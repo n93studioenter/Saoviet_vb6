@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "MSMASK32.OCX"
+Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "msmask32.ocx"
 Object = "{A8B3B723-0B5A-101B-B22E-00AA0037B2FC}#1.0#0"; "GRID32.OCX"
 Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Begin VB.Form FrmChungtu 
@@ -4292,11 +4292,14 @@ Private Sub Xuly51CTChild()
     txtChungtu_LostFocus (0)
     txtchungtu(2).Text = rs_import!VAT
     txtChungtu_LostFocus (2)
-
+    RFocus txtchungtu(6)
+    txtchungtu(6).Text = rs_import!TgTThue
     txtChungtu_KeyPress 6, 13
 
     txtchungtu(0) = rs_import!tkno
     txtChungtu_LostFocus (0)
+    RFocus txtchungtu(5)
+    txtchungtu(5).Text = rs_import!TongTien
     txtChungtu_KeyPress 6, 13
     timerNext.Enabled = True
 End Sub
@@ -4320,11 +4323,15 @@ Private Sub Xuly51None()
     txtChungtu_LostFocus (0)
     txtchungtu(2).Text = rs_import!VAT
     txtChungtu_LostFocus (2)
-
+    
+     RFocus txtchungtu(6)
+    txtchungtu(6).Text = rs_import!TgTThue
     txtChungtu_KeyPress 6, 13
 
     txtchungtu(0) = rs_import!tkno
     txtChungtu_LostFocus (0)
+     RFocus txtchungtu(5)
+    txtchungtu(5).Text = rs_import!TongTien
     If stt51none = 1 Then
         txtChungtu_KeyPress 6, 13
     End If
@@ -4390,12 +4397,16 @@ Private Sub Xuly51Child()
         txtChungtu_LostFocus (0)
         txtchungtu(2).Text = rs_import!VAT
         txtChungtu_LostFocus (2)
+        RFocus txtchungtu(6)
+        txtchungtu(6).Text = rs_import!TgTThue
 
         txtChungtu_KeyPress 6, 13
 
         txtchungtu(0) = rs_import!tkno
         txtChungtu_LostFocus (0)
-        txtChungtu_KeyPress 6, 13
+        RFocus txtchungtu(5)
+        txtchungtu(5).Text = rs_import!TongTien
+        'txtChungtu_KeyPress 6, 13
         timerNext.Enabled = True
     End If
 End Sub
@@ -4456,7 +4467,7 @@ Private Sub XulyTongtopChild(ByRef rs_import As Recordset)
     'RFocus txtchungtu(6)
     txtchungtu(0).Text = rs_import!TkCo
     txtChungtu_LostFocus (0)
-
+    txtchungtu(6).Text = rs_import!TongTien
     If rs_import!TkCo Like "331*" Then
         txtChungtu_KeyPress 6, 13
         t331.Enabled = True
