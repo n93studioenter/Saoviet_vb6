@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
-Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "COMCTL32.OCX"
-Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "MSMASK32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "ComDlg32.OCX"
+Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.5#0"; "comctl32.Ocx"
+Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "msmask32.ocx"
 Begin VB.Form FBcTC 
    BackColor       =   &H00FFFFC0&
    BorderStyle     =   0  'None
@@ -2525,17 +2525,17 @@ If OptTG(0).Value = False Then
                         MedNgay(1).Text = Format(ngay(1), Mask_D)
                         GoTo KhongInBC
                     Else
-                        If BangTHCTuGoc(CTGS.ItemData(CTGS.ListIndex), taikhoan.sohieu, IIf(OptTG(0).Value, NgayDauThang(pNamTC, tdau), ngay(0)), IIf(OptTG(0).Value, NgayCuoiThang(pNamTC, tcuoi), ngay(1)), -1) Then
+                        If BangTHCTuGoc(CTGS.ItemData(CTGS.ListIndex), taikhoan.sohieu, IIF(OptTG(0).Value, NgayDauThang(pNamTC, tdau), ngay(0)), IIF(OptTG(0).Value, NgayCuoiThang(pNamTC, tcuoi), ngay(1)), -1) Then
                             InBaoCaoRPT nn
                             SetRptInfo
                         End If
-                        If BangTHCTuGoc(CTGS.ItemData(CTGS.ListIndex), taikhoan.sohieu, IIf(OptTG(0).Value, NgayDauThang(pNamTC, tdau), ngay(0)), IIf(OptTG(0).Value, NgayCuoiThang(pNamTC, tcuoi), ngay(1)), 1) Then InBaoCaoRPT nn
+                        If BangTHCTuGoc(CTGS.ItemData(CTGS.ListIndex), taikhoan.sohieu, IIF(OptTG(0).Value, NgayDauThang(pNamTC, tdau), ngay(0)), IIF(OptTG(0).Value, NgayCuoiThang(pNamTC, tcuoi), ngay(1)), 1) Then InBaoCaoRPT nn
                         GoTo KhongInBC
                     End If
                 Case 18:
-                    SoDangKyCT tdau, tcuoi, IIf(OptTG(1).Value, 1, 0), ngay(0), ngay(1)
+                    SoDangKyCT tdau, tcuoi, IIF(OptTG(1).Value, 1, 0), ngay(0), ngay(1)
                 Case 0:
-                    If Not InNhatKy(tdau, tcuoi, IIf(ChkDu(1).Value, CboVV.ItemData(CboVV.ListIndex), 0), IIf(OptTG(1).Value, 1, 0), ngay(0), ngay(1), nn, , mdt1, mdt2, mdt3) Then GoTo KhongInBC
+                    If Not InNhatKy(tdau, tcuoi, IIF(ChkDu(1).Value, CboVV.ItemData(CboVV.ListIndex), 0), IIF(OptTG(1).Value, 1, 0), ngay(0), ngay(1), nn, , mdt1, mdt2, mdt3) Then GoTo KhongInBC
                 Case 1, 15:
                     If txtShTk(0).tag = 0 Then
                         RFocus txtShTk(0)
@@ -2553,19 +2553,19 @@ If OptTG(0).Value = False Then
                     End If
                     If (taikhoan.MaTC <> taikhoan.MaSo) And (taikhoan.MaTC > 0) Then
                         If OptTG(0).Value Then
-                            If Not InSoChitiet(taikhoan, tdau, tcuoi, ngay(0), ngay(1), True, doiung.sohieu, IIf(ChkDu(1).Value, CboVV.ItemData(CboVV.ListIndex), 0), ChkDu(3).Value, nn) Then GoTo KhongInBC
+                            If Not InSoChitiet(taikhoan, tdau, tcuoi, ngay(0), ngay(1), True, doiung.sohieu, IIF(ChkDu(1).Value, CboVV.ItemData(CboVV.ListIndex), 0), ChkDu(3).Value, nn) Then GoTo KhongInBC
                         Else
-                            If Not InSoChitiet(taikhoan, 0, 0, ngay(0), ngay(1), True, doiung.sohieu, IIf(ChkDu(1).Value, CboVV.ItemData(CboVV.ListIndex), 0), ChkDu(3).Value, nn) Then GoTo KhongInBC
+                            If Not InSoChitiet(taikhoan, 0, 0, ngay(0), ngay(1), True, doiung.sohieu, IIF(ChkDu(1).Value, CboVV.ItemData(CboVV.ListIndex), 0), ChkDu(3).Value, nn) Then GoTo KhongInBC
                         End If
                     Else
                         If baocao = 1 Then
                             If OptTG(0).Value Then
-                                If Not InSocaiTk(taikhoan, tdau, tcuoi, ngay(0), ngay(1), True, doiung.sohieu, IIf(ChkDu(1).Value, CboVV.ItemData(CboVV.ListIndex), 0), ChkDu(3).Value, nn, mdt1, mdt2, mdt3) Then GoTo KhongInBC
+                                If Not InSocaiTk(taikhoan, tdau, tcuoi, ngay(0), ngay(1), True, doiung.sohieu, IIF(ChkDu(1).Value, CboVV.ItemData(CboVV.ListIndex), 0), ChkDu(3).Value, nn, mdt1, mdt2, mdt3) Then GoTo KhongInBC
                             Else
-                                If Not InSocaiTk(taikhoan, tdau, tcuoi, ngay(0), ngay(1), True, doiung.sohieu, IIf(ChkDu(1).Value, CboVV.ItemData(CboVV.ListIndex), 0), ChkDu(3).Value, nn, mdt1, mdt2, mdt3) Then GoTo KhongInBC
+                                If Not InSocaiTk(taikhoan, tdau, tcuoi, ngay(0), ngay(1), True, doiung.sohieu, IIF(ChkDu(1).Value, CboVV.ItemData(CboVV.ListIndex), 0), ChkDu(3).Value, nn, mdt1, mdt2, mdt3) Then GoTo KhongInBC
                             End If
                         Else
-                            If Not InSocaiTk2(taikhoan, tdau, tcuoi, True, doiung.sohieu, IIf(ChkDu(1).Value, CboVV.ItemData(CboVV.ListIndex), 0), nn) Then GoTo KhongInBC
+                            If Not InSocaiTk2(taikhoan, tdau, tcuoi, True, doiung.sohieu, IIF(ChkDu(1).Value, CboVV.ItemData(CboVV.ListIndex), 0), nn) Then GoTo KhongInBC
                         End If
                     End If
                 Case 2:
@@ -2607,7 +2607,7 @@ If OptTG(0).Value = False Then
                     GoTo KhongInBC
                 Case 3:
                 frmMain.Rpt.Formulas(30) = "diachi='" + frmMain.LbCty(2).Caption + ", " + frmMain.LbCty(10).Caption + ", " + frmMain.LbCty(11).Caption + "'"
-                    If OptKqkd(0).Value Then InKqkd tdau, tcuoi, IIf(ChkDu(5).Value = 1, CboNK(2).ListIndex + 2, 0), nn
+                    If OptKqkd(0).Value Then InKqkd tdau, tcuoi, IIF(ChkDu(5).Value = 1, CboNK(2).ListIndex + 2, 0), nn
                     If OptKqkd(1).Value Then InThue tdau, tcuoi
                     If OptKqkd(2).Value Then InVAT tdau, tcuoi
                     If OptKqkd(4).Value Then
@@ -2717,7 +2717,7 @@ If OptTG(0).Value = False Then
                     If OptVAT(7).Value Then BangKeBanRa tdau, tcuoi, taikhoan
                     If OptVAT(8).Value Then ToKhaiTTDB tdau, tcuoi, taikhoan
                     If OptVAT(9).Value Or OptVAT(10).Value Then
-                        InBKTheoTK IIf(OptVAT(9).Value, -1, 1), tdau, tcuoi, txtShTk(5).Text, IIf(Chk(0).Value = 1, txtShTk(6).Text, "")
+                        InBKTheoTK IIF(OptVAT(9).Value, -1, 1), tdau, tcuoi, txtShTk(5).Text, IIF(Chk(0).Value = 1, txtShTk(6).Text, "")
                     End If
                 Case 11:
                     InLCTT2 tdau, tcuoi
@@ -2790,16 +2790,16 @@ If OptTG(0).Value = False Then
                     End Select
                     GoTo KhongInBC
                 Case 14:
-                    CTGhiSo CTGS.ItemData(CTGS.ListIndex), tdau, tcuoi, IIf(OptTG(1).Value, 1, 0), ngay(0), ngay(1), IIf(ChkDu(1).Value, CboVV.ItemData(CboVV.ListIndex), 0)
+                    CTGhiSo CTGS.ItemData(CTGS.ListIndex), tdau, tcuoi, IIF(OptTG(1).Value, 1, 0), ngay(0), ngay(1), IIF(ChkDu(1).Value, CboVV.ItemData(CboVV.ListIndex), 0)
                 Case 21:
                     CTGhiSo2 CTGS.ItemData(CTGS.ListIndex), tdau, tcuoi
                 Case 19:
                     For i = 0 To CTGS.ListCount - 1
-                        CTGhiSo CTGS.ItemData(i), tdau, tcuoi, IIf(OptTG(1).Value, 1, 0), ngay(0), ngay(1), 0
+                        CTGhiSo CTGS.ItemData(i), tdau, tcuoi, IIF(OptTG(1).Value, 1, 0), ngay(0), ngay(1), 0
                     Next
                 Case 16:
                     taikhoan.InitTaikhoanMaSo txtShTk(0).tag
-                    CTGhiSoTH taikhoan, tdau, tcuoi, IIf(OptTG(1).Value, 1, 0), ngay(0), ngay(1)
+                    CTGhiSoTH taikhoan, tdau, tcuoi, IIF(OptTG(1).Value, 1, 0), ngay(0), ngay(1)
                 Case 17:
                     If OptQT(0).Value Then InQTThue tdau, tcuoi
                     If OptQT(1).Value Then InQTVAT tdau, tcuoi
@@ -2833,13 +2833,13 @@ a:
     End Select
     GoTo KhongInBC
 LoiIn:
-    If Err.Number = 20510 Then
+    If Err.number = 20510 Then
         frmMain.Rpt.Formulas(52) = ""
         frmMain.Rpt.Formulas(53) = ""
         frmMain.Rpt.Formulas(54) = ""
         GoTo a
     End If
-    MsgBox "Error " + CStr(Err.Number) + ": " + Err.Description, vbExclamation, App.ProductName
+    MsgBox "Error " + CStr(Err.number) + ": " + Err.Description, vbExclamation, App.ProductName
 KhongInBC:
     Set taikhoan = Nothing
     Set doiung = Nothing
@@ -3010,9 +3010,9 @@ Private Sub InThue(tdau As Integer, tcuoi As Integer)
     Set rs_thue = DBKetoan.OpenRecordset("SELECT DISTINCTROW Thue.MaSo As MaThue, Thue.MaTk, Thue.KyTruocSang, " _
         & " Thue.KyNay, Thue.DaNop, Thue.TongHop, HeThongTK.* FROM Thue LEFT JOIN HeThongTK ON Thue.MaTk" _
         & " = HeThongTK.MaSo WHERE (Thue.MaTk>0)", dbOpenSnapshot)
-    If rs_thue.RecordCount > 0 Then
+    If rs_thue.recordCount > 0 Then
         rs_thue.MoveLast
-        GauGe.Max = Fix(0.5 + 1.5 * rs_thue.RecordCount)
+        GauGe.Max = Fix(0.5 + 1.5 * rs_thue.recordCount)
     End If
     Do While Not rs_thue.BOF
         If Not IsNull(rs_thue!sohieu) Then
@@ -3115,7 +3115,7 @@ Public Sub InTsNb(thang As Integer)
     
     GauGe.Max = 2
     st = CStr(CThangDB(thang))
-    SetSQL "QTaisanNB", "SELECT DISTINCTROW Ten" + IIf(nn > 0, "E", "") + ", SoHieu, DuNo_0, DuCo_0, DuNo_" + st + " AS DuNo, DuCo_" + st + " AS DuCo" _
+    SetSQL "QTaisanNB", "SELECT DISTINCTROW Ten" + IIF(nn > 0, "E", "") + ", SoHieu, DuNo_0, DuCo_0, DuNo_" + st + " AS DuNo, DuCo_" + st + " AS DuCo" _
     & " From HeThongTK Where ((HeThongTK.cap = 1) And (HeThongTK.Loai = 0)) ORDER BY HethongTK.SoHieu"
     GauGe.Value = 1
     frmMain.Rpt.ReportFileName = "TSNB.RPT"
@@ -3237,8 +3237,8 @@ Private Sub InVAT(tdau As Integer, tcuoi As Integer)
     lk = lk + duno - duco
     lk2 = -kn
     
-    ExecuteSQL5 "UPDATE VAT SET KyNay = " + DoiDau(IIf(kn > 0, kn, 0)) + ",LuyKe = " + DoiDau(IIf(lk > 0, lk, 0)) + " WHERE MaSo = '10'"
-    ExecuteSQL5 "UPDATE VAT SET KyNay = " + DoiDau(IIf(kn < 0, -kn, 0)) + ",LuyKe = " + DoiDau(IIf(lk < 0, -lk, 0)) + " WHERE MaSo = '40'"
+    ExecuteSQL5 "UPDATE VAT SET KyNay = " + DoiDau(IIF(kn > 0, kn, 0)) + ",LuyKe = " + DoiDau(IIF(lk > 0, lk, 0)) + " WHERE MaSo = '10'"
+    ExecuteSQL5 "UPDATE VAT SET KyNay = " + DoiDau(IIF(kn < 0, -kn, 0)) + ",LuyKe = " + DoiDau(IIF(lk < 0, -lk, 0)) + " WHERE MaSo = '40'"
     
     VATHoanLai tdau, tcuoi, dk, duno, lk1, duco, X
     ExecuteSQL5 "UPDATE VAT SET KyNay = " + DoiDau(dk) + " WHERE MaSo = '20'"
@@ -3324,7 +3324,7 @@ Private Sub InVAT(tdau As Integer, tcuoi As Integer)
         ExecuteSQL5 "UPDATE VAT SET KyNay = " + DoiDau(-lk2) + ",LuyKe = " + DoiDau(-lk2) + " WHERE MaSo = '17'"
     End If
     
-    sql = "SELECT VAT.MaSo, First(VAT.DienGiai" + IIf(nn > 0, "E", "") + ") AS FirstOfDienGiai, First(VAT.TongHop) AS FirstOfTongHop, Sum(VAT.KyNay) AS SumOfKyNay, Sum(VAT.LuyKe) AS SumOfLuyKe From VAT GROUP BY VAT.MaSo"
+    sql = "SELECT VAT.MaSo, First(VAT.DienGiai" + IIF(nn > 0, "E", "") + ") AS FirstOfDienGiai, First(VAT.TongHop) AS FirstOfTongHop, Sum(VAT.KyNay) AS SumOfKyNay, Sum(VAT.LuyKe) AS SumOfLuyKe From VAT GROUP BY VAT.MaSo"
     SetSQL "QVAT", sql
     
     Set TK = Nothing
@@ -3364,13 +3364,13 @@ Dim dkn As Double, dkc As Double, dknt As Double, psn As Double, psc As Double
     If dkno = 0 And psno = 0 And psco = 0 Then GoTo KhongIn
     
     If psno <> 0 Or psco <> 0 Then
-        SetSQL "QSocai", "SELECT DISTINCTROW ChungTu.MaCT, ChungTu.SoHieu, ChungTu.NgayCT, ChungTu.NgayGS, ChungTu.DienGiai" + IIf(nn > 0, "E", "") + ", ChungTu.SoPS, ChungTu.GhiChu, HeThongTK.SoHieu, HeThongTK_1.SoHieu, ChungTu.MaTKTCNo, ChungTu.MaTKTCCo" _
+        SetSQL "QSocai", "SELECT DISTINCTROW ChungTu.MaCT, ChungTu.SoHieu, ChungTu.NgayCT, ChungTu.NgayGS, ChungTu.DienGiai" + IIF(nn > 0, "E", "") + ", ChungTu.SoPS, ChungTu.GhiChu, HeThongTK.SoHieu, HeThongTK_1.SoHieu, ChungTu.MaTKTCNo, ChungTu.MaTKTCCo" _
             & " FROM HeThongTK AS HeThongTK_1 RIGHT JOIN (HeThongTK RIGHT JOIN ChungTu ON HeThongTK.MaSo = ChungTu.MaTKTCNo) ON HeThongTK_1.MaSo = ChungTu.MaTKTCCo" _
             & " Where ((HethongTK.SoHieu LIKE '" + shtkhl1 + "*' OR HethongTK.SoHieu LIKE '" + shtkhl2 + "*'" _
             + ") Or (HethongTK_1.SoHieu LIKE '" + shtkhl1 + "*' OR HethongTK_1.SoHieu LIKE '" + shtkhl2 + "*'" _
             + ")) And " + WThang("ThangCT", tdau, tcuoi) + " ORDER BY ChungTu.NgayGS, ChungTu.MaCT"
     Else
-        SetSQL "QSocai", "SELECT DISTINCTROW ChungTu.MaCT, ChungTu.SoHieu, ChungTu.NgayCT, ChungTu.NgayGS, ChungTu.DienGiai" + IIf(nn > 0, "E", "") + ", ChungTu.SoPS, ChungTu.GhiChu, HeThongTK.SoHieu, HeThongTK_1.SoHieu, ChungTu.MaTKTCNo, ChungTu.MaTKTCCo" _
+        SetSQL "QSocai", "SELECT DISTINCTROW ChungTu.MaCT, ChungTu.SoHieu, ChungTu.NgayCT, ChungTu.NgayGS, ChungTu.DienGiai" + IIF(nn > 0, "E", "") + ", ChungTu.SoPS, ChungTu.GhiChu, HeThongTK.SoHieu, HeThongTK_1.SoHieu, ChungTu.MaTKTCNo, ChungTu.MaTKTCCo" _
             & " FROM HeThongTK AS HeThongTK_1 RIGHT JOIN (HeThongTK RIGHT JOIN ChungTu ON HeThongTK.MaSo = ChungTu.MaTKTCNo) ON HeThongTK_1.MaSo = ChungTu.MaTKTCCo" _
             & " Where (chungtu.MaCT = 0)"
             frmMain.Rpt.Formulas(8) = "DuCk=" + DoiDau(dkno)
@@ -3412,7 +3412,7 @@ Dim taikhoan As New ClsTaikhoan, dkn As Double, dkc As Double, dknt As Double, p
     dkco = dkco + dkc - dkn
     GauGe.Value = 2
     
-    sql = "SELECT DISTINCTROW ChungTu.MaCT, ChungTu.SoHieu, ChungTu.NgayCT, ChungTu.NgayGS, ChungTu.DienGiai" + IIf(nn > 0, "E", "") + ", ChungTu.SoPS, ChungTu.GhiChu, HeThongTK.SoHieu, HeThongTK_1.SoHieu, ChungTu.MaTKTCNo, ChungTu.MaTKTCCo" _
+    sql = "SELECT DISTINCTROW ChungTu.MaCT, ChungTu.SoHieu, ChungTu.NgayCT, ChungTu.NgayGS, ChungTu.DienGiai" + IIF(nn > 0, "E", "") + ", ChungTu.SoPS, ChungTu.GhiChu, HeThongTK.SoHieu, HeThongTK_1.SoHieu, ChungTu.MaTKTCNo, ChungTu.MaTKTCCo" _
             & " FROM HeThongTK AS HeThongTK_1 RIGHT JOIN (HeThongTK RIGHT JOIN ChungTu ON HeThongTK.MaSo = ChungTu.MaTKTCNo) ON HeThongTK_1.MaSo = ChungTu.MaTKTCCo" _
             & " Where ((HethongTK.SoHieu LIKE '" + shtkmg1 + "*' AND HethongTK_1.SoHieu LIKE '" + shtkdg1 + "*'" _
             + ") Or (HethongTK.SoHieu LIKE '" + shtkmg2 + "*' AND HethongTK_1.SoHieu LIKE '" + shtkdg2 + "*'" _
@@ -3423,7 +3423,7 @@ Dim taikhoan As New ClsTaikhoan, dkn As Double, dkc As Double, dknt As Double, p
         SetSQL "QSocai", sql
     Else
         If dkco = 0 Then GoTo KhongIn
-        SetSQL "QSocai", "SELECT DISTINCTROW ChungTu.MaCT, ChungTu.SoHieu, ChungTu.NgayCT, ChungTu.NgayGS, ChungTu.DienGiai" + IIf(nn > 0, "E", "") + ", ChungTu.SoPS, ChungTu.GhiChu, HeThongTK.SoHieu, HeThongTK_1.SoHieu, ChungTu.MaTKTCNo, ChungTu.MaTKTCCo" _
+        SetSQL "QSocai", "SELECT DISTINCTROW ChungTu.MaCT, ChungTu.SoHieu, ChungTu.NgayCT, ChungTu.NgayGS, ChungTu.DienGiai" + IIF(nn > 0, "E", "") + ", ChungTu.SoPS, ChungTu.GhiChu, HeThongTK.SoHieu, HeThongTK_1.SoHieu, ChungTu.MaTKTCNo, ChungTu.MaTKTCCo" _
             & " FROM HeThongTK AS HeThongTK_1 RIGHT JOIN (HeThongTK RIGHT JOIN ChungTu ON HeThongTK.MaSo = ChungTu.MaTKTCNo) ON HeThongTK_1.MaSo = ChungTu.MaTKTCCo" _
             & " Where (chungtu.MaCT = 0)"
             frmMain.Rpt.Formulas(8) = "DuCk=" + DoiDau(dkco)
@@ -3450,7 +3450,7 @@ End Function
 Private Function InVATDauVao2(tdau As Integer, tcuoi As Integer, tl As Integer, HD As Integer, TK As ClsTaikhoan) As Boolean
     Dim sql As String, tk2 As New ClsTaikhoan, Fx As Integer
     
-    Fx = IIf(Left(frmMain.LbCty(8).Caption, 2) = "35" Or Left(frmMain.LbCty(3).Caption, 2) = "64", 35, 0)
+    Fx = IIF(Left(frmMain.LbCty(8).Caption, 2) = "35" Or Left(frmMain.LbCty(3).Caption, 2) = "64", 35, 0)
     
     tk2.InitTaikhoanSohieu "33312"
     If tk2.tk_id = GTGTKT_ID Then
@@ -3638,7 +3638,7 @@ Private Function InVATDauRa(tdau As Integer, tcuoi As Integer, tl As Integer, TK
             Case -2:
                 SetSQL "QNhatky", "SELECT DISTINCTROW KyHieu,SoHD,ChungTu.NgayCT as NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,KhachHang.MST,ChungTu.SoHieu,IIF(TK_ID=" + CStr(GTGTPN_ID) + ",SoPS,-SoPS) AS Thue,ChungTu.MauSoHD as DiaChi,TyLe,HTTT,MauSo,MaCT,KCT FROM " + ChungTu2TKHD(2) + " WHERE HoaDon.Loai=1 AND " + WThang("ThangCT", tdau, tcuoi) + " AND KCT=1 AND (HoaDon.DC=0 OR HD=1) ORDER BY NgayPH"
             Case -1:
-                SetSQL "QNhatky", "SELECT DISTINCTROW KyHieu,SoHD,ChungTu.NgayCT as NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,KhachHang.MST,ChungTu.SoHieu,IIF(TK_ID=" + CStr(GTGTPN_ID) + ",SoPS,-SoPS) AS Thue,ChungTu.MauSoHD as DiaChi,TyLe,HTTT,MauSo,MaCT,KCT FROM " + ChungTu2TKHD(2) + " WHERE HoaDon.Loai=1 AND " + WThang("ThangCT", tdau, tcuoi) + " AND (HoaDon.DC=0 OR HD=1) ORDER BY NgayPH"
+                SetSQL "QNhatky", "SELECT DISTINCTROW HoaDon.KyHieu,SoHD,ChungTu.NgayCT as NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,KhachHang.MST,ChungTu.SoHieu,IIF(TK_ID=" + CStr(GTGTPN_ID) + ",SoPS,-SoPS) AS Thue,ChungTu.MauSoHD as DiaChi,TyLe,HTTT,MauSo,MaCT,KCT FROM " + ChungTu2TKHD(2) + " WHERE HoaDon.Loai=1 AND " + WThang("ThangCT", tdau, tcuoi) + " AND (HoaDon.DC=0 OR HD=1) ORDER BY NgayPH"
             Case 30:
                 SetSQL "QNhatky", "SELECT DISTINCTROW KyHieu,SoHD,ChungTu.NgayCT as NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,KhachHang.MST,ChungTu.SoHieu,IIF(TK_ID=" + CStr(GTGTPN_ID) + ",SoPS,-SoPS) AS Thue,ChungTu.MauSoHD as DiaChi,TyLe,HTTT,MauSo,MaCT,KCT FROM " + ChungTu2TKHD(2) + " WHERE HoaDon.Loai=1 AND (TyLe=5 OR TyLe=10) AND " + WThang("ThangCT", tdau, tcuoi) + " AND KCT=0 AND (HoaDon.DC=0 OR HD=1) ORDER BY NgayPH"
             Case Else
@@ -3830,7 +3830,7 @@ Private Sub InCTChiphi(tdau As Integer, tcuoi As Integer, shtkcp As String, dg A
     Set RsTk = Nothing
     
     CongDonKC False
-    SetSQL "QTongHopCT", "SELECT DISTINCTROW SoHieu, First(Cap) AS FirstOfCap, First(Ten" + IIf(nn > 0, "E", "") + ") AS FirstOfTen, First(Kieu) AS FirstOfKieu, First(Loai) AS FirstOfLoai, First(MaTC = MaSo) AS FirstOfChuanLa, First(CapDuoi) AS CD," _
+    SetSQL "QTongHopCT", "SELECT DISTINCTROW SoHieu, First(Cap) AS FirstOfCap, First(Ten" + IIF(nn > 0, "E", "") + ") AS FirstOfTen, First(Kieu) AS FirstOfKieu, First(Loai) AS FirstOfLoai, First(MaTC = MaSo) AS FirstOfChuanLa, First(CapDuoi) AS CD," _
         & " Sum(" + sqln + " - KC_N) AS PsNo, Sum(" + sqlnx + " - KC_C) AS PsNoX" _
         & " From HeThongTK GROUP BY SoHieu Having (SoHieu LIKE '" + shtkcp + "*' AND SoHieu <> '" + shtkcp + "')"
     
@@ -3883,7 +3883,7 @@ Private Sub InSoDuTK(taikhoan As ClsTaikhoan, thang As Integer)
     
     GauGe.Max = 2
     st = CStr(CThangDB(thang))
-    SetSQL "QTongHopCT", "SELECT DISTINCTROW SoHieu, First(Cap) AS FirstOfCap, First(Ten" + IIf(nn > 0, "E", "") + ") AS FirstOfTen, First(Kieu) AS FirstOfKieu, First(Loai) AS FirstOfLoai, First(MaTC = MaSo OR MaTC = 0) AS FirstOfChuanLa," _
+    SetSQL "QTongHopCT", "SELECT DISTINCTROW SoHieu, First(Cap) AS FirstOfCap, First(Ten" + IIF(nn > 0, "E", "") + ") AS FirstOfTen, First(Kieu) AS FirstOfKieu, First(Loai) AS FirstOfLoai, First(MaTC = MaSo OR MaTC = 0) AS FirstOfChuanLa," _
         & " Sum(DuNo_" + st + ") AS CkNo, Sum(DuCo_" + st + ") AS CkCo, First(CapDuoi) AS CD" _
         & " From HeThongTK GROUP BY SoHieu Having (SoHieu LIKE '" + taikhoan.sohieu + "*' AND SoHieu <> '" + taikhoan.sohieu + "')"
     
@@ -3893,7 +3893,7 @@ Private Sub InSoDuTK(taikhoan As ClsTaikhoan, thang As Integer)
     RptSetDate NgayCuoiThang(pNamTC, thang), nn
     frmMain.Rpt.Formulas(3) = "ThoiGian='" + ThoiGian(thang, thang, nn) + "'"
     If taikhoan.MaSo > 0 Then
-        frmMain.Rpt.Formulas(5) = "TaiKhoan = IF PageNumber() = 1 THEN '" + IIf(nn > 0, ABCtoVNI("Account: ") + taikhoan.sohieu + " - " + taikhoan.TenE, ABCtoVNI("Tµi kho¶n: ") + taikhoan.sohieu + " - " + taikhoan.Ten) + "'"
+        frmMain.Rpt.Formulas(5) = "TaiKhoan = IF PageNumber() = 1 THEN '" + IIF(nn > 0, ABCtoVNI("Account: ") + taikhoan.sohieu + " - " + taikhoan.TenE, ABCtoVNI("Tµi kho¶n: ") + taikhoan.sohieu + " - " + taikhoan.Ten) + "'"
     End If
     taikhoan.SoDuTK thang, ckn, ckc, cknt
     frmMain.Rpt.Formulas(6) = "DuNoCK = " + DoiDau(ckn)
@@ -3903,7 +3903,7 @@ End Sub
 
 Private Sub InTMTC(tdau As Integer, tcuoi As Integer)
     Dim i As Integer, j As Integer, ps As Double, ps2 As Double, Verx As Integer, fn As String
-      fn = pCurDir + "TMBCTC" + IIf(tdau < 10, "0", "") + CStr(tdau) + IIf(tcuoi < 10, "0", "") + CStr(tcuoi) + CStr(pNamTC Mod 100) + ".XLS"
+      fn = pCurDir + "TMBCTC" + IIF(tdau < 10, "0", "") + CStr(tdau) + IIF(tcuoi < 10, "0", "") + CStr(tcuoi) + CStr(pNamTC Mod 100) + ".XLS"
    
    ' fn = pCurDir + IIf(tdau < 10, "0", "") + CStr(tdau) + IIf(tcuoi < 10, "0", "") + CStr(tcuoi) + CStr(pNamTC Mod 100) + ".XLS"
     'fn = "D:\TMBCTC.XLS"
@@ -4087,16 +4087,16 @@ Private Sub InTMTC(tdau As Integer, tcuoi As Integer)
     If SelectSQL("SELECT Tag AS F1 FROM License") = "Z" Then Verx = 1 Else Verx = 0
     
     xlsheet.Cells(235, 4) = 100 * SelectSQL("SELECT Sum(KyNay) AS F1 FROM Kqkd WHERE MaSo=50") / ps
-    xlsheet.Cells(236, 4) = 100 * SelectSQL("SELECT Sum(KyNay) AS F1 FROM Kqkd WHERE MaSo=" + IIf(Verx = 0, "60", "70")) / ps
+    xlsheet.Cells(236, 4) = 100 * SelectSQL("SELECT Sum(KyNay) AS F1 FROM Kqkd WHERE MaSo=" + IIF(Verx = 0, "60", "70")) / ps
 
     ps2 = SelectSQL("SELECT Sum(CuoiKy) AS F1 FROM Cdts WHERE MaSo=100 OR MaSo=200")
     If ps2 > 0 Then
         xlsheet.Cells(238, 4) = 100 * SelectSQL("SELECT Sum(KyNay) AS F1 FROM Kqkd WHERE MaSo=50") / ps2
-        xlsheet.Cells(239, 4) = 100 * SelectSQL("SELECT Sum(KyNay) AS F1 FROM Kqkd WHERE MaSo=" + IIf(Verx = 0, "60", "70")) / ps2
+        xlsheet.Cells(239, 4) = 100 * SelectSQL("SELECT Sum(KyNay) AS F1 FROM Kqkd WHERE MaSo=" + IIF(Verx = 0, "60", "70")) / ps2
     End If
     
     ps2 = SelectSQL("SELECT Sum(CuoiKy) AS F1 FROM Cdts WHERE MaSo=410")
-    If ps2 > 0 Then xlsheet.Cells(240, 4) = 100 * SelectSQL("SELECT Sum(KyNay) AS F1 FROM Kqkd WHERE MaSo=" + IIf(Verx = 0, "60", "70")) / ps2
+    If ps2 > 0 Then xlsheet.Cells(240, 4) = 100 * SelectSQL("SELECT Sum(KyNay) AS F1 FROM Kqkd WHERE MaSo=" + IIF(Verx = 0, "60", "70")) / ps2
 KT:
     xlapp.Workbooks(1).Save
     xlapp.Workbooks.Close
@@ -4104,9 +4104,9 @@ KT:
     Set xlsheet = Nothing
     Set xlapp = Nothing
 MoTep:
-    CallExcel IIf(tdau < 10, "0", "") + CStr(tdau) + IIf(tcuoi < 10, "0", "") + CStr(tcuoi) + CStr(pNamTC Mod 100) + ".XLS"
+    CallExcel IIF(tdau < 10, "0", "") + CStr(tdau) + IIF(tcuoi < 10, "0", "") + CStr(tcuoi) + CStr(pNamTC Mod 100) + ".XLS"
 KetThuc:
- MsgBox ("ThuyÕt minh tµi chÝnh ®· lËp t¹i:" + pCurDir + "TMBCTC3" + IIf(tdau < 10, "0", "") + CStr(tdau) + IIf(tcuoi < 10, "0", "") + CStr(tcuoi) + CStr(pNamTC Mod 100) + ".XLS")
+ MsgBox ("ThuyÕt minh tµi chÝnh ®· lËp t¹i:" + pCurDir + "TMBCTC3" + IIF(tdau < 10, "0", "") + CStr(tdau) + IIF(tcuoi < 10, "0", "") + CStr(tcuoi) + CStr(pNamTC Mod 100) + ".XLS")
 
 End Sub
 
@@ -4146,7 +4146,7 @@ Private Sub InLCTT2(tdau As Integer, tcuoi As Integer)
     
     sql = "SELECT SUM(DuNo_" + CStr(CThangDB(ThangTruoc(tdau))) + "-DuCo_" + CStr(CThangDB(ThangTruoc(tdau))) + ") AS F1,SUM(DuNo_0-DuCo_0) AS F2 FROM HethongTK WHERE SoHieu='111' OR SoHieu='112'"
     kn = SelectSQL(sql, KT)
-    ExecuteSQL5 "UPDATE LCTT SET KyTruoc = " + DoiDau(IIf(tdau > pThangDauKy, KT, 0)) + ", KyNay = " + DoiDau(kn) + " WHERE MaSo=60"
+    ExecuteSQL5 "UPDATE LCTT SET KyTruoc = " + DoiDau(IIF(tdau > pThangDauKy, KT, 0)) + ", KyNay = " + DoiDau(kn) + " WHERE MaSo=60"
     'sql = "SELECT SUM(DuNo_" + CStr(CThangDB(tcuoi)) + "-DuCo_" + CStr(CThangDB(tcuoi)) + ") AS F1,SUM(DuNo_" + CStr(CThangDB(ThangTruoc(tdau))) + "-DuCo_" + CStr(CThangDB(ThangTruoc(tdau))) + ") AS F2 FROM HethongTK WHERE SoHieu='1111' OR SoHieu='1121'"
     'kn = SelectSQL(sql, KT)
     'ExecuteSQL5 "UPDATE LCTT SET KyTruoc = " + CStr(IIf(tdau > pThangDauKy, KT, 0)) + ", KyNay = " + CStr(kn) + " WHERE MaSo=70"
@@ -4191,7 +4191,7 @@ Dim sotkno As Integer, sotkco As Integer, rx As String, cx As String
     sql = "SELECT LEFT(HeThongTK.SoHieu,4) AS ShCo FROM " + ChungTu2TKNC(2) _
         & " WHERE MaTKTCNo > 0 AND MaTKTCCo > 0 AND " + WThang("ThangCT", tdau, tcuoi) + " GROUP BY LEFT(HethongTK.SoHieu,4)"
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
-    If rs.RecordCount = 0 Then GoTo KetThuc
+    If rs.recordCount = 0 Then GoTo KetThuc
     
     Recycle pCurDir + "BANCO.XLS"
     On Error GoTo KetThuc
@@ -4218,9 +4218,9 @@ Dim sotkno As Integer, sotkco As Integer, rx As String, cx As String
         & " WHERE MaTKTCNo > 0 AND MaTKTCCo > 0 AND " + WThang("ThangCT", tdau, tcuoi) + " GROUP BY LEFT(HethongTK.SoHieu,4)"
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
 ' Liet ke theo hang doc (phat sinh no)
-    If rs.RecordCount > 0 Then
+    If rs.recordCount > 0 Then
         rs.MoveLast
-        GauGe.Max = rs.RecordCount
+        GauGe.Max = rs.recordCount
         rs.MoveFirst
         i = 0
         Do While Not rs.EOF
@@ -4303,15 +4303,15 @@ Private Sub NK1(tdau As Integer, tcuoi As Integer, TK As String, nhom As Integer
 Dim rs As Recordset, i As Integer, j As Integer, sql As String, d As Date, m As Long, r As Integer
 Dim sotkno As Integer, sotkco As Integer, rx As String, cx As String, lx As Integer, ofs As Integer
 
-    ofs = IIf(id >= 2 Or (id = 0 And nhom = 0), 2, 0)
-    r = IIf(id < 2, 1, 2)
+    ofs = IIF(id >= 2 Or (id = 0 And nhom = 0), 2, 0)
+    r = IIF(id < 2, 1, 2)
     lx = Len(TK)
     XDSoHieuCap cap
     ' Lay danh sach tai khoan tai chinh
     sql = "SELECT BaoCaoCP.SoHieu AS ShCo FROM (" + ChungTu2TKNC(0) + ") LEFT JOIN BaoCaoCP ON HethongTK.SoHieu LIKE BaoCaoCP.SoHieu+'*'" _
         & " WHERE SoPS<>0 AND LEFT(TK.SoHieu," + CStr(lx) + ")='" + TK + "' AND " + WThang("ThangCT", tdau, tcuoi) + " GROUP BY BaoCaoCP.SoHieu"
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
-    If rs.RecordCount = 0 Then
+    If rs.recordCount = 0 Then
         ErrMsg er_KoPS
         GoTo KetThuc
     End If
@@ -4325,7 +4325,7 @@ Dim sotkno As Integer, sotkco As Integer, rx As String, cx As String, lx As Inte
     On Error GoTo 0
     xlsheet.Cells(1, 1) = pTenCty
     xlsheet.Cells(2, 1) = pTenCn
-    xlsheet.Cells(3, 1) = IIf(id > 0, "NhËt ký chøng tõ sè " + CStr(id), "B¶ng kª ph¸t sinh cã tµi kho¶n " + TK)
+    xlsheet.Cells(3, 1) = IIF(id > 0, "NhËt ký chøng tõ sè " + CStr(id), "B¶ng kª ph¸t sinh cã tµi kho¶n " + TK)
     xlsheet.Cells(4, 1) = ThoiGian(tdau, tcuoi, nn)
     If ofs > 0 Then
         xlsheet.Cells(6, 1) = "STT"
@@ -4349,15 +4349,15 @@ Dim sotkno As Integer, sotkco As Integer, rx As String, cx As String, lx As Inte
     ' xlsheet.Range("C5","").
     xlsheet.Cells(5, sotkco + 3 + ofs) = "Céng cã"
     
-    sql = "SELECT First(Chungtu.MaCT) AS M,First(Chungtu.SoHieu) AS SH,NgayGS,BaoCaoCP.SoHieu AS ShCo,Sum(SoPS) AS PS,First(DienGiai" + IIf(nn > 0, "E", "") + ") AS DG FROM (" + ChungTu2TKNC(0) + ") LEFT JOIN BaoCaoCP ON HethongTK.SoHieu LIKE BaoCaoCP.SoHieu + '*'" _
-        & " WHERE SoPS<>0 AND LEFT(TK.SoHieu," + CStr(lx) + ")='" + TK + "' AND " + WThang("ThangCT", tdau, tcuoi) + " GROUP BY NgayGS" + IIf(nhom = 0, ",MaCT", "") + ",BaoCaoCP.SoHieu"
+    sql = "SELECT First(Chungtu.MaCT) AS M,First(Chungtu.SoHieu) AS SH,NgayGS,BaoCaoCP.SoHieu AS ShCo,Sum(SoPS) AS PS,First(DienGiai" + IIF(nn > 0, "E", "") + ") AS DG FROM (" + ChungTu2TKNC(0) + ") LEFT JOIN BaoCaoCP ON HethongTK.SoHieu LIKE BaoCaoCP.SoHieu + '*'" _
+        & " WHERE SoPS<>0 AND LEFT(TK.SoHieu," + CStr(lx) + ")='" + TK + "' AND " + WThang("ThangCT", tdau, tcuoi) + " GROUP BY NgayGS" + IIF(nhom = 0, ",MaCT", "") + ",BaoCaoCP.SoHieu"
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     d = CVDate("01/01/1900")
     j = 6
 
     ' Liet ke theo hang doc (phat sinh no)
     rs.MoveLast
-    GauGe.Max = rs.RecordCount
+    GauGe.Max = rs.recordCount
     rs.MoveFirst
     Do While Not rs.EOF
         If (rs!NgayGS <> d And nhom = 1) Or (rs!m <> m And nhom = 0) Then
@@ -4368,7 +4368,7 @@ Dim sotkno As Integer, sotkco As Integer, rx As String, cx As String, lx As Inte
             m = rs!m
             HienThongBao Format(rs!NgayGS, Mask_D), 1
             If id < 2 And id > 0 Then
-                xlsheet.Cells(j, 1) = IIf(nhom = 0, rs!sh, CStr(j - 6))
+                xlsheet.Cells(j, 1) = IIF(nhom = 0, rs!sh, CStr(j - 6))
                 xlsheet.Cells(j, 2) = rs!NgayGS
             Else
                 xlsheet.Cells(j, 1) = CStr(j - 6)
@@ -4422,7 +4422,7 @@ Dim sotkno As Integer, sotkco As Integer, rx As String, cx As String, lx As Inte
     xlsheet.Range(XLSCol(3 + ofs) + "5", XLSCol(sotkco + 2 + ofs) + "5").MergeCells = True
     xlsheet.Range(XLSCol(3 + ofs) + "5").HorizontalAlignment = 3
 '    xlSheet.Range(rx + "5", rx + "6").MergeCells = True
-    xlsheet.Range(IIf(ofs > 0, "C7", "B7"), IIf(ofs > 0, "C" + rx, "B" + rx)).NumberFormat = "dd/mm/yy" '.FormatConditions = "dd/mm/yy"
+    xlsheet.Range(IIF(ofs > 0, "C7", "B7"), IIF(ofs > 0, "C" + rx, "B" + rx)).NumberFormat = "dd/mm/yy" '.FormatConditions = "dd/mm/yy"
     With xlsheet.Range("A5", cx + rx)
         .Borders.LineStyle = xlContinuous
         .Borders.Weight = xlThin
@@ -4451,9 +4451,9 @@ Private Sub BK1(tdau As Integer, tcuoi As Integer, TK As String, nhom As Integer
 Dim rs As Recordset, i As Integer, j As Integer, sql As String, d As Date, m As Long, mtk As Long, duno As Double, duco As Double, kieu As Integer
 Dim sotkno As Integer, sotkco As Integer, rx As String, cx As String, lx As Integer, ofs As Integer, r As Integer
 
-    ofs = IIf(id >= 2 Or (id = 0 And nhom = 0), 2, 0)
+    ofs = IIF(id >= 2 Or (id = 0 And nhom = 0), 2, 0)
     
-    r = IIf(id < 2, 1, 2)
+    r = IIF(id < 2, 1, 2)
     mtk = SelectSQL("SELECT MaSo AS F1, Kieu AS F2 FROM HethongTK WHERE SoHieu='" + TK + "'", kieu)
     lx = Len(TK)
     XDSoHieuCap cap
@@ -4461,7 +4461,7 @@ Dim sotkno As Integer, sotkco As Integer, rx As String, cx As String, lx As Inte
     sql = "SELECT BaoCaoCP.SoHieu AS ShCo FROM ((ChungTu LEFT JOIN HethongTK ON ChungTu.MaTKCo = HethongTK.MaSo) INNER JOIN HethongTK AS TK ON ChungTu.MaTKNo=TK.MaSo) LEFT JOIN BaoCaoCP ON HethongTK.SoHieu LIKE BaoCaoCP.SoHieu+'*'" _
         & " WHERE SoPS<>0 AND LEFT(TK.SoHieu," + CStr(lx) + ")='" + TK + "' AND " + WThang("ThangCT", tdau, tcuoi) + " GROUP BY BaoCaoCP.SoHieu"
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
-    If rs.RecordCount = 0 Then
+    If rs.recordCount = 0 Then
         ErrMsg er_KoPS
         GoTo KetThuc
     End If
@@ -4475,7 +4475,7 @@ Dim sotkno As Integer, sotkco As Integer, rx As String, cx As String, lx As Inte
     On Error GoTo 0
     xlsheet.Cells(1, 1) = pTenCty
     xlsheet.Cells(2, 1) = pTenCn
-    xlsheet.Cells(3, 1) = IIf(id > 0, "B¶ng kª sè " + CStr(id), "B¶ng kª ph¸t sinh nî tµi kho¶n " + TK)
+    xlsheet.Cells(3, 1) = IIF(id > 0, "B¶ng kª sè " + CStr(id), "B¶ng kª ph¸t sinh nî tµi kho¶n " + TK)
     xlsheet.Cells(4, 1) = ThoiGian(tdau, tcuoi, nn)
 '    xlSheet.Cells(5, 1) = "Tµi kho¶n ghi cã"
     If ofs > 0 Then
@@ -4497,14 +4497,14 @@ Dim sotkno As Integer, sotkco As Integer, rx As String, cx As String, lx As Inte
     sotkco = i - 2 - ofs
     xlsheet.Cells(7, sotkco + 3 + ofs) = "Céng nî"
     
-    sql = "SELECT First(MaCT) AS M,First(Chungtu.SoHieu) AS SH,NgayGS,BaoCaoCP.SoHieu AS ShCo,Sum(SoPS) AS PS,First(DienGiai" + IIf(nn > 0, "E", "") + ") AS DG FROM (" + ChungTu2TKNC(0) + ") LEFT JOIN BaoCaoCP ON TK.SoHieu LIKE BaoCaoCP.SoHieu + '*'" _
-        & " WHERE SoPS<>0 AND LEFT(HethongTK.SoHieu," + CStr(lx) + ")='" + TK + "' AND " + WThang("ThangCT", tdau, tcuoi) + " GROUP BY NgayGS" + IIf(nhom = 0, ",MaCT", "") + ",BaoCaoCP.SoHieu"
+    sql = "SELECT First(MaCT) AS M,First(Chungtu.SoHieu) AS SH,NgayGS,BaoCaoCP.SoHieu AS ShCo,Sum(SoPS) AS PS,First(DienGiai" + IIF(nn > 0, "E", "") + ") AS DG FROM (" + ChungTu2TKNC(0) + ") LEFT JOIN BaoCaoCP ON TK.SoHieu LIKE BaoCaoCP.SoHieu + '*'" _
+        & " WHERE SoPS<>0 AND LEFT(HethongTK.SoHieu," + CStr(lx) + ")='" + TK + "' AND " + WThang("ThangCT", tdau, tcuoi) + " GROUP BY NgayGS" + IIF(nhom = 0, ",MaCT", "") + ",BaoCaoCP.SoHieu"
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     d = CVDate("01/01/1900")
     j = 7
 ' Liet ke theo hang doc (phat sinh no)
     rs.MoveLast
-    GauGe.Max = rs.RecordCount
+    GauGe.Max = rs.recordCount
     rs.MoveFirst
     Do While Not rs.EOF
         If (rs!NgayGS <> d And nhom = 1) Or (rs!m <> m And nhom = 0) Then
@@ -4515,7 +4515,7 @@ Dim sotkno As Integer, sotkco As Integer, rx As String, cx As String, lx As Inte
             m = rs!m
             HienThongBao Format(rs!NgayGS, Mask_D), 1
             If id < 2 And id > 0 Then
-                xlsheet.Cells(j, 1) = IIf(nhom = 0, rs!sh, CStr(j - 7))
+                xlsheet.Cells(j, 1) = IIF(nhom = 0, rs!sh, CStr(j - 7))
                 xlsheet.Cells(j, 2) = rs!NgayGS
             Else
                 xlsheet.Cells(j, 1) = CStr(j - 7)
@@ -4570,7 +4570,7 @@ Dim sotkno As Integer, sotkco As Integer, rx As String, cx As String, lx As Inte
     xlsheet.Range(XLSCol(sotkco + 4 + ofs) + "6", XLSCol(sotkco + 4 + ofs) + "7").MergeCells = True
     xlsheet.Range(XLSCol(3 + ofs) + "6", XLSCol(sotkco + 2 + ofs) + "6").MergeCells = True
     xlsheet.Range(XLSCol(3 + ofs) + "6").HorizontalAlignment = 3
-    xlsheet.Range(IIf(ofs > 0, "C8", "B8"), IIf(ofs > 0, "C" + rx, "B" + rx)).NumberFormat = "dd/mm/yy" '.FormatConditions = "dd/mm/yy"
+    xlsheet.Range(IIF(ofs > 0, "C8", "B8"), IIF(ofs > 0, "C" + rx, "B" + rx)).NumberFormat = "dd/mm/yy" '.FormatConditions = "dd/mm/yy"
     With xlsheet.Range("A6", XLSCol(sotkco + 3 + ofs) + rx)
         .Borders.LineStyle = xlContinuous
         .Borders.Weight = xlThin
@@ -4713,15 +4713,15 @@ Dim duno As Double, duco As Double
     ' xlsheet.Range("C5","").
     xlsheet.Cells(7, sotkco1 + 5) = "Céng cã"
     
-    sql = "SELECT First(Chungtu.MaCT) AS M,First(Chungtu.SoHieu) AS SH,NgayGS,BaoCaoCP.SoHieu AS ShCo,Sum(SoPS) AS PS,First(DienGiai" + IIf(nn > 0, "E", "") + ") AS DG FROM (" + ChungTu2TKNC(0) + ") LEFT JOIN BaoCaoCP ON HethongTK.SoHieu LIKE BaoCaoCP.SoHieu+'*'" _
+    sql = "SELECT First(Chungtu.MaCT) AS M,First(Chungtu.SoHieu) AS SH,NgayGS,BaoCaoCP.SoHieu AS ShCo,Sum(SoPS) AS PS,First(DienGiai" + IIF(nn > 0, "E", "") + ") AS DG FROM (" + ChungTu2TKNC(0) + ") LEFT JOIN BaoCaoCP ON HethongTK.SoHieu LIKE BaoCaoCP.SoHieu+'*'" _
         & " WHERE SoPS<>0 AND LEFT(TK.SoHieu," + CStr(lx) + ")='" + TK + "' AND " + WThang("ThangCT", tdau, tcuoi) + " GROUP BY NgayGS,MaCT,BaoCaoCP.SoHieu"
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     j = 7
 
     ' Liet ke theo hang doc (phat sinh no)
-    If rs.RecordCount > 0 Then
+    If rs.recordCount > 0 Then
         rs.MoveLast
-        GauGe.Max = rs.RecordCount
+        GauGe.Max = rs.recordCount
         rs.MoveFirst
         Do While Not rs.EOF
             If rs!m <> m Then
@@ -4772,14 +4772,14 @@ Dim duno As Double, duco As Double
     
     xlsheet.Cells(6, sotkco1 + 5 + sotkco2 + 4) = "Céng nî"
     
-    sql = "SELECT First(MaCT) AS M,First(Chungtu.SoHieu) AS SH,NgayGS,BaoCaoCP.SoHieu AS ShCo,Sum(SoPS) AS PS,First(DienGiai" + IIf(nn > 0, "E", "") + ") AS DG FROM (" + ChungTu2TKNC(0) + ") LEFT JOIN BaoCaoCP ON TK.SoHieu LIKE BaoCaoCP.SoHieu+'*'" _
+    sql = "SELECT First(MaCT) AS M,First(Chungtu.SoHieu) AS SH,NgayGS,BaoCaoCP.SoHieu AS ShCo,Sum(SoPS) AS PS,First(DienGiai" + IIF(nn > 0, "E", "") + ") AS DG FROM (" + ChungTu2TKNC(0) + ") LEFT JOIN BaoCaoCP ON TK.SoHieu LIKE BaoCaoCP.SoHieu+'*'" _
         & " WHERE SoPS<>0 AND LEFT(HethongTK.SoHieu," + CStr(lx) + ")='" + TK + "' AND " + WThang("ThangCT", tdau, tcuoi) + " GROUP BY NgayGS,MaCT,BaoCaoCP.SoHieu"
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     j = 7
 ' Liet ke theo hang doc (phat sinh no)
-    If rs.RecordCount > 0 Then
+    If rs.recordCount > 0 Then
         rs.MoveLast
-        GauGe.Max = rs.RecordCount
+        GauGe.Max = rs.recordCount
         GauGe.Value = 0
         rs.MoveFirst
         Do While Not rs.EOF
@@ -4807,8 +4807,8 @@ Dim duno As Double, duco As Double
         sotkno2 = 0
     End If
     
-    xlsheet.Cells(IIf(sotkno1 > sotkno2, sotkno1, sotkno2) + 8, 4) = ABCtoVNI("Tæng PS")
-    rx = CStr(IIf(sotkno1 > sotkno2, sotkno1, sotkno2) + 8)
+    xlsheet.Cells(IIF(sotkno1 > sotkno2, sotkno1, sotkno2) + 8, 4) = ABCtoVNI("Tæng PS")
+    rx = CStr(IIF(sotkno1 > sotkno2, sotkno1, sotkno2) + 8)
     
     cx = XLSCol(sotkco1 + 5)
     
@@ -4837,15 +4837,15 @@ Dim duno As Double, duco As Double
         xlsheet.Range(sql + rx).Formula = "=SUM(" + sql + "8:" + sql + CStr(sotkno2 + 7) + ")"
     Next
     
-    If sotkno1 > 0 Or sotkno2 > 0 Then xlsheet.Range(cx + rx).Formula = "=SUM(" + cx + "8:" + cx + CStr(IIf(sotkno1 > sotkno2, sotkno1, sotkno2) + 7) + ")"
+    If sotkno1 > 0 Or sotkno2 > 0 Then xlsheet.Range(cx + rx).Formula = "=SUM(" + cx + "8:" + cx + CStr(IIF(sotkno1 > sotkno2, sotkno1, sotkno2) + 7) + ")"
     
     xlsheet.Cells(5, sotkco1 + 5 + sotkco2 + 3) = "Sè ®Çu kú"
     SoDuTK mtk, ThangTruoc(tdau), duno, duco
-    xlsheet.Cells(5, sotkco1 + 6 + sotkco2 + 3) = IIf(kieu < 0, duno - duco, duco - duno)
+    xlsheet.Cells(5, sotkco1 + 6 + sotkco2 + 3) = IIF(kieu < 0, duno - duco, duco - duno)
     
     xlsheet.Cells(rx + 1, sotkco1 + 5 + sotkco2 + 3) = ABCtoVNI("Sè cuèi kú")
     SoDuTK mtk, tcuoi, duno, duco
-    xlsheet.Cells(rx + 1, sotkco1 + 6 + sotkco2 + 3) = IIf(kieu < 0, duno - duco, duco - duno)
+    xlsheet.Cells(rx + 1, sotkco1 + 6 + sotkco2 + 3) = IIF(kieu < 0, duno - duco, duco - duno)
             
     xlsheet.Range("A6", cx + "6").HorizontalAlignment = xlHAlignCenter
     xlsheet.Range("A7", "A" + rx).HorizontalAlignment = xlHAlignCenter
@@ -4856,7 +4856,7 @@ Dim duno As Double, duco As Double
     
     xlsheet.Range(cx + "6", cx + "7").MergeCells = True
     xlsheet.Range("A5", cx + "6").Font.Bold = True
-    xlsheet.Range("A" + rx, cx + CStr(IIf(sotkno1 > sotkno2, sotkno1, sotkno2) + 9)).Font.Bold = True
+    xlsheet.Range("A" + rx, cx + CStr(IIF(sotkno1 > sotkno2, sotkno1, sotkno2) + 9)).Font.Bold = True
     
     
     xlsheet.Range("E6").HorizontalAlignment = 3
@@ -4956,9 +4956,9 @@ Dim sqln As String, sqlc As String, st As String
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     j = 7
 ' Liet ke theo hang doc (phat sinh no)
-    If rs.RecordCount > 0 Then
+    If rs.recordCount > 0 Then
         rs.MoveLast
-        GauGe.Max = rs.RecordCount
+        GauGe.Max = rs.recordCount
         GauGe.Value = 0
         rs.MoveFirst
         Do While Not rs.EOF
@@ -5116,9 +5116,9 @@ Dim sotkno As Integer, sotkco As Integer, rx As String, cx As String, lx As Inte
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     j = 7
 ' Liet ke theo hang doc (phat sinh no)
-    If rs.RecordCount > 0 Then
+    If rs.recordCount > 0 Then
         rs.MoveLast
-        GauGe.Max = rs.RecordCount
+        GauGe.Max = rs.recordCount
         GauGe.Value = 0
         rs.MoveFirst
         Do While Not rs.EOF
@@ -5308,15 +5308,15 @@ Dim sotkno1 As Integer, sotkco1 As Integer, sotkno2 As Integer, sotkco2 As Integ
     xlsheet.Range(XLSCol(sotkco1 + 5) + "6", XLSCol(sotkco1 + 5) + "7").MergeCells = True
     If sotkco1 > 1 Then xlsheet.Range("E6", XLSCol(sotkco1 + 4) + "6").MergeCells = True
     
-    sql = "SELECT First(Chungtu.MaCT) AS M,First(Chungtu.SoHieu) AS SH,NgayGS,BaoCaoCP.SoHieu AS ShCo,Sum(SoPS) AS PS,First(DienGiai" + IIf(nn > 0, "E", "") + ") AS DG FROM (" + ChungTu2TKNC(0) + ") LEFT JOIN BaoCaoCP ON HethongTK.SoHieu LIKE BaoCaoCP.SoHieu+'*'" _
+    sql = "SELECT First(Chungtu.MaCT) AS M,First(Chungtu.SoHieu) AS SH,NgayGS,BaoCaoCP.SoHieu AS ShCo,Sum(SoPS) AS PS,First(DienGiai" + IIF(nn > 0, "E", "") + ") AS DG FROM (" + ChungTu2TKNC(0) + ") LEFT JOIN BaoCaoCP ON HethongTK.SoHieu LIKE BaoCaoCP.SoHieu+'*'" _
         & " WHERE SoPS<>0 AND LEFT(TK.SoHieu,3)='211' AND " + WThang("ThangCT", tdau, tcuoi) + " GROUP BY NgayGS,MaCT,BaoCaoCP.SoHieu"
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     j = 7
 
     ' Liet ke theo hang doc (phat sinh no)
-    If rs.RecordCount > 0 Then
+    If rs.recordCount > 0 Then
         rs.MoveLast
-        GauGe.Max = rs.RecordCount
+        GauGe.Max = rs.recordCount
         rs.MoveFirst
         Do While Not rs.EOF
             If rs!m <> m Then
@@ -5363,14 +5363,14 @@ Dim sotkno1 As Integer, sotkco1 As Integer, sotkno2 As Integer, sotkco2 As Integ
     xlsheet.Range(XLSCol(sotkco1 + 5 + sotkco2 + 1) + "6", XLSCol(sotkco1 + 5 + sotkco2 + 1) + "7").MergeCells = True
     If sotkco2 > 1 Then xlsheet.Range(XLSCol(sotkco1 + 6) + "6", XLSCol(sotkco1 + 5 + sotkco2) + "6").MergeCells = True
     m = 0
-    sql = "SELECT First(Chungtu.MaCT) AS M,First(Chungtu.SoHieu) AS SH,NgayGS,BaoCaoCP.SoHieu AS ShCo,Sum(SoPS) AS PS,First(DienGiai" + IIf(nn > 0, "E", "") + ") AS DG FROM (" + ChungTu2TKNC(0) + ") LEFT JOIN BaoCaoCP ON HethongTK.SoHieu LIKE BaoCaoCP.SoHieu+'*'" _
+    sql = "SELECT First(Chungtu.MaCT) AS M,First(Chungtu.SoHieu) AS SH,NgayGS,BaoCaoCP.SoHieu AS ShCo,Sum(SoPS) AS PS,First(DienGiai" + IIF(nn > 0, "E", "") + ") AS DG FROM (" + ChungTu2TKNC(0) + ") LEFT JOIN BaoCaoCP ON HethongTK.SoHieu LIKE BaoCaoCP.SoHieu+'*'" _
         & " WHERE SoPS<>0 AND LEFT(TK.SoHieu,3)='212' AND " + WThang("ThangCT", tdau, tcuoi) + " GROUP BY NgayGS,MaCT,BaoCaoCP.SoHieu"
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     j = 7
     ' Liet ke theo hang doc (phat sinh no)
-    If rs.RecordCount > 0 Then
+    If rs.recordCount > 0 Then
         rs.MoveLast
-        GauGe.Max = rs.RecordCount
+        GauGe.Max = rs.recordCount
         rs.MoveFirst
         Do While Not rs.EOF
             If rs!m <> m Then
@@ -5413,14 +5413,14 @@ Dim sotkno1 As Integer, sotkco1 As Integer, sotkno2 As Integer, sotkco2 As Integ
     xlsheet.Range(XLSCol(sotkco1 + 5 + sotkco2 + 1 + sotkco3 + 1) + "6", XLSCol(sotkco1 + 5 + sotkco2 + 1 + sotkco3 + 1) + "7").MergeCells = True
     If sotkco3 > 1 Then xlsheet.Range(XLSCol(sotkco1 + 5 + sotkco2 + 2) + "6", XLSCol(sotkco1 + 5 + sotkco2 + 1 + sotkco3) + "6").MergeCells = True
     m = 0
-    sql = "SELECT First(Chungtu.MaCT) AS M,First(Chungtu.SoHieu) AS SH,NgayGS,BaoCaoCP.SoHieu AS ShCo,Sum(SoPS) AS PS,First(DienGiai" + IIf(nn > 0, "E", "") + ") AS DG FROM (" + ChungTu2TKNC(0) + ") LEFT JOIN BaoCaoCP ON HethongTK.SoHieu LIKE BaoCaoCP.SoHieu+'*'" _
+    sql = "SELECT First(Chungtu.MaCT) AS M,First(Chungtu.SoHieu) AS SH,NgayGS,BaoCaoCP.SoHieu AS ShCo,Sum(SoPS) AS PS,First(DienGiai" + IIF(nn > 0, "E", "") + ") AS DG FROM (" + ChungTu2TKNC(0) + ") LEFT JOIN BaoCaoCP ON HethongTK.SoHieu LIKE BaoCaoCP.SoHieu+'*'" _
         & " WHERE SoPS<>0 AND LEFT(TK.SoHieu,3)='213' AND " + WThang("ThangCT", tdau, tcuoi) + " GROUP BY NgayGS,MaCT,BaoCaoCP.SoHieu"
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     j = 7
     ' Liet ke theo hang doc (phat sinh no)
-    If rs.RecordCount > 0 Then
+    If rs.recordCount > 0 Then
         rs.MoveLast
-        GauGe.Max = rs.RecordCount
+        GauGe.Max = rs.recordCount
         rs.MoveFirst
         Do While Not rs.EOF
             If rs!m <> m Then
@@ -5446,7 +5446,7 @@ Dim sotkno1 As Integer, sotkco1 As Integer, sotkno2 As Integer, sotkco2 As Integ
         xlsheet.Range(XLSCol(sotkco1 + 5 + sotkco2 + 1 + sotkco3 + 1) + CStr(i + 7)).Formula = "=SUM(" + XLSCol(sotkco1 + 5 + sotkco2 + 2) + CStr(i + 7) + ":" + XLSCol(sotkco1 + 5 + sotkco2 + 1 + sotkco3) + CStr(i + 7) + ")"
     Next
         
-    sotkno = IIf(sotkno1 > sotkno2, IIf(sotkno1 > sotkno3, sotkno1, sotkno3), IIf(sotkno2 > sotkno3, sotkno2, sotkno3))
+    sotkno = IIF(sotkno1 > sotkno2, IIF(sotkno1 > sotkno3, sotkno1, sotkno3), IIF(sotkno2 > sotkno3, sotkno2, sotkno3))
     
     xlsheet.Cells(sotkno + 8, 4) = "Toång PS"
     
@@ -5508,7 +5508,7 @@ Dim sqln As String, sqlc As String, st As String
     On Error GoTo 0
     xlsheet.Cells(1, 1) = pTenCty
     xlsheet.Cells(2, 1) = pTenCn
-    xlsheet.Cells(3, 1) = IIf(loai = 0, "NhËt ký chøng tõ sè 10", "B¶ng kª sè 6")
+    xlsheet.Cells(3, 1) = IIF(loai = 0, "NhËt ký chøng tõ sè 10", "B¶ng kª sè 6")
     xlsheet.Cells(4, 1) = ThoiGian(tdau, tcuoi, nn)
     xlsheet.Cells(6, 5) = "Ghi nî tµi kho¶n " + TK + ", ghi cã c¸c tµi kho¶n"
     
@@ -5571,15 +5571,15 @@ Dim sqln As String, sqlc As String, st As String
             sqlc = sqlc + " + Co_" + CStr(i)
         Next
         st = CStr(CThangDB(ThangTruoc(tdau)))
-        sql = "SELECT SoHieu,Ten" + IIf(nn > 0, "E", "") + " AS TenTK,Sum(DuNo_" + st + ") AS ndk,Sum(DuCo_" + st + ") AS cdk,Sum(DuNo_" + CStr(CThangDB(tcuoi)) + ") AS nck,Sum(DuCo_" + CStr(CThangDB(tcuoi)) + ") AS ckc,Sum(" + sqln + ") AS N,Sum(" + sqlc + ") AS C FROM HethongTK " _
+        sql = "SELECT SoHieu,Ten" + IIF(nn > 0, "E", "") + " AS TenTK,Sum(DuNo_" + st + ") AS ndk,Sum(DuCo_" + st + ") AS cdk,Sum(DuNo_" + CStr(CThangDB(tcuoi)) + ") AS nck,Sum(DuCo_" + CStr(CThangDB(tcuoi)) + ") AS ckc,Sum(" + sqln + ") AS N,Sum(" + sqlc + ") AS C FROM HethongTK " _
             & " WHERE TKCon=0 AND LEFT(SoHieu," + CStr(lx) + ")='" + TK + "' AND (DuNo_" + st + "<>0 OR DuCo_" + st + "<>0 OR " + sqln + "<>0 OR " + sqlc + "<>0) GROUP BY SoHieu,Ten"
     End If
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     j = 7
 ' Liet ke theo hang doc (phat sinh no)
-    If rs.RecordCount > 0 Then
+    If rs.recordCount > 0 Then
         rs.MoveLast
-        GauGe.Max = rs.RecordCount
+        GauGe.Max = rs.recordCount
         GauGe.Value = 0
         rs.MoveFirst
         Do While Not rs.EOF
@@ -5703,13 +5703,13 @@ Dim sqln As String, sql As String
         sqln = sqln + " + No_" + CStr(i)
     Next
     
-    sql = "SELECT SoHieu,Ten" + IIf(nn > 0, "E", "") + " AS TenTK,Cap,Sum(" + sqln + ") AS N FROM HethongTK WHERE (" + wsql + ") AND (" + sqln + "<>0) GROUP BY SoHieu,Ten,Cap"
+    sql = "SELECT SoHieu,Ten" + IIF(nn > 0, "E", "") + " AS TenTK,Cap,Sum(" + sqln + ") AS N FROM HethongTK WHERE (" + wsql + ") AND (" + sqln + "<>0) GROUP BY SoHieu,Ten,Cap"
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     j = 7
 ' Liet ke theo hang doc (phat sinh no)
-    If rs.RecordCount > 0 Then
+    If rs.recordCount > 0 Then
         rs.MoveLast
-        GauGe.Max = rs.RecordCount
+        GauGe.Max = rs.recordCount
         GauGe.Value = 0
         rs.MoveFirst
         Do While Not rs.EOF
@@ -5833,9 +5833,9 @@ Dim sqln As String, sqlc As String, st As String
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     j = 7
 ' Liet ke theo hang doc (phat sinh no)
-    If rs.RecordCount > 0 Then
+    If rs.recordCount > 0 Then
         rs.MoveLast
-        GauGe.Max = rs.RecordCount
+        GauGe.Max = rs.recordCount
         GauGe.Value = 0
         rs.MoveFirst
         Do While Not rs.EOF
@@ -5957,9 +5957,9 @@ Private Function CTGhiSo(mgs As Long, tdau As Integer, tcuoi As Integer, dktg As
         frmMain.Rpt.Formulas(4) = "ThoiGian='" + ThoiGianN(ndau, ncuoi, nn) + "'"
         RptSetDate ncuoi, nn
     End If
-    sql = "SELECT ChungTu.MaCT AS M, First(ChungTu.ThangCT) AS T, ChungTu.SoHieu AS SH, ChungTu.NgayCT AS NCT, ChungTu.NgayGS AS NGS, First(ChungTu.DienGiai" + IIf(nn > 0, "E", "") + ") AS DG, HeThongTK.SoHieu AS TKNo,First(HethongTK.Ten" + IIf(nn > 0, "E", "") + ") AS TNo, HeThongTK_1.SoHieu AS TKCo,First(HethongTK_1.Ten" + IIf(nn > 0, "E", "") + ") AS TCo, Sum(ChungTu.SoPS) AS PS" _
-        & " FROM (HeThongTK RIGHT JOIN ChungTu ON HeThongTK.MaSo = ChungTu.MaTKNo) LEFT JOIN HeThongTK AS HeThongTK_1 ON ChungTu.MaTKCo = HeThongTK_1.MaSo WHERE SoPS<>0 AND " + sqlw + " AND CTGS=" + CStr(mgs) + " AND (IsNull(HethongTK.MaSo) OR HethongTK.Loai>0) AND (IsNull(HethongTK_1.MaSo) OR HethongTK_1.Loai>0) " + IIf(VV > 1, " AND ChungTu.MaDT=" + CStr(VV), "") _
-        & " GROUP BY MaCT,ChungTu.SoHieu, NgayCT,NgayGS,ChungTu.DienGiai" + IIf(nn > 0, "E", "") + ",HeThongTK.SoHieu,HeThongTK_1.SoHieu ORDER BY NgayCT, ChungTu.SoHieu"
+    sql = "SELECT ChungTu.MaCT AS M, First(ChungTu.ThangCT) AS T, ChungTu.SoHieu AS SH, ChungTu.NgayCT AS NCT, ChungTu.NgayGS AS NGS, First(ChungTu.DienGiai" + IIF(nn > 0, "E", "") + ") AS DG, HeThongTK.SoHieu AS TKNo,First(HethongTK.Ten" + IIF(nn > 0, "E", "") + ") AS TNo, HeThongTK_1.SoHieu AS TKCo,First(HethongTK_1.Ten" + IIF(nn > 0, "E", "") + ") AS TCo, Sum(ChungTu.SoPS) AS PS" _
+        & " FROM (HeThongTK RIGHT JOIN ChungTu ON HeThongTK.MaSo = ChungTu.MaTKNo) LEFT JOIN HeThongTK AS HeThongTK_1 ON ChungTu.MaTKCo = HeThongTK_1.MaSo WHERE SoPS<>0 AND " + sqlw + " AND CTGS=" + CStr(mgs) + " AND (IsNull(HethongTK.MaSo) OR HethongTK.Loai>0) AND (IsNull(HethongTK_1.MaSo) OR HethongTK_1.Loai>0) " + IIF(VV > 1, " AND ChungTu.MaDT=" + CStr(VV), "") _
+        & " GROUP BY MaCT,ChungTu.SoHieu, NgayCT,NgayGS,ChungTu.DienGiai" + IIF(nn > 0, "E", "") + ",HeThongTK.SoHieu,HeThongTK_1.SoHieu ORDER BY NgayCT, ChungTu.SoHieu"
         
     SetSQL "QNhatKy", sql
     frmMain.Rpt.ReportFileName = "CTGHISO.RPT"
@@ -5974,7 +5974,7 @@ Private Function InTongHopPhi(shtk As String, tdau As Integer, tcuoi As Integer)
     sql = "SELECT DISTINCTROW TK.SoHieu AS SHC FROM " + ChungTu2TKNC(10) _
         & " WHERE (HethongTK.SoHieu LIKE '" + shtk + "*') AND " + WThang("ThangCT", tdau, tcuoi) + " AND SoPS<>0  GROUP BY TK.SoHieu HAVING Sum(ChungTu.SoPS)<>0"
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
-    If rs.RecordCount = 0 Then
+    If rs.recordCount = 0 Then
         InTongHopPhi = False
         GoTo KT
     End If
@@ -5992,7 +5992,7 @@ Private Function InTongHopPhi(shtk As String, tdau As Integer, tcuoi As Integer)
     Next
     st = st + ")<>0"
     
-    sql = "SELECT DISTINCTROW HethongTK.SoHieu AS SHN,First(HethongTK.Cap) AS CapCP,First(HethongTK.TKCon) AS TKConCP,First(HethongTK.Ten" + IIf(nn > 0, "E", "") + ") AS TenCP,TK.SoHieu AS SHC,Sum(ChungTu.SoPS) AS TPS FROM ((ChungTu INNER JOIN HethongTK AS TKN ON ChungTu.MaTKNo=TKN.MaSo) INNER JOIN HethongTK ON LEFT(TKN.SoHieu,Len(HethongTK.SoHieu)) = HethongTK.SoHieu) INNER JOIN HethongTK AS TK ON ChungTu.MaTKTCCo=TK.MaSo" _
+    sql = "SELECT DISTINCTROW HethongTK.SoHieu AS SHN,First(HethongTK.Cap) AS CapCP,First(HethongTK.TKCon) AS TKConCP,First(HethongTK.Ten" + IIF(nn > 0, "E", "") + ") AS TenCP,TK.SoHieu AS SHC,Sum(ChungTu.SoPS) AS TPS FROM ((ChungTu INNER JOIN HethongTK AS TKN ON ChungTu.MaTKNo=TKN.MaSo) INNER JOIN HethongTK ON LEFT(TKN.SoHieu,Len(HethongTK.SoHieu)) = HethongTK.SoHieu) INNER JOIN HethongTK AS TK ON ChungTu.MaTKTCCo=TK.MaSo" _
         & " WHERE (HethongTK.SoHieu LIKE '" + shtk + "*') AND (ISNULL(ChungTu.MaSo) OR (" + WThang("ThangCT", tdau, tcuoi) + " AND SoPS<>0))  GROUP BY HethongTK.SoHieu,TK.SoHieu HAVING Sum(SoPS)<>0 OR First(HethongTK.TKCon>0) AND " + st
     SetSQL "QSoCai", sql
         
@@ -6268,7 +6268,7 @@ Private Sub SoDangKyCT(tdau As Integer, tcuoi As Integer, dktg As Integer, ndau 
         sqlw = WNgay("NgayGS", ndau, ncuoi)
         frmMain.Rpt.Formulas(3) = "ThoiGian='" + ThoiGianN(ndau, ncuoi, nn) + "'"
     End If
-    SetSQL "QNhatKy", "SELECT CTGhiSo.SoHieu, CTGhiSo.DienGiai" + IIf(nn > 0, "E", "") + ",Sum(SoPS) AS TPS FROM (" + ChungTu2TKNC(-1) + ") INNER JOIN CTGhiSo ON ChungTu.CTGS=CTGhiSo.MaSo WHERE " + sqlw + " AND HethongTK.Loai>0 GROUP BY CTGhiSo.SoHieu, CTGhiSo.DienGiai"
+    SetSQL "QNhatKy", "SELECT CTGhiSo.SoHieu, CTGhiSo.DienGiai" + IIF(nn > 0, "E", "") + ",Sum(SoPS) AS TPS FROM (" + ChungTu2TKNC(-1) + ") INNER JOIN CTGhiSo ON ChungTu.CTGS=CTGhiSo.MaSo WHERE " + sqlw + " AND HethongTK.Loai>0 GROUP BY CTGhiSo.SoHieu, CTGhiSo.DienGiai"
     
     frmMain.Rpt.ReportFileName = "SODKCT.RPT"
     RptSetDate NgayCuoiThang(pNamTC, tcuoi), nn
@@ -6281,7 +6281,7 @@ Private Function BKChiTietRPT(TK As String, ndau As Date, ncuoi As Date) As Bool
     sql = "SELECT DISTINCTROW LEFT(HethongTK.SoHieu,4) AS SHN FROM " + ChungTu2TKNC(-1) _
         & " WHERE (HethongTK.SoHieu LIKE '" + TK + "*') AND " + WNgay("NgayGS", ndau, ncuoi) + " AND SoPS<>0 GROUP BY LEFT(HethongTK.SoHieu,4)"
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
-    If rs.RecordCount = 0 Then GoTo KgIn
+    If rs.recordCount = 0 Then GoTo KgIn
     Do While Not rs.EOF And i < 7
         i = i + 1
         frmMain.Rpt.Formulas(2 + i) = "TK" + CStr(i) + "='" + rs!SHN + "'"
@@ -6315,7 +6315,7 @@ Private Sub ChiTietDoanhThu(tdau As Integer, tcuoi As Integer)
     Next
         
     GauGe.Max = 2
-    SetSQL "QTongHopCT", "SELECT DISTINCTROW SoHieu, First(Cap) AS FirstOfCap, First(Ten" + IIf(nn > 0, "E", "") + ") AS FirstOfTen, First(Kieu) AS FirstOfKieu, First(Loai) AS FirstOfLoai, First(MaTC = MaSo OR MaTC = 0) AS FirstOfChuanLa," _
+    SetSQL "QTongHopCT", "SELECT DISTINCTROW SoHieu, First(Cap) AS FirstOfCap, First(Ten" + IIF(nn > 0, "E", "") + ") AS FirstOfTen, First(Kieu) AS FirstOfKieu, First(Loai) AS FirstOfLoai, First(MaTC = MaSo OR MaTC = 0) AS FirstOfChuanLa," _
         & " Sum(" + sqlc + ") AS PsCo, First(CapDuoi) AS CD From HeThongTK WHERE Cap>1 GROUP BY SoHieu Having (SoHieu LIKE '511*')"
     
     GauGe.Value = 1
@@ -6542,7 +6542,7 @@ Private Sub InVATDauRaMV(thang As Integer, tl As Integer, TK As ClsTaikhoan)
     End If
     
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
-    If rs.RecordCount = 0 Then GoTo KetThuc
+    If rs.recordCount = 0 Then GoTo KetThuc
     
     Recycle pCurDir + "BKVAT2.XLS"
     On Error GoTo KetThuc
@@ -6646,7 +6646,7 @@ Private Sub InVATDauVaoMV(thang As Integer, tl As Integer, HD As Integer, TK As 
     End If
     
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
-    If rs.RecordCount = 0 Then GoTo KetThuc
+    If rs.recordCount = 0 Then GoTo KetThuc
     
     If HD = 0 Then
         fname = "TEST04.XLS"
@@ -6876,7 +6876,7 @@ Private Sub ToKhaiVAT(tdau As Integer, tcuoi As Integer, taikhoan As ClsTaikhoan
     Dim KT As Double, shct As String, Fx As Integer
     Dim dkn As Double, dkc As Double, dknt As Double, TK As New ClsTaikhoan
     
-    Fx = IIf(Left(frmMain.LbCty(8).Caption, 2) = "35" Or Left(frmMain.LbCty(3).Caption, 2) = "64", 35, 0)
+    Fx = IIF(Left(frmMain.LbCty(8).Caption, 2) = "35" Or Left(frmMain.LbCty(3).Caption, 2) = "64", 35, 0)
     
     TK.InitTaikhoanSohieu "33312"
     If TK.tk_id = GTGTKT_ID Then
@@ -7100,8 +7100,8 @@ Private Sub BangKeTHPS(x2 As Worksheet, shtk As String, tdau As Integer, tcuoi A
     ' Liet ke doi ung
     j = 0
     ' Lay danh sach tai khoan tai chinh
-    sql = "SELECT BaoCaoCP.SoHieu AS SH FROM (" + ChungTu2TKNC(0) + ") LEFT JOIN BaoCaoCP ON " + IIf(loaips > 0, "Hethong", "") + "TK.SoHieu LIKE BaoCaoCP.SoHieu+'*'" _
-        & " WHERE SoPS<>0 AND LEFT(" + IIf(loaips < 0, "Hethong", "") + "TK.SoHieu," + CStr(Len(TK.sohieu)) + ")='" + TK.sohieu + "' AND " + WThang("ThangCT", tdau, tcuoi) + " GROUP BY BaoCaoCP.SoHieu"
+    sql = "SELECT BaoCaoCP.SoHieu AS SH FROM (" + ChungTu2TKNC(0) + ") LEFT JOIN BaoCaoCP ON " + IIF(loaips > 0, "Hethong", "") + "TK.SoHieu LIKE BaoCaoCP.SoHieu+'*'" _
+        & " WHERE SoPS<>0 AND LEFT(" + IIF(loaips < 0, "Hethong", "") + "TK.SoHieu," + CStr(Len(TK.sohieu)) + ")='" + TK.sohieu + "' AND " + WThang("ThangCT", tdau, tcuoi) + " GROUP BY BaoCaoCP.SoHieu"
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     Do While Not rs.EOF
         j = j + 1
@@ -7222,7 +7222,7 @@ Private Function BangTHCTuGoc(mgs As Long, shtk As String, ndau As Date, ncuoi A
             & " WHERE CTGS=" + CStr(mgs) + " AND (TK.SoHieu LIKE '" + shtk + "*') AND " + WNgay("NgayGS", ndau, ncuoi) + " AND SoPS<>0  GROUP BY LEFT(HethongTK.SoHieu,3) HAVING Sum(ChungTu.SoPS)<>0"
     End If
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
-    If rs.RecordCount = 0 Then GoTo KT
+    If rs.recordCount = 0 Then GoTo KT
     
     Do While Not rs.EOF And i < 10
         i = i + 1
@@ -7231,15 +7231,15 @@ Private Function BangTHCTuGoc(mgs As Long, shtk As String, ndau As Date, ncuoi A
     Loop
     frmMain.Rpt.Formulas(3 + i) = "SoHieuTK='" + shtk + "'"
     frmMain.Rpt.Formulas(4 + i) = "ThoiGian='" + ThoiGianN(ndau, ncuoi, nn) + "'"
-    frmMain.Rpt.Formulas(5 + i) = "TKNo='" + IIf(loaips < 0, "Ghi nî tµi kho¶n " + shtk + ", ghi cã c¸c tµi kho¶n", "Ghi cã tµi kho¶n " + shtk + ", ghi nî c¸c tµi kho¶n") + "'"
+    frmMain.Rpt.Formulas(5 + i) = "TKNo='" + IIF(loaips < 0, "Ghi nî tµi kho¶n " + shtk + ", ghi cã c¸c tµi kho¶n", "Ghi cã tµi kho¶n " + shtk + ", ghi nî c¸c tµi kho¶n") + "'"
     frmMain.Rpt.Formulas(6 + i) = "DG1='Sè: " + CStr((Day(ndau) - 1) \ 7 + 1) + "'"
     frmMain.Rpt.Formulas(7 + i) = "DG2='" + SelectSQL("SELECT SoHieu+' - '+DienGiai AS F1 FROM CTGhiSo WHERE MaSo=" + CStr(mgs)) + "'"
         
     If loaips < 0 Then
-        sql = "SELECT DISTINCTROW ChungTu.SoHieu, NgayCT, NgayGS, DienGiai" + IIf(nn > 0, "E", "") + " AS DG, SoPS, LEFT(TK.SoHieu,3) AS TKDU FROM " + ChungTu2TKNC(10) _
+        sql = "SELECT DISTINCTROW ChungTu.SoHieu, NgayCT, NgayGS, DienGiai" + IIF(nn > 0, "E", "") + " AS DG, SoPS, LEFT(TK.SoHieu,3) AS TKDU FROM " + ChungTu2TKNC(10) _
             & " WHERE CTGS=" + CStr(mgs) + " AND HethongTK.SoHieu LIKE '" + shtk + "*' AND " + WNgay("NgayGS", ndau, ncuoi) + " AND SoPS<>0 ORDER BY NgayGS, ChungTu.SoHieu"
     Else
-        sql = "SELECT DISTINCTROW ChungTu.SoHieu, NgayCT, NgayGS, DienGiai" + IIf(nn > 0, "E", "") + " AS DG, SoPS, LEFT(HethongTK.SoHieu,3) AS TKDU FROM " + ChungTu2TKNC(10) _
+        sql = "SELECT DISTINCTROW ChungTu.SoHieu, NgayCT, NgayGS, DienGiai" + IIF(nn > 0, "E", "") + " AS DG, SoPS, LEFT(HethongTK.SoHieu,3) AS TKDU FROM " + ChungTu2TKNC(10) _
             & " WHERE CTGS=" + CStr(mgs) + " AND TK.SoHieu LIKE '" + shtk + "*' AND " + WNgay("NgayGS", ndau, ncuoi) + " AND SoPS<>0 ORDER BY NgayGS, ChungTu.SoHieu"
     End If
     SetSQL "QSoCai", sql
@@ -7255,7 +7255,7 @@ End Function
 Private Function CTGhiSo2(mgs As Long, tdau As Integer, tcuoi As Integer) As Boolean
     Dim sql As String
     
-    sql = "SELECT  IIF(ThangCT<10,'0','')+Cstr(100*ThangCT)+Cstr((Day(NgayGS)-1)\7+1) AS TT, Last(ChungTu.SoHieu) AS SH, Last(ChungTu.NgayCT) AS NCT, Last(ChungTu.DienGiai" + IIf(nn > 0, "E", "") + ") AS DG, LEFT(HeThongTK.SoHieu,3) AS TKNo, LEFT(HeThongTK_1.SoHieu,3) AS TKCo, Sum(ChungTu.SoPS) AS PS, Last(NgayGS) AS NGS " _
+    sql = "SELECT  IIF(ThangCT<10,'0','')+Cstr(100*ThangCT)+Cstr((Day(NgayGS)-1)\7+1) AS TT, Last(ChungTu.SoHieu) AS SH, Last(ChungTu.NgayCT) AS NCT, Last(ChungTu.DienGiai" + IIF(nn > 0, "E", "") + ") AS DG, LEFT(HeThongTK.SoHieu,3) AS TKNo, LEFT(HeThongTK_1.SoHieu,3) AS TKCo, Sum(ChungTu.SoPS) AS PS, Last(NgayGS) AS NGS " _
         & " FROM (HeThongTK RIGHT JOIN ChungTu ON HeThongTK.MaSo = ChungTu.MaTKTCNo) LEFT JOIN HeThongTK AS HeThongTK_1 ON ChungTu.MaTKTCCo = HeThongTK_1.MaSo WHERE SoPS<>0 AND " + WThang("ThangCT", tdau, tcuoi) + " AND CTGS=" + CStr(mgs) + " AND (IsNull(HethongTK.MaSo) OR HethongTK.Loai>0) AND (IsNull(HethongTK_1.MaSo) OR HethongTK_1.Loai>0) " _
         & " GROUP BY IIF(ThangCT<10,'0','')+Cstr(100*ThangCT)+Cstr((Day(NgayGS)-1)\7+1), LEFT(HeThongTK.SoHieu,3),LEFT(HeThongTK_1.SoHieu,3) ORDER BY IIF(ThangCT<10,'0','')+Cstr(100*ThangCT)+Cstr((Day(NgayGS)-1)\7+1), Last(NgayGS)"
         
@@ -7272,22 +7272,22 @@ Private Sub InBKTheoTK(loai As Integer, tdau As Integer, tcuoi As Integer, shtk 
     
     GauGe.Max = 1
     
-    SetSQL "MienTru", "SELECT DISTINCTROW KyHieu,SoHD,NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,KhachHang.MST,ChungTu.SoHieu,SoPS,KhachHang.DiaChi,TyLe,HTTT,MauSo,MaCT,HoaDon.MaSo,KCT,HethongTK.SoHieu AS TKDU FROM (" + ChungTu2TKHD(10) + ") LEFT JOIN HethongTK ON ChungTu.MaTK" + IIf(loai < 0, "No", "Co") + "=HethongTK.MaSo WHERE HoaDon.Loai=" + CStr(loai) + " AND " + WThang("ThangCT", tdau, tcuoi) + " ORDER BY NgayPH,MaCT"
+    SetSQL "MienTru", "SELECT DISTINCTROW KyHieu,SoHD,NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,KhachHang.MST,ChungTu.SoHieu,SoPS,KhachHang.DiaChi,TyLe,HTTT,MauSo,MaCT,HoaDon.MaSo,KCT,HethongTK.SoHieu AS TKDU FROM (" + ChungTu2TKHD(10) + ") LEFT JOIN HethongTK ON ChungTu.MaTK" + IIF(loai < 0, "No", "Co") + "=HethongTK.MaSo WHERE HoaDon.Loai=" + CStr(loai) + " AND " + WThang("ThangCT", tdau, tcuoi) + " ORDER BY NgayPH,MaCT"
     'SetSQL "MienTru", "SELECT DISTINCTROW KyHieu,SoHD,NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,KhachHang.MST,ChungTu.SoHieu,SoPS,chungtu.mahs as DiaChi,TyLe,HTTT,MauSo,MaCT,HoaDon.MaSo,KCT,HethongTK.SoHieu AS TKDU FROM (" + ChungTu2TKHD(10) + ") LEFT JOIN HethongTK ON ChungTu.MaTK" + IIf(loai < 0, "No", "Co") + "=HethongTK.MaSo WHERE HoaDon.Loai=" + CStr(loai) + " AND " + WThang("ThangCT", tdau, tcuoi) + " ORDER BY NgayPH,MaCT"
     
-    SetSQL "QChitiet", "SELECT DISTINCTROW MaCT FROM ChungTu INNER JOIN HethongTK ON ChungTu.MaTK" + IIf(loai < 0, "No", "Co") + "=HethongTK.MaSo WHERE " + WThang("ThangCT", tdau, tcuoi) + " AND HethongTK.SoHieu LIKE '" + shtk + "*' GROUP BY MaCT"
-    SetSQL "QCdt", "SELECT DISTINCTROW MaCT FROM ChungTu INNER JOIN HethongTK ON ChungTu.MaTK" + IIf(loai < 0, "Co", "No") + "=HethongTK.MaSo WHERE " + WThang("ThangCT", tdau, tcuoi) + " AND HethongTK.SoHieu LIKE '" + shdu + "*' GROUP BY MaCT"
+    SetSQL "QChitiet", "SELECT DISTINCTROW MaCT FROM ChungTu INNER JOIN HethongTK ON ChungTu.MaTK" + IIF(loai < 0, "No", "Co") + "=HethongTK.MaSo WHERE " + WThang("ThangCT", tdau, tcuoi) + " AND HethongTK.SoHieu LIKE '" + shtk + "*' GROUP BY MaCT"
+    SetSQL "QCdt", "SELECT DISTINCTROW MaCT FROM ChungTu INNER JOIN HethongTK ON ChungTu.MaTK" + IIF(loai < 0, "Co", "No") + "=HethongTK.MaSo WHERE " + WThang("ThangCT", tdau, tcuoi) + " AND HethongTK.SoHieu LIKE '" + shdu + "*' GROUP BY MaCT"
     SetSQL "QNhatKy", "SELECT MienTru.* FROM (MienTru INNER JOIN QChitiet ON MienTru.MaCT=QChitiet.MaCT) INNER JOIN QCdt ON MienTru.MaCT=QCdt.MaCT ORDER BY NgayPH,MienTru.MaCT"
     
     GauGe.Value = 1
-    frmMain.Rpt.ReportFileName = pCurDir + "REPORTS\BANGKE" + IIf(loai < 0, "V", "R") + "7.RPT"
+    frmMain.Rpt.ReportFileName = pCurDir + "REPORTS\BANGKE" + IIF(loai < 0, "V", "R") + "7.RPT"
     
     RptSetDate NgayCuoiThang(pNamTC, tcuoi)
     frmMain.Rpt.Formulas(3) = "thang = " + CStr(tdau)
     frmMain.Rpt.Formulas(4) = "ThangCuoi = " + CStr(tcuoi)
     frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.LbCty(2).Caption + "'"
     frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.LbCty(8).Caption + "'"
-    frmMain.Rpt.Formulas(8) = "TK = '" + IIf(Len(shtk) > 0, "Tµi kho¶n: " + shtk, "") + IIf(Len(shdu) > 0, " - §èi øng: " + shdu, "") + "'"
+    frmMain.Rpt.Formulas(8) = "TK = '" + IIF(Len(shtk) > 0, "Tµi kho¶n: " + shtk, "") + IIF(Len(shdu) > 0, " - §èi øng: " + shdu, "") + "'"
 End Sub
 
 Private Sub InCdts_HCSN(tdau As Integer, tcuoi As Integer, cap As Integer)
@@ -7308,7 +7308,7 @@ Private Sub InCdts_HCSN(tdau As Integer, tcuoi As Integer, cap As Integer)
     GauGe.Value = 1
     st = CStr(CThangDB(tcuoi))
         
-    SetSQL "QTongHopCT", "SELECT DISTINCTROW SoHieu, Loai, First(Cap) AS FirstOfCap, First(Ten" + IIf(nn > 0, "E", "") + ") AS FirstOfTen, First(Kieu) AS FirstOfKieu, First(Loai) AS FirstOfLoai, First(MaTC = MaSo OR MaTC = 0) AS FirstOfChuanLa, First(TKCon) AS FirstOfTKCon, First(CapDuoi) AS CD," _
+    SetSQL "QTongHopCT", "SELECT DISTINCTROW SoHieu, Loai, First(Cap) AS FirstOfCap, First(Ten" + IIF(nn > 0, "E", "") + ") AS FirstOfTen, First(Kieu) AS FirstOfKieu, First(Loai) AS FirstOfLoai, First(MaTC = MaSo OR MaTC = 0) AS FirstOfChuanLa, First(TKCon) AS FirstOfTKCon, First(CapDuoi) AS CD," _
         & " Sum(DuNo_" + CStr(CThangDB(ThangTruoc(tdau))) + ") AS DkNo, Sum(DuCo_" + CStr(CThangDB(ThangTruoc(tdau))) + ") AS DkCo, Sum(" + sqln + ") AS PsNo, Sum(" + sqlc + ") AS PsCo, Sum(" + sqlnx + ") AS PsNoX, Sum(" + sqlcx + ") AS PsCoX, Sum(HeThongTK.DuNo_" + st + ") AS CkNo, Sum(HeThongTK.DuCo_" + st + ") AS CkCo" _
         & " From HeThongTK WHERE  Cap<=" + CStr(cap) + " GROUP BY SoHieu, Loai Having First(Cap > 0) ORDER BY IIF(Loai>0,Loai,Loai+10),SoHieu"
 
@@ -7941,12 +7941,12 @@ On Error GoTo ErrorHandler
    ' Recycle pCurDir + "bangke.XLS"
     On Error GoTo KetThuc
 
-             dlgCommonDialog.FileName = "D:\BangKeDauRa" + CStr(tdau) + IIf(tcuoi < 10, "0", "") + CStr(tcuoi) + CStr(pNamTC Mod 100) + ".XLS" '"*.XLS"
+             dlgCommonDialog.fileName = "D:\BangKeDauRa" + CStr(tdau) + IIF(tcuoi < 10, "0", "") + CStr(tcuoi) + CStr(pNamTC Mod 100) + ".XLS" '"*.XLS"
           '   dlgCommonDialog.
           '  On Error GoTo QuitSAS
             dlgCommonDialog.ShowSave
             On Error GoTo 0
-            pDataPath = dlgCommonDialog.FileName
+            pDataPath = dlgCommonDialog.fileName
    ' pDataPath = "bangke.XLS"
   
    
@@ -8024,7 +8024,7 @@ On Error GoTo ErrorHandler
     Set rs = DBKetoan.OpenRecordset("select  DISTINCTROW  ChungTu.MauSoHD ,ChungTu.LoaiHoaDon,KyHieu,SoHD,NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,MST,SoHieu,Thue,DiaChi,TyLe,HTTT,MauSo,MaCT,KCT  from QNhatky where   HTTT = '2' or (HTTT = '3' and tyle =0 ) order by val(SoHD),NgayPH ", dbOpenSnapshot) 'HTTT = '2' or (HTTT = '3' and
     
     xlsheet.Cells(i - 1, 5).NumberFormat = "dd/mm/yyyy"
-    If rs.RecordCount <> 0 Then 'GoTo KetThuc
+    If rs.recordCount <> 0 Then 'GoTo KetThuc
      
           Do While Not rs.EOF
                 sodong = i
@@ -8063,7 +8063,7 @@ On Error GoTo ErrorHandler
     xlsheet.Cells(i - 1, 5).NumberFormat = "dd/mm/yyyy"
     ' chiu thue 0%
     Set rs = DBKetoan.OpenRecordset("select  DISTINCTROW  ChungTu.MauSoHD ,ChungTu.LoaiHoaDon,KyHieu,SoHD,NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,MST,SoHieu,Thue,DiaChi,TyLe,HTTT,MauSo,MaCT,KCT  from QNhatky where (httt ='1' or httt = '3' or httt = '...') and tyle = 0 order by val(SoHD),NgayPH ", dbOpenSnapshot)
-    If rs.RecordCount <> 0 Then ' GoTo KetThuc
+    If rs.recordCount <> 0 Then ' GoTo KetThuc
                 Do While Not rs.EOF
                 sodong = i
                     xlsheet.Range("B" + sodong, "N" + sodong).Insert
@@ -8101,7 +8101,7 @@ On Error GoTo ErrorHandler
     tongcong = 0
     xlsheet.Cells(i - 1, 5).NumberFormat = "dd/mm/yyyy"
     Set rs = DBKetoan.OpenRecordset("select  DISTINCTROW  ChungTu.MauSoHD ,ChungTu.LoaiHoaDon,KyHieu,SoHD,NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,MST,SoHieu,Thue,DiaChi,TyLe,HTTT,MauSo,MaCT,KCT  from QNhatky where (httt ='1' or httt = '3' or httt = '...' ) and tyle = 5 order by val(SoHD),NgayPH ", dbOpenSnapshot)
-    If rs.RecordCount <> 0 Then ' GoTo KetThuc
+    If rs.recordCount <> 0 Then ' GoTo KetThuc
                 Do While Not rs.EOF
                 sodong = i
                     xlsheet.Range("B" + sodong, "N" + sodong).Insert
@@ -8139,7 +8139,7 @@ On Error GoTo ErrorHandler
     ' chiu thue 10%
     xlsheet.Cells(i - 1, 5).NumberFormat = "dd/mm/yyyy"
     Set rs = DBKetoan.OpenRecordset("select  DISTINCTROW  ChungTu.MauSoHD ,ChungTu.LoaiHoaDon,KyHieu,SoHD,NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,MST,SoHieu,Thue,DiaChi,TyLe,HTTT,MauSo,MaCT,KCT  from QNhatky where (httt ='1' or httt = '3'  or httt = '4' or httt = '...') and tyle = 10 order by val(SoHD),NgayPH ", dbOpenSnapshot)
-    If rs.RecordCount <> 0 Then ' GoTo KetThuc
+    If rs.recordCount <> 0 Then ' GoTo KetThuc
                      Do While Not rs.EOF
                 sodong = i
                     xlsheet.Range("B" + sodong, "N" + sodong).Insert
@@ -8177,7 +8177,7 @@ On Error GoTo ErrorHandler
     ' chiu thue tren 10%
     xlsheet.Cells(i - 1, 5).NumberFormat = "dd/mm/yyyy"
     Set rs = DBKetoan.OpenRecordset("select  DISTINCTROW  ChungTu.MauSoHD ,ChungTu.LoaiHoaDon,KyHieu,SoHD,NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,MST,SoHieu,Thue,DiaChi,TyLe,HTTT,MauSo,MaCT,KCT  from QNhatky where (httt ='1' or httt = '3' or httt = '...' ) and tyle >10 order by val(SoHD),NgayPH ", dbOpenSnapshot)
-    If rs.RecordCount = 0 Then ' GoTo KetThuc
+    If rs.recordCount = 0 Then ' GoTo KetThuc
                  Do While Not rs.EOF
                 sodong = i
                     xlsheet.Range("B" + sodong, "N" + sodong).Insert
@@ -8253,12 +8253,12 @@ Private Function InVATDauvao_exel(tdau As Integer, tcuoi As Integer, tl As Integ
    ' Recycle pCurDir + "bangke.XLS"
     On Error GoTo KetThuc
 
-             dlgCommonDialog.FileName = "D:\BangKeDauVao" + CStr(tdau) + IIf(tcuoi < 10, "0", "") + CStr(tcuoi) + CStr(pNamTC Mod 100) + ".XLS" '"*.XLS"
+             dlgCommonDialog.fileName = "D:\BangKeDauVao" + CStr(tdau) + IIF(tcuoi < 10, "0", "") + CStr(tcuoi) + CStr(pNamTC Mod 100) + ".XLS" '"*.XLS"
           '   dlgCommonDialog.
           '  On Error GoTo QuitSAS
             dlgCommonDialog.ShowSave
             On Error GoTo 0
-            pDataPath = dlgCommonDialog.FileName
+            pDataPath = dlgCommonDialog.fileName
    ' pDataPath = "bangke.XLS"
     FileCopy pCurDir + "REPORTS\Bangkemuavao.XLS", pDataPath '+ "bangkera.XLS"
 
@@ -8273,7 +8273,7 @@ Private Function InVATDauvao_exel(tdau As Integer, tcuoi As Integer, tl As Integ
 
     Dim tk2 As New ClsTaikhoan, Fx As Integer
     
-    Fx = IIf(Left(frmMain.LbCty(8).Caption, 2) = "35" Or Left(frmMain.LbCty(3).Caption, 2) = "64", 35, 0)
+    Fx = IIF(Left(frmMain.LbCty(8).Caption, 2) = "35" Or Left(frmMain.LbCty(3).Caption, 2) = "64", 35, 0)
     
     tk2.InitTaikhoanSohieu "33312"
     If tk2.tk_id = GTGTKT_ID Then
@@ -8368,7 +8368,7 @@ Private Function InVATDauvao_exel(tdau As Integer, tcuoi As Integer, tl As Integ
    ' Hang hoa dich vu khong chiu thue GTGT Tyle = -2
    ' xlsheet.Cells(i - 1, 5).NumberFormat = "dd/mm/yyyy"
     Set rs = DBKetoan.OpenRecordset("select  DISTINCTROW ChungTu.MauSoHD ,ChungTu.LoaiHoaDon,KyHieu,SoHD,NgayPH,MatHang,SoLuong,SoPS,ThanhTien,KhachHang.Ten,MST,SoHieu,sops,DiaChi,TyLe,HTTT,MauSo,MaCT,KCT  from QNhatky  where httt ='1' or httt ='...' order by NgayPH,SoHD ", dbOpenSnapshot) 'where tyle <>0
-    If rs.RecordCount <> 0 Then 'GoTo KetThuc where HTTT = '1'
+    If rs.recordCount <> 0 Then 'GoTo KetThuc where HTTT = '1'
      
             Do While Not rs.EOF
                 sodong = i
@@ -8411,7 +8411,7 @@ Private Function InVATDauvao_exel(tdau As Integer, tcuoi As Integer, tl As Integ
     ' chiu thue 0%
 
     Set rs = DBKetoan.OpenRecordset("select  DISTINCTROW ChungTu.MauSoHD ,ChungTu.LoaiHoaDon,KyHieu,SoHD,NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,MST,SoHieu,sops,DiaChi,TyLe,HTTT,MauSo,MaCT,KCT  from QNhatky where httt ='2' order by NgayPH,SoHD ", dbOpenSnapshot) 'tyle = 0
-    If rs.RecordCount <> 0 Then ' GoTo KetThuc
+    If rs.recordCount <> 0 Then ' GoTo KetThuc
            Do While Not rs.EOF
             sodong = i
                 xlsheet.Range("B" + sodong, "N" + sodong).Insert
@@ -8450,7 +8450,7 @@ Private Function InVATDauvao_exel(tdau As Integer, tcuoi As Integer, tl As Integ
     tongcong = 0
     
     Set rs = DBKetoan.OpenRecordset("select  DISTINCTROW ChungTu.MauSoHD ,ChungTu.LoaiHoaDon,KyHieu,SoHD,NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,MST,SoHieu,sops,DiaChi,TyLe,HTTT,MauSo,MaCT,KCT  from QNhatky where httt ='3' order by NgayPH,SoHD", dbOpenSnapshot) ' tyle = 5
-    If rs.RecordCount <> 0 Then ' GoTo KetThuc
+    If rs.recordCount <> 0 Then ' GoTo KetThuc
            Do While Not rs.EOF
            sodong = i
                 xlsheet.Range("B" + sodong, "N" + sodong).Insert
@@ -8489,7 +8489,7 @@ Private Function InVATDauvao_exel(tdau As Integer, tcuoi As Integer, tl As Integ
    '  chiu thue 10%
   
     Set rs = DBKetoan.OpenRecordset("select  DISTINCTROW ChungTu.MauSoHD ,ChungTu.LoaiHoaDon,KyHieu,SoHD,NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,MST,SoHieu,sops,DiaChi,TyLe,HTTT,MauSo,MaCT,KCT  from QNhatky where httt ='4' order by NgayPH,SoHD ", dbOpenSnapshot) 'tyle = 10
-    If rs.RecordCount <> 0 Then ' GoTo KetThuc
+    If rs.recordCount <> 0 Then ' GoTo KetThuc
            Do While Not rs.EOF
             sodong = i
                 xlsheet.Range("B" + sodong, "N" + sodong).Insert
@@ -8527,7 +8527,7 @@ Private Function InVATDauvao_exel(tdau As Integer, tcuoi As Integer, tl As Integ
  '   stt = 1
    '  chiu thue tren 10%
     Set rs = DBKetoan.OpenRecordset("select  DISTINCTROW ChungTu.MauSoHD ,ChungTu.LoaiHoaDon,KyHieu,SoHD,NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,MST,SoHieu,sops,DiaChi,TyLe,HTTT,MauSo,MaCT,KCT  from QNhatky where httt= '5' order by NgayPH,SoHD ", dbOpenSnapshot) 'tyle >10'
-    If rs.RecordCount <> 0 Then ' GoTo KetThuc
+    If rs.recordCount <> 0 Then ' GoTo KetThuc
    Do While Not rs.EOF
              sodong = i
                 xlsheet.Range("B" + sodong, "N" + sodong).Insert

@@ -7,9 +7,9 @@ Begin VB.Form FrmChungtu
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
    Caption         =   "NhËp chøng tõ"
-   ClientHeight    =   9075
+   ClientHeight    =   8985
    ClientLeft      =   60
-   ClientTop       =   600
+   ClientTop       =   495
    ClientWidth     =   18180
    ClipControls    =   0   'False
    Icon            =   "Fchungtu.frx":0000
@@ -18,7 +18,7 @@ Begin VB.Form FrmChungtu
    MaxButton       =   0   'False
    MinButton       =   0   'False
    PaletteMode     =   1  'UseZOrder
-   ScaleHeight     =   9075
+   ScaleHeight     =   8985
    ScaleWidth      =   18180
    StartUpPosition =   2  'CenterScreen
    Tag             =   "0"
@@ -4081,6 +4081,12 @@ Private Sub XulyAddHeader(ByRef rs_import As Recordset)
 
 'Select option Type
     Select Case True
+     Case rs_import!tkno Like "63*"
+        OptLoai(4).Value = True
+        OptLoai_LostFocus 0
+        RFocus CboThang
+
+    
     Case rs_import!tkno Like "64*"
         OptLoai(0).Value = True
         OptLoai_LostFocus 0
@@ -4203,7 +4209,7 @@ Private Sub Xuly15Child()
                 RFocus txtchungtu(6)
                 txtchungtu(6).Text = rs_ktra152!ttien
                 'txtChungtu_LostFocus (5)
-                txtChungtu_KeyPress 6, 13
+               ' txtChungtu_KeyPress 6, 13
                 rs_ktra152.MoveNext
                 timerDetail.Enabled = True
             Else
@@ -4516,7 +4522,7 @@ End Sub
 Private Sub XulyMiddle(ByRef rs_import As Recordset)
 
 'Xu ly hoa don tong hop
-    If (rs_import!tkno Like "64*" Or rs_import!tkno Like "242*" Or rs_import!tkno Like "8112*") Then
+    If (rs_import!tkno Like "64*" Or rs_import!tkno Like "242*" Or rs_import!tkno Like "8112*" Or rs_import!tkno Like "635*") Then
         FThuChi.FThuChiForm = 1
         XulyTongtopChild rs_import
     End If

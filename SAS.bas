@@ -270,7 +270,7 @@ DB_Handle:
         Exit Function
         Set DBKetoan = WSpace.OpenDatabase(file_name, False, False, ";PWD=" + pPSW)
         Set rs = DBKetoan.OpenRecordset("SELECT DISTINCTROW License.* FROM License", dbOpenSnapshot)
-        ExecuteSQL5 "update License set TenCty = '" + ModSAS.Federo16Decrypt(rs!TenCty, CStr(rs!NamTC)) + "',DiaChi = '" + ModSAS.Federo16Decrypt(rs!DiaChi, CStr(rs!NamTC)) + "',MaSoThue = '" + ModSAS.Federo16Decrypt(rs!masothue, CStr(rs!NamTC)) + "',CMP = '" + ModSAS.Federo16Decrypt(IIf(IsNull(rs!CMP), "", rs!CMP), CStr(rs!NamTC)) + "'"
+        ExecuteSQL5 "update License set TenCty = '" + ModSAS.Federo16Decrypt(rs!TenCty, CStr(rs!NamTC)) + "',DiaChi = '" + ModSAS.Federo16Decrypt(rs!DiaChi, CStr(rs!NamTC)) + "',MaSoThue = '" + ModSAS.Federo16Decrypt(rs!masothue, CStr(rs!NamTC)) + "',CMP = '" + ModSAS.Federo16Decrypt(IIF(IsNull(rs!CMP), "", rs!CMP), CStr(rs!NamTC)) + "'"
         DBKetoan.Close
         GoTo Op
     End If
@@ -313,7 +313,7 @@ Public Sub CloseUp(Optional nen As Integer = 0)
         
             If Mid(pDataPath, stt, 1) = "\" Then Exit For
         Next
-        dpath2 = "K" + IIf(Month(Date) < 10, "0", "") + CStr(Month(Date)) + IIf(Day(Date) < 10, "0", "") + CStr(Day(Date)) + Right(CStr(pNamTC), 2) + "_" + mst
+        dpath2 = "K" + IIF(Month(Date) < 10, "0", "") + CStr(Month(Date)) + IIF(Day(Date) < 10, "0", "") + CStr(Day(Date)) + Right(CStr(pNamTC), 2) + "_" + mst
         fn = dpath2 + ".SAS"
         dpath = Left(pDataPath, stt) + fn
         
@@ -443,7 +443,9 @@ End Function
 '====================================================================================================
 ' Hµm thay ®æi néi dung Query ®· khai b¸o trong CSDL
 '====================================================================================================
+
 Public Sub SetSQL(qname As String, sql As String)
+    ' Debug.Print Now & ": " & logMessage
     AddQuery qname, sql
     On Error GoTo QueryErr
     DBKetoan.QueryDefs(qname).sql = sql
@@ -569,7 +571,7 @@ k2:
       
                         
       HienThongBao "KiÓm tra sè tån ...", 1
-      ExecuteSQL5 "UPDATE TonKho SET Luong_0 = Fix(iif(Luong_0>0,0.5,-0.5) + Luong_0 * " + CStr(Mask_N) + ") / " + CStr(Mask_N) + ", Tien_0 = " + IIf(pTien = 0, "Fix(iif(Tien_0>0,0.5,-0.5)  + Tien_0)", "Fix(iif(Tien_0>0,0.5,-0.5)  + " + CStr(Mask_N) + "*Tien_0)/" + CStr(Mask_N))
+      ExecuteSQL5 "UPDATE TonKho SET Luong_0 = Fix(iif(Luong_0>0,0.5,-0.5) + Luong_0 * " + CStr(Mask_N) + ") / " + CStr(Mask_N) + ", Tien_0 = " + IIF(pTien = 0, "Fix(iif(Tien_0>0,0.5,-0.5)  + Tien_0)", "Fix(iif(Tien_0>0,0.5,-0.5)  + " + CStr(Mask_N) + "*Tien_0)/" + CStr(Mask_N))
       sql = "UPDATE TonKho SET MaVattu = MaVattu"
       For i = 1 To 12
             st = "Luong_0"
@@ -581,13 +583,13 @@ k2:
                   st2 = st2 + " + Tien_Nhap_" + st3 + " - Tien_Xuat_" + st3
                   st4 = st4 + " + USDTien_Nhap_" + st3 + " - USDTien_Xuat_" + st3
             Next
-           sql = sql + ", Luong_" + CStr(i) + " = Fix(iif(" + st + ">0,0.5,-0.5)  + (" + st + ") * " + CStr(Mask_N) + ")/" + CStr(Mask_N) + ", Tien_" + CStr(i) + " = " + st2 + IIf(pGiaUSD > 0, ", USDTien_" + CStr(i) + " = " + st4, "")
+           sql = sql + ", Luong_" + CStr(i) + " = Fix(iif(" + st + ">0,0.5,-0.5)  + (" + st + ") * " + CStr(Mask_N) + ")/" + CStr(Mask_N) + ", Tien_" + CStr(i) + " = " + st2 + IIF(pGiaUSD > 0, ", USDTien_" + CStr(i) + " = " + st4, "")
       Next
       ExecuteSQL5 sql
       
-      sql = "DELETE FROM TonKho WHERE Luong_0=0 And Tien_0=0" + IIf(pGiaUSD > 0, " AND USDTien_0=0", "")
+      sql = "DELETE FROM TonKho WHERE Luong_0=0 And Tien_0=0" + IIF(pGiaUSD > 0, " AND USDTien_0=0", "")
       For i = 1 To 12
-          sql = sql + " And Luong_Nhap_" + CStr(i) + "=0 And Luong_Xuat_" + CStr(i) + "=0 And Tien_Nhap_" + CStr(i) + "=0" + IIf(pGiaUSD > 0, " AND USDTien_Nhap_" + CStr(i) + "=0", "")
+          sql = sql + " And Luong_Nhap_" + CStr(i) + "=0 And Luong_Xuat_" + CStr(i) + "=0 And Tien_Nhap_" + CStr(i) + "=0" + IIF(pGiaUSD > 0, " AND USDTien_Nhap_" + CStr(i) + "=0", "")
       Next
       ExecuteSQL5 sql
       
@@ -646,8 +648,8 @@ Public Sub KiemTraTaiKhoan(Optional ktracn As Integer = 0)
             sql = "UPDATE HethongTK SET MaTC = MaTC"
             For i = 1 To 12
                   st = CStr(i)
-                  sql = sql + ", No_" + st + " = " + DoiDau(IIf(IsNull(rs_taikhoan.Fields("No_" + st)), 0, rs_taikhoan.Fields("No_" + st))) _
-                        + ", No_" + st + "_NT = " + DoiDau(IIf(IsNull(rs_taikhoan.Fields("NTNo_" + st)), 0, rs_taikhoan.Fields("NTNo_" + st)))
+                  sql = sql + ", No_" + st + " = " + DoiDau(IIF(IsNull(rs_taikhoan.Fields("No_" + st)), 0, rs_taikhoan.Fields("No_" + st))) _
+                        + ", No_" + st + "_NT = " + DoiDau(IIF(IsNull(rs_taikhoan.Fields("NTNo_" + st)), 0, rs_taikhoan.Fields("NTNo_" + st)))
             Next
             ExecuteSQL5 sql + " WHERE MaSo = " + CStr(rs_taikhoan!MaSoTK)
             rs_taikhoan.MoveNext
@@ -668,8 +670,8 @@ Public Sub KiemTraTaiKhoan(Optional ktracn As Integer = 0)
             sql = "UPDATE HethongTK SET MaTC = MaTC"
             For i = 1 To 12
                   st = CStr(i)
-                  sql = sql + ", Co_" + st + " = " + DoiDau(IIf(IsNull(rs_taikhoan.Fields("Co_" + st)), 0, rs_taikhoan.Fields("Co_" + st))) _
-                        + ", Co_" + st + "_NT = " + DoiDau(IIf(IsNull(rs_taikhoan.Fields("NTCo_" + st)), 0, rs_taikhoan.Fields("NTCo_" + st)))
+                  sql = sql + ", Co_" + st + " = " + DoiDau(IIF(IsNull(rs_taikhoan.Fields("Co_" + st)), 0, rs_taikhoan.Fields("Co_" + st))) _
+                        + ", Co_" + st + "_NT = " + DoiDau(IIF(IsNull(rs_taikhoan.Fields("NTCo_" + st)), 0, rs_taikhoan.Fields("NTCo_" + st)))
             Next
             ExecuteSQL5 sql + " WHERE MaSo = " + CStr(rs_taikhoan!MaSoTK)
             rs_taikhoan.MoveNext
@@ -1143,7 +1145,7 @@ KC1:
                     mk1 = 0
                     mk2 = rskh!MaSo
               
-                oct.InitChungtu 0, 3, "KC_" + CStr(rs!stt), thang, NgayCuoiThang(pNamTC, thang), NgayCuoiThang(pNamTC, thang), 0, 0, rs!diengiai, mtkn, mtkc, duno, IIf(mtkn = k, nt, 0), IIf(mtkc = k, nt, 0), 0, "...", 1, "", "", "", ""
+                oct.InitChungtu 0, 3, "KC_" + CStr(rs!stt), thang, NgayCuoiThang(pNamTC, thang), NgayCuoiThang(pNamTC, thang), 0, 0, rs!diengiai, mtkn, mtkc, duno, IIF(mtkn = k, nt, 0), IIF(mtkc = k, nt, 0), 0, "...", 1, "", "", "", ""
                 oct.MaCT = MaCT + rs!stt
                 oct.CT_ID = 300000000 + mkc
                 oct.MaTP = mk1
@@ -1191,7 +1193,7 @@ KC1:
                     mk2 = 0
                     mk1 = rskh!MaKhachHang
                 End If
-                oct.InitChungtu 0, 3, "KC_" + CStr(rs!stt), thang, NgayCuoiThang(pNamTC, thang), NgayCuoiThang(pNamTC, thang), 0, 0, rs!diengiai, mtkn, mtkc, duno, IIf(mtkn = k, nt, 0), IIf(mtkc = k, nt, 0), 0, "...", 1, "", "", "", ""
+                oct.InitChungtu 0, 3, "KC_" + CStr(rs!stt), thang, NgayCuoiThang(pNamTC, thang), NgayCuoiThang(pNamTC, thang), 0, 0, rs!diengiai, mtkn, mtkc, duno, IIF(mtkn = k, nt, 0), IIF(mtkc = k, nt, 0), 0, "...", 1, "", "", "", ""
                 oct.MaCT = MaCT + rs!stt
                 oct.CT_ID = 300000000 + mkc
                 oct.makh = mk1
@@ -1227,7 +1229,7 @@ KC1:
                 duno = duco - duno
             End If
             '///////////////////////////////////// Kiem tra NT
-             oct.InitChungtu 0, 3, "KC_" + CStr(rs!stt), thang, NgayCuoiThang(pNamTC, thang), NgayCuoiThang(pNamTC, thang), 0, 0, rs!diengiai, mtkn, mtkc, duno, IIf(mtkn = k, nt, 0), IIf(mtkc = k, nt, 0), 0, "...", 1, "", "", "", ""
+             oct.InitChungtu 0, 3, "KC_" + CStr(rs!stt), thang, NgayCuoiThang(pNamTC, thang), NgayCuoiThang(pNamTC, thang), 0, 0, rs!diengiai, mtkn, mtkc, duno, IIF(mtkn = k, nt, 0), IIF(mtkc = k, nt, 0), 0, "...", 1, "", "", "", ""
              oct.MaCT = MaCT + rs!stt
              oct.CT_ID = 300000000 + mkc
              If pTygia > 0 Then oct.tygia = tygia
@@ -1283,7 +1285,7 @@ Public Sub PhanBoCP(tdau As Integer, tcuoi As Integer, shtk As String, tentk As 
     For i = CThangDB(tdau) To CThangDB(tcuoi)
         sql = sql + "+No_" + CStr(i) + "-Co_" + CStr(i)
     Next
-    sql = "SELECT DISTINCTROW MaSo,(" + sql + "+KC_C)" + IIf(TyLe < 100, "*" + CStr(TyLe) + "/100", "") + " AS CP FROM HethongTK WHERE SoHieu LIKE '" + shtk + "*' AND TKCon=0 AND (" + sql + "+KC_C)<>0"
+    sql = "SELECT DISTINCTROW MaSo,(" + sql + "+KC_C)" + IIF(TyLe < 100, "*" + CStr(TyLe) + "/100", "") + " AS CP FROM HethongTK WHERE SoHieu LIKE '" + shtk + "*' AND TKCon=0 AND (" + sql + "+KC_C)<>0"
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     Do While Not rs.EOF
         tongpb = 0
@@ -1399,7 +1401,7 @@ Public Function InChiPhi(tdau As Integer, tcuoi As Integer, msg As Boolean, nn A
     Next
     
     ExecuteSQL5 "DELETE FROM BaoCaoCP"
-    If ExecuteSQL5("INSERT INTO BaoCaoCP (MaSo, SoHieu, CoCon, MaCha, Cap, Ten, Kq5) SELECT DISTINCTROW MaSo, SoHieu, TkCon, TkCha0, Cap, Ten" + IIf(nn > 0, "E", "") + ", DuNo_" + CStr(CThangDB(ThangTruoc(tdau))) _
+    If ExecuteSQL5("INSERT INTO BaoCaoCP (MaSo, SoHieu, CoCon, MaCha, Cap, Ten, Kq5) SELECT DISTINCTROW MaSo, SoHieu, TkCon, TkCha0, Cap, Ten" + IIF(nn > 0, "E", "") + ", DuNo_" + CStr(CThangDB(ThangTruoc(tdau))) _
         & " FROM HethongTK WHERE (SoHieu LIKE '" + ShTkSPDo + "*' OR SoHieu LIKE '" + ShTkTP + "*') AND (MaTC > 0 AND MaTC <> MaSo) AND (" + sql + ") ORDER BY SoHieu") <> 0 Then GoTo KhongIn
     
     If DBKetoan.RecordsAffected = 0 Then
@@ -1596,15 +1598,15 @@ Public Function InKetQua3(tdau As Integer, tcuoi As Integer, loaibc As Integer, 
     Do While Not rs.EOF
         tp.InitTPMaSo rs!MaSo
         HienThongBao tp.TenVattu, 1
-        tp.XDDauKy IIf(loaibc = 0, tdau, pThangDauKy)
-        tp.GhiCPTT IIf(loaibc = 0, tdau, pThangDauKy), tcuoi
+        tp.XDDauKy IIF(loaibc = 0, tdau, pThangDauKy)
+        tp.GhiCPTT IIF(loaibc = 0, tdau, pThangDauKy), tcuoi
         tp.XDCuoiKy tcuoi
         rs.MoveNext
     Loop
     rs.Close
     Set rs = Nothing
     
-    For i = CThangDB(IIf(loaibc = 0, tdau, pThangDauKy)) To CThangDB(tcuoi)
+    For i = CThangDB(IIF(loaibc = 0, tdau, pThangDauKy)) To CThangDB(tcuoi)
         cp1 = cp1 + "+CPBH" + CStr(i) + "+CPBHTT" + CStr(i)
         cp2 = cp2 + "+CPQL" + CStr(i) + "+CPQLTT" + CStr(i)
         cp3 = cp3 + "+CPTC" + CStr(i) + "+CPTCTT" + CStr(i)
@@ -1620,9 +1622,9 @@ Public Function InKetQua3(tdau As Integer, tcuoi As Integer, loaibc As Integer, 
     SetSQL "QTongHopCT", "SELECT * FROM MienTru ORDER BY SHPL, SoHieu"
     
     On Error GoTo KT
-    frmMain.Rpt.ReportFileName = pCurDir + "REPORTS\KETQUA" + IIf(loaibc = 0, "3", "4") + ".RPT"
+    frmMain.Rpt.ReportFileName = pCurDir + "REPORTS\KETQUA" + IIF(loaibc = 0, "3", "4") + ".RPT"
     RptSetDate NgayCuoiThang(pNamTC, tcuoi), nn
-    frmMain.Rpt.Formulas(3) = "ThoiGian='" + ThoiGian(IIf(loaibc = 0, tdau, pThangDauKy), tcuoi, nn) + "'"
+    frmMain.Rpt.Formulas(3) = "ThoiGian='" + ThoiGian(IIF(loaibc = 0, tdau, pThangDauKy), tcuoi, nn) + "'"
     On Error GoTo 0
     InKetQua3 = True
     GoTo KT
@@ -1647,8 +1649,8 @@ Public Function InKetQua(tdau As Integer, tcuoi As Integer, tag As Integer, msg 
     Next
     
     ExecuteSQL5 "DELETE FROM BaoCaoCP"
-    If ExecuteSQL5("INSERT INTO BaoCaoCP (MaSo, SoHieu, CoCon, MaCha, Cap, Ten) SELECT DISTINCTROW MaSo, SoHieu, TkCon, TkCha0, Cap, Ten" + IIf(nn > 0, "E", "") _
-        & " FROM HethongTK WHERE (SoHieu LIKE '" + ShTkKQ + "*') AND (MaTC > 0 AND MaTC <> MaSo) AND (" + IIf(tag = 0, sql, "TRUE") + ") ORDER BY SoHieu") <> 0 Then GoTo KhongIn
+    If ExecuteSQL5("INSERT INTO BaoCaoCP (MaSo, SoHieu, CoCon, MaCha, Cap, Ten) SELECT DISTINCTROW MaSo, SoHieu, TkCon, TkCha0, Cap, Ten" + IIF(nn > 0, "E", "") _
+        & " FROM HethongTK WHERE (SoHieu LIKE '" + ShTkKQ + "*') AND (MaTC > 0 AND MaTC <> MaSo) AND (" + IIF(tag = 0, sql, "TRUE") + ") ORDER BY SoHieu") <> 0 Then GoTo KhongIn
     
     If DBKetoan.RecordsAffected = 0 Then
         If msg Then ErrMsg er_KoPS
@@ -1746,9 +1748,9 @@ Private Function PhatSinhDu(mct As Long, mtk As Long, tdau As Integer, tcuoi As 
     
     sql = "SELECT SUM(SoPS) As KetQua FROM ChungTu WHERE " + WThang("ThangCT", tdau, tcuoi)
     If loai = -1 Then
-        sql = sql + " AND MaTkNo = " + CStr(mct) + IIf(mtk > 0, " AND MaTkTCCo = " + CStr(mtk), "")
+        sql = sql + " AND MaTkNo = " + CStr(mct) + IIF(mtk > 0, " AND MaTkTCCo = " + CStr(mtk), "")
     Else
-        sql = sql + " AND MaTkCo = " + CStr(mct) + IIf(mtk > 0, " AND MaTkTCNo = " + CStr(mtk), "")
+        sql = sql + " AND MaTkCo = " + CStr(mct) + IIF(mtk > 0, " AND MaTkTCNo = " + CStr(mtk), "")
     End If
     
     Set rs_kq = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
@@ -1760,9 +1762,9 @@ Private Function PhatSinhDu(mct As Long, mtk As Long, tdau As Integer, tcuoi As 
     
     sql = "SELECT SUM(SoPS) As KetQua FROM ChungTu WHERE " + WThang("ThangCT", tdau, tcuoi)
     If loai = -1 Then
-        sql = sql + " AND MaTkCo = " + CStr(mct) + IIf(mtk > 0, " AND MaTkTCNo = " + CStr(mtk), "")
+        sql = sql + " AND MaTkCo = " + CStr(mct) + IIF(mtk > 0, " AND MaTkTCNo = " + CStr(mtk), "")
     Else
-        sql = sql + " AND MaTkNo = " + CStr(mct) + IIf(mtk > 0, " AND MaTkTCCo = " + CStr(mtk), "")
+        sql = sql + " AND MaTkNo = " + CStr(mct) + IIF(mtk > 0, " AND MaTkTCCo = " + CStr(mtk), "")
     End If
     
     Set rs_kq = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
@@ -1777,7 +1779,7 @@ End Function
 Public Sub LayThongtinCT(MaCT As Long, loai As Integer, Ten As String, DiaChi As String, Optional ctgoc As String, Optional makh As Long, Optional p As Integer = 0)
     Dim rs As Recordset
     
-    Set rs = DBKetoan.OpenRecordset("SELECT DISTINCTROW * FROM ChungTuLQ" + IIf(p > 0, "P", "") + " WHERE MaCT=" + CStr(MaCT) + " AND Loai=" + CStr(loai), dbOpenSnapshot)
+    Set rs = DBKetoan.OpenRecordset("SELECT DISTINCTROW * FROM ChungTuLQ" + IIF(p > 0, "P", "") + " WHERE MaCT=" + CStr(MaCT) + " AND Loai=" + CStr(loai), dbOpenSnapshot)
     If rs.recordCount > 0 Then
         Ten = rs!hoten
         DiaChi = rs!DiaChi
@@ -1833,7 +1835,7 @@ Public Sub UpDateDB()
             sql = "VNI-Times"
             i = 10
         Else
-            sql = IIf(FontDaCo(sFONTNAME), sFONTNAME, "MS Sans Serif")
+            sql = IIF(FontDaCo(sFONTNAME), sFONTNAME, "MS Sans Serif")
             i = 8
         End If
         ExecuteSQL5 "UPDATE License SET FontName='" + sql + "',FontSize=" + CStr(i)
@@ -2320,8 +2322,8 @@ Public Sub XoaCTTheoID(thang As Integer, id As Long, ml As Integer, Optional nda
     Dim rs As Recordset, oct As New ClsChungtu
     
     Set rs = DBKetoan.OpenRecordset("SELECT DISTINCTROW MaSo FROM ChungTu WHERE CT_ID=" + CStr(id) + " AND " _
-        + IIf(thang > 0, "ThangCT=" + CStr(thang), WNgay("NgayGS", ndau, ncuoi)) _
-        + IIf(ml > 0, " AND MaLoai=" + CStr(ml), "") + IIf(ml2 > 0, " AND MaLoai<>" + CStr(ml2), ""), dbOpenSnapshot)
+        + IIF(thang > 0, "ThangCT=" + CStr(thang), WNgay("NgayGS", ndau, ncuoi)) _
+        + IIF(ml > 0, " AND MaLoai=" + CStr(ml), "") + IIF(ml2 > 0, " AND MaLoai<>" + CStr(ml2), ""), dbOpenSnapshot)
     Do While Not rs.EOF
         oct.InitChungtu rs!MaSo, 0, "", 0, Date, Date, 0, 0, "", 0, 0, 0, 0, 0, 0, "", 0, "", "", "", ""
         oct.XoaChungtu
@@ -3158,7 +3160,7 @@ Public Sub DoiTyGiaDB()
     
     tygia = SelectSQL("SELECT TyGia AS F1 FROM License")
     If tygia = 0 Then tygia = 1
-    sql = IIf(pTien = 0, "*", "/") + DoiDau(tygia)
+    sql = IIF(pTien = 0, "*", "/") + DoiDau(tygia)
     ExecuteSQL5 "UPDATE HethongTK SET DuNo_0=DuNo_0" + sql + ",DuCo_0=DuCo_0" + sql
     ExecuteSQL5 "UPDATE SoDuKhachHang SET DuNo_0=DuNo_0" + sql + ",DuCo_0=DuCo_0" + sql
     ExecuteSQL5 "UPDATE TonKho SET Tien_0=Tien_0" + sql
@@ -3166,7 +3168,7 @@ Public Sub DoiTyGiaDB()
     ExecuteSQL5 "UPDATE CTTaiSan SET NG_NS=NG_NS" + sql + ",NG_TBS=NG_TBS" + sql + ",NG_TD=NG_TD" + sql + ",NG_CNK=NG_CNK" + sql + ",CL_NS=CL_NS" + sql + ",CL_TBS=CL_TBS" + sql + ",CL_TD=CL_TD" + sql + ",CL_CNK=CL_CNK" + sql + " WHERE Thang=0"
     ExecuteSQL5 "UPDATE ThongSo SET NG_NS=NG_NS" + sql + ",NG_TBS=NG_TBS" + sql + ",NG_TD=NG_TD" + sql + ",NG_CNK=NG_CNK" + sql + ",CL_NS=CL_NS" + sql + ",CL_TBS=CL_TBS" + sql + ",CL_TD=CL_TD" + sql + ",CL_CNK=CL_CNK" + sql + ",KH_NS=KH_NS" + sql + ",KH_TBS=KH_TBS" + sql + ",KH_TD=KH_TD" + sql + ",KH_CNK=KH_CNK" + sql + " WHERE Thang=0"
     
-    sql = IIf(pTien = 0, "*", "/") + "IIF(ChungTu.TyGia>0,ChungTu.TyGia,1)"
+    sql = IIF(pTien = 0, "*", "/") + "IIF(ChungTu.TyGia>0,ChungTu.TyGia,1)"
     ExecuteSQL5 "UPDATE ChungTu SET SoPS=SoPS" + sql
     ExecuteSQL5 "UPDATE " + ChungTu2TKHD(0) + " SET ThanhTien=ThanhTien" + sql
     ExecuteSQL5 "UPDATE CTTaiSan INNER JOIN ChungTu ON CTTaiSan.MaCTKT=ChungTu.MaCT SET NG_NS=NG_NS" + sql + ",NG_TBS=NG_TBS" + sql + ",NG_TD=NG_TD" + sql + ",NG_CNK=NG_CNK" + sql + ",CL_NS=CL_NS" + sql + ",CL_TBS=CL_TBS" + sql + ",CL_TD=CL_TD" + sql + ",CL_CNK=CL_CNK" + sql
@@ -3174,7 +3176,7 @@ Public Sub DoiTyGiaDB()
         ExecuteSQL5 "UPDATE ThongSo INNER JOIN CTTaiSan ON ThongSo.MaTS=CTTaiSan.MaTS SET ThongSo.NG_NS=CTTaiSan.NG_NS,ThongSo.NG_TBS=CTTaiSan.NG_TBS,ThongSo.NG_TD=CTTaiSan.NG_TD,ThongSo.NG_CNK=CTTaiSan.NG_CNK,ThongSo.CL_NS=CTTaiSan.CL_NS,ThongSo.CL_TBS=CTTaiSan.CL_TBS,ThongSo.CL_TD=CTTaiSan.CL_TD,ThongSo.CL_CNK=CTTaiSan.CL_CNK WHERE CTTaiSan.MaLoai=" + CStr(NV_TANG) + " AND CTTaiSan.Thang=" + CStr(CThangFR(i)) + " AND ThongSo.Thang=" + CStr(i)
         tygia = SelectSQL("SELECT TyGia AS F1 FROM ChungTu INNER JOIN CTTaiSan ON ChungTu.MaCT=CTTaiSan.MaCTKT WHERE CTTaiSan.MaLoai=" + CStr(NV_TKHAO) + " AND Thang=" + CStr(CThangFR(i)))
         If tygia > 0 Then
-            sql = IIf(pTien = 0, "*", "/") + DoiDau(tygia)
+            sql = IIF(pTien = 0, "*", "/") + DoiDau(tygia)
             ExecuteSQL5 "UPDATE ThongSo SET KH_NS=KH_NS" + sql + ",KH_TBS=KH_TBS" + sql + ",KH_TD=KH_TD" + sql + ",KH_CNK=KH_CNK" + sql + " WHERE Thang<=" + CStr(i)
         End If
     Next
@@ -3231,7 +3233,7 @@ K1:
 KT:
     If f1 > 0 And CInt5(st) > 0 And Len(mst) < 12 Then
         For i = 1 To 99
-            s1 = IIf(i < 10, "0", "") + CStr(i)
+            s1 = IIF(i < 10, "0", "") + CStr(i)
             If QueryDaCo2(s1, s2) Then
                 If s2 = Left(mst, Len(s2)) Then
                     F2 = 0
@@ -3501,7 +3503,7 @@ Public Sub InCdts(tdau As Integer, tcuoi As Integer, loai As Integer, Optional n
     Set rs = Nothing
     frmMain.Rpt.ReportFileName = "CDTS.RPT"
     frmMain.Rpt.Formulas(3) = "Thang=" + CStr(tcuoi)
-    If tdau <> pThangDauKy Then frmMain.Rpt.Formulas(4) = "DKLB='" + IIf(nn = 0, "Sè ®Çu kú ", "Opening Balance of ") + CStr(tdau) + "/" + CStr(IIf(tdau < pThangDauKy, pNamTC + 1, pNamTC)) + "'"
+    If tdau <> pThangDauKy Then frmMain.Rpt.Formulas(4) = "DKLB='" + IIF(nn = 0, "Sè ®Çu kú ", "Opening Balance of ") + CStr(tdau) + "/" + CStr(IIF(tdau < pThangDauKy, pNamTC + 1, pNamTC)) + "'"
     'GauGe.Value = GauGe.Max
 End Sub
 
@@ -3520,7 +3522,7 @@ Public Sub KiemTraKetChuyen(thang As Integer)
     sql = ""
     If rs.recordCount > 0 Then
         Do While Not rs.EOF
-            sql = sql + Chr(13) + "Sè d­ tµi kho¶n " + rs!sohieu + ":" + Format(IIf(rs!loai > 0, rs!duco - rs!duno, rs!duno - rs!duco), Mask_0)
+            sql = sql + Chr(13) + "Sè d­ tµi kho¶n " + rs!sohieu + ":" + Format(IIF(rs!loai > 0, rs!duco - rs!duno, rs!duno - rs!duco), Mask_0)
             rs.MoveNext
         Loop
         MsgBox "C¸c tµi kho¶n cßn sè d­:" + sql, vbCritical, App.ProductName
@@ -3552,7 +3554,7 @@ Public Sub InKqkd(tdau As Integer, tcuoi As Integer, cap As Integer, nn As Integ
 
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     Do While Not rs.EOF
-            ExecuteSQL5 "UPDATE KQKD SET KyTruoc=" + DoiDau(IIf(IsNull(rs!kqua1), 0, rs!kqua1)) + ", KyNay = " + DoiDau(IIf(IsNull(rs!kqua2), 0, rs!kqua2)) + " WHERE Ma=" + CStr(rs!ma)
+            ExecuteSQL5 "UPDATE KQKD SET KyTruoc=" + DoiDau(IIF(IsNull(rs!kqua1), 0, rs!kqua1)) + ", KyNay = " + DoiDau(IIF(IsNull(rs!kqua2), 0, rs!kqua2)) + " WHERE Ma=" + CStr(rs!ma)
             rs.MoveNext
     Loop
 
@@ -3563,7 +3565,7 @@ Public Sub InKqkd(tdau As Integer, tcuoi As Integer, cap As Integer, nn As Integ
         
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     Do While Not rs.EOF
-            ExecuteSQL5 "UPDATE KQKD SET KyTruoc = KyTruoc - " + DoiDau(IIf(IsNull(rs!kqua1), 0, rs!kqua1)) + ", KyNay = KyNay - " + DoiDau(IIf(IsNull(rs!kqua2), 0, rs!kqua2)) + " WHERE Ma=" + CStr(rs!ma)
+            ExecuteSQL5 "UPDATE KQKD SET KyTruoc = KyTruoc - " + DoiDau(IIF(IsNull(rs!kqua1), 0, rs!kqua1)) + ", KyNay = KyNay - " + DoiDau(IIF(IsNull(rs!kqua2), 0, rs!kqua2)) + " WHERE Ma=" + CStr(rs!ma)
             rs.MoveNext
     Loop
             
@@ -3609,7 +3611,7 @@ Public Sub InKqkd(tdau As Integer, tcuoi As Integer, cap As Integer, nn As Integ
                 & " Where MaTK>0 AND " + WThang("ThangCT", 0, tcuoi) + " GROUP BY KQKD911.Ma"
             Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
             Do While Not rs.EOF
-                    ExecuteSQL5 "UPDATE KQKD911 SET KyTruoc=" + DoiDau(IIf(IsNull(rs!kqua1), 0, rs!kqua1)) + ", KyNay = " + DoiDau(IIf(IsNull(rs!kqua2), 0, rs!kqua2)) + " WHERE Ma=" + CStr(rs!ma)
+                    ExecuteSQL5 "UPDATE KQKD911 SET KyTruoc=" + DoiDau(IIF(IsNull(rs!kqua1), 0, rs!kqua1)) + ", KyNay = " + DoiDau(IIF(IsNull(rs!kqua2), 0, rs!kqua2)) + " WHERE Ma=" + CStr(rs!ma)
                     rs.MoveNext
             Loop
             rs.Close
@@ -3619,7 +3621,7 @@ Public Sub InKqkd(tdau As Integer, tcuoi As Integer, cap As Integer, nn As Integ
                 & " Where MaTK>0 AND " + WThang("ThangCT", 0, tcuoi) + " GROUP BY KQKD911.Ma"
             Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
             Do While Not rs.EOF
-                    ExecuteSQL5 "UPDATE KQKD911 SET KyTruoc=KyTruoc-" + DoiDau(IIf(IsNull(rs!kqua1), 0, rs!kqua1)) + ", KyNay = KyNay-" + DoiDau(IIf(IsNull(rs!kqua2), 0, rs!kqua2)) + " WHERE Ma=" + CStr(rs!ma)
+                    ExecuteSQL5 "UPDATE KQKD911 SET KyTruoc=KyTruoc-" + DoiDau(IIF(IsNull(rs!kqua1), 0, rs!kqua1)) + ", KyNay = KyNay-" + DoiDau(IIF(IsNull(rs!kqua2), 0, rs!kqua2)) + " WHERE Ma=" + CStr(rs!ma)
                     rs.MoveNext
             Loop
             rs.Close
@@ -3648,10 +3650,10 @@ Public Sub InKqkd(tdau As Integer, tcuoi As Integer, cap As Integer, nn As Integ
             Set rs = Nothing
             
             ExecuteSQL5 "UPDATE KQKD911 SET TongHop=0 WHERE MaTK>0"
-            SetSQL "QKqkd", "SELECT MaSo, First(Ten" + IIf(nn > 0, "E", "") + ") AS FirstOfTen, First(TongHop) AS FirstOfTongHop, Sum(KyTruoc) AS SumOfKyTruoc, Sum(KyNay) AS SumOfKyNay,First(Cap) AS C From KQKD911 GROUP BY MaSo, MaTK"
+            SetSQL "QKqkd", "SELECT MaSo, First(Ten" + IIF(nn > 0, "E", "") + ") AS FirstOfTen, First(TongHop) AS FirstOfTongHop, Sum(KyTruoc) AS SumOfKyTruoc, Sum(KyNay) AS SumOfKyNay,First(Cap) AS C From KQKD911 GROUP BY MaSo, MaTK"
         Else
             
-            SetSQL "QKqkd", "SELECT MaSo, First(Ten" + IIf(nn > 0, "E", "") + ") AS FirstOfTen, First(TongHop) AS FirstOfTongHop, Sum(KyTruoc) AS SumOfKyTruoc, Sum(KyNay) AS SumOfKyNay,First(Cap) AS C From KQKD GROUP BY MaSo"
+            SetSQL "QKqkd", "SELECT MaSo, First(Ten" + IIF(nn > 0, "E", "") + ") AS FirstOfTen, First(TongHop) AS FirstOfTongHop, Sum(KyTruoc) AS SumOfKyTruoc, Sum(KyNay) AS SumOfKyNay,First(Cap) AS C From KQKD GROUP BY MaSo"
         End If
         
         frmMain.Rpt.ReportFileName = "KQKD.RPT"
@@ -3678,7 +3680,7 @@ Public Sub XemBaoCao(sh As String, ndau As Date, ncuoi As Date)
 
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     Do While Not rs.EOF
-            ExecuteSQL5 "UPDATE KQKD BaoCao KyTruoc=" + DoiDau(IIf(IsNull(rs!kqua1), 0, rs!kqua1)) + ", KyNay = " + DoiDau(IIf(IsNull(rs!kqua2), 0, rs!kqua2)) + " WHERE MaSo=" + CStr(rs!MaSo)
+            ExecuteSQL5 "UPDATE KQKD BaoCao KyTruoc=" + DoiDau(IIF(IsNull(rs!kqua1), 0, rs!kqua1)) + ", KyNay = " + DoiDau(IIF(IsNull(rs!kqua2), 0, rs!kqua2)) + " WHERE MaSo=" + CStr(rs!MaSo)
             rs.MoveNext
     Loop
     
@@ -3688,7 +3690,7 @@ Public Sub XemBaoCao(sh As String, ndau As Date, ncuoi As Date)
         
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     Do While Not rs.EOF
-            ExecuteSQL5 "UPDATE BaoCao SET KyTruoc = KyTruoc - " + DoiDau(IIf(IsNull(rs!kqua1), 0, rs!kqua1)) + ", KyNay = KyNay - " + DoiDau(IIf(IsNull(rs!kqua2), 0, rs!kqua2)) + " WHERE MaSo=" + CStr(rs!MaSo)
+            ExecuteSQL5 "UPDATE BaoCao SET KyTruoc = KyTruoc - " + DoiDau(IIF(IsNull(rs!kqua1), 0, rs!kqua1)) + ", KyNay = KyNay - " + DoiDau(IIF(IsNull(rs!kqua2), 0, rs!kqua2)) + " WHERE MaSo=" + CStr(rs!MaSo)
             rs.MoveNext
     Loop
             
@@ -3749,10 +3751,10 @@ Private Sub ktracongno2004()
     Do While Not rs.EOF
         If rs!sodu <> SoNoTheoHoaDon(rs!MaTaiKhoan, rs!MaKhachHang, loai) Then
             ExecuteSQL5 "UPDATE CNDauNam SET SoXuat=Abs(DuNo_0-DuCo_0) WHERE MaTaiKhoan=" + CStr(rs!MaTaiKhoan) + " AND MaKhachHang=" + CStr(rs!MaKhachHang)
-            ExecuteSQL5 "UPDATE ChungTu SET SoXuat=SoPS WHERE " + IIf(loai < 0, "MaTKNo=" + CStr(rs!MaTaiKhoan) + " AND MaKH=" + CStr(rs!MaKhachHang), "MaTKCo=" + CStr(rs!MaTaiKhoan) + " AND MaKHC=" + CStr(rs!MaKhachHang))
+            ExecuteSQL5 "UPDATE ChungTu SET SoXuat=SoPS WHERE " + IIF(loai < 0, "MaTKNo=" + CStr(rs!MaTaiKhoan) + " AND MaKH=" + CStr(rs!MaKhachHang), "MaTKCo=" + CStr(rs!MaTaiKhoan) + " AND MaKHC=" + CStr(rs!MaKhachHang))
             tien = 0
             Do While tien < rs!sodu
-                ms = SelectSQL("SELECT TOP 1 MaSo AS F1,SoPS AS F2 FROM ChungTu WHERE " + IIf(loai < 0, "MaTKNo=" + CStr(rs!MaTaiKhoan) + " AND MaKH=" + CStr(rs!MaKhachHang), "MaTKCo=" + CStr(rs!MaTaiKhoan) + " AND MaKHC=" + CStr(rs!MaKhachHang)) + " AND SoPS<=SoXuat AND SoPS>0 ORDER BY NgayGS DESC, MaCT DESC", ps)
+                ms = SelectSQL("SELECT TOP 1 MaSo AS F1,SoPS AS F2 FROM ChungTu WHERE " + IIF(loai < 0, "MaTKNo=" + CStr(rs!MaTaiKhoan) + " AND MaKH=" + CStr(rs!MaKhachHang), "MaTKCo=" + CStr(rs!MaTaiKhoan) + " AND MaKHC=" + CStr(rs!MaKhachHang)) + " AND SoPS<=SoXuat AND SoPS>0 ORDER BY NgayGS DESC, MaCT DESC", ps)
                 If ms > 0 Then
                     If ps > rs!sodu - tien Then
                         ExecuteSQL5 "UPDATE ChungTu SET SoXuat=SoPS-" + DoiDau(rs!sodu - tien) + " WHERE MaSo=" + CStr(ms)
@@ -3916,7 +3918,7 @@ Public Sub CongDDVT(FrmDB As Database, masocu As Long, tencn As String, tachsh A
             Else
                 mcha = 0
             End If
-            ExecuteSQL5 "INSERT INTO PhanLoaiVattu (MaSo,SoHieu,TenPhanLoai,PLCon,PLCha,Cap,MaTK) VALUES (" + CStr(Lng_MaxValue("MaSo", "PhanLoaiVattu") + 1) + ",'" + sh + "','" + rs!TenPhanLoai + "'," + CStr(rs!plcon) + "," + CStr(mcha) + "," + CStr(rs!cap) + "," + CStr(MaTKFix(FrmDB, rs!shtk, IIf(pTK > 0, pCT, ""), tencn)) + ")"
+            ExecuteSQL5 "INSERT INTO PhanLoaiVattu (MaSo,SoHieu,TenPhanLoai,PLCon,PLCha,Cap,MaTK) VALUES (" + CStr(Lng_MaxValue("MaSo", "PhanLoaiVattu") + 1) + ",'" + sh + "','" + rs!TenPhanLoai + "'," + CStr(rs!plcon) + "," + CStr(mcha) + "," + CStr(rs!cap) + "," + CStr(MaTKFix(FrmDB, rs!shtk, IIF(pTK > 0, pCT, ""), tencn)) + ")"
         End If
         rs.MoveNext
     Loop
@@ -4105,7 +4107,7 @@ Public Sub CongDDTS(FrmDB As Database, mactcu As Long, tencn As String, tachsh A
                 & "NamSD, MaTaiKhoan, MaLoai, MaNhom, ThangTang, ThangGiam,NamKH) VALUES (" + CStr(Lng_MaxValue("MaSo", "TaiSan") + 1) + ",'" _
                 + rs!Ten + "','" + sh + "','" + rs!NangLuc + "','" + rs!GhiChu + "'," + CStr(ST2MaSo("Ten", rs!QG, "QuocGia")) + "," _
                 + CStr(rs!NamSX) + "," + CStr(rs!NamSD) + "," + CStr(SoHieu2MaSo(rs!SHT, "LoaiTaiSan")) + "," + CStr(SoHieu2MaSo(rs!SHL, "LoaiTaiSan")) _
-                + "," + CStr(SoHieu2MaSo(IIf(IsNull(rs!SHN), "", rs!SHN), "LoaiTaiSan")) + "," + CStr(rs!ThangTang) + "," + CStr(rs!ThangGiam) + "," + CStr(rs!NamKH) + ")"
+                + "," + CStr(SoHieu2MaSo(IIF(IsNull(rs!SHN), "", rs!SHN), "LoaiTaiSan")) + "," + CStr(rs!ThangTang) + "," + CStr(rs!ThangGiam) + "," + CStr(rs!NamKH) + ")"
             mcha = SoHieu2MaSo(sh, "TaiSan")
             Set rs2 = FrmDB.OpenRecordset("SELECT CTTaiSan.*,LoaiChungTu.SoHieu AS SHL,LCT.SoHieu AS SHN FROM (CTTaiSan INNER JOIN LoaiChungTu ON CTTaiSan.MaLoai=LoaiChungTu.MaSo) INNER JOIN LoaiChungTu AS LCT ON CTTaiSan.MaNhom=LCT.MaSo WHERE (Thang=0) AND MaTS=" + CStr(rs!MaSo), dbOpenSnapshot)
             If rs2.recordCount > 0 Then
@@ -4124,7 +4126,7 @@ Public Sub CongDDTS(FrmDB As Database, mactcu As Long, tencn As String, tachsh A
                     & "KH_NS, KH_TBS, KH_CNK, KH_TD, MaDTQL, MaDTSD, MaTTSD ) " _
                     & "VALUES (" + CStr(Lng_MaxValue("MaSo", "ThongSo") + 1) + "," + CStr(mcha) + "," + CStr(rs2!thang) + "," + DoiDau(rs2!NG_NS) + "," + DoiDau(rs2!NG_TBS) + "," + DoiDau(rs2!NG_CNK) + "," + DoiDau(rs2!NG_TD) _
                     + "," + DoiDau(rs2!CL_NS) + "," + DoiDau(rs2!CL_TBS) + "," + DoiDau(rs2!CL_CNK) + "," + DoiDau(rs2!CL_TD) + "," + DoiDau(rs2!KH_NS) + "," + DoiDau(rs2!KH_TBS) + "," + DoiDau(rs2!KH_CNK) + "," + DoiDau(rs2!KH_TD) _
-                    + "," + CStr(ST2MaSo("Ten", rs2!QL, "DTQLy")) + "," + CStr(MaTKFix(FrmDB, rs2!shtk, IIf(pTK > 0, pCT, ""), tencn)) + "," + CStr(ST2MaSo("Ten", rs2!tt, "TinhTrang")) + ")"
+                    + "," + CStr(ST2MaSo("Ten", rs2!QL, "DTQLy")) + "," + CStr(MaTKFix(FrmDB, rs2!shtk, IIF(pTK > 0, pCT, ""), tencn)) + "," + CStr(ST2MaSo("Ten", rs2!tt, "TinhTrang")) + ")"
                 rs2.MoveNext
             Loop
         End If
@@ -4149,7 +4151,7 @@ Dim rs As Recordset, rs2 As Recordset
     If thangdb = 0 Then ExecuteSQL5 "UPDATE HethongTK SET DuNo_0=DuNo_0-n" + s + ",DuCo_0=DuCo_0-c" + s + ",DuNT_0=DuNT_0-nt" + s + ",n" + s + "=0,c" + s + "=0,nt" + s + "=0"
     Set rs = db.OpenRecordset("SELECT SoHieu,Sum(DuNo_" + thang + ") AS ndk,Sum(DuCo_" + thang + ") AS cdk,Sum(DuNT_" + thang + ") AS dknt FROM HethongTK WHERE TKCon=0 GROUP BY SoHieu HAVING Sum(DuNo_" + thang + ")<>0 OR Sum(DuCo_" + thang + ")<>0 OR Sum(DuNT_" + thang + ")<>0", dbOpenSnapshot, dbForwardOnly)
     Do While Not rs.EOF
-        mk = MaTKFix(db, rs!sohieu, IIf(pTK > 0, pCT, IIf(thangdb = 0, "", "#")), tencn)
+        mk = MaTKFix(db, rs!sohieu, IIF(pTK > 0, pCT, IIF(thangdb = 0, "", "#")), tencn)
         If mk > 0 Then
             If thangdb = 0 Then
                 Set rs2 = DBKetoan.OpenRecordset("SELECT DISTINCTROW DuNo_0 AS dkn,DuCo_0 AS dkc,DuNT_0 AS dknt FROM HethongTK WHERE MaSo=" + CStr(mk), dbOpenSnapshot, dbForwardOnly)
@@ -4187,7 +4189,7 @@ Dim rs As Recordset, rs2 As Recordset
     If thangdb = 0 Then ExecuteSQL5 "UPDATE TonKho SET Luong_0=Luong_0-n" + s + ",Tien_0=Tien_0-c" + s + ",n" + s + "=0,c" + s + "=0"
     Set rs = db.OpenRecordset("SELECT KhoHang.TenKho AS Kho,HethongTK.SoHieu AS SHTK, Vattu.SoHieu AS SHVT,Luong_" + thang + " AS ndk,Tien_" + thang + " AS cdk FROM ((TonKho INNER JOIN HethongTK ON TonKho.MaTaiKhoan=HethongTK.MaSo) INNER JOIN Vattu ON TonKho.MaVattu=Vattu.MaSo) INNER JOIN KhoHang ON TonKho.MaSoKho=KhoHang.MaSo WHERE Luong_" + thang + "<>0 OR Tien_" + thang + "<>0", dbOpenSnapshot, dbForwardOnly)
     Do While Not rs.EOF
-        mk = MaTKFix(db, rs!shtk, IIf(pTK > 0, pCT, ""), tencn)
+        mk = MaTKFix(db, rs!shtk, IIF(pTK > 0, pCT, ""), tencn)
         mv = SoHieu2MaSo(rs!shvt, "Vattu")
         m2 = ST2MaSo("TenKho", rs!kho, "KhoHang")
         If mk > 0 And mv > 0 And m2 > 0 Then
@@ -4225,7 +4227,7 @@ Dim rs As Recordset, rs2 As Recordset, n As Double, c As Double, dknt As Double
     If thangdb = 0 Then ExecuteSQL5 "UPDATE SoDuKhachHang SET DuNo_0=DuNo_0-n" + s + ",DuCo_0=DuCo_0-c" + s + ",DuNT_0=DuNT_0-nt" + s + ",n" + s + "=0,c" + s + "=0,nt" + s + "=0"
     Set rs = db.OpenRecordset("SELECT HethongTK.SoHieu AS SHTK, KhachHang.SoHieu AS SHKH,SoDuKhachHang.DuNo_" + thang + " AS ndk,SoDuKhachHang.DuCo_" + thang + " AS cdk,SoDuKhachHang.DuNT_" + thang + " AS ntdk FROM (SoDuKhachHang INNER JOIN HethongTK ON SoDuKhachHang.MaTaiKhoan=HethongTK.MaSo) INNER JOIN KhachHang ON SoDuKhachHang.MaKhachHang=KhachHang.MaSo WHERE SoDuKhachHang.DuNo_" + thang + "<>0 OR SoDuKhachHang.DuCo_" + thang + "<>0 OR SoDuKhachHang.DuNT_" + thang + "<>0", dbOpenSnapshot, dbForwardOnly)
     Do While Not rs.EOF
-        mk = MaTKFix(db, rs!shtk, IIf(pTK > 0, pCT, ""), tencn)
+        mk = MaTKFix(db, rs!shtk, IIF(pTK > 0, pCT, ""), tencn)
         m2 = SoHieu2MaSo(rs!shkh, "KhachHang")
         If mk > 0 And m2 > 0 Then
             Set rs2 = DBKetoan.OpenRecordset("SELECT DISTINCTROW DuNo_0 AS dkn,DuCo_0 AS dkc,DuNT_0 AS dknt FROM SoDuKhachHang WHERE MaTaiKhoan=" + CStr(mk) + " AND MaKhachHang=" + CStr(m2), dbOpenSnapshot)
@@ -4323,7 +4325,7 @@ Function Federo16(ByVal src As String, ByVal FStr As String) As String
     Next i
     For i = 1 To Len(temp)
         result = result & Chr(Asc(Mid$(temp, i, 1)) + Asc(Mid$(FStr, j, 1)))
-        j = IIf((j = Len(FStr)), 1, j + 1)
+        j = IIF((j = Len(FStr)), 1, j + 1)
     Next i
     Federo16 = result
 End Function
@@ -4335,7 +4337,7 @@ Function Federo16Decrypt(ByVal src As String, ByVal FStr As String) As String
     j = 1
     For i = 1 To Len(src)
         temp = temp & Chr(Asc(Mid$(src, i, 1)) - Asc(Mid$(FStr, j, 1)))
-        j = IIf((j = Len(FStr)), 1, j + 1)
+        j = IIF((j = Len(FStr)), 1, j + 1)
     Next i
     For i = 1 To Len(temp) Step 2
         result = result & Chr(CLng("&H" & Mid$(temp, i, 2)))
