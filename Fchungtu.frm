@@ -3152,6 +3152,10 @@ Option Explicit
 Private Declare Function SetTimer Lib "user32" (ByVal hwnd As Long, ByVal nIDEvent As Long, ByVal uElapse As Long, ByVal lpTimerFunc As Long) As Long
 Private Declare Function KillTimer Lib "user32" (ByVal hwnd As Long, ByVal nIDEvent As Long) As Long
 
+Dim myList() As String
+Dim Indexes As Integer
+Dim numberOfItems As Integer
+    
 Dim TimerID As Long
 ' Ð?u tiên, khai báo các API c?n thi?t
 Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" _
@@ -3497,8 +3501,8 @@ Public Sub DoSubNganhang()
         RFocus txtchungtu(5)
         txtchungtu(5).Text = rs_ktraNH!TongTien2
         RFocus txtchungtu(6)
+        txtchungtu(6).Text = 0
         txtChungtu_KeyPress 6, 13
-
 
         If rs_ktraNH!makh <> "" Then
             txtchungtu(0).Text = rs_ktraNH!TkCo
@@ -3514,17 +3518,14 @@ Public Sub DoSubNganhang()
 
             txtchungtu(6).Text = rs_ktraNH!TongTien2
             txtChungtu_KeyPress 6, 13
+            sttnganhang = sttnganhang + 1
         Else
             txtchungtu(0).Text = rs_ktraNH!TkCo
             txtChungtu_LostFocus 0
             RFocus txtchungtu(1)
             txtChungtu_LostFocus 1
             txtchungtu(6).Text = rs_ktraNH!TongTien2
-
-            If sttnganhang = 0 Then
-                txtChungtu_KeyPress 6, 13
-                sttnganhang = sttnganhang + 1
-            End If
+            txtChungtu_KeyPress 6, 13
 
         End If
         'RFocus txtchungtu(6)
@@ -5498,6 +5499,23 @@ htp:
         End If
     End If
     If HasChitiet = False Then
+    
+    Dim Y As Integer
+    Dim ContainsValue As Boolean
+    ContainsValue = False ' M?c d?nh là không tìm th?y
+
+    For Y = LBound(myList) To UBound(myList)
+        If myList(Y) = txtchungtu(0).Text And (txtchungtu(0).Text Like "111*" Or txtchungtu(0).Text Like "331*" Or txtchungtu(0).Text Like "131*") Then
+            ContainsValue = True ' Tìm th?y giá tr?
+         Exit For ' Thoát kh?i vòng l?p
+
+        End If
+    Next Y
+    
+        If ContainsValue = False Then
+         myList(Indexes) = (txtchungtu(0).Text)
+         Indexes = Indexes + 1
+    
         GrdChungtu.AddItem "" + Chr(9) + txtchungtu(0).Text + Chr(9) + txtchungtu(1).Text + Chr(9) + shnt _
                          + Chr(9) + IIf(nt <> 0, Format(nt, Mask_2), "") + Chr(9) + IIf(nt <> 0, txtchungtu(4).Text, "") + Chr(9) + Format(no, msk) + Chr(9) + Format(co, msk) + Chr(9) _
                          + CStr(taikhoan.MaSo) + Chr(9) + CStr(vattu.MaSo) + Chr(9) + IIf(taikhoan.loai > 0, "0", "1") _
@@ -5505,7 +5523,8 @@ htp:
                          + Chr(9) + "" + Chr(9) + "" + Chr(9) + "" + Chr(9) + DoiDau(IIf(no <> 0, m, 0)) + Chr(9) + CStr(i) + Chr(9) _
                          + "" + Chr(9) + DoiDau(IIf(co <> 0, m, 0)) + Chr(9) + CStr(tp.MaSo) + Chr(9) + "" + Chr(9) + CStr(dvt) + Chr(9) _
                          + Format(txtchungtu(11).Text, Mask_2) + Chr(9) + Format(txtchungtu(9).Text, IIf(Cdbl5(txtchungtu(9).Text) * 100 Mod 100 <> 0, Mask_2, Mask_0)) + Chr(9) + Format(txtchungtu(10).Text, Mask_0) + Chr(9) + frmSoLo.txtsolo.Text + Chr(9) + frmSoLo.txtngaynhap.Text, IIf(CmdChitiet.tag < 0, NewRowIndex(GrdChungtu, 1), CmdChitiet.tag)
-
+        End If
+    
     End If
 
     If taikhoan.MaTC = 14045 Then
@@ -6878,6 +6897,9 @@ Public Sub Command_Click(Index As Integer)
         End If
         RFocus CboThang
     Case 1:
+        Erase myList
+        ReDim myList(0 To numberOfItems - 1)
+        Indexes = 0
         If (kiem_tra_so_dong() = False) Then
             GoTo XongCT
         End If
@@ -7730,7 +7752,9 @@ Private Sub dlayNganhang_Timer()
 End Sub
 
 Private Sub Form_Activate()
-    
+    numberOfItems = 10
+        ReDim myList(0 To numberOfItems - 1)
+
     Grid2.Left = ScaleWidth * 0.27   ' 30% c?a kích thu?c màn hình
     countbanhang = 1
     Dim ithang As Integer
@@ -9482,7 +9506,6 @@ End Function
 '====================================================================================================
 Private Sub txtChungtu_KeyPress(Index As Integer, KeyAscii As Integer)
     demClick = demClick + 1
-
     Dim str As String
 
     Select Case Index
