@@ -24,6 +24,14 @@ Begin VB.Form FrmChungtu
    Tag             =   "0"
    WhatsThisButton =   -1  'True
    WhatsThisHelp   =   -1  'True
+   Begin VB.CommandButton btnXoa 
+      Caption         =   "Xoa"
+      Height          =   495
+      Left            =   5400
+      TabIndex        =   177
+      Top             =   8400
+      Width           =   1455
+   End
    Begin VB.CommandButton btnReset 
       Caption         =   "Reset"
       Height          =   375
@@ -75,7 +83,7 @@ Begin VB.Form FrmChungtu
    End
    Begin VB.Timer dlayNganhang 
       Enabled         =   0   'False
-      Interval        =   300
+      Interval        =   100
       Left            =   10680
       Top             =   4080
    End
@@ -117,7 +125,7 @@ Begin VB.Form FrmChungtu
    Begin VB.Timer timerImport 
       Enabled         =   0   'False
       Interval        =   100
-      Left            =   12600
+      Left            =   12720
       Top             =   5640
    End
    Begin VB.TextBox txtNgaychungtu 
@@ -4153,6 +4161,23 @@ Private Sub btnReset_Click()
     hasError = False
 End Sub
 
+Private Sub btnXoa_Click()
+With Grid2
+MsgBox .Row
+        For i = 0 To .Row - 1
+            '  For j = 0 To .Cols - 1
+            .Row = i
+            .col = 0
+            '.col = 6
+            If Len(.Text) > 0 Then
+               MsgBox .Text
+            End If
+            'MsgBox (.Text)
+            '  Next
+        Next
+    End With
+End Sub
+
 Private Sub Command6_Click()
     DoNganhang
 End Sub
@@ -6808,6 +6833,8 @@ End Function
 ' C¸c chøc n¨ng thªm, ghi, xãa
 '====================================================================================================
 Public Sub Command_Click(Index As Integer)
+
+
     If hasError = True Then
         Exit Sub
     End If

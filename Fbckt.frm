@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.5#0"; "COMCTL32.OCX"
-Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "MSMASK32.OCX"
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
+Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.5#0"; "comctl32.Ocx"
+Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "msmask32.ocx"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TabCtl32.Ocx"
 Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Begin VB.Form FBcKt 
    AutoRedraw      =   -1  'True
@@ -6460,7 +6460,7 @@ Public Sub BangCDCno(tdau As Integer, tcuoi As Integer, mpl As Long)
     Next
     GauGe.Value = 1
     st = CStr(CThangDB(ThangTruoc(tdau)))
-    SetSQL "QChitiet", "SELECT DISTINCTROW KhachHang.SoHieu, KhachHang.Ten, PhanLoaiKhachHang.SoHieu AS SHPL, TenPhanLoai,KyHieu," _
+    SetSQL "QChitiet", "SELECT DISTINCTROW KhachHang.SoHieu, KhachHang.Ten, PhanLoaiKhachHang.SoHieu AS SHPL, TenPhanLoai,HethongTK.KyHieu," _
         & " SoDuKhachHang.DuNo_" + st + " AS DkNo, SoDuKhachHang.DuCo_" + st + " AS DkCo, SoDuKhachHang.DuNT_" + st + " AS DkNT, (" + sqln + ") AS PsNo, (" + sqln2 + ") AS PsNo2, (" + sqlc + ") AS PsCo, (" + sqlc2 + ") AS PsCo2, (" + sqlnx + ") AS PsNoX, (" + sqlnx2 + ") AS PsNoX2, (" + sqlcx + ") AS PsCoX, (" + sqlcx2 + ") AS PsCoX2, SoDuKhachHang.DuNo_" _
         + CStr(CThangDB(tcuoi)) + " AS CkNo, SoDuKhachHang.DuCo_" + CStr(CThangDB(tcuoi)) + " AS CkCo, SoDuKhachHang.DuNT_" + CStr(CThangDB(tcuoi)) + " AS CkNT,PhanLoaiKhachHang.PLCha,HethongTK.SoHieu AS SHTK,HethongTK.Ten AS TenTK" _
         & " FROM (((KhachHang INNER JOIN PhanLoaiKhachHang ON KhachHang.MaPhanLoai=PhanLoaiKhachHang.MaSo) INNER JOIN SoDuKhachHang ON KhachHang.MaSo=SoDuKhachHang.MaKhachHang) LEFT JOIN NguyenTe ON KhachHang.MaNT=NguyenTe.MaSo) INNER JOIN HethongTK ON SoDuKhachHang.MaTaiKhoan=HethongTK.MaSo " _
