@@ -1,0 +1,4578 @@
+VERSION 5.00
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Begin VB.Form FrmOptions 
+   AutoRedraw      =   -1  'True
+   BackColor       =   &H00FFFFC0&
+   BorderStyle     =   0  'None
+   ClientHeight    =   8265
+   ClientLeft      =   615
+   ClientTop       =   585
+   ClientWidth     =   11925
+   ClipControls    =   0   'False
+   FillColor       =   &H00FFFFC0&
+   BeginProperty Font 
+      Name            =   "VK Sans Serif"
+      Size            =   9.75
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
+   ForeColor       =   &H00FFFFC0&
+   Icon            =   "Frmopt.frx":0000
+   KeyPreview      =   -1  'True
+   LinkTopic       =   "Form1"
+   MaxButton       =   0   'False
+   MinButton       =   0   'False
+   PaletteMode     =   1  'UseZOrder
+   Picture         =   "Frmopt.frx":57E2
+   ScaleHeight     =   8265
+   ScaleWidth      =   11925
+   ShowInTaskbar   =   0   'False
+   Tag             =   "Options"
+   Begin VB.PictureBox picFakeTitle 
+      BackColor       =   &H00FFFFFF&
+      BorderStyle     =   0  'None
+      Height          =   255
+      Left            =   0
+      ScaleHeight     =   255
+      ScaleWidth      =   13575
+      TabIndex        =   135
+      Top             =   0
+      Width           =   13575
+      Begin VB.Label lblTitle 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Th«ng sè hÖ thèng"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   405
+         Index           =   11
+         Left            =   600
+         TabIndex        =   137
+         Top             =   0
+         Width           =   4455
+      End
+      Begin VB.Image picIcon 
+         Appearance      =   0  'Flat
+         Height          =   255
+         Index           =   1
+         Left            =   120
+         Picture         =   "Frmopt.frx":AFC4
+         Stretch         =   -1  'True
+         Top             =   0
+         Width           =   255
+      End
+      Begin VB.Image Image1 
+         Height          =   8550
+         Index           =   0
+         Left            =   840
+         Picture         =   "Frmopt.frx":B281
+         Stretch         =   -1  'True
+         Top             =   240
+         Width           =   7890
+      End
+      Begin VB.Label lblClose 
+         Alignment       =   2  'Center
+         BackColor       =   &H00FFFFFF&
+         BackStyle       =   0  'Transparent
+         Caption         =   "X"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   405
+         Left            =   11400
+         TabIndex        =   136
+         Top             =   0
+         Width           =   480
+      End
+   End
+   Begin VB.Frame Frame 
+      BackColor       =   &H00FFFFC0&
+      BeginProperty Font 
+         Name            =   "VK Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   4425
+      Index           =   1
+      Left            =   0
+      TabIndex        =   69
+      Top             =   4680
+      Width           =   9070
+      Begin VB.CheckBox ChkVT 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Luü kÕ theo ngµy chØ kª vËt t­ cã ph¸t sinh"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   6
+         Left            =   120
+         TabIndex        =   114
+         Top             =   3000
+         Width           =   3735
+      End
+      Begin VB.CheckBox ChkVT 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "KiÓm kª tån kho theo ngµy"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   5
+         Left            =   120
+         TabIndex        =   113
+         Top             =   3240
+         Width           =   2895
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "NhËt ký chung"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   10
+         Left            =   4440
+         TabIndex        =   108
+         Top             =   1800
+         Value           =   1  'Checked
+         Width           =   1455
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "CT ghi sæ"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   11
+         Left            =   4440
+         TabIndex        =   107
+         Top             =   2040
+         Value           =   1  'Checked
+         Width           =   1095
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "NK chøng tõ"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   12
+         Left            =   4440
+         TabIndex        =   106
+         Top             =   2280
+         Value           =   1  'Checked
+         Width           =   1455
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Cho nhËp trïng sè hiÖu chøng tõ kh¸c th¸ng"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   38
+         Left            =   120
+         TabIndex        =   101
+         Top             =   2520
+         Width           =   4095
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "NhËp theo tªn"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   37
+         Left            =   1680
+         TabIndex        =   100
+         Top             =   840
+         Visible         =   0   'False
+         Width           =   1335
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "TÝnh gi¸ vèn hµng nhËp khÈu"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   36
+         Left            =   5520
+         TabIndex        =   98
+         Top             =   5040
+         Visible         =   0   'False
+         Width           =   3135
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   25
+         Left            =   9360
+         MaxLength       =   2
+         TabIndex        =   97
+         Text            =   "0"
+         Top             =   4200
+         Visible         =   0   'False
+         Width           =   495
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "Sè th«ng tin chøng tõ bæ sung cÇn theo dâi"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   35
+         Left            =   5520
+         TabIndex        =   96
+         Top             =   4800
+         Visible         =   0   'False
+         Width           =   3495
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "ChiÕt khÊu ®Çu ra theo mÆt hµng"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   34
+         Left            =   120
+         TabIndex        =   93
+         Top             =   2040
+         Width           =   3495
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "§¬n gi¸ hµng ho¸ vµ ho¸ ®¬n sö dông USD"
+         Enabled         =   0   'False
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   33
+         Left            =   120
+         TabIndex        =   91
+         Top             =   4920
+         Visible         =   0   'False
+         Width           =   3735
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "Ph©n quyÒn theo tµi kho¶n"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   32
+         Left            =   600
+         TabIndex        =   90
+         Top             =   3960
+         Width           =   2415
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "C«ng nî theo ho¸ ®¬n"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   31
+         Left            =   5520
+         TabIndex        =   89
+         Top             =   3600
+         Width           =   3015
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "Sö dông c¸c b¸o c¸o qu¶n trÞ"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   30
+         Left            =   5520
+         TabIndex        =   87
+         Top             =   4560
+         Width           =   3015
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "T¸ch chøc n¨ng in phiÕu"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   29
+         Left            =   5520
+         TabIndex        =   86
+         Top             =   4320
+         Width           =   3015
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "Theo dâi nh©n viªn b¸n hµng"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   24
+         Left            =   5520
+         TabIndex        =   83
+         Top             =   4080
+         Width           =   3015
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "Sö dung chøc n¨ng in b¸o gi¸"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   23
+         Left            =   120
+         TabIndex        =   82
+         Top             =   4680
+         Visible         =   0   'False
+         Width           =   3015
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   10
+         Left            =   9120
+         MaxLength       =   20
+         TabIndex        =   81
+         Text            =   "..."
+         Top             =   2280
+         Visible         =   0   'False
+         Width           =   975
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Gi¸ thµnh s¶n xuÊt"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   22
+         Left            =   120
+         TabIndex        =   33
+         Top             =   1800
+         Width           =   1695
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Tû gi¸ b×nh qu©n"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   21
+         Left            =   120
+         TabIndex        =   32
+         Top             =   5160
+         Width           =   1695
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   24
+         Left            =   3120
+         MaxLength       =   2
+         TabIndex        =   79
+         Tag             =   "0"
+         Text            =   "0"
+         Top             =   3720
+         Visible         =   0   'False
+         Width           =   495
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "Cho sö dông chøc n¨ng tæng hîp sè liÖu"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   20
+         Left            =   5520
+         TabIndex        =   74
+         Top             =   3840
+         Width           =   3615
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "Cho phÐp ®iÒu chØnh tªn chi nh¸nh"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   19
+         Left            =   120
+         TabIndex        =   73
+         Top             =   4440
+         Width           =   3015
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   22
+         Left            =   3960
+         MaxLength       =   20
+         TabIndex        =   51
+         Text            =   "8.0"
+         Top             =   4440
+         Width           =   975
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   21
+         Left            =   4200
+         MaxLength       =   20
+         TabIndex        =   50
+         Text            =   "0"
+         Top             =   4080
+         Width           =   975
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "Theo dâi tû gi¸ tõng chøng tõ víi tû gi¸ ®Çu n¨m lµ"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   18
+         Left            =   120
+         TabIndex        =   49
+         Top             =   4200
+         Width           =   3975
+      End
+      Begin VB.ComboBox Combo 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   315
+         Index           =   2
+         ItemData        =   "Frmopt.frx":16D9E
+         Left            =   3960
+         List            =   "Frmopt.frx":16DA0
+         Style           =   2  'Dropdown List
+         TabIndex        =   53
+         Top             =   5040
+         Width           =   1095
+      End
+      Begin VB.Frame Frame 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Ph­¬ng ph¸p tÝnh gi¸ xuÊt kho"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   1305
+         Index           =   2
+         Left            =   4320
+         TabIndex        =   70
+         Top             =   240
+         Width           =   3975
+         Begin VB.CheckBox ChkVT 
+            BackColor       =   &H00FFFFC0&
+            Caption         =   "In barcode"
+            BeginProperty Font 
+               Name            =   "VK Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Index           =   4
+            Left            =   6120
+            TabIndex        =   99
+            Top             =   360
+            Visible         =   0   'False
+            Width           =   1095
+         End
+         Begin VB.CheckBox ChkVT 
+            BackColor       =   &H00FFFFC0&
+            Caption         =   "KiÓm kª tån kho theo ngµy"
+            BeginProperty Font 
+               Name            =   "VK Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Index           =   3
+            Left            =   120
+            TabIndex        =   94
+            Top             =   1440
+            Visible         =   0   'False
+            Width           =   2895
+         End
+         Begin VB.OptionButton OptVT 
+            BackColor       =   &H00FFFFC0&
+            Caption         =   "Gi¸ b×nh qu©n"
+            BeginProperty Font 
+               Name            =   "VK Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Index           =   0
+            Left            =   120
+            TabIndex        =   34
+            Top             =   240
+            Value           =   -1  'True
+            Width           =   1455
+         End
+         Begin VB.OptionButton OptVT 
+            BackColor       =   &H00FFFFC0&
+            Caption         =   "XuÊt ®Ých danh"
+            BeginProperty Font 
+               Name            =   "VK Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Index           =   1
+            Left            =   120
+            TabIndex        =   35
+            Top             =   480
+            Width           =   1575
+         End
+         Begin VB.OptionButton OptVT 
+            BackColor       =   &H00FFFFC0&
+            Caption         =   "FIFO"
+            BeginProperty Font 
+               Name            =   "VK Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Index           =   2
+            Left            =   120
+            TabIndex        =   36
+            Top             =   720
+            Width           =   975
+         End
+         Begin VB.OptionButton OptVT 
+            BackColor       =   &H00FFFFC0&
+            Caption         =   "LIFO"
+            BeginProperty Font 
+               Name            =   "VK Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Index           =   3
+            Left            =   120
+            TabIndex        =   37
+            Top             =   960
+            Width           =   975
+         End
+         Begin VB.CheckBox ChkVT 
+            BackColor       =   &H00FFFFC0&
+            Caption         =   "Cè ®Þnh gi¸ xuÊt"
+            BeginProperty Font 
+               Name            =   "VK Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Index           =   0
+            Left            =   2040
+            TabIndex        =   38
+            Top             =   240
+            Value           =   1  'Checked
+            Visible         =   0   'False
+            Width           =   1575
+         End
+         Begin VB.CheckBox ChkVT 
+            BackColor       =   &H00FFFFC0&
+            Caption         =   "Sö dông gi¸ HT"
+            BeginProperty Font 
+               Name            =   "VK Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Index           =   1
+            Left            =   2040
+            TabIndex        =   39
+            Top             =   480
+            Value           =   1  'Checked
+            Visible         =   0   'False
+            Width           =   1575
+         End
+         Begin VB.CheckBox ChkVT 
+            BackColor       =   &H00FFFFC0&
+            Caption         =   "Luü kÕ theo ngµy chØ kª vËt t­ cã ph¸t sinh"
+            BeginProperty Font 
+               Name            =   "VK Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Index           =   2
+            Left            =   120
+            TabIndex        =   40
+            Top             =   1680
+            Visible         =   0   'False
+            Width           =   3735
+         End
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Theo dâi chi tiÕt vËt t­, hµng ho¸"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   0
+         Left            =   120
+         TabIndex        =   24
+         Top             =   120
+         Value           =   1  'Checked
+         Width           =   2895
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Theo dâi chi tiÕt tµi s¶n cè ®Þnh"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   1
+         Left            =   120
+         TabIndex        =   25
+         Top             =   360
+         Value           =   1  'Checked
+         Width           =   2895
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Theo dâi chi tiÕt c«ng nî"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   2
+         Left            =   120
+         TabIndex        =   26
+         Top             =   600
+         Value           =   1  'Checked
+         Width           =   2775
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "H¹ch to¸n kÐp"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   3
+         Left            =   120
+         TabIndex        =   27
+         Top             =   840
+         Value           =   1  'Checked
+         Width           =   2775
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Tù ®éng xuÊt gi¸ vèn hµng b¸n"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   4
+         Left            =   120
+         TabIndex        =   28
+         Top             =   1080
+         Value           =   1  'Checked
+         Width           =   2655
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "TËp hîp gi¸ thµnh theo ®èi t­îng"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   5
+         Left            =   120
+         TabIndex        =   30
+         Top             =   1320
+         Value           =   1  'Checked
+         Width           =   2775
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Trõ lïi thuÕ GTGT trªn ho¸ ®¬n "
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   6
+         Left            =   120
+         TabIndex        =   42
+         Top             =   2280
+         Width           =   3615
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "In chi tiÕt mÆt hµng trªn b¶ng kª"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   7
+         Left            =   2880
+         TabIndex        =   43
+         Top             =   5040
+         Width           =   2655
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "KiÓm tra tû lÖ thuÕ c¸c mÆt hµng cïng ho¸ ®¬n"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   8
+         Left            =   2880
+         TabIndex        =   44
+         Top             =   5280
+         Width           =   3735
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "In b¸o c¸o thuÕ cã m· v¹ch"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   9
+         Left            =   120
+         TabIndex        =   41
+         Top             =   5400
+         Width           =   2415
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "§Þnh møc thµnh phÈm theo th¸ng"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   13
+         Left            =   120
+         TabIndex        =   31
+         Top             =   1560
+         Width           =   2775
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "Song ng÷"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   14
+         Left            =   3240
+         TabIndex        =   52
+         Top             =   4560
+         Width           =   1095
+      End
+      Begin VB.ComboBox CTGS 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   315
+         ItemData        =   "Frmopt.frx":16DA2
+         Left            =   2880
+         List            =   "Frmopt.frx":16DCA
+         Style           =   2  'Dropdown List
+         TabIndex        =   29
+         Top             =   1080
+         Visible         =   0   'False
+         Width           =   975
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "Qu¶n lý quyÒn xem tõng b¸o c¸o"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   15
+         Left            =   120
+         TabIndex        =   45
+         Top             =   3720
+         Width           =   2775
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Cho sö dông chøc n¨ng ®æi font"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   16
+         Left            =   120
+         TabIndex        =   46
+         Top             =   2760
+         Width           =   2775
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "Ch­¬ng tr×nh söa ®æi theo doanh nghiÖp"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   17
+         Left            =   120
+         TabIndex        =   47
+         Top             =   3960
+         Width           =   3255
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   8
+         Left            =   3480
+         MaxLength       =   50
+         TabIndex        =   48
+         Text            =   "..."
+         Top             =   3840
+         Width           =   2295
+      End
+      Begin VB.Label Label2 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Trõ chiÕt khÊu, gi¶m gi¸ trªn ho¸ ®¬n ®Çu ra"
+         ForeColor       =   &H00000000&
+         Height          =   255
+         Index           =   3
+         Left            =   4920
+         TabIndex        =   131
+         Top             =   3240
+         Width           =   4095
+      End
+      Begin MSForms.CheckBox CheckBox1 
+         Height          =   255
+         Index           =   3
+         Left            =   4440
+         TabIndex        =   130
+         Top             =   3240
+         Width           =   255
+         BackColor       =   16777152
+         ForeColor       =   16777152
+         DisplayStyle    =   4
+         Size            =   "450;450"
+         Value           =   "0"
+         FontName        =   "VK Sans Serif"
+         FontHeight      =   195
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
+      End
+      Begin VB.Label Label2 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Trõ chiÕt khÊu, gi¶m gi¸ trªn ho¸ ®¬n ®Çu vµo"
+         ForeColor       =   &H00000000&
+         Height          =   255
+         Index           =   2
+         Left            =   4920
+         TabIndex        =   129
+         Top             =   2950
+         Width           =   4095
+      End
+      Begin VB.Label Label2 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Tù ®éng nhËp, xuÊt kho"
+         ForeColor       =   &H00000000&
+         Height          =   615
+         Index           =   1
+         Left            =   240
+         TabIndex        =   128
+         Top             =   120
+         Width           =   2175
+      End
+      Begin MSForms.CheckBox CheckBox1 
+         Height          =   255
+         Index           =   2
+         Left            =   4440
+         TabIndex        =   127
+         Top             =   2950
+         Width           =   255
+         BackColor       =   16777152
+         ForeColor       =   16777152
+         DisplayStyle    =   4
+         Size            =   "450;450"
+         Value           =   "0"
+         FontName        =   "VK Sans Serif"
+         FontHeight      =   195
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
+      End
+      Begin VB.Label Label2 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Bá qua lçi import "
+         ForeColor       =   &H00000000&
+         Height          =   255
+         Index           =   0
+         Left            =   4920
+         TabIndex        =   125
+         Top             =   2640
+         Width           =   2175
+      End
+      Begin MSForms.CheckBox CheckBox1 
+         Height          =   255
+         Index           =   0
+         Left            =   4440
+         TabIndex        =   124
+         Top             =   2640
+         Width           =   255
+         BackColor       =   16777152
+         ForeColor       =   16777152
+         DisplayStyle    =   4
+         Size            =   "450;450"
+         Value           =   "0"
+         FontName        =   "VK Sans Serif"
+         FontHeight      =   195
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Sö dông c¸c sæ:"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   18
+         Left            =   4440
+         TabIndex        =   109
+         Top             =   1560
+         Width           =   1335
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Sè m¸y truy cËp tèi ®a trªn m¹ng"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   24
+         Left            =   600
+         TabIndex        =   80
+         Top             =   3720
+         Visible         =   0   'False
+         Width           =   2535
+         WordWrap        =   -1  'True
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "Rev."
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   16
+         Left            =   3120
+         TabIndex        =   72
+         Top             =   3960
+         Width           =   375
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "H¹ch to¸n b»ng"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   10
+         Left            =   3960
+         TabIndex        =   71
+         Top             =   4800
+         Width           =   1575
+      End
+   End
+   Begin VB.TextBox Text 
+      BeginProperty Font 
+         Name            =   "VK Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   285
+      Index           =   29
+      Left            =   8640
+      MaxLength       =   20
+      TabIndex        =   123
+      Text            =   "..."
+      Top             =   6720
+      Width           =   255
+   End
+   Begin VB.CheckBox Chbanthuoc 
+      BackColor       =   &H00FFFFC0&
+      Caption         =   "§Æt thï ngµnh d­îc"
+      BeginProperty Font 
+         Name            =   "VK Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   255
+      Left            =   120
+      TabIndex        =   105
+      Top             =   6360
+      Width           =   2895
+   End
+   Begin VB.CommandButton active 
+      Caption         =   "Active"
+      Height          =   375
+      Left            =   9120
+      TabIndex        =   104
+      Top             =   6840
+      Width           =   1095
+   End
+   Begin VB.TextBox Text 
+      BackColor       =   &H00FFFFC0&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "VK Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFC0&
+      Height          =   285
+      Index           =   4
+      Left            =   7440
+      MaxLength       =   300
+      TabIndex        =   103
+      Text            =   "0"
+      Top             =   3480
+      Width           =   1335
+   End
+   Begin VB.TextBox Text 
+      BeginProperty Font 
+         Name            =   "VK Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   285
+      Index           =   27
+      Left            =   11400
+      MaxLength       =   30
+      TabIndex        =   92
+      Text            =   "..."
+      Top             =   600
+      Visible         =   0   'False
+      Width           =   375
+   End
+   Begin VB.Frame Frame 
+      BackColor       =   &H00FFFFC0&
+      BeginProperty Font 
+         Name            =   "VK Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   4815
+      Index           =   0
+      Left            =   0
+      TabIndex        =   56
+      Top             =   0
+      Width           =   9075
+      Begin VB.TextBox Text4 
+         Height          =   360
+         Left            =   1800
+         TabIndex        =   143
+         Text            =   "Text4"
+         Top             =   4200
+         Visible         =   0   'False
+         Width           =   7095
+      End
+      Begin VB.CommandButton Command1 
+         Height          =   375
+         Left            =   7920
+         TabIndex        =   134
+         Top             =   4560
+         Visible         =   0   'False
+         Width           =   735
+      End
+      Begin VB.TextBox Text3 
+         Height          =   360
+         Left            =   1800
+         TabIndex        =   133
+         Text            =   "Text3"
+         Top             =   4200
+         Width           =   7095
+      End
+      Begin VB.Frame Frame1 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Frame1"
+         Height          =   1935
+         Left            =   3840
+         TabIndex        =   115
+         Top             =   2160
+         Width           =   5055
+         Begin VB.TextBox Text2 
+            Height          =   360
+            Left            =   2880
+            TabIndex        =   119
+            Text            =   "0"
+            Top             =   720
+            Width           =   1935
+         End
+         Begin VB.TextBox Text1 
+            Height          =   360
+            Left            =   480
+            TabIndex        =   118
+            Text            =   "0"
+            Top             =   720
+            Width           =   1695
+         End
+         Begin VB.OptionButton Option2 
+            BackColor       =   &H00FFFFC0&
+            Caption         =   "Theo n¨m"
+            Height          =   240
+            Left            =   360
+            TabIndex        =   117
+            Top             =   360
+            Width           =   1215
+         End
+         Begin VB.OptionButton Option1 
+            BackColor       =   &H00FFFFC0&
+            Caption         =   "§¨ng ký vÜnh viÔn"
+            Height          =   240
+            Left            =   360
+            TabIndex        =   116
+            Top             =   1440
+            Width           =   1935
+         End
+         Begin VB.Label Label1 
+            BackColor       =   &H00FFFFC0&
+            Caption         =   "Sè l­îng chøng tõ"
+            Height          =   255
+            Left            =   2880
+            TabIndex        =   120
+            Top             =   360
+            Width           =   855
+         End
+      End
+      Begin VB.ComboBox Combo 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   315
+         Index           =   3
+         ItemData        =   "Frmopt.frx":16DF5
+         Left            =   9120
+         List            =   "Frmopt.frx":16E0D
+         Style           =   2  'Dropdown List
+         TabIndex        =   12
+         Top             =   840
+         Visible         =   0   'False
+         Width           =   735
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   28
+         Left            =   7080
+         MaxLength       =   30
+         TabIndex        =   112
+         Text            =   "..."
+         Top             =   4800
+         Width           =   1575
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   13
+         Left            =   1800
+         MaxLength       =   2
+         TabIndex        =   110
+         Text            =   "2"
+         Top             =   3840
+         Width           =   255
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   26
+         Left            =   1800
+         MaxLength       =   500
+         TabIndex        =   102
+         Text            =   "..."
+         Top             =   480
+         Visible         =   0   'False
+         Width           =   7215
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   28
+         Left            =   2280
+         TabIndex        =   88
+         Top             =   3840
+         Visible         =   0   'False
+         Width           =   375
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "B¸o c¸o néi bé"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Index           =   55
+         Left            =   9120
+         TabIndex        =   95
+         Top             =   0
+         Visible         =   0   'False
+         Width           =   255
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   9
+         Left            =   9360
+         MaxLength       =   20
+         TabIndex        =   16
+         Text            =   "..."
+         Top             =   1080
+         Visible         =   0   'False
+         Width           =   510
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "CDT"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Index           =   27
+         Left            =   9120
+         TabIndex        =   15
+         Top             =   1920
+         Visible         =   0   'False
+         Width           =   735
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   26
+         Left            =   2280
+         MaskColor       =   &H00FFFFFF&
+         TabIndex        =   14
+         Top             =   3840
+         Visible         =   0   'False
+         Width           =   255
+      End
+      Begin VB.CheckBox Check 
+         BackColor       =   &H00FFFFC0&
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   25
+         Left            =   2280
+         MaskColor       =   &H00FFFFFF&
+         TabIndex        =   13
+         Top             =   3840
+         Visible         =   0   'False
+         Width           =   255
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   17
+         Left            =   9120
+         MaxLength       =   30
+         TabIndex        =   23
+         Text            =   "..."
+         Top             =   1080
+         Visible         =   0   'False
+         Width           =   375
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   11
+         Left            =   1800
+         MaxLength       =   1
+         TabIndex        =   20
+         Text            =   "2"
+         Top             =   3360
+         Width           =   255
+      End
+      Begin VB.ComboBox Combo 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   315
+         Index           =   1
+         ItemData        =   "Frmopt.frx":16E71
+         Left            =   9120
+         List            =   "Frmopt.frx":16E9C
+         Style           =   2  'Dropdown List
+         TabIndex        =   18
+         Top             =   480
+         Visible         =   0   'False
+         Width           =   615
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   18
+         Left            =   3360
+         MaxLength       =   1
+         TabIndex        =   22
+         Text            =   "2"
+         Top             =   3360
+         Width           =   255
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   12
+         Left            =   2520
+         MaxLength       =   1
+         TabIndex        =   21
+         Text            =   "2"
+         Top             =   3360
+         Width           =   255
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   315
+         Index           =   23
+         Left            =   7680
+         MaxLength       =   3
+         TabIndex        =   2
+         Top             =   480
+         Visible         =   0   'False
+         Width           =   1335
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         HideSelection   =   0   'False
+         Index           =   0
+         Left            =   5040
+         MaxLength       =   500
+         TabIndex        =   0
+         Text            =   "..."
+         Top             =   200
+         Visible         =   0   'False
+         Width           =   2175
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   1
+         Left            =   8040
+         MaxLength       =   50
+         TabIndex        =   1
+         Text            =   "..."
+         Top             =   240
+         Visible         =   0   'False
+         Width           =   975
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   2
+         Left            =   7920
+         MaxLength       =   500
+         TabIndex        =   3
+         Text            =   "..."
+         Top             =   650
+         Visible         =   0   'False
+         Width           =   1095
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   3
+         Left            =   1800
+         MaxLength       =   50
+         TabIndex        =   6
+         Text            =   "0"
+         Top             =   1395
+         Width           =   1695
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   5
+         Left            =   8760
+         MaxLength       =   5000
+         TabIndex        =   9
+         Text            =   "..."
+         Top             =   1800
+         Visible         =   0   'False
+         Width           =   495
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   6
+         Left            =   1800
+         MaxLength       =   50
+         TabIndex        =   10
+         Text            =   "..."
+         Top             =   3000
+         Width           =   1695
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   7
+         Left            =   1800
+         MaxLength       =   20
+         TabIndex        =   11
+         Text            =   "..."
+         Top             =   1020
+         Width           =   1695
+      End
+      Begin VB.ComboBox Combo 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   315
+         Index           =   0
+         ItemData        =   "Frmopt.frx":16EC7
+         Left            =   6000
+         List            =   "Frmopt.frx":16EC9
+         Style           =   2  'Dropdown List
+         TabIndex        =   17
+         Top             =   1005
+         Width           =   1215
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   14
+         Left            =   9360
+         MaxLength       =   2
+         TabIndex        =   19
+         Text            =   "0"
+         Top             =   120
+         Visible         =   0   'False
+         Width           =   615
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   16
+         Left            =   8160
+         MaxLength       =   30
+         TabIndex        =   8
+         Text            =   "..."
+         Top             =   1080
+         Visible         =   0   'False
+         Width           =   495
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   15
+         Left            =   6000
+         MaxLength       =   30
+         TabIndex        =   7
+         Text            =   "..."
+         Top             =   1390
+         Width           =   3015
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   19
+         Left            =   1800
+         MaxLength       =   30
+         TabIndex        =   4
+         Text            =   "..."
+         Top             =   2280
+         Width           =   1695
+      End
+      Begin VB.TextBox Text 
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Index           =   20
+         Left            =   1800
+         MaxLength       =   500
+         TabIndex        =   5
+         Text            =   "..."
+         Top             =   2640
+         Width           =   1695
+      End
+      Begin MSForms.TextBox txtTaikhoan 
+         Height          =   340
+         Left            =   1800
+         TabIndex        =   142
+         Top             =   1800
+         Width           =   7335
+         VariousPropertyBits=   -1467987941
+         Size            =   "12938;600"
+         FontName        =   "Tahoma"
+         FontHeight      =   180
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
+      End
+      Begin MSForms.TextBox txtFax 
+         Height          =   300
+         Left            =   4200
+         TabIndex        =   141
+         Top             =   1440
+         Width           =   1215
+         VariousPropertyBits=   746604571
+         Size            =   "2143;529"
+         FontName        =   "Times New Roman"
+         FontHeight      =   195
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
+      End
+      Begin MSForms.TextBox txtCCCD 
+         Height          =   300
+         Left            =   4200
+         TabIndex        =   140
+         Top             =   1080
+         Width           =   1215
+         VariousPropertyBits=   746604571
+         Size            =   "2143;529"
+         Value           =   "..."
+         FontName        =   "Times New Roman"
+         FontHeight      =   195
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
+      End
+      Begin MSForms.TextBox txtDiachi 
+         Height          =   330
+         Left            =   1800
+         TabIndex        =   139
+         Top             =   610
+         Width           =   7095
+         VariousPropertyBits=   679495707
+         Size            =   "12515;582"
+         FontName        =   "Tahoma"
+         FontHeight      =   180
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
+      End
+      Begin MSForms.TextBox txtTenCty 
+         Height          =   340
+         Left            =   1800
+         TabIndex        =   138
+         Top             =   230
+         Width           =   7095
+         VariousPropertyBits=   679495707
+         Size            =   "12515;600"
+         FontName        =   "Tahoma"
+         FontHeight      =   180
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "§Þa chØ cËp nhËt míi"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   25
+         Left            =   120
+         TabIndex        =   132
+         Top             =   4250
+         Width           =   2895
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "CCCD"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   23
+         Left            =   3720
+         TabIndex        =   122
+         Tag             =   "Tax Code"
+         Top             =   1080
+         Width           =   975
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Sè ch÷ sè thËp ph©n"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   15
+         Left            =   120
+         TabIndex        =   111
+         Top             =   3840
+         Width           =   1695
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "LÜnh vùc H§"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   12
+         Left            =   8880
+         TabIndex        =   85
+         Tag             =   "Activities"
+         Top             =   1320
+         Visible         =   0   'False
+         Width           =   975
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "Lo¹i h×nh DN"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   11
+         Left            =   8880
+         TabIndex        =   84
+         Tag             =   "Class"
+         Top             =   1680
+         Visible         =   0   'False
+         Width           =   975
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "H¹ch to¸n theo:"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   21
+         Left            =   75
+         TabIndex        =   78
+         Tag             =   "Send data to default addr"
+         Top             =   2280
+         Width           =   1575
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "chi"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   22
+         Left            =   2160
+         TabIndex        =   77
+         Top             =   3360
+         Width           =   255
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "UNC"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   14
+         Left            =   2880
+         TabIndex        =   76
+         Top             =   3360
+         Width           =   375
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Sè lÇn in mçi phiÕu thu"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   13
+         Left            =   80
+         TabIndex        =   75
+         Top             =   3360
+         Width           =   1695
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Tªn c«ng ty: "
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   0
+         Left            =   480
+         TabIndex        =   68
+         Tag             =   "Company"
+         Top             =   240
+         Width           =   1455
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "§Þa chØ:"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   2
+         Left            =   500
+         TabIndex        =   67
+         Tag             =   "Address"
+         Top             =   650
+         Width           =   855
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "§iÖn tho¹i:"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   3
+         Left            =   500
+         TabIndex        =   66
+         Tag             =   "Tel"
+         Top             =   1440
+         Width           =   900
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Fax"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   4
+         Left            =   3720
+         TabIndex        =   65
+         Top             =   1440
+         Width           =   375
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Tµi kho¶n VN§:"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   5
+         Left            =   500
+         TabIndex        =   64
+         Tag             =   "Bank VND Account"
+         Top             =   1850
+         Width           =   1215
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Sè ®Þa ®iÓm kinh doanh:"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   6
+         Left            =   80
+         TabIndex        =   63
+         Tag             =   "Bank F.C. Account"
+         Top             =   3000
+         Width           =   1815
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "M· sè thuÕ:"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   7
+         Left            =   500
+         TabIndex        =   62
+         Tag             =   "Tax Code"
+         Top             =   1065
+         Width           =   975
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "N¨m"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   8
+         Left            =   5520
+         TabIndex        =   61
+         Tag             =   "Year"
+         Top             =   1080
+         Width           =   375
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Lo¹i h×nh ho¹t ®éng:"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   9
+         Left            =   75
+         TabIndex        =   60
+         Tag             =   "From month"
+         Top             =   2640
+         Width           =   1575
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Ngµy ®Çu th¸ng"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   17
+         Left            =   9240
+         TabIndex        =   59
+         Tag             =   "Month from Date"
+         Top             =   360
+         Visible         =   0   'False
+         Width           =   375
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Email"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   19
+         Left            =   5520
+         TabIndex        =   58
+         Top             =   1440
+         Width           =   495
+      End
+      Begin VB.Label Label 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "SMTP"
+         BeginProperty Font 
+            Name            =   "VK Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   20
+         Left            =   7560
+         TabIndex        =   57
+         Top             =   1080
+         Visible         =   0   'False
+         Width           =   495
+      End
+   End
+   Begin VB.CommandButton Command 
+      BackColor       =   &H00E0E0E0&
+      BeginProperty Font 
+         Name            =   "VK Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Index           =   1
+      Left            =   9120
+      Picture         =   "Frmopt.frx":16ECB
+      Style           =   1  'Graphical
+      TabIndex        =   55
+      Tag             =   "&Return"
+      Top             =   6360
+      Width           =   1095
+   End
+   Begin VB.CommandButton Command 
+      BackColor       =   &H00E0E0E0&
+      BeginProperty Font 
+         Name            =   "VK Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Index           =   0
+      Left            =   9120
+      Picture         =   "Frmopt.frx":182ED
+      Style           =   1  'Graphical
+      TabIndex        =   54
+      Tag             =   "&Save"
+      Top             =   5880
+      Width           =   1095
+   End
+   Begin MSForms.CheckBox CheckBox1 
+      Height          =   255
+      Index           =   1
+      Left            =   8760
+      TabIndex        =   126
+      Top             =   4800
+      Width           =   255
+      BackColor       =   16777152
+      ForeColor       =   16777152
+      DisplayStyle    =   4
+      Size            =   "450;450"
+      Value           =   "0"
+      FontName        =   "VK Sans Serif"
+      FontHeight      =   195
+      FontCharSet     =   0
+      FontPitchAndFamily=   2
+   End
+   Begin VB.Label Label 
+      BackColor       =   &H00FFFFC0&
+      Caption         =   "M· sè thuÕ:"
+      BeginProperty Font 
+         Name            =   "VK Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   255
+      Index           =   1
+      Left            =   2640
+      TabIndex        =   121
+      Tag             =   "Tax Code"
+      Top             =   960
+      Width           =   975
+   End
+End
+Attribute VB_Name = "FrmOptions"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = False
+Option Explicit
+Private Const SECRET_KEY_MST As Long = &H7B4D8E2F
+Private isNewActive As Boolean
+Private Const RANDOM_MIN As Long = 10
+Private Const RANDOM_MAX As Long = 99
+
+Private Const SECRET_KEYMac As Long = &H5A3C9F2E
+
+Private Const SECRET_KEY2 As Long = 13579
+Private Const BASE36 As String = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+Private Const MAGIC_NUMBER As Long = 7919
+Private Const CHARSET As String = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" ( _
+                                     ByVal hwnd As Long, _
+                                     ByVal wMsg As Long, _
+                                     ByVal wParam As Long, _
+                                     ByVal lParam As Long) As Long
+Private Const EM_SETMARGINS = &HD3
+Private Const EC_LEFTMARGIN = &H1
+Private Const SECRET_KEY As Byte = &H5A    ' Khóa bí m?t
+
+Private Type BROWSEINFO
+    hOwner As Long
+    pidlRoot As Long
+    pszDisplayName As String
+    lpszTitle As String
+    ulFlags As Long
+    lpfn As Long
+    lParam As Long
+    iImage As Long
+End Type
+
+Private Declare Function SHBrowseForFolder Lib "shell32.dll" _
+                                           (lpBrowseInfo As BROWSEINFO) As Long
+
+Private Declare Function SHGetPathFromIDList Lib "shell32.dll" _
+                                             (ByVal pidl As Long, ByVal pszPath As String) As Long
+
+
+
+Dim ttVT As Integer
+Dim mst As String
+Dim suatencn As Integer
+Dim kb As Integer
+Dim typeRegistry As Integer
+Private Sub SetLeftPadding(txt As Object, widthInPixels As Long)
+    ' lParam luu giá tr? margin (LOWORD là Left, HIWORD là Right)
+    SendMessage txt.hwnd, EM_SETMARGINS, EC_LEFTMARGIN, widthInPixels
+End Sub
+
+Public Function BrowseForFolder(ByVal sTitle As String) As String
+    Dim bi As BROWSEINFO
+    Dim pidl As Long
+    Dim path As String
+
+    path = Space(260)
+
+    bi.lpszTitle = sTitle
+    bi.ulFlags = &H1    ' BIF_RETURNONLYFSDIRS
+
+    pidl = SHBrowseForFolder(bi)
+
+    If pidl <> 0 Then
+        If SHGetPathFromIDList(pidl, path) Then
+            BrowseForFolder = Left(path, InStr(path, vbNullChar) - 1)
+        End If
+    End If
+End Function
+'Mã hóa cho so chung tu
+Public Function EncodeLicense6(ByVal num As Long, ByRef randomNum As Long) As String
+    'Dim randomNum As Long
+    Dim combined As Variant   ' <--- Dùng Variant
+    Dim encrypted As Variant  ' <--- Dùng Variant
+    Dim result As String
+
+    On Error GoTo ErrorHandler
+
+    ' Gi?i h?n s? d?u vào du?i 2 tri?u
+    If num > 1999999 Then
+        EncodeLicense6 = "ERROR"
+        Exit Function
+    End If
+
+    ' T?o s? random 3 ch? s?
+    'Randomize
+    'randomNum = Int((RANDOM_MAX - RANDOM_MIN + 1) * Rnd + RANDOM_MIN)
+
+    ' K?t h?p: random (3 ch? s?) + num (t?i da 1,999,999)
+    combined = randomNum * 2000000
+    combined = combined + num
+
+    ' Mã hóa
+    encrypted = combined Xor SECRET_KEY
+    encrypted = encrypted + 12345
+
+    ' Gi?i h?n trong 36^6 = 2,176,782,336
+    encrypted = encrypted - Int(encrypted / 2176782336#) * 2176782336#
+
+    ' Chuy?n sang base36 (6 ký t?)
+    result = ""
+    Do While encrypted > 0
+        result = Mid(CHARSET, (encrypted Mod 36) + 1, 1) & result
+        encrypted = Int(encrypted / 36)
+    Loop
+
+    EncodeLicense6 = Right(String(6, "0") & result, 6)
+    Exit Function
+
+ErrorHandler:
+    EncodeLicense6 = "ERROR"
+End Function
+
+' ==============================================
+' DECODE: Mã 6 ký t? -> s? g?c và random
+' ==============================================
+Public Function DecodeLicense6(ByVal txt As String, ByRef randomNum As Long) As Long
+    Dim i As Integer
+    Dim result As Variant   ' <--- Dùng Variant
+    Dim combined As Variant
+    
+    On Error GoTo ErrorHandler
+    
+    ' Gi?i mã base36
+    result = 0
+    For i = 1 To Len(txt)
+        result = result * 36 + (InStr(CHARSET, Mid(txt, i, 1)) - 1)
+    Next
+    
+    ' Gi?i mã
+    result = result - 12345
+    combined = result Xor SECRET_KEY
+    
+    ' Tách random và s? g?c
+    randomNum = Int(combined / 2000000)
+    DecodeLicense6 = combined - (randomNum * 2000000)
+    Exit Function
+    
+ErrorHandler:
+    DecodeLicense6 = -1
+End Function
+
+' ==============================================
+' ENCODE: Có th? truy?n random vào (dùng cho test)
+' ==============================================
+
+' ==============================================
+' ENCODE: Có th? truy?n random vào (dùng cho test)
+' ==============================================
+Public Function EncodeLicense6Ex(ByVal num As Long, ByVal randomNum As Long) As String
+    Dim combined As Currency   ' <--- Ð?i thành Currency
+    Dim encrypted As Long
+    Dim result As String
+    
+    On Error GoTo ErrorHandler
+    
+    If num > 1999999 Or randomNum < 100 Or randomNum > 999 Then
+        EncodeLicense6Ex = "ERROR"
+        Exit Function
+    End If
+    
+    ' Dùng Currency d? tránh tràn
+    combined = CDec(randomNum) * 2000000 + num
+    
+    encrypted = (CLng(combined) Xor SECRET_KEY) + 12345
+    encrypted = encrypted Mod 2176782336#
+    
+    result = ""
+    Do While encrypted > 0
+        result = Mid(CHARSET, (encrypted Mod 36) + 1, 1) & result
+        encrypted = encrypted \ 36
+    Loop
+    
+    EncodeLicense6Ex = Right(String(6, "0") & result, 6)
+    Exit Function
+    
+ErrorHandler:
+    EncodeLicense6Ex = "ERROR"
+End Function
+
+' ==============================================
+' GI? L?I HÀM CU (4 ký t?) d? tuong thích
+' ==============================================
+Public Function EncodeLicense4(ByVal num As Long) As String
+    Dim encrypted As Long
+    Dim result As String
+    
+    If num > 999999 Then
+        EncodeLicense4 = "ERROR"
+        Exit Function
+    End If
+    
+    encrypted = ((num Xor SECRET_KEY) + 12345) Mod 1679616
+    
+    result = ""
+    Do While encrypted > 0
+        result = Mid(CHARSET, (encrypted Mod 36) + 1, 1) & result
+        encrypted = encrypted \ 36
+    Loop
+    
+    EncodeLicense4 = Right("0000" & result, 4)
+End Function
+
+Public Function DecodeLicense4(ByVal txt As String) As Long
+    Dim i As Integer
+    Dim result As Long
+    
+    result = 0
+    For i = 1 To Len(txt)
+        result = result * 36 + (InStr(CHARSET, Mid(txt, i, 1)) - 1)
+    Next
+    
+    result = result - 12345
+    result = result Xor SECRET_KEY
+    
+    DecodeLicense4 = result
+End Function
+
+Public Function EncodeLicense2(ByVal num As Long) As String
+    Dim encrypted As Long
+    Dim result As String
+    
+    encrypted = (num Xor SECRET_KEY) + 12345
+    
+    result = ""
+    Do While encrypted > 0
+        result = Mid(CHARSET, (encrypted Mod 36) + 1, 1) & result
+        encrypted = encrypted \ 36
+    Loop
+    
+    EncodeLicense2 = result
+End Function
+
+Public Function DecodeLicense2(ByVal txt As String) As Long
+    Dim i As Integer
+    Dim result As Long
+    
+    result = 0
+    For i = 1 To Len(txt)
+        result = result * 36 + (InStr(CHARSET, Mid(txt, i, 1)) - 1)
+    Next
+    
+    result = result - 12345
+    result = result Xor SECRET_KEY
+    
+    DecodeLicense2 = result
+End Function
+
+'Cho mac
+ Public Function EncodeMAC12(ByVal macAddress As String) As String
+    Dim cleanMAC As String
+    Dim p1 As Long, p2 As Long
+    Dim code1 As String, code2 As String
+    
+    ' Xóa d?u :
+    cleanMAC = UCase(Replace(macAddress, ":", ""))
+    
+    If Len(cleanMAC) <> 12 Then
+        EncodeMAC12 = "ERROR"
+        Exit Function
+    End If
+    
+    ' Tách 12 hex thành 2 ph?n, m?i ph?n 6 hex (3 byte)
+    p1 = CLng("&H" & Mid(cleanMAC, 1, 6))   ' 6 hex d?u
+    p2 = CLng("&H" & Mid(cleanMAC, 7, 6))   ' 6 hex cu?i
+    
+    ' Encode m?i ph?n thành 6 ký t?
+    code1 = Encode6(p1)
+    code2 = Encode6(p2)
+    
+    ' N?i l?i v?i d?u -
+    EncodeMAC12 = code1 & "-" & code2
+End Function
+
+' ==============================================
+' DECODE MAC t? 12 ký t? (2 block x 6 ký t?)
+' ==============================================
+Public Function DecodeMAC12(ByVal code As String) As String
+    Dim parts() As String
+    Dim p1 As Long, p2 As Long
+    Dim hexMAC As String
+    
+    ' Tách 2 ph?n
+    parts = Split(code, "-")
+    
+    If UBound(parts) <> 1 Then
+        DecodeMAC12 = "ERROR"
+        Exit Function
+    End If
+    
+    ' Gi?i mã t?ng ph?n
+    p1 = Decode6(parts(0))
+    p2 = Decode6(parts(1))
+    
+    ' Ghép l?i thành MAC 12 hex
+    hexMAC = Right("000000" & Hex(p1), 6) & _
+             Right("000000" & Hex(p2), 6)
+    
+    DecodeMAC12 = UCase(hexMAC)
+End Function
+
+' ==============================================
+' ENCODE: 6 hex (3 byte) -> 6 ký t? base36 (có random)
+' ==============================================
+Public Function Encode6(ByVal num As Long) As String
+    Dim randomNum As Long
+    Dim combined As Variant
+    Dim encrypted As Variant
+    Dim result As String
+    
+    On Error GoTo ErrorHandler
+    
+    ' Gi?i h?n num trong 0-16,777,215 (6 hex = 24 bit)
+    num = num And &HFFFFFF
+    
+    ' T?o random 3 ch? s?
+    Randomize
+    randomNum = Int((RANDOM_MAX - RANDOM_MIN + 1) * Rnd + RANDOM_MIN)
+    
+    ' K?t h?p: random (3 ch? s?) * 16,777,216 + num
+    ' 16,777,216 = 2^24
+    combined = CDec(randomNum) * 16777216
+    combined = combined + num
+    
+    ' Mã hóa
+    encrypted = combined Xor SECRET_KEY2
+    encrypted = encrypted + 12345
+    
+    ' Gi?i h?n trong 36^6 = 2,176,782,336
+    encrypted = encrypted - Int(encrypted / 2176782336#) * 2176782336#
+    
+    ' Chuy?n sang base36 (6 ký t?)
+    result = ""
+    Do While encrypted > 0
+        result = Mid(CHARSET, (encrypted Mod 36) + 1, 1) & result
+        encrypted = Int(encrypted / 36)
+    Loop
+    
+    Encode6 = Right(String(6, "0") & result, 6)
+    Exit Function
+    
+ErrorHandler:
+    Encode6 = "ERROR"
+End Function
+
+' ==============================================
+' DECODE: 6 ký t? base36 -> 6 hex (3 byte)
+' ==============================================
+Public Function Decode6(ByVal txt As String) As Long
+    Dim i As Integer
+    Dim result As Variant
+    Dim combined As Variant
+    
+    On Error GoTo ErrorHandler
+    
+    ' Gi?i mã base36
+    result = 0
+    For i = 1 To Len(txt)
+        result = result * 36 + (InStr(CHARSET, Mid(txt, i, 1)) - 1)
+    Next
+    
+    ' Gi?i mã
+    result = result - 12345
+    combined = result Xor SECRET_KEY2
+    
+    ' L?y num (b? random)
+    Decode6 = combined Mod 16777216
+    Exit Function
+    
+ErrorHandler:
+    Decode6 = -1
+End Function
+
+' ==============================================
+' Ð?NH D?NG MAC CÓ D?U ":"
+' ==============================================
+Public Function FormatMAC(ByVal mac As String) As String
+    Dim result As String
+    Dim i As Integer
+    
+    If Len(mac) <> 12 Then
+        FormatMAC = mac
+        Exit Function
+    End If
+    
+    result = ""
+    For i = 1 To Len(mac) Step 2
+        If result <> "" Then result = result & ":"
+        result = result & Mid(mac, i, 2)
+    Next i
+    
+    FormatMAC = result
+End Function
+ 
+
+'random 6 cho 1_2
+Public Function EncodeWithRandom6(ByVal strValue As String, ByRef randomNum As Long) As String
+    Dim parts() As String
+    Dim num1 As Long   ' <--- S?A: num1, không ph?i numl
+    Dim num2 As Long
+    Dim combined As Long
+    
+    On Error GoTo ErrorHandler
+    
+    ' Tách chu?i d?ng "1_2"
+    parts = Split(strValue, "_")
+    
+    If UBound(parts) <> 1 Then
+        EncodeWithRandom6 = "ERROR"
+        Exit Function
+    End If
+    
+    num1 = CLng(parts(0))
+    num2 = CLng(parts(1))
+    
+    ' Gi?i h?n m?i s? trong 0-999
+    If num1 > 999 Or num2 > 999 Then   ' <--- S?A: num1
+        EncodeWithRandom6 = "ERROR"
+        Exit Function
+    End If
+    
+    ' T?o s? random 4 ch? s?
+    'Randomize
+    'randomNum = Int((RANDOM_MAX - RANDOM_MIN + 1) * Rnd + RANDOM_MIN)
+    
+    ' K?t h?p: randomNum (4 ch? s?) + num1 (3 ch? s?) + num2 (3 ch? s?)
+    combined = randomNum * 1000000 + num1 * 1000 + num2   ' <--- S?A: num1
+    
+    ' Mã hóa thành 6 ký t?
+    EncodeWithRandom6 = ToBase36_6(combined)
+    Exit Function
+    
+ErrorHandler:
+    EncodeWithRandom6 = "ERROR"
+End Function
+
+' ==============================================
+' DECODE: 6 ký t? -> chu?i "x_y" và random
+' ==============================================
+Public Function DecodeWithRandom6(ByVal code As String, ByRef randomNum As Long) As String
+    Dim combined As Long
+    Dim num1 As Long
+    Dim num2 As Long
+    
+    On Error GoTo ErrorHandler
+    
+    ' Gi?i mã base36
+    combined = FromBase36_6(code)
+    
+    ' Tách thành random, num1, num2
+   ' randomNum = combined \ 1000000
+    num1 = (combined Mod 1000000) \ 1000
+    num2 = combined Mod 1000
+    
+    DecodeWithRandom6 = num1 & "_" & num2
+    Exit Function
+    
+ErrorHandler:
+    DecodeWithRandom6 = "ERROR"
+End Function
+
+' ==============================================
+' ENCODE: Có th? truy?n random vào (dùng cho test)
+' ==============================================
+Public Function EncodeWithRandom6Ex(ByVal strValue As String, ByVal randomNum As Long) As String
+    Dim parts() As String
+    Dim num1 As Long
+    Dim num2 As Long
+    Dim combined As Long
+    
+    On Error GoTo ErrorHandler
+    
+    ' Tách chu?i d?ng "1_2"
+    parts = Split(strValue, "_")
+    
+    If UBound(parts) <> 1 Then
+        EncodeWithRandom6Ex = "ERROR"
+        Exit Function
+    End If
+    
+    num1 = CLng(parts(0))
+    num2 = CLng(parts(1))
+    
+    ' Gi?i h?n
+    If num1 > 999 Or num2 > 999 Or randomNum < 1000 Or randomNum > 9999 Then
+        EncodeWithRandom6Ex = "ERROR"
+        Exit Function
+    End If
+    
+    ' K?t h?p: randomNum (4 ch? s?) + num1 (3 ch? s?) + num2 (3 ch? s?)
+    combined = randomNum * 1000000 + num1 * 1000 + num2
+    
+    ' Mã hóa thành 6 ký t?
+    EncodeWithRandom6Ex = ToBase36_6(combined)
+    Exit Function
+    
+ErrorHandler:
+    EncodeWithRandom6Ex = "ERROR"
+End Function
+
+' ==============================================
+' HÀM H? TR?: Chuy?n s? sang base36 (6 ký t?)
+' ==============================================
+Private Function ToBase36_6(ByVal num As Long) As String
+    Dim result As String
+    
+    If num = 0 Then
+        ToBase36_6 = "000000"
+        Exit Function
+    End If
+    
+    result = ""
+    Do While num > 0
+        result = Mid(CHARSET, (num Mod 36) + 1, 1) & result
+        num = num \ 36
+    Loop
+    
+    ToBase36_6 = Right(String(6, "0") & result, 6)
+End Function
+
+' ==============================================
+' HÀM H? TR?: Gi?i mã base36
+' ==============================================
+Private Function FromBase36_6(ByVal txt As String) As Long
+    Dim i As Integer
+
+    FromBase36_6 = 0
+    For i = 1 To Len(txt)
+        FromBase36_6 = FromBase36_6 * 36 + (InStr(CHARSET, Mid(txt, i, 1)) - 1)
+    Next i
+End Function
+'cho mst
+ Public Function EncodeMST8(ByVal mst As String, ByRef randomNum As Long) As String
+    Dim cleanMST As String
+    Dim totalLen As Integer
+    Dim p1 As String, p2 As String
+    Dim len1 As Integer, len2 As Integer
+    Dim mixed1 As String, mixed2 As String
+    
+    On Error GoTo ErrorHandler
+    
+    cleanMST = Replace(mst, "-", "")
+    
+    If Not IsNumeric(cleanMST) Then GoTo ErrorHandler
+    
+    totalLen = Len(cleanMST)
+    
+    Select Case totalLen
+        Case 10
+            len1 = 5: len2 = 5
+        Case 12
+            len1 = 6: len2 = 6
+        Case 13
+            len1 = 6: len2 = 7
+        Case Else
+            GoTo ErrorHandler
+    End Select
+    
+    p1 = Left(cleanMST, len1)
+    p2 = Right(cleanMST, len2)
+    
+    ' ? KHÔNG Randomize ? dây
+    randomNum = Int((RANDOM_MAX - RANDOM_MIN + 1) * Rnd + RANDOM_MIN)
+    
+    mixed1 = MixString(p1, randomNum)
+    mixed2 = MixString(p2, randomNum)
+    
+    EncodeMST8 = ToBase36_2_Fixed(randomNum) & _
+                 ToBase36_1(len1) & ToBase36_1(len2) & _
+                 EncodeString(mixed1) & EncodeString(mixed2)
+    Exit Function
+
+ErrorHandler:
+    EncodeMST8 = "ERROR"
+End Function
+
+' ==============================================
+' DECODE (ÐÃ FIX M?T S? 0)
+' ==============================================
+Public Function DecodeMST8(ByVal code As String, ByRef randomNum As Long) As String
+    Dim len1 As Integer, len2 As Integer
+    Dim mixed1 As String, mixed2 As String
+    Dim p1 As String, p2 As String
+    Dim rdn As Long
+    
+    On Error GoTo ErrorHandler
+
+    If Len(code) <> 12 Then GoTo ErrorHandler
+
+    rdn = FromBase36_2_Fixed(Left(code, 2))
+    randomNum = rdn
+    
+    len1 = FromBase36_1(Mid(code, 3, 1))
+    len2 = FromBase36_1(Mid(code, 4, 1))
+
+    mixed1 = DecodeString(Mid(code, 5, 4))
+    mixed2 = DecodeString(Mid(code, 9, 4))
+
+    ' ?? FIX QUAN TR?NG: gi? l?i s? 0 d?u
+    mixed1 = Right(String(len1, "0") & mixed1, len1)
+    mixed2 = Right(String(len2, "0") & mixed2, len2)
+
+    p1 = UnmixString(mixed1, rdn)
+    p2 = UnmixString(mixed2, rdn)
+
+    DecodeMST8 = p1 & p2
+    Exit Function
+
+ErrorHandler:
+    DecodeMST8 = "ERROR"
+End Function
+
+' ==============================================
+' MIX
+' ==============================================
+Private Function MixString(ByVal s As String, ByVal key As Integer) As String
+    Dim result As String, i As Integer
+    Dim digit As Integer, keyDigit As Integer
+    
+    For i = 1 To Len(s)
+        digit = CInt(Mid(s, i, 1))
+        keyDigit = (key \ (10 ^ ((i - 1) Mod 2))) Mod 10
+        digit = (digit + keyDigit) Mod 10
+        result = result & digit
+    Next i
+    
+    MixString = result
+End Function
+
+' ==============================================
+' UNMIX
+' ==============================================
+Private Function UnmixString(ByVal s As String, ByVal key As Integer) As String
+    Dim result As String, i As Integer
+    Dim digit As Integer, keyDigit As Integer
+    
+    For i = 1 To Len(s)
+        digit = CInt(Mid(s, i, 1))
+        keyDigit = (key \ (10 ^ ((i - 1) Mod 2))) Mod 10
+        digit = (digit - keyDigit) Mod 10
+        If digit < 0 Then digit = digit + 10
+        result = result & digit
+    Next i
+    
+    UnmixString = result
+End Function
+
+' ==============================================
+' BASE36 1 CHAR
+' ==============================================
+Private Function ToBase36_1(ByVal num As Integer) As String
+    If num < 0 Or num > 35 Then num = 0
+    ToBase36_1 = Mid(CHARSET, num + 1, 1)
+End Function
+
+Private Function FromBase36_1(ByVal c As String) As Integer
+    Dim pos As Integer
+    pos = InStr(CHARSET, c)
+    If pos > 0 Then
+        FromBase36_1 = pos - 1
+    Else
+        FromBase36_1 = 0
+    End If
+End Function
+
+' ==============================================
+' BASE36 2 CHAR
+' ==============================================
+Private Function ToBase36_2_Fixed(ByVal num As Integer) As String
+    Dim high As Integer, low As Integer
+    high = num \ 36
+    low = num Mod 36
+    ToBase36_2_Fixed = Mid(CHARSET, high + 1, 1) & Mid(CHARSET, low + 1, 1)
+End Function
+
+Private Function FromBase36_2_Fixed(ByVal code As String) As Integer
+    Dim high As Integer, low As Integer
+    
+    If Len(code) <> 2 Then Exit Function
+    
+    high = InStr(CHARSET, Mid(code, 1, 1)) - 1
+    low = InStr(CHARSET, Mid(code, 2, 1)) - 1
+    
+    If high < 0 Then high = 0
+    If low < 0 Then low = 0
+    
+    FromBase36_2_Fixed = high * 36 + low
+End Function
+
+' ==============================================
+' ENCODE STRING ? 4 CHAR
+' ==============================================
+Private Function EncodeString(ByVal s As String) As String
+    Dim num As Double
+    Dim i As Integer
+    Dim result As String
+
+    num = 0
+
+    For i = 1 To Len(s)
+        num = num * 10 + CInt(Mid(s, i, 1))
+    Next i
+
+    If num = 0 Then
+        EncodeString = "0000"
+        Exit Function
+    End If
+
+    Do While num > 0
+        result = Mid(CHARSET, (num Mod 36) + 1, 1) & result
+        num = Int(num / 36)
+    Loop
+
+    EncodeString = Right(String(4, "0") & result, 4)
+End Function
+
+' ==============================================
+' DECODE 4 CHAR ? STRING
+' ==============================================
+Private Function DecodeString(ByVal code As String) As String
+    Dim i As Integer
+    Dim num As Double
+
+    num = 0
+    
+    For i = 1 To Len(code)
+        num = num * 36 + (InStr(CHARSET, Mid(code, i, 1)) - 1)
+    Next i
+
+    DecodeString = CStr(num)
+End Function
+
+Public Sub active_Click()
+
+   
+    If IsValidMST_Format(Text(7).Text) = False Then
+        'MsgBox "MST khong hop le"
+        Dim s As String
+        s = ChrW(77) & ChrW(227) & ChrW(32) & ChrW(115) & ChrW(7889) & ChrW(32) & ChrW(116) & ChrW(104) & ChrW(117) & ChrW(7871) & ChrW(32) & ChrW(107) & ChrW(104) & ChrW(244) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(104) & ChrW(7907) & ChrW(112) & ChrW(32) & ChrW(108) & ChrW(7879)
+        MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
+
+        Exit Sub
+    End If
+
+    Dim checkactive As Boolean
+    checkactive = active.Visible
+    Dim strValue As String
+    If Option2.Value = True Then
+        ' MsgBox "Vui long nhap so nam"
+        If Text1.Text = "0" Then
+
+            s = ChrW(86) & ChrW(117) & ChrW(105) & ChrW(32) & ChrW(108) & ChrW(242) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(110) & ChrW(104) & ChrW(7853) & ChrW(112) & ChrW(32) & ChrW(115) & ChrW(7889) & ChrW(32) & ChrW(110) & ChrW(259) & ChrW(109) & ChrW(32) & ChrW(115) & ChrW(7917) & ChrW(32) & ChrW(100) & ChrW(7909) & ChrW(110) & ChrW(103)
+            MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
+            Exit Sub
+        End If
+        If Text2.Text = "0" Then
+            s = ChrW(86) & ChrW(117) & ChrW(105) & ChrW(32) & ChrW(108) & ChrW(242) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(110) & ChrW(104) & ChrW(7853) & ChrW(112) & ChrW(32) & ChrW(115) & ChrW(7889) & ChrW(32) & ChrW(115) & ChrW(7889) & ChrW(32) & ChrW(108) & ChrW(432) & ChrW(7907) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(99) & ChrW(104) & ChrW(7913) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(116) & ChrW(7915)
+            MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
+            Exit Sub
+        End If
+    End If
+
+    'Fill cho strValue
+    Dim opType As Integer
+    Dim opSoNam As Integer
+    Dim opSoCT As Double
+    opSoCT = Text2.Text
+    If Option2.Value = True Then
+        opType = 1
+        opSoNam = Text1.Text
+    Else
+        opType = 2
+        opSoNam = 0
+    End If
+    strValue = opType & "_" & opSoNam
+
+    Dim mst10 As String
+    Dim mst13 As String
+    Dim encoded10 As String
+    Dim encoded13 As String
+    Dim decoded10 As String
+    Dim decoded13 As String
+
+    Debug.Print "=== ENCODE MST THÀNH 8 KÝ T? ==="
+    Debug.Print ""
+    Dim randomNum As Long
+    ' Test MST 10 s?
+    mst10 = Text(7).Text
+    Dim encoded1 As String, encoded2 As String
+    Dim decoded1 As String, decoded2 As String
+    Dim random1 As Integer, random2 As Integer
+
+    encoded1 = EncodeMST14(mst10, randomNum)
+    decoded1 = DecodeMST14(encoded1, randomNum)
+    If decoded1 <> mst10 Then
+        MsgBox "Chua can"
+        encoded1 = EncodeMST8(mst10, randomNum)
+        decoded1 = DecodeMST8(encoded1, randomNum)
+    End If
+    '---------------------
+
+
+    Dim code As String
+    Dim decoded As String
+
+    Dim randomNum2 As Long
+
+    Debug.Print "=== ENCODE/DECODE V?I S? RANDOM 4 CH? S? ==="
+    Debug.Print ""
+
+    ' Test 1: T? d?ng random
+    'strValue = "1_2"
+    code = EncodeWithRandom6(strValue, randomNum)
+    decoded = DecodeWithRandom6(code, randomNum)
+
+    'mac
+    Dim mac As String
+    Dim encoded As String
+    Dim formatted As String
+
+    Debug.Print "=== ENCODE MAC THÀNH 12 KÝ T? (2 BLOCK) ==="
+    Debug.Print ""
+
+    ' Test MAC 1
+    mac = GetMacAddress()
+    'mac = "C8:A3:E8:B0:32:21"
+    encoded = EncodeMAC12(mac)
+    decoded = DecodeMAC12(encoded)
+    formatted = FormatMAC(decoded)
+    'So chung tu phai nho hon 1 tr 6
+    Dim license As String
+    license = EncodeLicense6(CLng(Text2.Text), randomNum)
+    Debug.Print "1 -> " & license
+    Debug.Print DecodeLicense6(license, randomNum)    ' 1
+
+    FrmGetStr2.Text1.Text = randomNum & "*" & encoded1 & "*" & code & "*" & license & "*" & encoded
+    FrmGetStr2.Status = 1
+    FrmGetStr2.Show vbModal
+    Exit Sub
+    Dim st As String
+    Dim rs As Recordset
+    Set rs = DBKetoan.OpenRecordset("SELECT DISTINCTROW License.* FROM License", dbOpenSnapshot)
+
+    If FrmGetStr.GetMK(Text(7).Text) Then
+        st = rs!CMP
+        ExecuteSQL5 "UPDATE license SET CMG = " + str(Int_StrToCodes(st)) + ",namcode = " + str(Int_StrToCodes(str(rs!nam)))
+        frmMain.txtdungthu.Caption = ""
+        url_helper.Thong_tin Text(7).Text, Text(0) + " - " + Text(2).Text + " - " + Text(3).Text + " - " + Text(15).Text
+        If Option1.Value = True Then
+            MsgBox "Dang ky vinh vien thanh cong"
+            ExecuteSQL5 "Update tbLicensekey set Type=1,Year=0,Totals=0"
+
+        Else
+            MsgBox "Dang ky " & Text1.Text & " nam thanh cong"
+            ExecuteSQL5 "UPDATE tbLicensekey SET Type = 2, Year = '" & Text1.Text & "|" & pNamTC & "', Totals = '" & Text2.Text & "'"
+        End If
+        Unload FrmGetStr2
+        isNewActive = True
+        Command_Click 0
+
+    End If
+    If checkactive Then
+        Unload Me
+    End If
+End Sub
+Public Function KiemTraKey(strkey As String) As Boolean
+    If strkey = FrmGetStr2.Text1.Text Then
+        KiemTraKey = False
+        Exit Function
+    End If
+    If strkey = "" Then
+        Exit Function    ' ? thoát ngay t?i dây
+    End If
+    Dim ktbtnlc As Boolean
+    ktbtnlc = active.Visible
+    'Lay thong tin key ra truoc
+    Dim a() As String
+    a = Split(strkey, "*")
+    'Lay ra mst truoc
+    Dim mst As String
+    mst = DecodeMST14(a(1), CLng(a(0)))
+
+    'Kiem tra MST cong ty
+    If mst <> Text(7).Text Then
+        Dim s As String
+        s = ChrW(77) & ChrW(227) & ChrW(32) & ChrW(115) & ChrW(7889) & ChrW(32) & ChrW(116) & ChrW(104) & ChrW(117) & ChrW(7871) & ChrW(32) & ChrW(273) & ChrW(259) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(107) & ChrW(253) & ChrW(32) & ChrW(107) & ChrW(104) & ChrW(244) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(273) & ChrW(250) & ChrW(110) & ChrW(103)
+        MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
+        KiemTraKey = False
+        Exit Function
+    End If
+
+    'Kiem tra dia chi mac
+    Dim mac As String
+    Dim macKT As String
+    mac = GetMacAddress()
+    macKT = DecodeMAC12(a(4))
+    If mac <> FormatMAC(macKT) Then
+        s = ChrW(272) & ChrW(7883) & ChrW(97) & ChrW(32) & ChrW(99) & ChrW(104) & ChrW(7881) & ChrW(32) & ChrW(77) & ChrW(97) & ChrW(99) & ChrW(32) & ChrW(107) & ChrW(104) & ChrW(244) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(104) & ChrW(7907) & ChrW(112) & ChrW(32) & ChrW(108) & ChrW(7879)
+        MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
+        KiemTraKey = False
+        Exit Function
+    End If
+    KiemTraKey = True
+    'Neu dia chi Mac hop le thi cap nhat data
+    isNewActive = True
+
+End Function
+Public Sub UpdateLicnes()
+
+
+    Dim ktbtnlc As Boolean
+    ktbtnlc = active.Visible
+    Dim bakoptionnal As Integer
+    Dim bakSonam As String
+    bakSonam = Text1.Text
+    Dim bakTotal As String
+    bakTotal = Text2.Text
+    If Option1.Value = True Then
+        bakoptionnal = 1
+    Else
+        bakoptionnal = 2
+    End If
+
+
+    If ktbtnlc = True Then
+        Command_Click 0
+
+        Dim st As String
+        Dim rs As Recordset
+        Set rs = DBKetoan.OpenRecordset("SELECT DISTINCTROW License.* FROM License", dbOpenSnapshot)
+        frmMain.txtdungthu.Caption = ""
+        url_helper.Thong_tin Text(7).Text, Text(0) + " - " + Text(2).Text + " - " + Text(3).Text + " - " + Text(15).Text
+        If bakoptionnal = 1 Then
+            MsgBox "Dang ky vinh vien thanh cong"
+            ExecuteSQL5 "Update tbLicensekey set Type=1,Year=0,Totals=0"
+        Else
+            MsgBox "Dang ky " & bakSonam & " nam thanh cong"
+            ExecuteSQL5 "UPDATE tbLicensekey SET Type = 2, Year = '" & bakSonam & "|" & pNamTC & "', Totals = '" & bakTotal & "'"
+        End If
+        Unload FrmGetStr2
+        st = rs!CMP
+        ExecuteSQL5 "UPDATE license SET CMG = " + str(Int_StrToCodes(st)) + ",namcode = " + str(Int_StrToCodes(str(rs!nam)))
+
+        'Update cho user
+        Dim mac As String
+        mac = GetMacAddress()
+        'ExecuteSQL5 "UPDATE Users SET MacAddress='" & Replace(mac, "'", "''") & "'"
+        ExecuteSQL5 "UPDATE Users SET IsReister=1, Psw='" & pNamTC & "', MacAddress='" & mac & "'"
+        frmMain.Label5.Visible = False
+        Unload Me
+    End If
+
+End Sub
+Private Sub Check_Click(Index As Integer)
+    Select Case Index
+        Case 17:
+            If Check(Index).Value = 0 Then Text(8).Text = "..."
+        Case 18:
+            If Check(18).Value = 0 Then
+                Check(33).Enabled = False
+                Check(33).Value = 0
+            Else
+                Check(33).Enabled = True
+            End If
+        Case 25, 26, 27, 28:
+            PhanChucNang Combo(3).ListIndex + 1, Check(25).Value, Check(26).Value, Check(27).Value, Check(28).Value
+    End Select
+End Sub
+
+Private Sub ChkVT_Click(Index As Integer)
+    If Index = 4 And ChkVT(4).Value = 1 Then
+        If Len(Dir(pCurDir + "DOWNLOAD.EXE")) = 0 Then
+            MsgBox "Ch­a cµi ®Æt ch­¬ng tr×nh ®äc m· v¹ch!", vbCritical, App.ProductName
+            ChkVT(4).Value = 0
+        End If
+    End If
+End Sub
+
+Private Sub Combo_Click(Index As Integer)
+    If Index = 3 Then PhanChucNang Combo(Index).ListIndex + 1, Check(25).Value, Check(26).Value, Check(27).Value, Check(28).Value
+End Sub
+
+Private Sub Command1_Click()
+    Dim folderPath As String
+
+    folderPath = BrowseForFolder("Ch?n thu m?c luu file")
+
+    If folderPath <> "" Then
+        Text3.Text = folderPath
+    End If
+End Sub
+Private Function ReadTxt(FilePath As String) As String
+    Dim fileNumber As Integer
+    Dim content As String
+
+    On Error GoTo ErrorHandler
+
+    ' Ki?m tra file t?n t?i
+    If Dir(FilePath) = "" Then
+        ReadTxt = "File không t?n t?i: " & FilePath
+        Exit Function
+    End If
+
+    ' L?y file number
+    fileNumber = FreeFile
+
+    ' M? file d? d?c
+    Open FilePath For Input As #fileNumber
+
+    ' Ð?c toàn b? n?i dung
+    If LOF(fileNumber) > 0 Then
+        content = Input$(LOF(fileNumber), #fileNumber)
+    End If
+
+    ' Ðóng file
+    Close #fileNumber
+
+    ' Tr? v? n?i dung
+    ReadTxt = content
+    Exit Function
+
+ErrorHandler:
+    ReadTxt = "L?i d?c file: " & Err.Description
+    On Error Resume Next
+    Close #fileNumber
+End Function
+
+Private Sub Form_Activate()
+    LoadInfo
+    'Load thong tin folder server path
+    Dim originPath As String
+    Dim content As String
+    originPath = App.path
+    content = Text3.Text
+    Dim serverpath As String
+    serverpath = originPath & "\Hoadon\serverpath.txt"
+    If FileExists(serverpath) Then
+        Text3.Text = ReadTxt(serverpath)
+    End If
+
+
+    Option1.Value = True
+    ' Combo(0).Enabled = False
+    If (SelectSQL("select count(*) as f1 from chungtu") > 0) Then Combo(0).Enabled = False
+    ActiveInfo
+
+    Dim types As Integer
+    types = SelectSQL("select Type AS f1 from  tbLicensekey")
+    If types <> 0 Then
+        Frame1.Visible = True
+    Else
+        Frame1.Visible = False
+    End If
+
+    Dim AutoNK As Integer
+    AutoNK = SelectSQL("select skiperror AS f1 from  License")
+    If AutoNK = 1 Then
+        CheckBox1(0).Value = 1
+    Else
+        CheckBox1(0).Value = 0
+    End If
+
+
+    Dim col711 As String
+    col711 = SelectSQL("select col711 AS f1 from  License")
+    If col711 = "1" Then
+        CheckBox1(2).Value = 1
+    Else
+        CheckBox1(2).Value = 0
+    End If
+
+    Dim col711ra As String
+    col711ra = SelectSQL("select col711ra AS f1 from  License")
+    If col711ra = "1" Then
+        CheckBox1(3).Value = 1
+    Else
+        CheckBox1(3).Value = 0
+    End If
+
+
+End Sub
+Private Sub ActiveInfo()
+    Dim rs_ktra As Recordset
+    Dim Query As String
+    Dim rst As String
+    Query = "SELECT *  FROM tbLicensekey "
+    Set rs_ktra = DBKetoan.OpenRecordset(Query, dbOpenSnapshot)
+    If Not rs_ktra.EOF Then
+        ' Duy?t qua t?t c? các b?n ghi
+        Do While Not rs_ktra.EOF
+            If rs_ktra!Type = 1 Then
+                Option1.Value = True
+                Option1.Enabled = False
+                Option2.Enabled = False
+                Text1.Enabled = False
+                Text2.Enabled = False
+                Text2.Text = rs_ktra!totals
+            End If
+            If rs_ktra!Type = 2 Then
+                Option2.Value = True
+                Option1.Enabled = False
+                Option2.Enabled = False
+                Dim resultArray() As String
+                resultArray = Split(rs_ktra!Year, "|")
+
+                Text1.Text = resultArray(0)
+                Text2.Text = rs_ktra!totals
+                Text2.Enabled = False
+                Text1.Enabled = False
+            End If
+            rs_ktra.MoveNext
+
+        Loop
+    End If
+End Sub
+
+Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
+    If Shift And vbShiftMask Then
+        If Text4.Visible = False Then
+            Text4.Visible = True
+            Text3.Visible = False
+        Else
+            Text3.Visible = True
+            Text4.Visible = False
+        End If
+    End If
+
+
+    If (Shift And vbAltMask) > 0 Then
+        Select Case KeyCode
+        Case vbKeyG:
+            RFocus Command(0)
+            Command_Click 0
+
+        Case vbKeyV:
+            RFocus Command(1)
+            Command_Click 1
+        End Select
+    End If
+
+    If (Shift And vbAltMask) > 0 And (Shift And vbCtrlMask) > 0 And KeyCode = vbKeyN Then
+        kb = 1
+        HienNoiBo
+    End If
+
+    If KeyCode = vbKeyEscape Then Unload Me
+End Sub
+Private Sub lblClose_Click()
+    Unload Me
+End Sub
+Public Sub AnControl2(frm As Form)
+    Dim ctl As Control
+Dim TITLE_HEIGHT As Double
+TITLE_HEIGHT = 160
+    For Each ctl In frm.Controls
+        Select Case TypeName(ctl)
+        Case "Label", "TextBox", "ComboBox", "PictureBox", _
+             "CommandButton", "Frame", "CheckBox", _
+             "OptionButton", "ListBox", "Grid", _
+             "MSHFlexGrid", "DataGrid", "Outline", "Line", "SSTab", "MaskEdBox"
+
+            If ctl.Name <> "picFakeTitle" _
+               And ctl.Name <> "lblTitle" _
+               And ctl.Name <> "lblClose" Then
+
+                If TypeName(ctl) = "Line" Then
+                    ctl.y1 = ctl.y1 + TITLE_HEIGHT
+                    ctl.y2 = ctl.y2 + TITLE_HEIGHT
+                Else
+                    ctl.Top = ctl.Top + TITLE_HEIGHT
+                End If
+
+            End If
+        End Select
+    Next
+End Sub
+
+Private Sub Form_Load()
+    lblTitle(11).AutoSize = True
+    Me.Height = Me.Height + 350 + 10
+    picFakeTitle.Width = Me.ScaleWidth
+    picFakeTitle.Height = 350
+    picIcon(1).Top = (picFakeTitle.Height - picIcon(1).Height) \ 2
+    lblTitle(11).Left = picIcon(1).Left + picIcon(1).Width + 90
+    lblTitle(11).Top = (picFakeTitle.Height - picIcon(1).Height) \ 2 + 15
+    lblClose.Top = 80
+    AnControl2 Me
+
+
+    Dim vis As Boolean
+
+    ' LÊy l¹i c¸c gi¸ trÞ mÆc ®Þnh
+    Int_RecsetToCbo "SELECT MaSo As F2,SoHieu+ ' - '+DienGiai As F1 FROM CTGhiSo ORDER BY SoHieu", CTGS
+
+    SetFont Me
+    Set Combo(3).Font = Me.Font
+    mst = frmMain.LbCty(8).Caption
+    If IsNumeric(mst) Then
+        vis = (Cdbl5(mst) = 0)
+    Else
+        vis = False
+    End If
+
+    Frame(1).Enabled = vis
+    Combo(3).Enabled = vis
+    Check(25).Enabled = vis
+    Check(26).Enabled = vis
+    Check(27).Enabled = vis
+    Check(28).Enabled = vis
+
+    Int_RecsetToCbo "SELECT MaSo As F2, KyHieu As F1 FROM NguyenTe ORDER BY KyHieu", Combo(2)
+    Combo(2).AddItem "VND", 0
+    Combo(2).ItemData(0) = 0
+    SetListIndex Combo(2), pTien
+
+    LoadInfo
+    Frame(1).Enabled = True
+    Frame(2).Enabled = False
+    If Len(Text(7).Text) >= 9 Then Chbanthuoc.Enabled = False
+
+   
+End Sub
+
+
+
+Private Sub Label2_Click(Index As Integer)
+    If Index = 0 Then
+        If CheckBox1(0).Value <> 0 Then
+            CheckBox1(0).Value = 0
+        Else
+            CheckBox1(0).Value = 1
+        End If
+    End If
+    If Index = 2 Then
+        If CheckBox1(2).Value <> 0 Then
+            CheckBox1(2).Value = 0
+        Else
+            CheckBox1(2).Value = 1
+        End If
+    End If
+    If Index = 3 Then
+        If CheckBox1(3).Value <> 0 Then
+            CheckBox1(3).Value = 0
+        Else
+            CheckBox1(3).Value = 1
+        End If
+    End If
+End Sub
+
+Private Sub Option1_Click()
+    typeRegistry = 1
+End Sub
+
+Private Sub Option2_Click()
+    typeRegistry = 2
+End Sub
+
+Private Sub OptVT_Click(Index As Integer)
+    ttVT = Index
+End Sub
+' T?o file version.txt v?i n?i dung
+Public Function CreateVersionFile(FilePath As String, content As String) As Boolean
+    Dim fileNumber As Integer
+
+    On Error GoTo ErrorHandler
+
+    ' L?y file number
+    fileNumber = FreeFile
+
+    ' T?o file m?i (Output mode s? t?o file n?u chua có)
+    Open FilePath For Output As #fileNumber
+
+    ' Ghi n?i dung
+    Print #fileNumber, content;
+
+    ' Ðóng file
+    Close #fileNumber
+
+    ' Ki?m tra file dã du?c t?o
+    CreateVersionFile = FileExists(FilePath)
+
+    Exit Function
+
+ErrorHandler:
+    CreateVersionFile = False
+    On Error Resume Next
+    Close #fileNumber
+End Function
+Public Function FileExists(FilePath As String) As Boolean
+    On Error GoTo ErrorHandler
+
+    If Dir(FilePath) <> "" Then
+        FileExists = True
+    Else
+        FileExists = False
+    End If
+
+    Exit Function
+
+ErrorHandler:
+    FileExists = False
+End Function
+Private Sub Dongbotxt()
+    Text(0).Text = UnicodeToVni(txtTenCty.Text)
+    Text(2).Text = UnicodeToVni(txtDiaChi.Text)
+End Sub
+Public Sub Command_Click(Index As Integer)
+'Validate
+    If Option2.Value = True And Text1.Text = "0" Then
+        ' MsgBox "Vui long nhap so nam"
+        Dim s As String
+        s = ChrW(86) & ChrW(117) & ChrW(105) & ChrW(32) & ChrW(108) & ChrW(242) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(99) & ChrW(104) & ChrW(7885) & ChrW(110) & ChrW(32) & ChrW(115) & ChrW(7889) & ChrW(32) & ChrW(110) & ChrW(259) & ChrW(109) & ChrW(32) & ChrW(115) & ChrW(7917) & ChrW(32) & ChrW(100) & ChrW(7909) & ChrW(110) & ChrW(103)
+        MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
+
+        Exit Sub
+    End If
+
+
+    Dongbotxt
+    Dim originPath As String
+    Dim content As String
+    originPath = App.path
+    content = Text3.Text
+    Dim serverpath As String
+    serverpath = originPath & "\Hoadon\serverpath.txt"
+    If Not FileExists(serverpath) Then
+        ' T?o file version.txt
+        If CreateVersionFile(serverpath, content) Then
+            'MsgBox "Ðã t?o file version.txt t?i:" & vbCrLf & filePath, vbInformation
+        Else
+            MsgBox "Không th? t?o file version.txt", vbExclamation
+        End If
+    Else
+        Dim fileNumber As Integer
+        fileNumber = FreeFile
+        On Error Resume Next
+        Open serverpath For Output As #fileNumber
+        If Err.number = 0 Then
+            Print #fileNumber, Text3.Text;
+            Close #fileNumber
+            'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+        Else
+            MsgBox "L?i khi ghi dè file!", vbExclamation
+        End If
+    End If
+
+    'Tao file version.txt
+    Dim versionpath As String
+    versionpath = originPath & "\Hoadon\version.txt"
+    Dim checkBoxValue As Integer
+    If Not FileExists(versionpath) Then
+        ' T?o file version.txt
+        If CreateVersionFile(versionpath, content) Then
+            'MsgBox "Ðã t?o file version.txt t?i:" & vbCrLf & filePath, vbInformation
+        Else
+            MsgBox "Không th? t?o file version.txt", vbExclamation
+        End If
+    Else
+        'Dim fileNumber As Integer
+        fileNumber = FreeFile
+        On Error Resume Next
+        Open serverpath For Output As #fileNumber
+        If Err.number = 0 Then
+            Print #fileNumber, Text3.Text;
+            Close #fileNumber
+            'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+        Else
+            MsgBox "L?i khi ghi dè file!", vbExclamation
+        End If
+    End If
+
+
+    'Tao file status.txt
+    Dim statuspath As String
+    statuspath = originPath & "\Hoadon\status.txt"
+    If Not FileExists(statuspath) Then
+        ' T?o file version.txt
+        If CreateVersionFile(statuspath, content) Then
+            'MsgBox "Ðã t?o file version.txt t?i:" & vbCrLf & filePath, vbInformation
+        Else
+            MsgBox "Không th? t?o file version.txt", vbExclamation
+        End If
+
+    End If
+
+
+    checkBoxValue = CheckBox1(0).Value
+
+    If checkBoxValue <> 0 Then
+        ExecuteSQL5 "Update License set skiperror=1"
+    Else
+        ExecuteSQL5 "Update License set skiperror=0"
+    End If
+    Dim checkBoxValue711 As Integer
+
+    checkBoxValue711 = CheckBox1(2).Value
+    If checkBoxValue711 <> 0 Then
+        ExecuteSQL5 "Update License set col711=1"
+    Else
+        ExecuteSQL5 "Update License set col711=0"
+    End If
+
+    Dim checkBoxValue711ra As Integer
+
+    checkBoxValue711ra = CheckBox1(3).Value
+    If checkBoxValue711ra <> 0 Then
+        ExecuteSQL5 "Update License set col711ra=1"
+    Else
+        ExecuteSQL5 "Update License set col711ra=0"
+    End If
+    If Index = 0 Then
+        ExecuteSQL5 "UPDATE license SET CCCD = '" + txtCCCD.Text + "'"
+    End If
+
+    ExecuteSQL5_Themmoi ("ALTER TABLE license  ADD tenhoadon text")
+    Dim i As Integer, tygia As Double, T As Long, mk As Long, Fx As Long, pctpath As String, F0 As Integer, f1 As Integer, k As Integer, F2 As Integer
+    Dim KiemTra
+    ExecuteSQL5_Themmoi ("ALTER TABLE license  ADD COLUMN banthuoc Number")
+    ExecuteSQL5_Themmoi ("ALTER TABLE license  ADD tenhoadon text")
+    ExecuteSQL5 ("ALTER TABLE license ALTER COLUMN TaiKhoanVN TEXT(255)")
+    ExecuteSQL5 ("ALTER TABLE license ALTER COLUMN DiaChi TEXT(255)")
+    ' ExecuteSQL5 ("ALTER TABLE license add COLUMN sofax TEXT(255)")
+    ExecuteSQL5_Themmoi ("ALTER TABLE license add COLUMN sofax TEXT(255)")
+    ' them moi sau
+    ExecuteSQL5_Themmoi ("ALTER TABLE license ADD Lock13 TEXT(255)")
+    ExecuteSQL5_Themmoi ("ALTER TABLE license ADD CMP TEXT(255)")
+    ExecuteSQL5 ("ALTER TABLE license ALTER COLUMN CMP TEXT(255)")
+    ExecuteSQL5_Themmoi ("ALTER TABLE license add COLUMN CMG Number")
+    ExecuteSQL5_Themmoi ("ALTER TABLE license  ADD nam Number")
+    ExecuteSQL5_Themmoi ("ALTER TABLE license  ADD namCode Number")
+    ExecuteSQL5_Themmoi ("ALTER TABLE license ADD sodong Number")
+    ExecuteSQL5_Themmoi ("ALTER TABLE license ADD sodongId Number")
+    ' them moi sau
+
+
+    If Index = 0 Then    ' neu la nut ghi, nguoc lai thoat
+        'neu test dung thi bo
+        If (CInt(SelectSQL("SELECT nam as f1 from license ")) <= 0) Then ExecuteSQL5 "UPDATE license SET nam = " + str(pNamTC)
+
+        For i = 0 To Text.count - 1
+            Text_LostFocus i
+        Next
+        'If Not KiemTraMaSoThue(Text(7).Text, pTaxCode, 1) Then
+        '    RFocus Text(7)
+        '    GoTo KT
+        'End If
+
+        If IsNumeric(Left(App.LegalCopyright, 10)) And Len(App.LegalCopyright) >= 10 Then
+            If Left(Text(7).Text, 10) <> Left(App.LegalCopyright, 10) Then GoTo KT
+        End If
+        If Combo(3).ListIndex < 0 Then Combo(3).ListIndex = Combo(3).ListCount - 1
+        Dim Tr As String
+        'Tr = Int_StrToCode(Text(0).Text)
+        ' Me.Caption = "Th«ng tin ch­¬ng tr×nh   -  " + Tr
+        If (Combo(3).ListIndex < 2 Or Combo(3).ListIndex > 4) And pVersion = 0 Then
+            ErrMsg er_Version
+            GoTo KT
+        End If
+        If Check(35).Value = 1 Then
+            i = CInt5(Text(25).Text)
+            If i < 1 Or i > 3 Then Text(25).Text = ""
+        End If
+
+        '  MsgBox FrmGetStr.GetMK(Text(7).Text)
+
+        If Combo(2).ListIndex >= 0 Then T = Combo(2).ItemData(Combo(2).ListIndex) Else T = pTien
+        If CInt5(Left(Text(Index).Text, 2)) <> 0 Then Check(55).Value = 0
+        If ((((pTenCty = Text(0).Text And (pTenCn = Text(1).Text Or suatencn = 1) And (Check(19).Value = suatencn) And pMaVach = Check(9).Value And pDinhmuc = Check(13).Value And pSongNgu = (Check(14).Value = 1) And pRpt = Check(15).Value And pTygia = Check(18).Value And T = pTien And mk = 0) Or (DEMO = 1 And CLng5(Left(Text(7).Text, 2)) > 0)) And (mst = Text(7).Text Or (suatencn = 1 And Left(mst, 10) = Left(Text(7).Text, 10)))) Or Combo(3).ListIndex = 4 Or (Cdbl5(Left(Text(7).Text, 10)) = 0 And Cdbl5(Left(frmMain.LbCty(8).Caption, 10)) = 0)) And (pNoiBo = Check(55).Value) And (CInt5(Combo(0).Text) = pNamTC) Then GoTo a
+        If (Len(pMST) > 0 And Left(Text(7).Text, Len(pMST)) = pMST) Then GoTo a
+        If boolean_kiemtra() = False Then GoTo a    ' kiem tra da active thi bat khung nhap ma so le
+        'If FrmGetStr.GetMK(Text(7).Text) Then
+        FrmGetStr2.Status = 2
+        If FrmGetStr2.CheckLicense Then
+            frmMain.txtdungthu.Caption = ""
+a:
+            If ttVT <> OutCost And SelectSQL("SELECT TOP 1 MaCT AS F1 FROM ChungTu WHERE MaLoai=2 OR MaLoai=4") > 0 And ttVT <> 0 Then
+                If MsgBox("§· cã chøng tõ xuÊt kho, thay ®æi ph­¬ng ph¸p tÝnh gi¸ xuÊt ?", vbCritical + vbYesNo, App.ProductName) = vbNo Then GoTo KT
+            End If
+            If Combo(2).ListIndex >= 0 Then pTien = Combo(2).ItemData(Combo(2).ListIndex)
+            pMaVach = Check(9).Value + IIf(Check(19).Value = 1, 10, 0) + IIf(Check(20).Value = 1, 100, 0) + IIf(Check(21).Value = 1, 1000, 0) + IIf(DEMO = 0, 10000, 0)
+            pSoKT = IIf(Check(10).Value = 1, 1, 0) + IIf(Check(11).Value = 1, 10, 0) + IIf(Check(12).Value = 1, 100, 0) + IIf(Check(14).Value = 1, 10000, 0)
+            If Len(Dir(Text(8).Text)) > 0 Then pctpath = Text(8).Text Else pctpath = "..."
+            If Check(18).Value = 0 Then
+                tygia = 0
+            Else
+                tygia = IIf(Check(18).Value = 1, Cdbl5(Text(21).Text), TyGiaNT(0))
+                If tygia = 0 Then tygia = 1
+                If pTygia = 0 Then
+                    ThemTruong "ChungTu", "TyGia", dbDouble
+                    ExecuteSQL5 "UPDATE ChungTu SET TyGia=" + DoiDau(tygia) + " WHERE TyGia=0 OR TyGia=1"
+                End If
+            End If
+            If Check(33).Value = 1 And pGiaUSD = 0 Then
+                If ThemTruong("TonKho", "USDTien_0", dbDouble) Then
+                    If tygia > 0 Then ExecuteSQL5 "UPDATE TonKho SET USDTien_0=Round(" + CStr(Mask_N) + "*Tien_0/" + DoiDau(tygia) + ")/" + CStr(Mask_N)
+                End If
+                If ThemTruong("VTDauNam", "USDTien_0", dbDouble) Then
+                    If tygia > 0 Then ExecuteSQL5 "UPDATE VTDauNam SET USDTien_0=Round(" + CStr(Mask_N) + "*Tien_0/" + DoiDau(tygia) + ")/" + CStr(Mask_N)
+                End If
+                If ThemTruong("ChungTu", "PSUSD", dbDouble) Then
+                    ExecuteSQL5 "UPDATE ChungTu SET PSUSD=Round(" + CStr(Mask_N) + "*SoPS/TyGia)/" + CStr(Mask_N) + " WHERE TyGia<>0"
+                End If
+                For i = 1 To 12
+                    ThemTruong "TonKho", "USDTien_Nhap_" + CStr(i), dbDouble
+                    ThemTruong "TonKho", "USDTien_Xuat_" + CStr(i), dbDouble
+                    ThemTruong "TonKho", "USDTien_" + CStr(i), dbDouble
+                Next
+            End If
+            k = CInt5(Text(25).Text)
+            For i = pSoVV + 1 To k
+                CopyTable2 "DoiTuongCT", "DoiTuongCT" + CStr(i)
+                ThemTruong "CPGVHD", "MaDT" + CStr(i), dbLong
+            Next
+
+
+            If pNhapKhau = 0 And Check(36).Value = 1 And (Not BangDaCo("CPGVHD")) Then CopyTable pCurDir + "UPDATE.MDB", "CPGVHD"
+            Fx = (CInt5(Text(24).Text) Mod 100) + IIf(Check(23).Value = 1, 100, 0) + IIf(Check(24).Value = 1, 1000, 0) + (Combo(3).ListIndex + 1) * 100000000 + IIf(Check(25).Value = 1, 10000000, 0) + IIf(Check(26).Value = 1, 1000000, 0) + IIf(Check(27).Value = 1, 100000, 0) + IIf(Check(28).Value = 1, 10000, 0) + IIf(Check(29).Value = 1, 1000000000, 0)
+            F0 = IIf(Check(30).Value = 1, 10, 0) + IIf(Check(31).Value = 1, 100, 0) + IIf(Check(32).Value = 1, 1000, 0) + IIf(Check(33).Value = 1, 10000, 0)
+            f1 = IIf(Check(34).Value = 1, 10, 0) + IIf(ChkVT(3).Value = 1, 100, 0) + IIf(Check(55).Value = 1, 1000, 0) + IIf(Check(35).Value = 1 And k > 0 And k <= 3, 10000 * k, 0)
+            F2 = IIf(Check(36).Value = 1, 10, 0) + IIf(ChkVT(4).Value = 1, 100, 0) + IIf(Check(37).Value = 1, 1000, 0) + IIf(Check(38).Value = 1, 10000, 0)
+
+            If ExecuteSQL5("UPDATE License SET banthuoc = " + CStr(Chbanthuoc.Value) + ",sofax = '" + txtFax.Text + "', Tenhoadon ='" + Text(26).Text + "',TenCty = '" + Text(0).Text + "', TenCn = '" + Text(1).Text + "', DiaChi = '" _
+                         + Text(2).Text + "', Tel = '" + Text(3).Text + "', Fax = '" + Text(4).Text + "', Quan='" + Text(19).Text + "', ThanhPho='" + Text(20).Text + "',TaiKhoanVN = '" _
+                         + Text(5).Text + "', TaiKhoanNT = '" + Text(6).Text + "', TenCty_ID = " + CStr(Int_StrToCode(Text(0).Text)) _
+                         + ",TenCn_ID = " + CStr(Int_StrToCode(Text(1).Text)) + ", NamTC = " + CStr(Combo(0).Text) + ",TKVattu='" + Text(22).Text + "-" + Text(23).Text + "'" _
+                         + ",STDetail = " + CStr(IIf(Check(0).Value = 1 And Check(13).Value = 1, 1000, 0) + IIf(Check(0).Value = 1 And Check(5).Value = 1, 100, 0) + IIf(Check(0).Value = 1 And Check(4).Value = 1, 10, 0) + Check(0).Value) + ", FADetail = " + CStr(Check(1).Value) + ", HDV = " + CStr(Check(2).Value) _
+                         + ",Thang = " + CStr(Combo(1).Text) + " , Tag = '" + IIf(DEMO = 0, "S", "DEMO") + "',OutCost=" + CStr(ttVT) + ",MKUP=" + CStr(pRev) + ",MaSoThue = '" + Text(7).Text + "',MST_ID = " + CStr(Int_StrToCode(Text(7).Text)) _
+                         + ",App1Path='" + pctpath + "',TyGia=" + DoiDau(tygia) + ",FixedoutCost=" + CStr(ChkVT(0).Value) + ",GiaHT=" + CStr(ChkVT(1).Value) + ",RptOrder=" + CStr(IIf(Check(22).Value = 1, 1000, 0) + IIf(Check(16).Value = 1, 100, 0) _
+                                                                                                                                                                                   + IIf(Check(15).Value = 1, 10, 0) + 1 - Check(3).Value) + ",NgayDauThang=" + IIf(CInt5(Text(14).Text) > 1, Text(14).Text, "0") + ",MV=" + CStr(pMaVach) + ",SoKT=" + CStr(pSoKT) _
+                                                                                                                                                                                   + ",EMail='" + Text(15).Text + "',SMTP='" + Text(16).Text + "',EMailDB='" + Text(17).Text + "',CTGS_GV=" + CStr(CTGS.ItemData(CTGS.ListIndex)) + ",LoaiTien=" + CStr(pTien) + ",Flag1=" + CStr(Fx) + ",Lock0=Lock0 Mod 10 + " + CStr(F0) _
+                                                                                                                                                                                   + ",Lock1=Lock1 Mod 10 + " + CStr(f1) + ",Lock2=Lock2 Mod 10 + " + CStr(F2), True) <> 0 Then
+
+                GoTo KT
+            End If
+            ExecuteSQL5 ("update Users set Psw =  " + Combo(0).Text)
+            SaveSetting IniPath, "Environment", "DInvoice", Text(11).Text
+            SaveSetting IniPath, "Environment", "CInvoice", Text(12).Text
+            SaveSetting IniPath, "Environment", "UNC", Text(18).Text
+            SaveSetting IniPath, "Environment", "NDecimal", Text(13).Text
+            SaveSetting IniPath, "Invoice", "VAT1", Check(6).Value
+            SaveSetting IniPath, "Invoice", "ListDetail", Check(7).Value
+            SaveSetting IniPath, "Invoice", "VATCheck", Check(8).Value
+            SaveSetting IniPath, "Stock", "DailySummary", ChkVT(2).Value
+            If Not pSongNgu And Check(14).Value = 1 Then ThemSongNgu
+            If pCongNoHD = 0 And Check(31).Value = 1 Then ExecuteSQL5 "INSERT INTO CNDauNam (MaSo,MaTaiKhoan,MaKhachHang,DuNo_0,DuCo_0,DuNT_0,SoXuat,HanTT) SELECT MaSo,MaTaiKhoan,MaKhachHang,DuNo_0,DuCo_0,DuNT_0,0 AS SoXuat,0 AS HanTT FROM SoDuKhachHang WHERE DuNo_0<>0 OR DuCo_0<>0 OR DuNT_0<>0"
+            pSTOP = 0
+            If (pTenCty <> Text(0).Text Or mst <> Text(7).Text Or CInt5(Combo(0).Text) <> pNamTC) Then
+                url_helper.Thong_tin Text(7).Text, Text(0) + " - " + Text(2).Text + " - " + Text(3).Text + " - " + Text(15).Text
+            End If
+            'If CInt5(Left(Text(7).Text, 4)) = 0 Then GoTo KT
+        End If
+    End If    ' kiem tra ma
+    Unload Me
+KT:
+    HienThongBao "", 1
+End Sub
+
+Private Sub Text_GotFocus(Index As Integer)
+    AutoSelect Text(Index)
+End Sub
+
+Private Sub Text_KeyPress(Index As Integer, KeyAscii As Integer)
+    Select Case Index
+        Case 7, 11 To 14, 18, 21, 24, 25:
+            KeyProcess Text(Index), KeyAscii, True
+        Case 22:
+            If DEMO = 1 Then KeyAscii = 0
+    End Select
+End Sub
+
+Private Sub Text_LostFocus(Index As Integer)
+    Select Case Index
+        Case 1 To 6, 8, 9, 10, 15 To 17, 19, 20, 22, 23:
+            If Len(Text(Index).Text) = 0 Then Text(Index).Text = "..."
+        Case 7:
+            Text(Index).Text = SetNumericStr(Text(Index).Text)
+            If Len(Text(Index).Text) = 0 Then Text(Index) = "00"
+            HienNoiBo
+        Case 8:
+            If Len(Dir(Text(8).Text)) = 0 Then Text(8).Text = "..."
+        Case 21:
+            If Cdbl5(Text(21).Text) = 0 Then Check(8).Value = 0
+        Case 24:
+            If Text(24).tag > 0 And CInt(Text(24).Text) > Text(24).tag Then Text(24).Text = CStr(Text(24).tag)
+    End Select
+End Sub
+
+Private Sub LoadInfo()
+    Dim rs As Recordset, i As Integer
+
+    Set rs = DBKetoan.OpenRecordset("SELECT DISTINCTROW License.* FROM License", dbOpenSnapshot)
+    On Error Resume Next
+    If pVersion = 3 Then
+        Combo(3).AddItem "Hµnh chÝnh sù nghiÖp"
+        Combo(3).Locked = True
+    End If
+    Combo(3).ListIndex = (rs!Flag1 Mod 1000000000) \ 100000000 - 1
+    ttVT = rs!OutCost
+    OptVT(ttVT).Value = True
+    ChkVT(0).Value = rs!FixedOutCost
+    ChkVT(1).Value = rs!GiaHT
+    ChkVT(4).Value = pBarCode
+    Check(0).Value = IIf(rs!STDetail <> 0, 1, 0)
+    Check(1).Value = rs!FADetail
+    Check(2).Value = rs!HDV
+    Check(3).Value = 1 - (rs!RptOrder Mod 10)
+    Check(4).Value = (rs!STDetail Mod 100) \ 10
+    Check(5).Value = (rs!STDetail Mod 1000) \ 100
+    Check(13).Value = (rs!STDetail Mod 10000) \ 1000
+    Check(6).Value = GetSetting(IniPath, "Invoice", "VAT1", 0)
+    Check(7).Value = GetSetting(IniPath, "Invoice", "ListDetail", 0)
+    Check(8).Value = GetSetting(IniPath, "Invoice", "VATCheck", 0)
+    Check(9).Value = pMaVach
+    suatencn = IIf(rs!mv Mod 100 >= 10, 1, 0)
+    Check(19).Value = suatencn
+    Check(20).Value = IIf(rs!mv Mod 1000 >= 100, 1, 0)
+    Check(21).Value = pTyGiaBQ
+    Check(23).Value = pBaoGia
+    Check(24).Value = pNVBH
+
+    Check(30).Value = (rs!Lock0 Mod 100) \ 10
+    Check(31).Value = (rs!Lock0 Mod 1000) \ 100
+    Check(32).Value = (rs!Lock0 Mod 10000) \ 1000
+    Check(33).Value = (rs!Lock0 Mod 100000) \ 10000
+    Check(34).Value = (rs!Lock1 Mod 100) \ 10
+
+    Check(35).Value = IIf(pSoVV > 0, 1, 0)
+    Check(36).Value = IIf(pNhapKhau > 0, 1, 0)
+    Check(37).Value = IIf(pNhapDoiTuong > 0, 1, 0)
+    Check(38).Value = IIf(pTrungSoHieuKhacThang > 0, 1, 0)
+    Text(25).Text = CStr(pSoVV)
+
+    ChkVT(3).Value = pKiemKeNgay
+
+    Text(24).Text = CStr(rs!Flag1 Mod 100)
+    Check(25).Value = (rs!Flag1 Mod 100000000) \ 10000000
+    Check(26).Value = (rs!Flag1 Mod 10000000) \ 1000000
+    Check(27).Value = (rs!Flag1 Mod 1000000) \ 100000
+    Check(28).Value = (rs!Flag1 Mod 100000) \ 10000
+
+    Check(29).Value = IIf(frmMain.Command(4).Visible, 1, 0)
+
+    Check(10).Value = IIf(pSoKT Mod 10 >= 1, 1, 0)
+    Check(11).Value = IIf(pSoKT Mod 100 >= 10, 1, 0)
+    Check(12).Value = IIf(pSoKT Mod 1000 >= 100, 1, 0)
+    Check(14).Value = IIf(pSoKT Mod 100000 >= 10000, 1, 0)
+    Check(15).Value = IIf(rs!RptOrder Mod 100 >= 10, 1, 0)
+    Check(22).Value = IIf(rs!RptOrder Mod 10000 >= 1000, 1, 0)
+    Check(16).Value = IIf(rs!RptOrder Mod 1000 >= 100, 1, 0)
+    Check(17).Value = IIf(rs!App1Path <> "...", 1, 0)
+    Check(18).Value = IIf(rs!tygia > 0, 1, 0)
+    Text(8).Text = rs!App1Path
+    Text(0).Text = pTenCty
+    txtTenCty.Text = VniToUnicode(pTenCty)
+    Text(1).Text = pTenCn
+    Text(2).Text = rs!DiaChi
+    txtDiaChi.Text = VniToUnicode(rs!DiaChi)
+    Text(3).Text = rs!Tel
+    Text(4).Text = rs!Fax
+    Text(5).Text = rs!TaiKhoanVN
+    txtTaikhoan.Text = VniToUnicode(rs!TaiKhoanVN)
+    Text(6).Text = rs!TaiKhoanNT
+    mst = rs!masothue
+    Chbanthuoc.Value = rs!banthuoc
+    Text(7).Text = mst
+    Text(29).Text = rs!CCCD
+    txtCCCD.Text = rs!CCCD
+    SetListIndex CTGS, rs!CTGS_GV
+    Text(11).Text = GetSetting(IniPath, "Environment", "DInvoice", 2)
+    Text(12).Text = GetSetting(IniPath, "Environment", "CInvoice", 2)
+    Text(18).Text = GetSetting(IniPath, "Environment", "UNC", 2)
+    Text(13).Text = GetSetting(IniPath, "Environment", "NDecimal", 2)
+    Text(14).Text = CStr(IIf(rs!NgayDauThang = 0, 1, rs!NgayDauThang))
+
+    Text(15).Text = rs!email
+    Text(16).Text = rs!smtp
+    Text(17).Text = rs!EMailDB
+
+    Text(19).Text = rs!Quan
+    Text(20).Text = rs!ThanhPho
+    Text(21).Text = Format(rs!tygia, Mask_2)
+    Text(22).Text = LaySH(rs!TKVattu, 1, "-")
+    Text(23).Text = LaySH(rs!TKVattu, 2, "-")
+    Text(26).Text = rs!Tenhoadon
+    Text(27).Text = rs!sofax
+    txtFax.Text = rs!sofax
+    If boolean_kiemtra() Then active.Visible = False
+    rs.Close
+    Set rs = Nothing
+
+    If pNoiBo > 0 Then
+        kb = 1
+        Check(55).Value = 1
+        HienNoiBo
+    End If
+
+    On Error GoTo 0
+
+    SetListIndex Combo(0), CLng(pNamTC)
+    SetListIndex Combo(1), CLng(pThangDauKy)
+
+    '   For i = pNamTC - 1 To pNamTC + 1
+    Dim so_index, kkk
+    so_index = 0
+    kkk = 0
+    For i = 2005 To 3000
+        Combo(0).AddItem CStr(i)
+        If i = pNamTC Then
+            kkk = so_index
+        End If
+        so_index = so_index + 1
+    Next
+    Combo(0).ListIndex = kkk
+
+End Sub
+Private Sub txtTaikhoan_Change()
+    Text(5).Text = UnicodeToVni(txtTaikhoan.Text)
+End Sub
+
+
+Private Sub PhanChucNang(lh As Integer, TM As Integer, xd As Integer, cdt As Integer, sx As Integer)
+    Dim i As Integer
+    
+    'If Not Frame(1).Enabled Then Exit Sub
+    
+    For i = 0 To 36
+        Check(i).Visible = True
+    Next
+            
+    Check(13).Visible = sx > 0
+    Check(24).Visible = TM > 0
+    Check(31).Visible = TM > 0
+    Check(23).Visible = TM > 0
+    Check(33).Visible = TM > 0
+    Check(34).Visible = TM > 0
+    Check(27).Visible = lh < 3 Or lh = 5
+    
+    Check(14).Visible = (lh > 1 And lh < 3 Or lh = 5)
+    Check(15).Visible = lh <> 4
+    Check(19).Visible = lh <> 4
+    Check(20).Visible = lh <> 4
+    Check(29).Visible = lh < 3 Or lh = 5
+    Check(32).Visible = lh < 3 Or lh = 5
+    Check(30).Visible = lh < 3 Or lh = 5
+    Check(19).Visible = IIf(lh < 3 Or lh = 5, True, Check(19).Value)
+    
+    If pVersion = 3 Then
+        Check(4).Visible = False
+        CTGS.Visible = False
+        Check(5).Visible = False
+        Check(13).Visible = False
+        Check(14).Visible = False
+        Check(22).Visible = False
+        Check(31).Visible = False
+        Check(21).Visible = False
+        Check(36).Visible = False
+        Check(26).Visible = False
+        Check(27).Visible = False
+        Check(28).Visible = False
+    End If
+End Sub
+
+Private Sub HienNoiBo()
+    If (CInt5(Left(Text(7).Text, 2)) = 0) And kb > 0 Then
+        Check(55).Visible = True
+    Else
+        Check(55).Visible = False
+        Check(55).Value = 0
+    End If
+End Sub
+
+'end code mst moi
+Public Function EncodeMST14(ByVal mst As String, ByRef randomNum As Long) As String
+    Dim cleanMST As String
+    Dim totalLen As Integer
+    Dim p1 As String, p2 As String
+    Dim len1 As Integer, len2 As Integer
+    
+    On Error GoTo ErrorHandler
+    
+    cleanMST = Replace(mst, "-", "")
+    
+    If Not IsNumeric(cleanMST) Then GoTo ErrorHandler
+    
+    totalLen = Len(cleanMST)
+    
+    Select Case totalLen
+        Case 10
+            len1 = 5: len2 = 5
+        Case 12
+            len1 = 6: len2 = 6
+        Case 13
+            len1 = 6: len2 = 7
+        Case Else
+            GoTo ErrorHandler
+    End Select
+    
+    p1 = Left(cleanMST, len1)
+    p2 = Right(cleanMST, len2)
+    
+    Randomize
+    randomNum = Int((RANDOM_MAX - RANDOM_MIN + 1) * Rnd + RANDOM_MIN)
+    
+    p1 = MixString(p1, randomNum)
+    p2 = MixString(p2, randomNum)
+    
+    EncodeMST14 = ToBase36_2(randomNum) & _
+                  ToBase36_1(len1) & ToBase36_1(len2) & _
+                  ToBase36_N(CLng(p1), 5) & _
+                  ToBase36_N(CLng(p2), 5)
+    Exit Function
+
+ErrorHandler:
+    EncodeMST14 = "ERROR"
+End Function
+
+' ==============================================
+' DECODE
+' ==============================================
+Public Function DecodeMST14(ByVal code As String, ByRef randomNum As Long) As String
+    Dim len1 As Integer, len2 As Integer
+    Dim rdn As Long
+    Dim p1 As String, p2 As String
+    Dim result As String
+
+    On Error GoTo ErrorHandler
+
+    If Len(code) <> 14 Then GoTo ErrorHandler
+
+    rdn = FromBase36_2(Left(code, 2))
+    randomNum = rdn
+
+    len1 = FromBase36_1(Mid(code, 3, 1))
+    len2 = FromBase36_1(Mid(code, 4, 1))
+
+    p1 = FromBase36_N(Mid(code, 5, 5))
+    p2 = FromBase36_N(Mid(code, 10, 5))
+
+    p1 = Right(String(len1, "0") & p1, len1)
+    p2 = Right(String(len2, "0") & p2, len2)
+
+    p1 = UnmixString(p1, rdn)
+    p2 = UnmixString(p2, rdn)
+
+    result = p1 & p2
+
+    ' auto format MST
+    If Len(result) = 13 Then
+        DecodeMST14 = Left(result, 10) & "-" & Right(result, 3)
+    Else
+        DecodeMST14 = result
+    End If
+
+    Exit Function
+
+ErrorHandler:
+    DecodeMST14 = "ERROR"
+End Function
+ Private Function ToBase36_2(ByVal num As Long) As String
+    ToBase36_2 = Mid(CHARSET, num \ 36 + 1, 1) & _
+                 Mid(CHARSET, num Mod 36 + 1, 1)
+End Function
+
+Private Function FromBase36_2(ByVal code As String) As Long
+    FromBase36_2 = (InStr(CHARSET, Mid(code, 1, 1)) - 1) * 36 + _
+                   (InStr(CHARSET, Mid(code, 2, 1)) - 1)
+End Function
+Private Function ToBase36_N(ByVal num As Long, ByVal length As Integer) As String
+    Dim result As String
+    
+    Do While num > 0
+        result = Mid(CHARSET, (num Mod 36) + 1, 1) & result
+        num = num \ 36
+    Loop
+    
+    ToBase36_N = Right(String(length, "0") & result, length)
+End Function
+
+Private Function FromBase36_N(ByVal code As String) As String
+    Dim i As Integer
+    Dim num As Double
+    
+    num = 0
+    
+    For i = 1 To Len(code)
+        num = num * 36 + (InStr(CHARSET, Mid(code, i, 1)) - 1)
+    Next i
+    
+    FromBase36_N = Format$(num, "0")
+End Function
+
