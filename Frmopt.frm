@@ -2687,6 +2687,11 @@ Attribute VB_Exposed = False
 Option Explicit
 Private Const SECRET_KEY_MST As Long = &H7B4D8E2F
 Private isNewActive As Boolean
+Const LICENSE_LEN As Integer = 12
+Const BASE As Integer = 36
+
+Const MAX_BASE36_VALUE As Variant = 36 ^ 12   ' ~ 4.7e18 (d? l?n cho 64 bit)
+
 Private Const RANDOM_MIN As Long = 10
 Private Const RANDOM_MAX As Long = 99
 
@@ -2805,24 +2810,24 @@ Public Function DecodeLicense6(ByVal txt As String, ByRef randomNum As Long) As 
     Dim i As Integer
     Dim result As Variant   ' <--- Dùng Variant
     Dim combined As Variant
-    
+
     On Error GoTo ErrorHandler
-    
+
     ' Gi?i mã base36
     result = 0
     For i = 1 To Len(txt)
         result = result * 36 + (InStr(CHARSET, Mid(txt, i, 1)) - 1)
     Next
-    
+
     ' Gi?i mã
     result = result - 12345
     combined = result Xor SECRET_KEY
-    
+
     ' Tách random và s? g?c
     randomNum = Int(combined / 2000000)
     DecodeLicense6 = combined - (randomNum * 2000000)
     Exit Function
-    
+
 ErrorHandler:
     DecodeLicense6 = -1
 End Function
@@ -3416,10 +3421,147 @@ Private Function DecodeString(ByVal code As String) As String
 
     DecodeString = CStr(num)
 End Function
+'cho seri CPU
+   Public Function EncodeSerialCPUFull(ByVal serialHex As String, ByRef randomNum As Long) As String
+    Dim bytes() As Byte
+    Dim combined() As Byte
+    Dim i As Integer
+    
+    ' Chuy?n hex sang byte array
+    ReDim bytes(Len(serialHex) \ 2 - 1)
+    For i = 0 To Len(serialHex) \ 2 - 1
+        bytes(i) = CByte("&H" & Mid(serialHex, i * 2 + 1, 2))
+    Next
+    
+    ' Thêm randomNum (4 byte) vào d?u
+    ReDim combined(UBound(bytes) + 4)
+    combined(0) = randomNum And &HFF
+    combined(1) = (randomNum \ 256) And &HFF
+    combined(2) = (randomNum \ 65536) And &HFF
+    combined(3) = (randomNum \ 16777216) And &HFF
+    For i = 0 To UBound(bytes)
+        combined(i + 4) = bytes(i)
+    Next
+    
+    ' XOR mã hóa
+    For i = 0 To UBound(combined)
+        combined(i) = combined(i) Xor (SECRET_KEY And &HFF)
+    Next
+    
+    ' Chuy?n sang Base36
+    EncodeSerialCPUFull = BytesToBase36(combined)
+End Function
 
+' ==============================================
+' DECODE: Base36 -> Serial (KHÔNG c?n serial g?c)
+' ==============================================
+Public Function DecodeSerialCPUFull(ByVal code As String, ByRef randomNum As Long) As String
+    Dim bytes() As Byte
+    Dim i As Integer
+    Dim hexResult As String
+
+    ' Base36 -> bytes
+    bytes = Base36ToBytes(code)
+
+    ' XOR gi?i mã
+    For i = 0 To UBound(bytes)
+        bytes(i) = bytes(i) Xor (SECRET_KEY And &HFF)
+    Next
+
+    ' L?y randomNum (4 byte d?u)
+    If UBound(bytes) >= 3 Then
+        randomNum = bytes(0) + bytes(1) * 256 + bytes(2) * 65536 + bytes(3) * 16777216
+    End If
+
+    ' Chuy?n ph?n còn l?i thành hex
+    hexResult = ""
+    For i = 4 To UBound(bytes)
+        hexResult = hexResult & Right("0" & Hex(bytes(i)), 2)
+    Next
+
+    DecodeSerialCPUFull = hexResult
+End Function
+' ==============================================
+' HÀM CHUY?N BYTES -> BASE36
+' ==============================================
+Private Function BytesToBase36(bytes() As Byte) As String
+    Dim temp() As Long
+    Dim result As String
+    Dim remainder As Integer
+    Dim i As Integer
+    
+    ReDim temp(UBound(bytes))
+    For i = 0 To UBound(bytes)
+        temp(i) = bytes(i)
+    Next
+    
+    result = ""
+    Do
+        remainder = 0
+        For i = UBound(temp) To 0 Step -1
+            remainder = remainder * 256 + temp(i)
+            temp(i) = remainder \ BASE
+            remainder = remainder Mod BASE
+        Next
+        result = Mid(CHARSET, remainder + 1, 1) & result
+        
+        Dim allZero As Boolean
+        allZero = True
+        For i = 0 To UBound(temp)
+            If temp(i) <> 0 Then
+                allZero = False
+                Exit For
+            End If
+        Next
+        If allZero Then Exit Do
+    Loop
+    
+    BytesToBase36 = result
+End Function
+
+' ==============================================
+' HÀM CHUY?N BASE36 -> BYTES
+' ==============================================
+Private Function Base36ToBytes(base36Str As String) As Byte()
+    Dim result() As Byte
+    Dim i As Integer
+    Dim j As Integer
+    Dim val As Integer
+    Dim carry As Long
+
+    ReDim result(0)
+    result(0) = 0
+
+    For i = 1 To Len(base36Str)
+        val = InStr(CHARSET, Mid(base36Str, i, 1)) - 1
+        If val < 0 Or val >= BASE Then
+            Base36ToBytes = Array(0)
+            Exit Function
+        End If
+
+        carry = val
+        For j = 0 To UBound(result)
+            carry = carry + result(j) * BASE
+            result(j) = carry And &HFF
+            carry = carry \ 256
+        Next
+
+        Do While carry > 0
+            ReDim Preserve result(UBound(result) + 1)
+            result(UBound(result)) = carry And &HFF
+            carry = carry \ 256
+        Loop
+    Next
+
+    Base36ToBytes = result
+End Function
 Public Sub active_Click()
+    Dim randomNum As Long
+    Dim encoded As String
+    Dim decoded As String
+    Dim originalSerial As String
+    Dim myrsndom As Long
 
-   
     If IsValidMST_Format(Text(7).Text) = False Then
         'MsgBox "MST khong hop le"
         Dim s As String
@@ -3470,7 +3612,7 @@ Public Sub active_Click()
 
     Debug.Print "=== ENCODE MST THÀNH 8 KÝ T? ==="
     Debug.Print ""
-    Dim randomNum As Long
+
     ' Test MST 10 s?
     mst10 = Text(7).Text
     Dim encoded1 As String, encoded2 As String
@@ -3485,10 +3627,20 @@ Public Sub active_Click()
         decoded1 = DecodeMST8(encoded1, randomNum)
     End If
     '---------------------
+    'Serial CPU
+    originalSerial = GetCPUSerialFast()
+    ' Encode
+    encoded = EncodeSerialCPUFull(originalSerial, randomNum)
+    Debug.Print "Encoded: " & encoded
+    Debug.Print "Length: " & Len(encoded)
+
+    ' Decode (KHÔNG c?n originalSerialHex!)
+    decoded = DecodeSerialCPUFull(encoded, randomNum)
+    Debug.Print "Decoded: " & decoded
+    Debug.Print "Match: " & IIf(decoded = originalSerial, "YES", "NO")
 
 
     Dim code As String
-    Dim decoded As String
 
     Dim randomNum2 As Long
 
@@ -3502,7 +3654,6 @@ Public Sub active_Click()
 
     'mac
     Dim mac As String
-    Dim encoded As String
     Dim formatted As String
 
     Debug.Print "=== ENCODE MAC THÀNH 12 KÝ T? (2 BLOCK) ==="
@@ -3511,7 +3662,7 @@ Public Sub active_Click()
     ' Test MAC 1
     mac = GetMacAddress()
     'mac = "C8:A3:E8:B0:32:21"
-    encoded = EncodeMAC12(mac)
+    'encoded = EncodeMAC12(mac)
     decoded = DecodeMAC12(encoded)
     formatted = FormatMAC(decoded)
     'So chung tu phai nho hon 1 tr 6
@@ -3566,9 +3717,10 @@ Public Function KiemTraKey(strkey As String) As Boolean
     'Lay ra mst truoc
     Dim mst As String
     mst = DecodeMST14(a(1), CLng(a(0)))
-
+    Dim ktmst As String
+    ktmst = SelectSQL("select MaSoThue AS f1 from  License")
     'Kiem tra MST cong ty
-    If mst <> Text(7).Text Then
+    If mst <> Text(7).Text And mst <> ktmst Then
         Dim s As String
         s = ChrW(77) & ChrW(227) & ChrW(32) & ChrW(115) & ChrW(7889) & ChrW(32) & ChrW(116) & ChrW(104) & ChrW(117) & ChrW(7871) & ChrW(32) & ChrW(273) & ChrW(259) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(107) & ChrW(253) & ChrW(32) & ChrW(107) & ChrW(104) & ChrW(244) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(273) & ChrW(250) & ChrW(110) & ChrW(103)
         MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
@@ -3577,11 +3729,11 @@ Public Function KiemTraKey(strkey As String) As Boolean
     End If
 
     'Kiem tra dia chi mac
-    Dim mac As String
+    Dim cpusreri As String
     Dim macKT As String
-    mac = GetMacAddress()
-    macKT = DecodeMAC12(a(4))
-    If mac <> FormatMAC(macKT) Then
+    cpusreri = GetCPUSerial
+    macKT = DecodeSerialCPUFull(a(4), CLng(a(0)))
+    If cpusreri <> macKT Then
         s = ChrW(272) & ChrW(7883) & ChrW(97) & ChrW(32) & ChrW(99) & ChrW(104) & ChrW(7881) & ChrW(32) & ChrW(77) & ChrW(97) & ChrW(99) & ChrW(32) & ChrW(107) & ChrW(104) & ChrW(244) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(104) & ChrW(7907) & ChrW(112) & ChrW(32) & ChrW(108) & ChrW(7879)
         MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
         KiemTraKey = False
@@ -3593,7 +3745,6 @@ Public Function KiemTraKey(strkey As String) As Boolean
 
 End Function
 Public Sub UpdateLicnes()
-
 
     Dim ktbtnlc As Boolean
     ktbtnlc = active.Visible
@@ -3630,9 +3781,17 @@ Public Sub UpdateLicnes()
 
         'Update cho user
         Dim mac As String
-        mac = GetMacAddress()
+        mac = GetCPUSerial()
         'ExecuteSQL5 "UPDATE Users SET MacAddress='" & Replace(mac, "'", "''") & "'"
-        ExecuteSQL5 "UPDATE Users SET IsReister=1, Psw='" & pNamTC & "', MacAddress='" & mac & "'"
+        ' ExecuteSQL5 "UPDATE Users SET IsReister=1, Psw='" & pNamTC & "', MacAddress='" & mac & "'"
+        'Insert vo cpu
+        Dim rsCount As DAO.Recordset
+
+        Set rsCount = DBKetoan.OpenRecordset( _
+                      "SELECT COUNT(*) AS Tong FROM tbCpu where Name ='" & mac & "' ", dbOpenSnapshot)
+        If rsCount!tong = 0 Then
+            ExecuteSQL5 "INSERT INTO tbCpu(Name,PcName) VALUES ('" & mac & "','" & GetComputerName1 & "')"
+        End If
         frmMain.Label5.Visible = False
         Unload Me
     End If
@@ -3881,7 +4040,7 @@ Private Sub Form_Load()
 
     SetFont Me
     Set Combo(3).Font = Me.Font
-    mst = frmMain.LbCty(8).Caption
+    mst = frmMain.lbCty(8).Caption
     If IsNumeric(mst) Then
         vis = (Cdbl5(mst) = 0)
     Else
@@ -4152,7 +4311,7 @@ Public Sub Command_Click(Index As Integer)
 
         If Combo(2).ListIndex >= 0 Then T = Combo(2).ItemData(Combo(2).ListIndex) Else T = pTien
         If CInt5(Left(Text(Index).Text, 2)) <> 0 Then Check(55).Value = 0
-        If ((((pTenCty = Text(0).Text And (pTenCn = Text(1).Text Or suatencn = 1) And (Check(19).Value = suatencn) And pMaVach = Check(9).Value And pDinhmuc = Check(13).Value And pSongNgu = (Check(14).Value = 1) And pRpt = Check(15).Value And pTygia = Check(18).Value And T = pTien And mk = 0) Or (DEMO = 1 And CLng5(Left(Text(7).Text, 2)) > 0)) And (mst = Text(7).Text Or (suatencn = 1 And Left(mst, 10) = Left(Text(7).Text, 10)))) Or Combo(3).ListIndex = 4 Or (Cdbl5(Left(Text(7).Text, 10)) = 0 And Cdbl5(Left(frmMain.LbCty(8).Caption, 10)) = 0)) And (pNoiBo = Check(55).Value) And (CInt5(Combo(0).Text) = pNamTC) Then GoTo a
+        If ((((pTenCty = Text(0).Text And (pTenCn = Text(1).Text Or suatencn = 1) And (Check(19).Value = suatencn) And pMaVach = Check(9).Value And pDinhmuc = Check(13).Value And pSongNgu = (Check(14).Value = 1) And pRpt = Check(15).Value And pTygia = Check(18).Value And T = pTien And mk = 0) Or (DEMO = 1 And CLng5(Left(Text(7).Text, 2)) > 0)) And (mst = Text(7).Text Or (suatencn = 1 And Left(mst, 10) = Left(Text(7).Text, 10)))) Or Combo(3).ListIndex = 4 Or (Cdbl5(Left(Text(7).Text, 10)) = 0 And Cdbl5(Left(frmMain.lbCty(8).Caption, 10)) = 0)) And (pNoiBo = Check(55).Value) And (CInt5(Combo(0).Text) = pNamTC) Then GoTo a
         If (Len(pMST) > 0 And Left(Text(7).Text, Len(pMST)) = pMST) Then GoTo a
         If boolean_kiemtra() = False Then GoTo a    ' kiem tra da active thi bat khung nhap ma so le
         'If FrmGetStr.GetMK(Text(7).Text) Then

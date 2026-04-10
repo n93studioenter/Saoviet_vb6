@@ -163,6 +163,83 @@ Public Function VniToUnicode2(ByVal sVNI As String) As String
 
     VniToUnicode2 = result
 End Function
+Public Function GetMainboardSerial() As String
+    On Error Resume Next
+
+    Dim objWMI As Object
+    Dim colItems As Object
+    Dim objItem As Object
+    Dim s As String
+
+    Set objWMI = GetObject("winmgmts:\\.\root\cimv2")
+    Set colItems = objWMI.ExecQuery("Select * from Win32_BaseBoard")
+
+    For Each objItem In colItems
+        s = objItem.SerialNumber
+        
+        ' b? d?u /
+        s = Replace(s, "/", "")
+        
+        ' lo?i kho?ng tr?ng du
+        s = Trim(s)
+        
+        GetMainboardSerial = s
+        Exit For
+    Next
+
+    Set objItem = Nothing
+    Set colItems = Nothing
+    Set objWMI = Nothing
+End Function
+Public Function GetCPUSerial() As String
+    Dim oWMI As Object
+    Dim oItem As Object
+    Dim oList As Object
+    
+    On Error GoTo ErrHandler
+    Set oWMI = GetObject("WinMgmts:")
+    Set oList = oWMI.InstancesOf("Win32_Processor")
+    
+    For Each oItem In oList
+        GetCPUSerial = oItem.ProcessorId
+        Exit For
+    Next
+    
+    Exit Function
+ErrHandler:
+    GetCPUSerial = ""
+End Function
+Public Function GetCPUSerialFast() As String
+    Dim oWMI As Object
+    Dim oItem As Object
+    Dim oList As Object
+    
+    On Error GoTo ErrHandler
+    
+    ' Ki?m tra cache tru?c
+    Static cachedSerial As String
+    If cachedSerial <> "" Then
+        GetCPUSerialFast = cachedSerial
+        Exit Function
+    End If
+    
+    ' Dùng ExecQuery thay vì InstancesOf (nhanh hon 1 chút)
+    Set oWMI = GetObject("WinMgmts:")
+    Set oList = oWMI.ExecQuery("SELECT ProcessorId FROM Win32_Processor")
+    
+    For Each oItem In oList
+        cachedSerial = oItem.ProcessorId
+        If cachedSerial <> "" Then
+            GetCPUSerialFast = cachedSerial
+            Exit Function
+        End If
+    Next
+    
+    Exit Function
+    
+ErrHandler:
+    GetCPUSerialFast = ""
+End Function
 Public Function GetMacAddress2() As String
     Const OFFSET_LENGTH As Long = 400
     Dim lSize As Long
@@ -176,7 +253,7 @@ Public Function GetMacAddress2() As String
         Call GetAdaptersInfo(baBuffer(0), lSize)
         Call CopyMemory(lSize, baBuffer(OFFSET_LENGTH), 4)
         For lIdx = OFFSET_LENGTH + 4 To OFFSET_LENGTH + 4 + lSize - 1
-            sRetVal = IIf(LenB(sRetVal) <> 0, sRetVal & ":", vbNullString) & Right$("0" & Hex$(baBuffer(lIdx)), 2)
+            sRetVal = IIf(LenB(sRetVal) <> 0, sRetVal & ":", vbNullString) & Right$("0" & hex$(baBuffer(lIdx)), 2)
         Next
     End If
     GetMacAddress2 = sRetVal
@@ -203,7 +280,7 @@ Public Function GetMacAddress() As String
             CopyMemory ai, buffer(0), Len(ai)
 
             For i = 0 To ai.AddressLength - 1
-                sMac = sMac & Right$("0" & Hex$(ai.Address(i)), 2)
+                sMac = sMac & Right$("0" & hex$(ai.Address(i)), 2)
                 If i < ai.AddressLength - 1 Then sMac = sMac & ":"
             Next
 

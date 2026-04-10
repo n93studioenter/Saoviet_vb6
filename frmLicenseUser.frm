@@ -2,10 +2,10 @@ VERSION 5.00
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form frmLicenseUser 
    BorderStyle     =   0  'None
-   ClientHeight    =   2550
+   ClientHeight    =   2055
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   7770
+   ClientWidth     =   8745
    BeginProperty Font 
       Name            =   "VK Sans Serif"
       Size            =   8.25
@@ -17,12 +17,12 @@ Begin VB.Form frmLicenseUser
    EndProperty
    LinkTopic       =   "Form4"
    Picture         =   "frmLicenseUser.frx":0000
-   ScaleHeight     =   2550
-   ScaleWidth      =   7770
+   ScaleHeight     =   2055
+   ScaleWidth      =   8745
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Begin MSComDlg.CommonDialog dlgCommonDialog 
-      Left            =   7080
+      Left            =   8520
       Top             =   360
       _ExtentX        =   847
       _ExtentY        =   847
@@ -35,7 +35,7 @@ Begin VB.Form frmLicenseUser
       Left            =   0
       ScaleHeight     =   255
       ScaleWidth      =   13575
-      TabIndex        =   12
+      TabIndex        =   11
       Top             =   0
       Width           =   13575
       Begin VB.Label lblTitle 
@@ -53,7 +53,7 @@ Begin VB.Form frmLicenseUser
          Height          =   405
          Index           =   11
          Left            =   600
-         TabIndex        =   14
+         TabIndex        =   13
          Top             =   0
          Width           =   3000
       End
@@ -72,8 +72,8 @@ Begin VB.Form frmLicenseUser
             Strikethrough   =   0   'False
          EndProperty
          Height          =   405
-         Left            =   7320
-         TabIndex        =   13
+         Left            =   8160
+         TabIndex        =   12
          Top             =   0
          Width           =   480
       End
@@ -82,7 +82,7 @@ Begin VB.Form frmLicenseUser
          Height          =   255
          Index           =   1
          Left            =   120
-         Picture         =   "frmLicenseUser.frx":D51B
+         Picture         =   "frmLicenseUser.frx":8D469
          Stretch         =   -1  'True
          Top             =   0
          Width           =   255
@@ -91,7 +91,7 @@ Begin VB.Form frmLicenseUser
          Height          =   8550
          Index           =   0
          Left            =   840
-         Picture         =   "frmLicenseUser.frx":D7D8
+         Picture         =   "frmLicenseUser.frx":8D726
          Stretch         =   -1  'True
          Top             =   240
          Width           =   7890
@@ -109,27 +109,27 @@ Begin VB.Form frmLicenseUser
          Strikethrough   =   0   'False
       EndProperty
       Height          =   255
-      Left            =   7350
-      TabIndex        =   11
-      Top             =   2280
+      Left            =   8280
+      TabIndex        =   10
+      Top             =   1680
       Width           =   375
    End
    Begin VB.CommandButton Command1 
-      Caption         =   "KÝch ho¹t"
+      Caption         =   "D¸n m·"
       Height          =   285
       Index           =   1
-      Left            =   6480
-      TabIndex        =   10
-      Top             =   1560
-      Width           =   1095
+      Left            =   7440
+      TabIndex        =   9
+      Top             =   1080
+      Width           =   1215
    End
    Begin VB.TextBox Text 
       Height          =   285
       Index           =   3
       Left            =   3360
       MaxLength       =   6
-      TabIndex        =   9
-      Top             =   1560
+      TabIndex        =   8
+      Top             =   1080
       Width           =   835
    End
    Begin VB.TextBox Text 
@@ -137,8 +137,8 @@ Begin VB.Form frmLicenseUser
       Index           =   2
       Left            =   2400
       MaxLength       =   6
-      TabIndex        =   8
-      Top             =   1560
+      TabIndex        =   7
+      Top             =   1080
       Width           =   1000
    End
    Begin VB.TextBox Text 
@@ -146,8 +146,8 @@ Begin VB.Form frmLicenseUser
       Index           =   1
       Left            =   1080
       MaxLength       =   13
-      TabIndex        =   7
-      Top             =   1560
+      TabIndex        =   6
+      Top             =   1080
       Width           =   1335
    End
    Begin VB.TextBox Text 
@@ -155,39 +155,31 @@ Begin VB.Form frmLicenseUser
       Index           =   0
       Left            =   360
       MaxLength       =   100
-      TabIndex        =   6
-      Top             =   1560
+      TabIndex        =   5
+      Top             =   1080
       Width           =   735
    End
    Begin VB.TextBox Text 
       Height          =   285
       Index           =   4
       Left            =   4200
-      MaxLength       =   6
-      TabIndex        =   5
-      Top             =   1560
-      Width           =   940
-   End
-   Begin VB.TextBox Text 
-      Height          =   285
-      Index           =   5
-      Left            =   5160
-      MaxLength       =   6
+      MaxLength       =   30
       TabIndex        =   4
-      Top             =   1560
-      Width           =   1005
+      Top             =   1080
+      Width           =   2985
    End
    Begin VB.CommandButton Command1 
       Caption         =   "Sao chÐp"
       Height          =   300
       Index           =   0
-      Left            =   6480
+      Left            =   7440
       TabIndex        =   2
-      Top             =   960
-      Width           =   1095
+      Top             =   600
+      Width           =   1215
    End
    Begin VB.Label Label1 
       BackColor       =   &H00400000&
+      BackStyle       =   0  'Transparent
       Caption         =   "NhÊn sao chÐp m· ®Ó göi l¹i cho chóng t«i"
       BeginProperty Font 
          Name            =   "VK Sans Serif"
@@ -198,19 +190,20 @@ Begin VB.Form frmLicenseUser
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H0000FFFF&
+      ForeColor       =   &H000080FF&
       Height          =   255
       Index           =   2
       Left            =   360
       TabIndex        =   3
-      Top             =   2160
-      Width           =   5775
+      Top             =   1680
+      Width           =   4575
    End
    Begin VB.Label Label1 
       BackColor       =   &H00400000&
+      BackStyle       =   0  'Transparent
       Caption         =   "lbl1"
       BeginProperty Font 
-         Name            =   "VK Sans Serif"
+         Name            =   "MS Sans Serif"
          Size            =   9.75
          Charset         =   0
          Weight          =   700
@@ -218,16 +211,17 @@ Begin VB.Form frmLicenseUser
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00FFFFFF&
+      ForeColor       =   &H00000000&
       Height          =   300
       Index           =   1
       Left            =   360
       TabIndex        =   1
-      Top             =   960
-      Width           =   5775
+      Top             =   600
+      Width           =   6855
    End
    Begin VB.Label Label1 
-      BackColor       =   &H00400000&
+      BackColor       =   &H00C0C000&
+      BackStyle       =   0  'Transparent
       Caption         =   "Vui lßng ®¨ng ký ®Ó ®­îc sö dông phÇn mÒm"
       BeginProperty Font 
          Name            =   "VK Sans Serif"
@@ -238,13 +232,13 @@ Begin VB.Form frmLicenseUser
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00FFFFFF&
-      Height          =   495
+      ForeColor       =   &H000080FF&
+      Height          =   375
       Index           =   0
       Left            =   360
       TabIndex        =   0
       Top             =   240
-      Width           =   5775
+      Width           =   5895
    End
 End
 Attribute VB_Name = "frmLicenseUser"
@@ -253,6 +247,8 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+Const LICENSE_LEN As Integer = 12
+Const BASE As Integer = 36
 Private Const SECRET_KEY_MST As Long = &H7B4D8E2F
 Private isNewActive As Boolean
 Private Const RANDOM_MIN As Long = 10
@@ -983,47 +979,33 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
     End Select
 End Sub
 Private Sub Kichhoatma()
-If Trim(Label1(1).Caption) = bakStr Then
-            Dim s As String
-            s = ChrW(75) & ChrW(237) & ChrW(99) & ChrW(104) & ChrW(32) & ChrW(104) & ChrW(111) & ChrW(7841) & ChrW(116) & ChrW(32) & ChrW(107) & ChrW(104) & ChrW(244) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(116) & ChrW(104) & ChrW(224) & ChrW(110) & ChrW(104) & ChrW(32) & ChrW(99) & ChrW(244) & ChrW(110) & ChrW(103)
-            MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
-            Exit Sub
-        End If
-        If FrmOptions.KiemTraKey(bakStr) = True Then
-            Dim mac As String
-            mac = GetMacAddress()
-            Dim rsCount As DAO.Recordset
+    If Trim(Label1(1).Caption) = bakStr Then
+        Dim s As String
+        s = ChrW(75) & ChrW(237) & ChrW(99) & ChrW(104) & ChrW(32) & ChrW(104) & ChrW(111) & ChrW(7841) & ChrW(116) & ChrW(32) & ChrW(107) & ChrW(104) & ChrW(244) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(116) & ChrW(104) & ChrW(224) & ChrW(110) & ChrW(104) & ChrW(32) & ChrW(99) & ChrW(244) & ChrW(110) & ChrW(103)
+        MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
+        Exit Sub
+    End If
+    If FrmOptions.KiemTraKey(bakStr) = True Then
+        Dim mac As String
+        mac = GetCPUSerialFast()
+        Dim rsCount As DAO.Recordset
 
-            Set rsCount = DBKetoan.OpenRecordset( _
-                          "SELECT COUNT(*) AS Tong FROM Users ", dbOpenSnapshot)
+        Set rsCount = DBKetoan.OpenRecordset( _
+                      "SELECT COUNT(*) AS Tong FROM Users ", dbOpenSnapshot)
 
-            If rsCount!tong > 1 Then
-                ExecuteSQL5 "INSERT INTO Users (TenNSD,Psw,UserRight,VT,TS,HDV,WS,MacAddress,IsReister) VALUES ('Administrator" & (rsCount!tong + 1) & "','" & pNamTC & "',0,1111111111,1,1,'...','" & mac & "',1)"
-            Else
-                'Kiem tra xem day co phai la chinh chu
-                Dim rs_checkus As Recordset
-                Set rs_checkus = DBKetoan.OpenRecordset( _
-                                 "SELECT * FROM Users WHERE IsReister=1", _
-                                 dbOpenSnapshot, dbForwardOnly)
-                If rs_checkus.EOF Then
-                    ExecuteSQL5 "UPDATE Users SET IsReister=1, Psw='" & pNamTC & "', MacAddress='" & mac & "'"
-                Else
-                    ExecuteSQL5 "INSERT INTO Users (TenNSD,Psw,UserRight,VT,TS,HDV,WS,MacAddress,IsReister) VALUES ('Administrator" & (rsCount!tong + 1) & "','" & pNamTC & "',0,1111111111,1,1,'...','" & mac & "',1)"
-                End If
+        ExecuteSQL5 "INSERT INTO tbCpu(Name,PcName) VALUES ('" & mac & "','" & GetComputerName1 & "')"
+        'MsgBox "Kich hoat thanh cong"
+        s = ChrW(75) & ChrW(237) & ChrW(99) & ChrW(104) & ChrW(32) & ChrW(104) & ChrW(111) & ChrW(7841) & ChrW(116) & ChrW(32) & ChrW(116) & ChrW(104) & ChrW(224) & ChrW(110) & ChrW(104) & ChrW(32) & ChrW(99) & ChrW(244) & ChrW(110) & ChrW(103)
+        MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
 
-            End If
-            'MsgBox "Kich hoat thanh cong"
-            s = ChrW(75) & ChrW(237) & ChrW(99) & ChrW(104) & ChrW(32) & ChrW(104) & ChrW(111) & ChrW(7841) & ChrW(116) & ChrW(32) & ChrW(116) & ChrW(104) & ChrW(224) & ChrW(110) & ChrW(104) & ChrW(32) & ChrW(99) & ChrW(244) & ChrW(110) & ChrW(103)
-            MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
+        FrmMatkhau.Command(0).Enabled = True
+        FrmMatkhau.Refresh
+        Unload Me
+    Else
+        s = ChrW(75) & ChrW(237) & ChrW(99) & ChrW(104) & ChrW(32) & ChrW(104) & ChrW(111) & ChrW(7841) & ChrW(116) & ChrW(32) & ChrW(107) & ChrW(104) & ChrW(244) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(116) & ChrW(104) & ChrW(224) & ChrW(110) & ChrW(104) & ChrW(32) & ChrW(99) & ChrW(244) & ChrW(110) & ChrW(103)
+        MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
 
-            FrmMatkhau.Command(0).Enabled = True
-            FrmMatkhau.Refresh
-            Unload Me
-        Else
-            s = ChrW(75) & ChrW(237) & ChrW(99) & ChrW(104) & ChrW(32) & ChrW(104) & ChrW(111) & ChrW(7841) & ChrW(116) & ChrW(32) & ChrW(107) & ChrW(104) & ChrW(244) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(116) & ChrW(104) & ChrW(224) & ChrW(110) & ChrW(104) & ChrW(32) & ChrW(99) & ChrW(244) & ChrW(110) & ChrW(103)
-            MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
-
-        End If
+    End If
 End Sub
 
 Private Sub Command1_Click(Index As Integer)
@@ -1130,7 +1112,8 @@ Public Sub GenerateCode()
 
     ' Test MAC 1
     mac = GetMacAddress()
-    encoded = EncodeMAC12(mac)
+    'encoded = EncodeMAC12(mac)
+    encoded = EncodeSerialCPUFull(GetCPUSerialFast(), randomNum)
     decoded = DecodeMAC12(encoded)
     formatted = FormatMAC(decoded)
     'So chung tu phai nho hon 1 tr 6
@@ -1154,10 +1137,7 @@ Private Sub Text_Change(Index As Integer)
         Text(1).Text = a(1)
         Text(2).Text = a(2)
         Text(3).Text = a(3)
-        Dim A2() As String
-        A2 = Split(a(4), "-")
-        Text(4).Text = A2(0)
-        Text(5).Text = A2(1)
+        Text(4).Text = a(4)
         'Command1_Click 1
     End If
 Error_Handler:
@@ -1281,3 +1261,140 @@ Private Function FromBase36_N(ByVal code As String) As String
     
     FromBase36_N = Format$(num, "0")
 End Function
+
+'cho seri CPU
+   Public Function EncodeSerialCPUFull(ByVal serialHex As String, ByRef randomNum As Long) As String
+    Dim bytes() As Byte
+    Dim combined() As Byte
+    Dim i As Integer
+    
+    ' Chuy?n hex sang byte array
+    ReDim bytes(Len(serialHex) \ 2 - 1)
+    For i = 0 To Len(serialHex) \ 2 - 1
+        bytes(i) = CByte("&H" & Mid(serialHex, i * 2 + 1, 2))
+    Next
+    
+    ' Thêm randomNum (4 byte) vào d?u
+    ReDim combined(UBound(bytes) + 4)
+    combined(0) = randomNum And &HFF
+    combined(1) = (randomNum \ 256) And &HFF
+    combined(2) = (randomNum \ 65536) And &HFF
+    combined(3) = (randomNum \ 16777216) And &HFF
+    For i = 0 To UBound(bytes)
+        combined(i + 4) = bytes(i)
+    Next
+    
+    ' XOR mã hóa
+    For i = 0 To UBound(combined)
+        combined(i) = combined(i) Xor (SECRET_KEY And &HFF)
+    Next
+    
+    ' Chuy?n sang Base36
+    EncodeSerialCPUFull = BytesToBase36(combined)
+End Function
+
+' ==============================================
+' DECODE: Base36 -> Serial (KHÔNG c?n serial g?c)
+' ==============================================
+Public Function DecodeSerialCPUFull(ByVal code As String, ByRef randomNum As Long) As String
+    Dim bytes() As Byte
+    Dim i As Integer
+    Dim hexResult As String
+
+    ' Base36 -> bytes
+    bytes = Base36ToBytes(code)
+
+    ' XOR gi?i mã
+    For i = 0 To UBound(bytes)
+        bytes(i) = bytes(i) Xor (SECRET_KEY And &HFF)
+    Next
+
+    ' L?y randomNum (4 byte d?u)
+    If UBound(bytes) >= 3 Then
+        randomNum = bytes(0) + bytes(1) * 256 + bytes(2) * 65536 + bytes(3) * 16777216
+    End If
+
+    ' Chuy?n ph?n còn l?i thành hex
+    hexResult = ""
+    For i = 4 To UBound(bytes)
+        hexResult = hexResult & Right("0" & Hex(bytes(i)), 2)
+    Next
+
+    DecodeSerialCPUFull = hexResult
+End Function
+' ==============================================
+' HÀM CHUY?N BYTES -> BASE36
+' ==============================================
+Private Function BytesToBase36(bytes() As Byte) As String
+    Dim temp() As Long
+    Dim result As String
+    Dim remainder As Integer
+    Dim i As Integer
+    
+    ReDim temp(UBound(bytes))
+    For i = 0 To UBound(bytes)
+        temp(i) = bytes(i)
+    Next
+    
+    result = ""
+    Do
+        remainder = 0
+        For i = UBound(temp) To 0 Step -1
+            remainder = remainder * 256 + temp(i)
+            temp(i) = remainder \ BASE
+            remainder = remainder Mod BASE
+        Next
+        result = Mid(CHARSET, remainder + 1, 1) & result
+        
+        Dim allZero As Boolean
+        allZero = True
+        For i = 0 To UBound(temp)
+            If temp(i) <> 0 Then
+                allZero = False
+                Exit For
+            End If
+        Next
+        If allZero Then Exit Do
+    Loop
+    
+    BytesToBase36 = result
+End Function
+
+' ==============================================
+' HÀM CHUY?N BASE36 -> BYTES
+' ==============================================
+Private Function Base36ToBytes(base36Str As String) As Byte()
+    Dim result() As Byte
+    Dim i As Integer
+    Dim j As Integer
+    Dim val As Integer
+    Dim carry As Long
+
+    ReDim result(0)
+    result(0) = 0
+
+    For i = 1 To Len(base36Str)
+        val = InStr(CHARSET, Mid(base36Str, i, 1)) - 1
+        If val < 0 Or val >= BASE Then
+            Base36ToBytes = Array(0)
+            Exit Function
+        End If
+
+        carry = val
+        For j = 0 To UBound(result)
+            carry = carry + result(j) * BASE
+            result(j) = carry And &HFF
+            carry = carry \ 256
+        Next
+
+        Do While carry > 0
+            ReDim Preserve result(UBound(result) + 1)
+            result(UBound(result)) = carry And &HFF
+            carry = carry \ 256
+        Loop
+    Next
+
+    Base36ToBytes = result
+End Function
+
+

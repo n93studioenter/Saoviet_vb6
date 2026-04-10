@@ -642,6 +642,7 @@ Public Sub CheckAndCreateToKhaiThueTable()
         'MsgBox "B?ng ToKhaiThue dã t?n t?i!"
     End If
 End Sub
+
 Public Sub CheckAndCreateTBLogin()
     Dim tdf As DAO.TableDef
     Dim fld As DAO.Field
@@ -767,7 +768,43 @@ Private Sub importRegister()
     rs.Close
     Set rs = Nothing
 End Sub
+Private Function KiemTraMatKhau(pstr_psw As String) As Boolean
 
+    Dim newpsw As Integer
+    newpsw = 64 + Day(Date) + pNamTC
+    If pstr_psw <> "" Then
+        If pstr_psw = newpsw Then
+            scecretpws = Int_StrToCode(CStr(newpsw))
+            ExecuteSQL5 "UPDATE Users SET Psw = " + scecretpws + " WHERE MaSo = " + CStr(CboUser.ItemData(CboUser.ListIndex))
+        End If
+    End If
+
+    Dim rs_mk As Recordset
+
+    Set rs_mk = DBKetoan.OpenRecordset("SELECT Users.* FROM Users WHERE MaSo = " + CStr(CboUser.ItemData(CboUser.ListIndex)), dbOpenSnapshot, dbForwardOnly)
+    If (Int_StrToCode(pstr_psw) = rs_mk!psw - pNamTC Or Int_StrToCode(pstr_psw) = rs_mk!psw) Then
+        KiemTraMatKhau = True
+        If Int_StrToCode(pstr_psw) = rs_mk!psw Then
+            ExecuteSQL5 "UPDATE Users SET Psw =  '" & pNamTC & "' WHERE MaSo = " + CStr(CboUser.ItemData(CboUser.ListIndex))
+        End If
+
+    Else
+        KiemTraMatKhau = False
+        On Error GoTo SaiMK
+        KiemTraMatKhau = (CInt5(pstr_psw) = Day(Date) + month(Date) + pNamTC)
+        On Error GoTo 0
+    End If
+
+    User_Right = rs_mk!UserRight
+    UserID = rs_mk!MaSo
+    UserName = rs_mk!TenNSD
+    frmMain.tag = CStr(rs_mk!vt)
+    frmMain.SetUserRight
+    frmMain.sbStatusBar.Panels(3).ToolTipText = "Log On Time: " + Format(Time, "hh:mm:ss")
+SaiMK:
+    rs_mk.Close
+    Set rs_mk = Nothing
+End Function
 Private Sub Command_Click(Index As Integer)
     If Index = 1 Then
         Unload Me
@@ -783,7 +820,7 @@ Private Sub Command_Click(Index As Integer)
             ExecuteSQL5 "UPDATE Users SET WS='" + GetComputerName1 + "' WHERE MaSo=" + CStr(UserID), False
             'Luu dia chi mac
             Dim mac As String
-            mac = GetMacAddress()
+            mac = GetCPUSerialFast()
             Dim sql As String
 
             sql = "update tbRegister SET Name= ('" & mac & "');"
@@ -828,7 +865,7 @@ Private Sub Command_Click(Index As Integer)
                 Unload FrmMatkhau
             Else
                 'MsgBox "B¹n ch­a nhí ®óng mËt khÈu !", vbExclamation, App.ProductName
-                
+
                 s = ChrW(66) & ChrW(7841) & ChrW(110) & ChrW(32) & ChrW(99) & ChrW(104) & ChrW(432) & ChrW(97) & ChrW(32) & ChrW(110) & ChrW(104) & ChrW(7899) & ChrW(32) & ChrW(273) & ChrW(250) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(109) & ChrW(7853) & ChrW(116) & ChrW(32) & ChrW(107) & ChrW(104) & ChrW(7849) & ChrW(117)
                 MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
 
@@ -1133,11 +1170,14 @@ Private Sub AddDataLCTT()
     ExecuteSQL5 "Update LCTT set  TKNo=413, TKCo=11,Dau=-1 where MaSo=61 "
 End Sub
 Private Sub Form_Activate()
+    CheckAndCreateTBCpu
+    ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
     ExecuteSQL5_Themmoi ("ALTER TABLE Users ADD IsReister NUMBER")
     ExecuteSQL5_Themmoi ("ALTER TABLE Users  ADD MacAddress text")
     AddDataLCTT
     Left = frmMain.ScaleWidth * 30 / 100
     Top = frmMain.ScaleHeight * 40 / 100
+
     CheckAndCreateTBLogin
     CheckAndCreateTable
     CheckAndCreateToKhaiThueTable
@@ -1202,14 +1242,13 @@ Private Sub Form_Activate()
         Set rs = DBKetoan.OpenRecordset("SELECT TOP 1 Name FROM tbRegister ")
         If Not rs.EOF Then
             Dim mac As String
-            mac = GetMacAddress()
+            mac = GetCPUSerialFast()
             If rs!Name <> mac Then
                 Dim newpsw As Integer
                 newpsw = 64 + Day(Date) + pNamTC
                 scecretpws = Int_StrToCode(CStr(newpsw))
-                MsgBox scecretpws
                 'ExecuteSQL5 "UPDATE Users SET Psw = " + scecretpws + " WHERE MaSo = " + CStr(CboUser.ItemData(CboUser.ListIndex))
-                
+
             End If
         End If
         'Kiem tra dia chi mac
@@ -1218,7 +1257,7 @@ Private Sub Form_Activate()
         cmg = SelectSQL("select CMG AS f1 from  License")
         Dim rs_checkus As Recordset
         Set rs_checkus = DBKetoan.OpenRecordset( _
-                         "SELECT * FROM Users WHERE MacAddress='" & Replace(mac, "'", "''") & "' AND IsReister=1", _
+                         "SELECT * FROM tbCpu WHERE Name='" & mac & "'", _
                          dbOpenSnapshot, dbForwardOnly)
         If rs_checkus.EOF And cmg <> 249991 Then
             Command(0).Enabled = False
@@ -1247,7 +1286,7 @@ Private Sub UpdateMacuser(tong As Integer, mac As String)
     End If
 
 End Sub
-Private Function KiemTraMatKhau(pstr_psw As String) As Boolean
+Private Function KiemTraMatKhau3(pstr_psw As String) As Boolean
 
     Dim rsMac As DAO.Recordset
 
@@ -1260,7 +1299,7 @@ Private Function KiemTraMatKhau(pstr_psw As String) As Boolean
                   "SELECT COUNT(*) AS Tong FROM Users ", dbOpenSnapshot)
     Dim chinhchu As Boolean
     Dim mac As String
-    mac = GetMacAddress()
+    mac = GetCPUSerialFast()
     'mac = "3f:cd:e2:c5:c0:71"
     'mac = "5e:3e:70:b5:1c:1c"
     'Kiem tra danh sach user co dia chi nay khong
@@ -1293,7 +1332,7 @@ Private Function KiemTraMatKhau(pstr_psw As String) As Boolean
             If chinhchu = True Then
                 'UpdateMacuser rsCount!tong, mac
                 'ExecuteSQL5 "UPDATE Users SET Psw = " + scecretpws + " WHERE MaSo = " + CStr(CboUser.ItemData(CboUser.ListIndex))
-                ExecuteSQL5 "UPDATE Users SET Psw = " + scecretpws + " WHERE MacAddress = '" & Replace(mac, "'", "''") & "'"
+                ExecuteSQL5 "UPDATE Users SET Psw = " + scecretpws + " WHERE MacAddress = '" & mac & "'"
             Else
                 'Neu khong chinh chu thi phai tao 1 user
                 ExecuteSQL5 "INSERT INTO Users (TenNSD,Psw,UserRight,VT,TS,HDV,WS,MacAddress) VALUES ('Administrator" & (rsCount!tong + 1) & "','" & scecretpws & "',0,1111111111,1,1,'...','" & mac & "')"
@@ -1307,24 +1346,24 @@ Private Function KiemTraMatKhau(pstr_psw As String) As Boolean
     If IsNull(rsMac!macAddress) Then
         Set rs_mk = DBKetoan.OpenRecordset("SELECT Users.* FROM Users ", dbOpenSnapshot, dbForwardOnly)
     Else
-        Set rs_mk = DBKetoan.OpenRecordset("SELECT Users.* FROM Users WHERE MacAddress = '" & Replace(mac, "'", "''") & "'", dbOpenSnapshot, dbForwardOnly)
+        Set rs_mk = DBKetoan.OpenRecordset("SELECT Users.* FROM Users WHERE MacAddress = '" & mac & "'", dbOpenSnapshot, dbForwardOnly)
     End If
     'Set rs_mk = DBKetoan.OpenRecordset("SELECT Users.* FROM Users WHERE MaSo = " + CStr(CboUser.ItemData(CboUser.ListIndex)), dbOpenSnapshot, dbForwardOnly)
     If rs_mk.EOF Then
         On Error GoTo SaiMK
     End If
     If (Int_StrToCode(pstr_psw) = rs_mk!psw - pNamTC Or Int_StrToCode(pstr_psw) = rs_mk!psw) Then
-        KiemTraMatKhau = True
+        KiemTraMatKhau3 = True
         'Cap nhat dia chi mac neu la user dau
         'UpdateMacuser rsCount!tong, mac
         If Int_StrToCode(pstr_psw) = rs_mk!psw Then
-            ExecuteSQL5 "UPDATE Users SET Psw =  '" & pNamTC & "' WHERE MacAddress = '" & Replace(mac, "'", "''") & "'"
+            ExecuteSQL5 "UPDATE Users SET Psw =  '" & pNamTC & "' WHERE MacAddress = '" & mac & "'"
         End If
 
     Else
-        KiemTraMatKhau = False
+        KiemTraMatKhau3 = False
         On Error GoTo SaiMK
-        KiemTraMatKhau = (CInt5(pstr_psw) = Day(Date) + month(Date) + pNamTC)
+        KiemTraMatKhau3 = (CInt5(pstr_psw) = Day(Date) + month(Date) + pNamTC)
         On Error GoTo 0
     End If
     User_Right = rs_mk!UserRight
@@ -1421,8 +1460,41 @@ End Sub
 Private Sub Label1_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     picTitle_MouseDown Button, Shift, X, Y
 End Sub
+Public Sub CheckAndCreateTBCpu()
+    Dim tdf As DAO.TableDef
+    Dim fld As DAO.Field
+    Dim tableExists As Boolean
+    Dim tableName As String
 
+    tableName = "tbCpu"
+    tableExists = False
+
+
+    ' Ki?m tra t?n t?i b?ng
+    For Each tdf In DBKetoan.TableDefs
+        If tdf.Name = tableName Then
+            tableExists = True
+            Exit For
+        End If
+    Next tdf
+
+    If Not tableExists Then
+        ' T?o b?ng n?u chua t?n t?i
+        Set tdf = DBKetoan.CreateTableDef(tableName)
+
+        ' Username
+        Set fld = tdf.CreateField("Name", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+ 
+        ' Thêm b?ng vào CSDL
+        DBKetoan.TableDefs.Append tdf
+    End If
+End Sub
 Private Sub Form_Load()
+    CheckAndCreateTBCpu
+    ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
     ExecuteSQL5_Themmoi ("ALTER TABLE Users ADD IsReister NUMBER")
     ExecuteSQL5_Themmoi ("ALTER TABLE Users  ADD MacAddress text")
     Counter = -1
@@ -1436,7 +1508,7 @@ Private Sub Form_Load()
     Set rs = DBKetoan.OpenRecordset("SELECT TOP 1 Name FROM tbRegister ")
     If Not rs.EOF Then
         Dim mac As String
-        mac = GetMacAddress()
+        mac = GetCPUSerialFast()
         If rs!Name <> mac Then
             Dim newpsw As Integer
             newpsw = 64 + Day(Date) + pNamTC
@@ -1452,12 +1524,11 @@ Private Sub Form_Load()
     cmg = SelectSQL("select CMG AS f1 from  License")
     Dim rs_checkus As Recordset
     Set rs_checkus = DBKetoan.OpenRecordset( _
-                     "SELECT * FROM Users WHERE MacAddress='" & Replace(mac, "'", "''") & "' AND IsReister=1", _
+                     "SELECT * FROM tbCpu WHERE Name='" & mac & "'", _
                      dbOpenSnapshot, dbForwardOnly)
     If rs_checkus.EOF And cmg <> 249991 Then
         Command(0).Enabled = False
         frmLicenseUser.Show vbModal
-
     End If
 End Sub
 Private Sub BuildTitle()

@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "MSMASK32.OCX"
+Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "msmask32.ocx"
 Begin VB.Form FrmTongHop 
    AutoRedraw      =   -1  'True
    BackColor       =   &H00E0E0E0&
@@ -525,10 +525,10 @@ Private Sub Command_Click(Index As Integer)
             End If
         Case 2:
             Me.MousePointer = 11
-            pTK = Chk(3).Value
-            If Opt(0).Value And CboThang(0).ListIndex > CboThang(1).ListIndex Then CboThang(1).ListIndex = CboThang(0).ListIndex
-            If Chk(5).Value = 1 Then
-                SoCTChon = FrmA.ChonCTSoA(LstDB(1).List(0), IIf(Opt(0).Value, CboThang(1).ItemData(CboThang(1).ListIndex), 0), ngay(0), ngay(1), MaCT())
+            pTK = Chk(3).value
+            If Opt(0).value And CboThang(0).ListIndex > CboThang(1).ListIndex Then CboThang(1).ListIndex = CboThang(0).ListIndex
+            If Chk(5).value = 1 Then
+                SoCTChon = FrmA.ChonCTSoA(LstDB(1).List(0), IIf(Opt(0).value, CboThang(1).ItemData(CboThang(1).ListIndex), 0), ngay(0), ngay(1), MaCT())
                 Me.Refresh
                 If SoCTChon = 0 Then GoTo KT
             End If
@@ -538,12 +538,12 @@ Private Sub Command_Click(Index As Integer)
                     On Error GoTo KT1
                     Set db = WSpace.OpenDatabase(LstDB(1).List(i), False, False, ";PWD=" + pPSW)
                     On Error Resume Next
-                    If NhapPS(db, IIf(Opt(0).Value, CboThang(0).ItemData(CboThang(0).ListIndex), 0), IIf(Opt(0).Value, CboThang(0).ItemData(CboThang(1).ListIndex), 0), Chk(0).Value, Chk(1).Value, Chk(2).Value, i + 1, ngay(0), ngay(1)) Then
-                        If (Opt(0).Value And CboThang(0).ItemData(CboThang(0).ListIndex) = pThangDauKy) Or (Opt(1).Value And ngay(0) = NgayDauThang(pNamTC, pThangDauKy)) Then
+                    If NhapPS(db, IIf(Opt(0).value, CboThang(0).ItemData(CboThang(0).ListIndex), 0), IIf(Opt(0).value, CboThang(0).ItemData(CboThang(1).ListIndex), 0), Chk(0).value, Chk(1).value, Chk(2).value, i + 1, ngay(0), ngay(1)) Then
+                        If (Opt(0).value And CboThang(0).ItemData(CboThang(0).ListIndex) = pThangDauKy) Or (Opt(1).value And ngay(0) = NgayDauThang(pNamTC, pThangDauKy)) Then
                             CBDL CStr(LstDB(1).ItemData(i))
                             CongDK db, CStr(LstDB(1).ItemData(i)), LstDB(0).List(i), 0, pTK, pCT
-                            If Chk(0).Value = 1 Then CongDKVT db, CStr(LstDB(1).ItemData(i)), LstDB(0).List(i), 0, pTK, pCT
-                            If Chk(1).Value = 1 Then CongDKCN db, CStr(LstDB(1).ItemData(i)), LstDB(0).List(i), 0, pTK, pCT
+                            If Chk(0).value = 1 Then CongDKVT db, CStr(LstDB(1).ItemData(i)), LstDB(0).List(i), 0, pTK, pCT
+                            If Chk(1).value = 1 Then CongDKCN db, CStr(LstDB(1).ItemData(i)), LstDB(0).List(i), 0, pTK, pCT
                         End If
                         j = j + 1
                         HienThongBao "§· tæng hîp " + LstDB(0).List(i), 1
@@ -555,9 +555,9 @@ KT1:
                 End If
             Next
             If j > 0 Then
-                If Chk(0).Value = 0 Then ExecuteSQL5 "UPDATE HethongTK SET TK_ID=0 WHERE TK_ID=" + CStr(TKVT_ID) Else KiemTraVatTu
-                If Chk(1).Value = 0 Then ExecuteSQL5 "UPDATE HethongTK SET TK_ID=0 WHERE TK_ID=" + CStr(TKCNKH_ID) + " OR TK_ID=" + CStr(TKCNPT_ID)
-                If Chk(2).Value = 1 Then SoDuTKTS
+                If Chk(0).value = 0 Then ExecuteSQL5 "UPDATE HethongTK SET TK_ID=0 WHERE TK_ID=" + CStr(TKVT_ID) Else KiemTraVatTu
+                If Chk(1).value = 0 Then ExecuteSQL5 "UPDATE HethongTK SET TK_ID=0 WHERE TK_ID=" + CStr(TKCNKH_ID) + " OR TK_ID=" + CStr(TKCNPT_ID)
+                If Chk(2).value = 1 Then SoDuTKTS
                 KiemTraTaiKhoan
                 MsgBox "Ph¸t sinh cña " + CStr(j) + " ®¬n vÞ ®· ®­îc tËp hîp vµo sè liÖu cña " + VString(pTenCn)
                 CloseItemList
@@ -608,12 +608,12 @@ LoiNgay:
 End Sub
 
 Private Sub LietKeDB()
-    Dim i As Integer, FileName As String
+    Dim i As Integer, fileName As String
     
     For i = 1 To maxfile
-        FileName = GetSetting(IniPath, "ImportFile", "File" + CStr(i))
-        If Len(FileName) > 0 Then
-            If Len(Dir(FileName)) > 0 Then ThemDB FileName, False
+        fileName = GetSetting(IniPath, "ImportFile", "File" + CStr(i))
+        If Len(fileName) > 0 Then
+            If Len(Dir(fileName)) > 0 Then ThemDB fileName, False
         Else
             Exit For
         End If
@@ -655,7 +655,7 @@ LoiDB:
     GoTo KetThuc
 End Sub
 
-Private Sub Form_Unload(CANCEL As Integer)
+Private Sub Form_Unload(Cancel As Integer)
     Dim i As Integer
     Set db = Nothing
     For i = 1 To LstDB(0).ListCount
@@ -735,7 +735,7 @@ Dim ml As Long, idcn As Long, tencn As String, LayCTBanHang As Integer
             XoaCTTheoID i, i * 1000 + idcn, 0
         Next
     Else
-        For i = Month(ndau) To Month(ncuoi)
+        For i = month(ndau) To month(ncuoi)
             XoaCTTheoID 0, i * 1000 + idcn, 0, ndau, ncuoi
         Next
     End If
@@ -859,7 +859,7 @@ a:
             End If
         End If
         DBEngine.Idle
-        If rsct.RecordCount Mod 100 = 0 Then
+        If rsct.recordCount Mod 100 = 0 Then
             Label1(3).Caption = "Sè CT ®· tæng hîp: " + CStr(CLng5(Label1(3).ToolTipText) + soct)
             Me.Refresh
         End If
@@ -871,9 +871,9 @@ B:
     'LayCTBanHang = 1
     'Set rsct = db.OpenRecordset("SELECT DISTINCTROW ChungTu.*,DoituongCT.DienGiai AS DG FROM ChungTu INNER JOIN DoituongCT ON ChungTu.MaDT=DoituongCT.MaSo WHERE (MaLoai=8) AND MaCT > 0 AND " + IIf(thang > 0, WThang("ThangCT", thang, tcuoi), WNgay("NgayGS", ndau, ncuoi)) + " ORDER BY MaCT, ChungTu.MaSo", dbOpenSnapshot)
     'GoTo LCT
-    If vt > 0 Then CongDDVT db, masocu, tencn, Chk(4).Value, True, pTK, pCT
-    If cn > 0 Then CongDDCN db, masocu, Chk(4).Value, True, pTK, pCT
-    If ts > 0 Then CongDDTS db, mactcu, tencn, Chk(4).Value, True, pTK, pCT
+    If vt > 0 Then CongDDVT db, masocu, tencn, Chk(4).value, True, pTK, pCT
+    If cn > 0 Then CongDDCN db, masocu, Chk(4).value, True, pTK, pCT
+    If ts > 0 Then CongDDTS db, mactcu, tencn, Chk(4).value, True, pTK, pCT
     
     NhapPS = True
     Label1(3).ToolTipText = CStr(soct)

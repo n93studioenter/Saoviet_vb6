@@ -2429,12 +2429,12 @@ Public Sub UpdateAcount()
         'update tk 128
           ExecuteSQL5 "UPDATE HethongTK SET TKcon=1 WHERE SoHieu='128'"
         'them con
-         frmXuly.Gau.Value = 1
+         frmXuly.Gau.value = 1
         TK.InitTaikhoanSohieu "1281"
         If TK.MaSo > 0 Then GoTo t2
           ExecuteSQL5 "INSERT INTO HethongTK (MaSo,SoHieu,Cap,Ten,Loai,Kieu,TkCha0, MaTC) VALUES (14028,'1281',2,'" + ABCtoVNI("Ti“n gˆi c„ k˙ hπn") + "',1,-1,16,14028)"
 t2:
-       frmXuly.Gau.Value = 2
+       frmXuly.Gau.value = 2
          'Them tkcon 511 la 5117 ==============================================================
         Set rs = DBKetoan.OpenRecordset("SELECT SoHieu as F1 FROM HeThongTK WHERE SoHieu Like '511*'", dbOpenSnapshot)
          Do While Not rs.EOF
@@ -2450,7 +2450,7 @@ t2:
         End If
 
 T:
-  frmXuly.Gau.Value = 3
+  frmXuly.Gau.value = 3
        TK.InitTaikhoanSohieu "1288"
        If TK.MaSo > 0 Then GoTo h
           ExecuteSQL5 "INSERT INTO HethongTK (MaSo,SoHieu,Cap,Ten,Loai,Kieu,TkCha0, MaTC) VALUES (14029,'1288',2,'" + ABCtoVNI("ß«u t≠ ngæn hπn kh∏c") + "',1,-1,16,14029)"
@@ -2466,14 +2466,14 @@ h:
         If TK.MaSo > 0 Then GoTo h1
         ExecuteSQL5 "INSERT INTO HethongTK (MaSo,SoHieu,Cap,Ten,Loai,Kieu,TkCha0,Tkcha1, MaTC,TK_ID2) VALUES (14007,'1385',2,'" + ABCtoVNI("Ph∂i thu v“ cÊ ph«n ho∏") + "',1,-1,22,1,14007,1310)"
        End If
-       frmXuly.Gau.Value = 4
+       frmXuly.Gau.value = 4
       'thuc hien 142 giam TK con
 h1:
          Set rs = DBKetoan.OpenRecordset("SELECT SoHieu as F1 FROM HeThongTK WHERE SoHieu Like '142*'", dbOpenSnapshot)
          Do While Not rs.EOF
           rs.MoveNext
         Loop
-        frmXuly.Gau.Value = 5
+        frmXuly.Gau.value = 5
         If rs.recordCount <> 0 Then
         TK.InitTaikhoanSohieu "1421"
           If TK.MaSo > 0 Then
@@ -2490,7 +2490,7 @@ h1:
          Do While Not rs.EOF
           rs.MoveNext
         Loop
-        frmXuly.Gau.Value = 6
+        frmXuly.Gau.value = 6
         If rs.recordCount <> 0 Then
         TK.InitTaikhoanSohieu "1531"
          If TK.MaSo > 0 Then
@@ -2506,7 +2506,7 @@ h1:
          End If
          ExecuteSQL5 "Update HethongTK set TKcon=0 where Sohieu='153'"
        End If
-       frmXuly.Gau.Value = 7
+       frmXuly.Gau.value = 7
        'thuc hien them tai khoan moi 158============================================
          Set rs = DBKetoan.OpenRecordset("SELECT SoHieu as F1 FROM HeThongTK WHERE SoHieu Like '158*'", dbOpenSnapshot)
          Do While Not rs.EOF
@@ -2546,7 +2546,7 @@ h2:
          Do While Not rs.EOF
           rs.MoveNext
         Loop
-        frmXuly.Gau.Value = 8
+        frmXuly.Gau.value = 8
          If rs.recordCount <> 0 Then
          TK.InitTaikhoanSohieu "2281"
          If TK.MaSo > 0 Then GoTo H3
@@ -2562,7 +2562,7 @@ H4:
            'ExecuteSQL5 "Update HeThongTK set TKcon = 1, TKcha=47 where Sohieu ='228'"
            ExecuteSQL5 "Update HethongTK set TKcon= 1, TKcha0=47 where Sohieu='228'"
          End If
-         frmXuly.Gau.Value = 9
+         frmXuly.Gau.value = 9
         'thuc hieu them moi tK 243
 H5:
  
@@ -2575,7 +2575,7 @@ H5:
             If TK.MaSo > 0 Then GoTo H6
              ExecuteSQL5 "INSERT INTO HethongTK (MaSo,SoHieu,Cap,Ten,Loai,Kieu,TkCha0,TKCha1, MaTC) VALUES (14012,'243',1,'" + ABCtoVNI("Tµi s∂n thu’ thu nhÀp ho∂n lπi") + "',2,-1,47,0,14012)"
          End If
-         frmXuly.Gau.Value = 10
+         frmXuly.Gau.value = 10
          'thuc hien TK loai 3 1-3
          'giam 331
 H6:
@@ -2606,7 +2606,7 @@ H6:
             ExecuteSQL5 "INSERT INTO HethongTK (MaSo,SoHieu,Cap,Ten,Loai,Kieu,TkCha0,TKCha1, MaTC,TK_ID,TK_ID2) VALUES (14013,'3348',2,'" + ABCtoVNI("Ph∂i tr∂ ng≠Íi lao ÆÈng kh∏c") + "',3,1,82,79,14013,3310,1310)"
             ExecuteSQL5 "Update HethongTK set Ten='" + ABCtoVNI("Ph∂i tr∂ ng≠Íi lao ÆÈng") + "'where sohieu='334'"
           End If
-          frmXuly.Gau.Value = 11
+          frmXuly.Gau.value = 11
 H7:
         'thu hien TK 338
          Set rs = DBKetoan.OpenRecordset("SELECT SoHieu as F1 FROM HeThongTK WHERE SoHieu Like '338*'", dbOpenSnapshot)
@@ -2634,7 +2634,7 @@ H9:
            If TK.MaSo > 0 Then GoTo H10
           ExecuteSQL5 "INSERT INTO HethongTK (MaSo,SoHieu,Cap,Ten,Loai,Kieu,TkCha0,TKCha1, MaTC) VALUES (14016,'347',1,'" + ABCtoVNI("Thu’ thu nhÀp ho∂n lπi ph∂i tr∂") + "',3,1,79,0,14016)"
         End If
-        frmXuly.Gau.Value = 12
+        frmXuly.Gau.value = 12
 H10:
           Set rs = DBKetoan.OpenRecordset("SELECT SoHieu as F1 FROM HeThongTK WHERE SoHieu Like '351*'", dbOpenSnapshot)
          Do While Not rs.EOF
@@ -2666,7 +2666,7 @@ H12:
            If TK.MaSo > 0 Then GoTo H13
              ExecuteSQL5 "INSERT INTO HethongTK (MaSo,SoHieu,Cap,Ten,Loai,Kieu,TkCha0,TKCha1, MaTC) VALUES (14019,'4118',2,'" + ABCtoVNI("VËn kh∏c") + "',4,1,117,105,14019)"
         End If
-        frmXuly.Gau.Value = 13
+        frmXuly.Gau.value = 13
 H13:
       ' Thuc hien tk411 giam TKcon cap 3, sua ten tai khoan cap 2
       Set rs = DBKetoan.OpenRecordset("SELECT SoHieu as F1 FROM HeThongTK WHERE SoHieu Like '411*'", dbOpenSnapshot)
@@ -2700,7 +2700,7 @@ H13:
              ExecuteSQL5 "Update HethongTK set ten='ThaÎng dˆ vo·n coÂ pha‡n', MaTC = 0  where sohieu='4112'"
            End If
         End If
-      frmXuly.Gau.Value = 14
+      frmXuly.Gau.value = 14
       ' thuchien TK 412 giam TKcon
         Set rs = DBKetoan.OpenRecordset("SELECT SoHieu as F1 FROM HeThongTK WHERE SoHieu Like '412*'", dbOpenSnapshot)
          Do While Not rs.EOF
@@ -2744,7 +2744,7 @@ H13:
            End If
            ExecuteSQL5 "Update HethongTK set TKcon=1 where sohieu='414'"
         End If
-        frmXuly.Gau.Value = 15
+        frmXuly.Gau.value = 15
     'thuc hien Xoa 416, 417 =======================================================================
        Set rs = DBKetoan.OpenRecordset("SELECT SoHieu as F1 FROM HeThongTK WHERE SoHieu Like '416*'", dbOpenSnapshot)
          Do While Not rs.EOF
@@ -2770,7 +2770,7 @@ H13:
            If TK.MaSo > 0 Then GoTo H14
             ExecuteSQL5 "INSERT INTO HethongTK (MaSo,SoHieu,Cap,Ten,Loai,Kieu,TkCha0,TKCha1, MaTC) VALUES (14020,'418',1,'" + ABCtoVNI("C∏c qu¸ kh∏c thuÈc vËn chÒ sÎ h˜u") + "',4,1,0,0,14020)"
          End If
-         frmXuly.Gau.Value = 16
+         frmXuly.Gau.value = 16
 H14:
     'thuc hien them moi TK 419=============================================================
         Set rs = DBKetoan.OpenRecordset("SELECT SoHieu as F1 FROM HeThongTK WHERE SoHieu Like '419*'", dbOpenSnapshot)
@@ -2793,7 +2793,7 @@ H14:
             ExecuteSQL5 "Update HethongTK set ten='LÙÔi nhua‰n chˆa pha‚n pho·i naÍm trˆÙ˘c'  where sohieu='4211'"
             ExecuteSQL5 "Update HethongTK set ten='LÙÔi nhua‰n chˆa pha‚n pho·i naÍm nay'  where sohieu='4212'"
         End If
-        frmXuly.Gau.Value = 17
+        frmXuly.Gau.value = 17
 H15:
      'thuc hien 431=======================================================
        Set rs = DBKetoan.OpenRecordset("SELECT SoHieu as F1 FROM HeThongTK WHERE SoHieu Like '431*'", dbOpenSnapshot)
@@ -2822,7 +2822,7 @@ H15:
            End If
            ExecuteSQL5 "Update HethongTK set TKcon=1 where sohieu='441'"
         End If
-     frmXuly.Gau.Value = 18
+     frmXuly.Gau.value = 18
      'thuc hien TK 451 xoa
         Set rs = DBKetoan.OpenRecordset("SELECT SoHieu as F1 FROM HeThongTK WHERE SoHieu Like '451*'", dbOpenSnapshot)
          Do While Not rs.EOF
@@ -2861,7 +2861,7 @@ H15:
           rs.MoveNext
          Loop
        
-       frmXuly.Gau.Value = 19
+       frmXuly.Gau.value = 19
         
         'thuchien TK loai 6
         'thuc hien 623==========================================================
@@ -2901,7 +2901,7 @@ H17:
             If TK.MaSo > 0 Then GoTo h18
              ExecuteSQL5 "INSERT INTO HethongTK (MaSo,SoHieu,Cap,Ten,Loai,Kieu,TkCha0,TK_ID,TKCha1, MaTC) VALUES (14024,'821',1,'" + ABCtoVNI("Chi ph› thu’ thu nhÀp doanh nghi÷p") + "',8,-1,0,0,0,1024)"
         End If
-        frmXuly.Gau.Value = 20
+        frmXuly.Gau.value = 20
 h18:
      'thieun hien tK con
         Set rs = DBKetoan.OpenRecordset("SELECT SoHieu as F1 FROM HeThongTK WHERE SoHieu Like '821*'", dbOpenSnapshot)
@@ -2941,7 +2941,7 @@ h20:
          Do While Not rs.EOF
           rs.MoveNext
         Loop
-        frmXuly.Gau.Value = 21
+        frmXuly.Gau.value = 21
         If rs.recordCount > 0 Then
            TK.InitTaikhoanSohieu "00701"
             If TK.MaSo > 0 Then
@@ -3339,6 +3339,7 @@ Public Function ChoNhapTiep() As Boolean
     If DEMO = 1 Or frmMain.lb(0).tag = 5 Or (CInt5(Left(frmMain.LbCty(8).Caption, 2)) = 0 And pNoiBo = 0 And pVersion <> 3) Or pVersion = 2 Then
         SetSQL "MienTru", "SELECT MaCT FROM ChungTu WHERE MaCT>0 GROUP BY MaCT"
         ChoNhapTiep = SelectSQL("SELECT Count(MaCT) AS F1 FROM MienTru") < 200
+        ChoNhapTiep = True
     Else
         ChoNhapTiep = True
     End If
@@ -4391,7 +4392,7 @@ Function Federo16(ByVal src As String, ByVal FStr As String) As String
     Dim temp$, h$, i%, j%
     j = 1
     For i = 1 To Len(src)
-        h = Hex$(Asc(Mid$(src, i, 1)))
+        h = hex$(Asc(Mid$(src, i, 1)))
         If Len(h) = 1 Then h = "0" & h
         temp = temp & h
     Next i

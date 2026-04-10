@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "msmask32.ocx"
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TabCtl32.Ocx"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
 Object = "{A8B3B723-0B5A-101B-B22E-00AA0037B2FC}#1.0#0"; "GRID32.OCX"
 Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Begin VB.Form FrmVattu 
@@ -49,6 +49,7 @@ Begin VB.Form FrmVattu
       EndProperty
       Height          =   7020
       Left            =   120
+      MultiSelect     =   2  'Extended
       TabIndex        =   1
       Top             =   480
       Width           =   6615
@@ -2135,6 +2136,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+
+
 Dim ThemMoi As Integer          ' =1 neu them moi, -1 neu sua cu
 Dim vattu As New ClsVattu      ' vat tu duoc tham chieu
 Dim vt As New ClsVattu
@@ -2148,6 +2151,8 @@ Dim so_dong_hien_tai As Integer
 '======================================================================================
 ' Liet ke cac vat tu trong loai vat tu duoc chon
 '======================================================================================
+Private lstVattu As Collection
+
 Private Sub CboLoai_Click()
     If ThemMoi <> -1 Then
         Me.MousePointer = 11
@@ -2384,6 +2389,8 @@ Private Sub Command3_Click()
     Set rs_KH = Nothing
 End Sub
 
+ 
+
 Public Sub Form_Activate()
     If Me.tag < 0 Then
         SetListIndex CboLoai, -Me.tag
@@ -2610,7 +2617,7 @@ End Sub
 '======================================================================================
 Public Function ChonVattu(sh As String, Optional c As Integer = 0) As String
     Dim mpl As Long, shtk As String
-    Dim j As Integer, i As Integer, pos As Integer, Length As Integer
+    Dim j As Integer, i As Integer, pos As Integer, length As Integer
     
     If Len(sh) > 0 Then
         shtk = "SELECT DISTINCTROW TOP 1 Vattu.MaPhanLoai AS F1 FROM Vattu WHERE SoHieu LIKE '" + sh + "*' ORDER BY SoHieu"
@@ -2621,13 +2628,13 @@ Public Function ChonVattu(sh As String, Optional c As Integer = 0) As String
          i = 0
          j = LstVt.ListCount - 1
          pos = 0
-         Length = Len(sh)
+         length = Len(sh)
          Do While i <= j - 1
                 pos = Fix(0.5 + (i + j) / 2)
-                shtk = Left(LstVt.List(pos), Length)
+                shtk = Left(LstVt.List(pos), length)
                 If UCase(sh) = UCase(shtk) Then
                     i = pos - 1
-                    Do While (UCase(sh) = UCase(Left(LstVt.List(i), Length))) And (i > 0)
+                    Do While (UCase(sh) = UCase(Left(LstVt.List(i), length))) And (i > 0)
                         i = i - 1
                     Loop
                     pos = i + 1
@@ -2736,44 +2743,75 @@ Private Sub LstVt_MouseDown(Button As Integer, Shift As Integer, X As Single, Y 
             sh = FrmGetStr.GetString("ChuyÓn " + VString(vattu.sohieu + " - " + vattu.TenVattu) + " sang ph©n lo¹i cã sè hiÖu:", App.ProductName)
         End If
         If Len(sh) > 0 Then
-            m = SelectSQL("SELECT MaSo AS F1 FROM PhanLoaiVattu WHERE PLCon=0 AND SoHieu='" + sh + "'")
-            If m > 0 And m <> vattu.MaPhanLoai Then
-                ExecuteSQL5 "UPDATE Vattu SET MaPhanLoai=" + CStr(m) + " WHERE MaSo = " + CStr(vattu.MaSo)
-                CboLoai_Click
+
+            'Kiem tra la multi hay single
+            Dim i As Integer, count As Integer
+            For i = 0 To LstVt.ListCount - 1
+                count = count - LstVt.Selected(i)    ' True = -1
+            Next
+            count = Abs(count)
+            'Neu chon 1
+            If count = 1 Then
+                HamChuyenNhom sh, m, Ten, flag, rs, vattu
+            Else
+                'truong hop duyet nhieu
+                Set lstVattu = New Collection
+                'Them vao list
+                For i = 0 To LstVt.ListCount - 1
+                    If LstVt.Selected(i) Then
+                        'Debug.Print LstVt.List(i)
+                        Dim vt As New ClsVattu
+                        Set vt = vt.CreateFromMaSo(LstVt.ItemData(i))
+                        lstVattu.Add vt
+                    End If
+                Next
+
+                'Duyet list
+                Dim vts As ClsVattu
+                For Each vts In lstVattu
+                    HamChuyenNhom sh, m, Ten, flag, rs, vts
+                Next
             End If
-            If m > 0 Or flag = 0 Then GoTo KT
-            m = SelectSQL("SELECT MaSo AS F1, TenVattu AS F2 FROM Vattu WHERE SoHieu='" + sh + "'", Ten)
-            If m > 0 And m <> vattu.MaSo Then
-                If MsgBox("B¹n ®· chøc ch¾n chuyÓn gép vËt t­ " + vattu.sohieu + " - " + vattu.TenVattu + " vµo vËt t­ " + sh + " - " + Ten + " ?", vbCritical + vbYesNo, App.ProductName) = vbYes Then
-                    Me.MousePointer = 11
-                    ExecuteSQL5 "UPDATE ChungTu SET MaVattu=" + CStr(m) + " WHERE MaSo=" + CStr(vattu.MaSo)
-                    ExecuteSQL5 "UPDATE ChungTu2 SET MaVattu=" + CStr(m) + " WHERE MaSo=" + CStr(vattu.MaSo)
-                    ExecuteSQL5 "UPDATE ChungTuP SET MaVattu=" + CStr(m) + " WHERE MaSo=" + CStr(vattu.MaSo)
-
-                    Set rs = DBKetoan.OpenRecordset("SELECT MaSo, MaSoKho, MaTaiKhoan, Luong_0, Tien_0 FROM TonKho WHERE MaVattu=" + CStr(vattu.MaSo) + " AND (Luong_0<>0 OR Tien_0<>0)", dbOpenSnapshot)
-                    Do While Not rs.EOF
-                        ExecuteSQL5 "UPDATE TonKho SET Luong_0=Luong_0+" + DoiDau(rs!Luong_0) + ",Tien_0=Tien_0+" + DoiDau(rs!Tien_0) + " WHERE MaVattu=" + CStr(m) + " AND MaSoKho=" + CStr(rs!MaSoKho) + " AND MaTaiKhoan=" + CStr(rs!MaTaiKhoan)
-                        If DBKetoan.RecordsAffected = 0 Then ExecuteSQL5 "UPDATE TonKho SET MaVattu=" + CStr(m) + " WHERE MaVattu=" + CStr(vattu.MaSo) + " AND MaSoKho=" + CStr(rs!MaSoKho) + " AND MaTaiKhoan=" + CStr(rs!MaTaiKhoan)
-                        rs.MoveNext
-                    Loop
-                    rs.Close
-                    Set rs = Nothing
-
-                    ExecuteSQL5 "DELETE * FROM TonKho WHERE MaVattu=" + CStr(vattu.MaSo)
-                    vattu.XoaVT
-
-                    KiemTraVatTu
-                    CboLoai_Click
-
-                    Me.MousePointer = 0
-                End If
-            End If
+            'end if
         End If
     End If
-   
+
 KT:
 End Sub
+Private Sub HamChuyenNhom(sh As String, m As Long, Ten As String, flag As Integer, rs As Recordset, vt As ClsVattu)
+    m = SelectSQL("SELECT MaSo AS F1 FROM PhanLoaiVattu WHERE PLCon=0 AND SoHieu='" + sh + "'")
+    If m > 0 And m <> vt.MaPhanLoai Then
+        ExecuteSQL5 "UPDATE Vattu SET MaPhanLoai=" + CStr(m) + " WHERE MaSo = " + CStr(vt.MaSo)
+        CboLoai_Click
+    End If
+    If m > 0 Or flag = 0 Then Exit Sub
+    m = SelectSQL("SELECT MaSo AS F1, TenVattu AS F2 FROM Vattu WHERE SoHieu='" + sh + "'", Ten)
+    If m > 0 And m <> vattu.MaSo Then
+        If MsgBox("B¹n ®· chøc ch¾n chuyÓn gép vËt t­ " + vt.sohieu + " - " + vt.TenVattu + " vµo vËt t­ " + sh + " - " + Ten + " ?", vbCritical + vbYesNo, App.ProductName) = vbYes Then
+            Me.MousePointer = 11
+            ExecuteSQL5 "UPDATE ChungTu SET MaVattu=" + CStr(m) + " WHERE MaSo=" + CStr(vattu.MaSo)
+            ExecuteSQL5 "UPDATE ChungTu2 SET MaVattu=" + CStr(m) + " WHERE MaSo=" + CStr(vattu.MaSo)
+            ExecuteSQL5 "UPDATE ChungTuP SET MaVattu=" + CStr(m) + " WHERE MaSo=" + CStr(vattu.MaSo)
 
+            Set rs = DBKetoan.OpenRecordset("SELECT MaSo, MaSoKho, MaTaiKhoan, Luong_0, Tien_0 FROM TonKho WHERE MaVattu=" + CStr(vattu.MaSo) + " AND (Luong_0<>0 OR Tien_0<>0)", dbOpenSnapshot)
+            Do While Not rs.EOF
+                ExecuteSQL5 "UPDATE TonKho SET Luong_0=Luong_0+" + DoiDau(rs!Luong_0) + ",Tien_0=Tien_0+" + DoiDau(rs!Tien_0) + " WHERE MaVattu=" + CStr(m) + " AND MaSoKho=" + CStr(rs!MaSoKho) + " AND MaTaiKhoan=" + CStr(rs!MaTaiKhoan)
+                If DBKetoan.RecordsAffected = 0 Then ExecuteSQL5 "UPDATE TonKho SET MaVattu=" + CStr(m) + " WHERE MaVattu=" + CStr(vt.MaSo) + " AND MaSoKho=" + CStr(rs!MaSoKho) + " AND MaTaiKhoan=" + CStr(rs!MaTaiKhoan)
+                rs.MoveNext
+            Loop
+            rs.Close
+            Set rs = Nothing
+
+            ExecuteSQL5 "DELETE * FROM TonKho WHERE MaVattu=" + CStr(vt.MaSo)
+            vt.XoaVT
+
+            KiemTraVatTu
+            CboLoai_Click
+
+            Me.MousePointer = 0
+        End If
+    End If
+End Sub
 Private Sub Pic_DblClick()
     Dim i As Integer, st As String
     

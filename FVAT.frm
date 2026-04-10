@@ -957,6 +957,7 @@ Er:
         .KyHieu = IIf(Len(T(1).Text) > 0, T(1).Text, "...")
         .sohd = IIf(Len(T(2).Text) > 0, T(2).Text, "...")
         .NgayPH = MedNgay.Text
+        Debug.Print (MedNgay.Text)
         .MatHang = IIf(Len(T(3).Text) > 0, T(3).Text, "...")
         .SoLuong = Cdbl5(T(4).Text)
         .ThanhTien = Cdbl5(T(5).Text)

@@ -36,7 +36,78 @@ Public ThueNK As Double
 ' Thu tuc khoi tao object tu ma so vat tu
 ' mvt:  Ma so vat tu can tham chieu
 '       =0 neu vat tu moi
-'======================================================================================
+' ClsVattu.cls
+Public Sub InitVattuMaSo2(mvt As Long, vt As ClsVattu)
+    Dim rs_vattu As Recordset
+
+    If mvt > 0 Then
+        Set rs_vattu = DBKetoan.OpenRecordset("SELECT Vattu.*" _
+                                            & " FROM Vattu" _
+                                            & " WHERE Vattu.MaSo=" + CStr(mvt), dbOpenSnapshot)
+        If rs_vattu.recordCount = 0 Then GoTo iv
+
+        ' C?p nh?t vào object vt (không dùng Me, không dùng bi?n toàn c?c)
+        vt.MaSo = rs_vattu!MaSo
+        vt.MaPhanLoai = rs_vattu!MaPhanLoai
+        vt.sohieu = rs_vattu!sohieu
+        vt.TenVattu = rs_vattu!TenVattu
+        vt.DonVi = rs_vattu!DonVi
+        vt.TonMin = rs_vattu!TonMin
+        vt.TonMax = rs_vattu!TonMax
+        vt.GiaHT = rs_vattu!GiaHT
+
+        If IsNull(rs_vattu!Dvt2) Then
+            vt.Dvt2 = 0
+        Else
+            vt.Dvt2 = rs_vattu!Dvt2
+        End If
+
+        vt.DonVi2 = rs_vattu!DonVi2
+
+        If IsNull(rs_vattu!TyLeQD) Then
+            vt.TyLeQD = 0
+        Else
+            vt.TyLeQD = rs_vattu!TyLeQD
+        End If
+
+        vt.GhiChu = rs_vattu!GhiChu
+
+        If IsNull(rs_vattu!VAT) Then
+            vt.VAT = 0
+        Else
+            vt.VAT = rs_vattu!VAT
+        End If
+
+        vt.GiaBan1 = rs_vattu!GiaBan1
+        vt.GiaBan2 = rs_vattu!GiaBan2
+        vt.GiaBan3 = rs_vattu!GiaBan3
+        vt.CK = rs_vattu!CK
+        ' vt.ThueNK = rs_vattu!ThueNK
+
+        rs_vattu.Close
+        Set rs_vattu = Nothing
+    Else
+iv:
+        vt.MaSo = 0
+        vt.MaPhanLoai = 0
+        vt.sohieu = ""
+        vt.TenVattu = ""
+        vt.DonVi = ""
+        vt.TonMin = 0
+        vt.TonMax = 0
+        vt.GiaHT = 0
+        vt.Dvt2 = 0
+        vt.DonVi2 = "..."
+        vt.TyLeQD = 0
+        vt.GhiChu = "..."
+        vt.VAT = 0
+        vt.GiaBan1 = 0
+        vt.GiaBan2 = 0
+        vt.GiaBan3 = 0
+        vt.CK = 0
+        ' vt.ThueNK = 0
+    End If
+End Sub
 Public Sub InitVattuMaSo(mvt As Long)
     Dim rs_vattu As Recordset
 

@@ -14,18 +14,9 @@ Begin VB.Form FrmGetStr2
       Caption         =   "Paste"
       Height          =   375
       Left            =   6000
-      TabIndex        =   10
+      TabIndex        =   9
       Top             =   720
       Width           =   735
-   End
-   Begin VB.TextBox Text 
-      Height          =   285
-      Index           =   5
-      Left            =   5760
-      MaxLength       =   6
-      TabIndex        =   9
-      Top             =   360
-      Width           =   1000
    End
    Begin VB.TextBox Text1 
       Height          =   285
@@ -43,7 +34,7 @@ Begin VB.Form FrmGetStr2
       MaxLength       =   6
       TabIndex        =   7
       Top             =   360
-      Width           =   1000
+      Width           =   1965
    End
    Begin VB.TextBox Text 
       Height          =   285
@@ -179,10 +170,7 @@ Private Sub Text_Change(Index As Integer)
         Text(1).Text = a(1)
         Text(2).Text = a(2)
         Text(3).Text = a(3)
-        Dim A2() As String
-        A2 = Split(a(4), "-")
-        Text(4).Text = A2(0)
-        Text(5).Text = A2(1)
+        Text(4).Text = a(4)
         Form_KeyPress 13
 
     End If
@@ -201,7 +189,6 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
         Text(2).Text = ""
         Text(3).Text = ""
         Text(4).Text = ""
-        Text(5).Text = ""
 
         If FrmOptions.KiemTraKey(bakStr) = True Then
             FrmOptions.UpdateLicnes

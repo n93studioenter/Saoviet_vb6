@@ -214,7 +214,7 @@ Begin VB.Form frmMain
          EndProperty
          BeginProperty Panel4 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Style           =   6
-            TextSave        =   "07/04/26"
+            TextSave        =   "10/04/26"
             Key             =   ""
             Object.Tag             =   ""
          EndProperty
@@ -775,7 +775,7 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H0000FFFF&
+      ForeColor       =   &H0017A0D4&
       Height          =   435
       Index           =   16
       Left            =   8280
@@ -796,7 +796,7 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H0000FFFF&
+      ForeColor       =   &H0017A0D4&
       Height          =   285
       Index           =   0
       Left            =   9960
@@ -931,7 +931,7 @@ Begin VB.Form frmMain
          Italic          =   -1  'True
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H0000FFFF&
+      ForeColor       =   &H0017A0D4&
       Height          =   690
       Index           =   1
       Left            =   4920
@@ -2901,11 +2901,13 @@ End Sub
 
 
 Private Sub Form_Activate()
+    CheckAndCreateTBCpu
+    ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
     Dim cmg As Long
     cmg = SelectSQL("select CMG AS f1 from  License")
     If cmg = 249991 Then
         'Label5.Visible = True
-        
+
     Else
         Label5.Visible = False
     End If
@@ -2931,7 +2933,7 @@ Private Sub Form_Activate()
     Label3(16).Left = Me.ScaleWidth * 0.96 - Label3(16).Width
     Label3(16).Top = (Me.ScaleHeight * 88 / 100)
 
-    
+
     ExecuteSQL5_Themmoi ("ALTER TABLE HeThongTK DROP COLUMN KyHieu")
     ExecuteSQL5_Themmoi ("ALTER TABLE ChungTu  ADD NgayImport Datetime")
     ExecuteSQL5_Themmoi ("ALTER TABLE license  ADD tenhoadon text")
@@ -3371,7 +3373,41 @@ Public Sub BackupSysFont()
     SystemParametersInfo SPI_GETNONCLIENTMETRICS, Len(g_NcmBackup), g_NcmBackup, 0
     g_HasBackup = True
 End Sub
+Public Sub CheckAndCreateTBCpu()
+    Dim tdf As DAO.TableDef
+    Dim fld As DAO.Field
+    Dim tableExists As Boolean
+    Dim tableName As String
+
+    tableName = "tbCpu"
+    tableExists = False
+
+
+    ' Ki?m tra t?n t?i b?ng
+    For Each tdf In DBKetoan.TableDefs
+        If tdf.Name = tableName Then
+            tableExists = True
+            Exit For
+        End If
+    Next tdf
+
+    If Not tableExists Then
+        ' T?o b?ng n?u chua t?n t?i
+        Set tdf = DBKetoan.CreateTableDef(tableName)
+
+        ' Username
+        Set fld = tdf.CreateField("Name", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+ 
+        ' Thêm b?ng vào CSDL
+        DBKetoan.TableDefs.Append tdf
+    End If
+End Sub
 Private Sub Form_Load()
+    CheckAndCreateTBCpu
+    ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
     frmMain.sbStatusBar.Panels(4).ToolTipText = "Log On Time: " + Format(Time, "hh:mm:ss")
     Label5.Caption = "  (" & ABCtoVNI("Phiªn b¶n dïng thö") & ")"
     'PopMenu1.BindMenu Me.hwnd, Me.Menu
@@ -3499,7 +3535,18 @@ Private Sub Form_Load()
         'frmMain.txtdungthu.Caption = ABCtoVNI("PhÇn mÒm hÕt h¹n dïng, vui lßng liªn hÖ víi nhµ cung cÊp!")
         'frmMain.txtdungthu.Caption = "PhÇn mÒm hÕt h¹n dïng, vui lßng liªn hÖ víi nhµ cung cÊp!"
         Label5.Caption = "  (" & ABCtoVNI("PhÇn mÒm hÕt h¹n dïng") & ")"
-        If (SelectSQL("SELECT count(*) as F1 FROM ChungTu ") > 100 Or SelectSQL("SELECT sum(duco_12) as F1 from hethongtk where sohieu ='511' ") > 200000000) Then
+        Dim demslchungtu As Double
+        demslchungtu = SelectSQL( _
+                       "SELECT COUNT(*) AS F1 " & _
+                       "FROM (" & _
+                     " SELECT MaCT FROM ChungTu " & _
+                     " WHERE SoHieu NOT LIKE '*GV*' " & _
+                     " GROUP BY MaCT" & _
+                       ") AS T" _
+                     )
+        Dim demdoanhthu As Double
+        demdoanhthu = SelectSQL("SELECT sum(duco_12) as F1 from hethongtk where sohieu ='511' ")
+        If (demslchungtu > 200 Or demdoanhthu > 2000000000#) Then
             ban_quyen = 1
         Else
             frmMain.txtdungthu.Caption = ""
@@ -5034,8 +5081,21 @@ Private Sub GetLicense()
         frmMain.txtdungthu.Caption = "PhÇn mÒm hÕt h¹n dïng, vui lßng liªn hÖ víi nhµ cung cÊp!"
         ' dung khoa nut thay doi cau hinh doanh nghiep
 
-        If (SelectSQL("SELECT count(*) as F1 FROM ChungTu ") + rs_license!sodong > 300 Or SelectSQL("SELECT  DateDiff('d',min(NgayCT ), max(NgayCT ))  as F1 from chungtu") > 90) Then
+        'If (SelectSQL("SELECT count(*) as F1 FROM ChungTu ") + rs_license!sodong > 300 Or SelectSQL("SELECT  DateDiff('d',min(NgayCT ), max(NgayCT ))  as F1 from chungtu") > 90) Then
+        ' If (SelectSQL("SELECT count(*) as F1 FROM HoaDon ") >= 200 Or SelectSQL("SELECT Sum(ThanhTien) as F1 FROM HoaDon ") > 2000000000) Then
 
+        Dim demslchungtu As Double
+        demslchungtu = SelectSQL( _
+                       "SELECT COUNT(*) AS F1 " & _
+                       "FROM (" & _
+                     " SELECT MaCT FROM ChungTu " & _
+                     " WHERE SoHieu NOT LIKE '*GV*' " & _
+                     " GROUP BY MaCT" & _
+                       ") AS T" _
+                     )
+        Dim demdoanhthu As Double
+        demdoanhthu = SelectSQL("SELECT sum(duco_12) as F1 from hethongtk where sohieu ='511' ")
+        If (demslchungtu > 200 Or demdoanhthu > 2000000000#) Then
             ' pTenCty = ABCtoVNI("PhÇn mÒm hÕt h¹n dïng thö")
             '  pTenCn = ABCtoVNI("PhÇn mÒm hÕt h¹n dïng thö")
             FrmOptions.Text(0).Enabled = False
@@ -5054,7 +5114,8 @@ Private Sub GetLicense()
             frmMain.txtdungthu.Caption = ""
 
         End If
-
+    Else
+        frmMain.txtdungthu.Caption = ""
     End If
     If pVersion = 3 Then
         Me.Caption = Me.Caption + " - HCSN"
