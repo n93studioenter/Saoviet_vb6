@@ -240,7 +240,7 @@ Private Sub picFakeTitle_MouseDown(Button As Integer, Shift As Integer, X As Sin
     ReleaseCapture
     SendMessage Me.hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0
 End Sub
-Private Sub lblTitle_MouseDown(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lblTitle_MouseDown(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     picFakeTitle_MouseDown Button, Shift, X, Y
 End Sub
 Private Sub Form_Load()
@@ -319,7 +319,7 @@ Private Function GetRandom4() As String
     GetRandom4 = st
 End Function
 
-Private Sub Text_Change(Index As Integer)
+Private Sub Text_Change(index As Integer)
 Dim a() As String
  On Error GoTo Error_Handler
 If (Text(1).Visible = True) Then

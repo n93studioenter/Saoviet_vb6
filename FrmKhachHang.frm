@@ -801,23 +801,23 @@ Private Sub CboLoai_Click()
 End Sub
 
 
-Public Sub Command_Click(Index As Integer)
+Public Sub Command_Click(index As Integer)
     Dim vt As New ClsKhachHang, i As Integer
     
-    If (User_Right = 2) And (Index < 3) Then
+    If (User_Right = 2) And (index < 3) Then
         HienThongBao "Kh«ng cã quyÒn truy cËp!", 1
         GoTo XongVT
     End If
     
     Me.MousePointer = 11
-    If Index < 3 Then
+    If index < 3 Then
         If CboLoai.ListIndex < 0 Then
                 ErrMsg er_PhanLoai
                 GoTo XongVT
         End If
     End If
     
-    Select Case Index
+    Select Case index
         Case 0:
             txtVT(0).Text = SoHieuVTMoi(CboLoai.ItemData(CboLoai.ListIndex), 2)
             For i = 1 To 9
@@ -961,12 +961,25 @@ Private Sub picFakeTitle_MouseDown(Button As Integer, Shift As Integer, X As Sin
     ReleaseCapture
     SendMessage Me.hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0
 End Sub
-Private Sub lblTitle_MouseDown(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lblTitle_MouseDown(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     picFakeTitle_MouseDown Button, Shift, X, Y
 End Sub
 Private Sub lblClose_Click()
     Unload Me
 End Sub
+Private Sub txtName_GotFocus()
+    With txtName
+        .SelStart = 0
+        .SelLength = Len(.Text)
+    End With
+End Sub
+Private Sub txtDiaChi_GotFocus()
+    With txtDiaChi
+        .SelStart = 0
+        .SelLength = Len(.Text)
+    End With
+End Sub
+
 Private Sub txtName_Change()
     txtVT(1).Text = UnicodeToVni(txtName.Text)
 End Sub
@@ -1005,8 +1018,8 @@ Private Sub Form_Load()
     ThemMoi = 0
     doiloai = 0
     Caption = "Danh s¸ch kh¸ch hµng" + " - " + CStr(pNamTC)
-    'Int_RecsetToCbo "SELECT DISTINCTROW MaSo As F2,SoHieu + ' - '  + TenPhanLoai As F1 FROM PhanLoaiKhachHang WHERE PLCon=0 AND LEFT(SoHieu,1)<>'#' ORDER BY SoHieu", CboLoai
-    Int_RecsetToCbo "SELECT DISTINCTROW MaSo As F2,SoHieu + ' - '  + TenPhanLoai As F1 FROM PhanLoaiKhachHang WHERE PLCon=0  ORDER BY SoHieu", CboLoai
+    Int_RecsetToCbo "SELECT DISTINCTROW MaSo As F2,SoHieu + ' - '  + TenPhanLoai As F1 FROM PhanLoaiKhachHang WHERE PLCon=0 AND LEFT(SoHieu,1)<>'#' ORDER BY SoHieu", CboLoai
+    'Int_RecsetToCbo "SELECT DISTINCTROW MaSo As F2,SoHieu + ' - '  + TenPhanLoai As F1 FROM PhanLoaiKhachHang WHERE PLCon=0  ORDER BY SoHieu", CboLoai
     Int_RecsetToCbo "SELECT MaSo As F2,KyHieu As F1 FROM NguyenTe WHERE KyHieu<>'" + pTienStr + "' ORDER BY KyHieu", CboNT
     CboNT.AddItem pTienStr, 0
     CboNT.ItemData(0) = 0
@@ -1069,7 +1082,7 @@ End Sub
 '======================================================================================
 Public Function ChonKhachHang(sh As String) As String
     Dim mpl As Long, shtk As String
-    Dim j As Integer, i As Integer, pos As Integer, Length As Integer
+    Dim j As Integer, i As Integer, pos As Integer, length As Integer
     
     If Len(sh) > 0 Then
         shtk = "SELECT DISTINCTROW TOP 1 MaPhanLoai AS F1 FROM KhachHang WHERE SoHieu LIKE '" + sh + "*' ORDER BY SoHieu"
@@ -1080,13 +1093,13 @@ Public Function ChonKhachHang(sh As String) As String
          i = 0
          j = LstVt.ListCount - 1
          pos = 0
-         Length = Len(sh)
+         length = Len(sh)
          Do While i <= j - 1
                 pos = Fix(0.5 + (i + j) / 2)
-                shtk = Left(LstVt.List(pos), Length)
+                shtk = Left(LstVt.List(pos), length)
                 If UCase(sh) = UCase(shtk) Then
                     i = pos - 1
-                    Do While (UCase(sh) = UCase(Left(LstVt.List(i), Length))) And (i > 0)
+                    Do While (UCase(sh) = UCase(Left(LstVt.List(i), length))) And (i > 0)
                         i = i - 1
                     Loop
                     pos = i + 1
@@ -1197,25 +1210,25 @@ Private Sub txtF_GotFocus()
     MaDaTim = 0
 End Sub
 
-Private Sub Txtvt_GotFocus(Index As Integer)
-    AutoSelect txtVT(Index)
+Private Sub txtVT_GotFocus(index As Integer)
+    AutoSelect txtVT(index)
 End Sub
 
-Private Sub TxtVT_KeyPress(Index As Integer, KeyAscii As Integer)
-    Select Case Index
+Private Sub TxtVT_KeyPress(index As Integer, KeyAscii As Integer)
+    Select Case index
         Case 0: If KeyAscii = 32 Or KeyAscii = 35 Or KeyAscii = 39 Or KeyAscii = 42 Then KeyAscii = 0
-        Case 10, 11, 12: KeyProcess txtVT(Index), KeyAscii
+        Case 10, 11, 12: KeyProcess txtVT(index), KeyAscii
     End Select
 End Sub
 
-Private Sub TxtVT_LostFocus(Index As Integer)
-    Select Case Index
+Private Sub TxtVT_LostFocus(index As Integer)
+    Select Case index
         Case 0:
             txtVT(0).Text = UCase(txtVT(0).Text)
         Case 1, 2, 3, 4, 5, 6, 7, 8, 9:
-            If Len(txtVT(Index).Text) = 0 Then txtVT(Index).Text = "..."
+            If Len(txtVT(index).Text) = 0 Then txtVT(index).Text = "..."
         Case 10, 11, 12:
-            txtVT(Index).Text = Format(txtVT(Index).Text, Mask_2)
+            txtVT(index).Text = Format(txtVT(index).Text, Mask_2)
     End Select
 End Sub
 

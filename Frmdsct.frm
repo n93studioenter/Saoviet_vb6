@@ -2132,7 +2132,7 @@ Public Sub LietKeChungtu(shtk As String, mvt As Long, mts As Long, mcn As Long, 
         End If
         rs_chungtu.MoveNext
     Loop
-    FrmChungtu.Label(28).Caption = "Tæng sè chøng tõ: " + str(rs_chungtu.recordCount)
+    FrmChungtu.Label(28).Caption = "Sè chøng tõ ph©n hÖ ®ang dïng: " + str(rs_chungtu.recordCount)
     Dim kk
     kk = 0
     Do While kk <> 10
@@ -2364,7 +2364,7 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
         End If
         rs_chungtu.MoveNext
     Loop
-    FrmChungtu.Label(28).Caption = "Tæng sè chøng tõ: " + str(rs_chungtu.recordCount)
+    FrmChungtu.Label(28).Caption = "Sè chøng tõ ph©n hÖ ®ang dïng: " + str(rs_chungtu.recordCount)
 
     Dim kk
     kk = 0

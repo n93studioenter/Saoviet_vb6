@@ -32,7 +32,7 @@ Begin VB.Form FrmVattu
       EndProperty
       Height          =   320
       Left            =   480
-      TabIndex        =   35
+      TabIndex        =   38
       Top             =   7080
       Visible         =   0   'False
       Width           =   6015
@@ -61,7 +61,7 @@ Begin VB.Form FrmVattu
       Left            =   0
       ScaleHeight     =   255
       ScaleWidth      =   13575
-      TabIndex        =   92
+      TabIndex        =   95
       Top             =   0
       Width           =   13575
       Begin VB.Label lblTitle 
@@ -79,7 +79,7 @@ Begin VB.Form FrmVattu
          Height          =   405
          Index           =   11
          Left            =   600
-         TabIndex        =   94
+         TabIndex        =   97
          Top             =   0
          Width           =   4455
       End
@@ -118,7 +118,7 @@ Begin VB.Form FrmVattu
          EndProperty
          Height          =   405
          Left            =   12000
-         TabIndex        =   93
+         TabIndex        =   96
          Top             =   0
          Width           =   480
       End
@@ -136,7 +136,7 @@ Begin VB.Form FrmVattu
       EndProperty
       Height          =   360
       Left            =   5880
-      TabIndex        =   91
+      TabIndex        =   94
       Top             =   7680
       Width           =   735
    End
@@ -145,14 +145,14 @@ Begin VB.Form FrmVattu
       Height          =   375
       Index           =   5
       Left            =   6840
-      TabIndex        =   90
+      TabIndex        =   93
       Top             =   6360
       Width           =   610
    End
    Begin TabDlg.SSTab SSTab1 
       Height          =   1815
       Left            =   6840
-      TabIndex        =   79
+      TabIndex        =   82
       Top             =   5640
       Width           =   5295
       _ExtentX        =   9340
@@ -192,7 +192,7 @@ Begin VB.Form FrmVattu
          Caption         =   "Xãa"
          Height          =   375
          Left            =   0
-         TabIndex        =   84
+         TabIndex        =   87
          Top             =   1440
          Width           =   615
       End
@@ -200,14 +200,14 @@ Begin VB.Form FrmVattu
          Caption         =   "Ghi"
          Height          =   375
          Left            =   600
-         TabIndex        =   83
+         TabIndex        =   86
          Top             =   1440
          Width           =   615
       End
       Begin VB.TextBox txtsoluong 
          Height          =   375
          Left            =   1200
-         TabIndex        =   80
+         TabIndex        =   83
          Text            =   "0"
          Top             =   1440
          Width           =   975
@@ -215,7 +215,7 @@ Begin VB.Form FrmVattu
       Begin VB.TextBox txtsolo 
          Height          =   375
          Left            =   2280
-         TabIndex        =   81
+         TabIndex        =   84
          Text            =   "..."
          Top             =   1440
          Width           =   1150
@@ -223,7 +223,7 @@ Begin VB.Form FrmVattu
       Begin MSMask.MaskEdBox txthandung 
          Height          =   375
          Left            =   3435
-         TabIndex        =   82
+         TabIndex        =   85
          Top             =   1440
          Width           =   1815
          _ExtentX        =   3201
@@ -237,7 +237,7 @@ Begin VB.Form FrmVattu
          Height          =   1215
          Index           =   4
          Left            =   120
-         TabIndex        =   88
+         TabIndex        =   91
          Tag             =   "10"
          Top             =   240
          Width           =   5295
@@ -280,7 +280,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   36
          Left            =   0
-         TabIndex        =   89
+         TabIndex        =   92
          Tag             =   "U. Price"
          Top             =   0
          Width           =   1215
@@ -304,7 +304,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   35
          Left            =   1200
-         TabIndex        =   87
+         TabIndex        =   90
          Tag             =   "U. Price"
          Top             =   0
          Width           =   975
@@ -328,7 +328,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   34
          Left            =   2160
-         TabIndex        =   86
+         TabIndex        =   89
          Tag             =   "U. Price"
          Top             =   0
          Width           =   1270
@@ -352,7 +352,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   33
          Left            =   3370
-         TabIndex        =   85
+         TabIndex        =   88
          Tag             =   "U. Price"
          Top             =   0
          Width           =   1600
@@ -365,7 +365,7 @@ Begin VB.Form FrmVattu
       Left            =   6720
       ScaleHeight     =   7395
       ScaleWidth      =   5595
-      TabIndex        =   25
+      TabIndex        =   28
       Tag             =   "0"
       Top             =   120
       Width           =   5655
@@ -386,7 +386,7 @@ Begin VB.Form FrmVattu
          Left            =   3600
          ScaleHeight     =   375
          ScaleWidth      =   1665
-         TabIndex        =   78
+         TabIndex        =   81
          Top             =   120
          Visible         =   0   'False
          Width           =   1695
@@ -407,7 +407,7 @@ Begin VB.Form FrmVattu
          Index           =   13
          Left            =   4080
          MaxLength       =   2
-         TabIndex        =   11
+         TabIndex        =   14
          Text            =   "0"
          Top             =   2760
          Width           =   855
@@ -428,7 +428,7 @@ Begin VB.Form FrmVattu
          Index           =   12
          Left            =   4560
          MaxLength       =   2
-         TabIndex        =   10
+         TabIndex        =   13
          Text            =   "0"
          Top             =   2280
          Width           =   375
@@ -450,7 +450,7 @@ Begin VB.Form FrmVattu
          Left            =   3600
          MaxLength       =   12
          MultiLine       =   -1  'True
-         TabIndex        =   15
+         TabIndex        =   18
          Text            =   "Frmvattu.frx":115D8
          Top             =   6600
          Visible         =   0   'False
@@ -470,7 +470,7 @@ Begin VB.Form FrmVattu
          Height          =   285
          Index           =   2
          Left            =   5040
-         TabIndex        =   16
+         TabIndex        =   19
          ToolTipText     =   "Ghi ph¸t sinh"
          Top             =   6600
          Visible         =   0   'False
@@ -492,7 +492,7 @@ Begin VB.Form FrmVattu
          ForeColor       =   &H80000008&
          Height          =   1455
          Left            =   0
-         TabIndex        =   12
+         TabIndex        =   15
          Tag             =   "Conversion Units"
          Top             =   5520
          Visible         =   0   'False
@@ -513,7 +513,7 @@ Begin VB.Form FrmVattu
          Index           =   4
          Left            =   1320
          MaxLength       =   20
-         TabIndex        =   13
+         TabIndex        =   16
          Top             =   6600
          Visible         =   0   'False
          Width           =   1095
@@ -535,7 +535,7 @@ Begin VB.Form FrmVattu
          Left            =   2400
          MaxLength       =   12
          MultiLine       =   -1  'True
-         TabIndex        =   14
+         TabIndex        =   17
          Text            =   "Frmvattu.frx":115DA
          Top             =   6600
          Visible         =   0   'False
@@ -557,7 +557,7 @@ Begin VB.Form FrmVattu
          Index           =   10
          Left            =   2880
          MaxLength       =   20
-         TabIndex        =   8
+         TabIndex        =   11
          Text            =   "0"
          Top             =   2280
          Width           =   975
@@ -578,7 +578,7 @@ Begin VB.Form FrmVattu
          Index           =   9
          Left            =   1560
          MaxLength       =   20
-         TabIndex        =   7
+         TabIndex        =   10
          Text            =   "0"
          Top             =   2280
          Width           =   975
@@ -599,7 +599,7 @@ Begin VB.Form FrmVattu
          Index           =   8
          Left            =   360
          MaxLength       =   20
-         TabIndex        =   6
+         TabIndex        =   9
          Text            =   "0"
          Top             =   2280
          Width           =   975
@@ -620,7 +620,7 @@ Begin VB.Form FrmVattu
          Index           =   7
          Left            =   4080
          MaxLength       =   2
-         TabIndex        =   9
+         TabIndex        =   12
          Text            =   "0"
          Top             =   2280
          Width           =   255
@@ -639,7 +639,7 @@ Begin VB.Form FrmVattu
          Index           =   6
          Left            =   2640
          MaxLength       =   50
-         TabIndex        =   19
+         TabIndex        =   22
          Top             =   5040
          Visible         =   0   'False
          Width           =   2655
@@ -661,7 +661,7 @@ Begin VB.Form FrmVattu
          Left            =   1560
          MaxLength       =   20
          MultiLine       =   -1  'True
-         TabIndex        =   5
+         TabIndex        =   8
          Text            =   "Frmvattu.frx":115DC
          Top             =   2760
          Width           =   975
@@ -683,7 +683,7 @@ Begin VB.Form FrmVattu
          Left            =   3960
          MaxLength       =   12
          MultiLine       =   -1  'True
-         TabIndex        =   18
+         TabIndex        =   21
          Text            =   "Frmvattu.frx":115DE
          Top             =   3120
          Width           =   975
@@ -705,7 +705,7 @@ Begin VB.Form FrmVattu
          Left            =   1560
          MaxLength       =   12
          MultiLine       =   -1  'True
-         TabIndex        =   17
+         TabIndex        =   20
          Text            =   "Frmvattu.frx":115E2
          Top             =   3120
          Width           =   975
@@ -724,7 +724,7 @@ Begin VB.Form FrmVattu
          Index           =   2
          Left            =   2760
          MaxLength       =   12
-         TabIndex        =   4
+         TabIndex        =   7
          Top             =   4560
          Visible         =   0   'False
          Width           =   2535
@@ -743,7 +743,7 @@ Begin VB.Form FrmVattu
          Index           =   1
          Left            =   2880
          MaxLength       =   50
-         TabIndex        =   3
+         TabIndex        =   6
          Top             =   4200
          Visible         =   0   'False
          Width           =   2535
@@ -771,7 +771,7 @@ Begin VB.Form FrmVattu
          Height          =   2895
          Index           =   2
          Left            =   240
-         TabIndex        =   67
+         TabIndex        =   70
          Tag             =   "10"
          Top             =   4200
          Width           =   5295
@@ -799,7 +799,7 @@ Begin VB.Form FrmVattu
          Height          =   975
          Index           =   3
          Left            =   1320
-         TabIndex        =   74
+         TabIndex        =   77
          Tag             =   "10"
          Top             =   5160
          Visible         =   0   'False
@@ -828,7 +828,7 @@ Begin VB.Form FrmVattu
       Begin MSForms.TextBox txtGhiChu 
          Height          =   280
          Left            =   1200
-         TabIndex        =   97
+         TabIndex        =   5
          Top             =   1560
          Width           =   3255
          VariousPropertyBits=   679495707
@@ -842,7 +842,7 @@ Begin VB.Form FrmVattu
       Begin MSForms.TextBox txtDVT 
          Height          =   280
          Left            =   1200
-         TabIndex        =   96
+         TabIndex        =   4
          Top             =   1100
          Width           =   1455
          VariousPropertyBits=   679495707
@@ -856,7 +856,7 @@ Begin VB.Form FrmVattu
       Begin MSForms.TextBox txtTen 
          Height          =   285
          Left            =   1200
-         TabIndex        =   95
+         TabIndex        =   3
          Top             =   720
          Width           =   4215
          VariousPropertyBits=   679495707
@@ -883,7 +883,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   32
          Left            =   2520
-         TabIndex        =   77
+         TabIndex        =   80
          Tag             =   "VAT Rate (%)"
          Top             =   2880
          Width           =   1455
@@ -918,7 +918,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   31
          Left            =   4440
-         TabIndex        =   76
+         TabIndex        =   79
          Tag             =   "VAT Rate (%)"
          Top             =   1920
          Width           =   495
@@ -942,7 +942,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   27
          Left            =   3120
-         TabIndex        =   75
+         TabIndex        =   78
          Tag             =   "U. Price"
          Top             =   4920
          Visible         =   0   'False
@@ -967,7 +967,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   26
          Left            =   1320
-         TabIndex        =   73
+         TabIndex        =   76
          Tag             =   "Unit"
          Top             =   4920
          Visible         =   0   'False
@@ -992,7 +992,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   11
          Left            =   2400
-         TabIndex        =   72
+         TabIndex        =   75
          Tag             =   "Rate"
          Top             =   4920
          Visible         =   0   'False
@@ -1017,7 +1017,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   30
          Left            =   3640
-         TabIndex        =   71
+         TabIndex        =   74
          Tag             =   "Amount"
          Top             =   3960
          Width           =   1560
@@ -1041,7 +1041,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   29
          Left            =   2400
-         TabIndex        =   70
+         TabIndex        =   73
          Tag             =   "Unit Price"
          Top             =   3960
          Width           =   1305
@@ -1065,7 +1065,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   7
          Left            =   1430
-         TabIndex        =   69
+         TabIndex        =   72
          Tag             =   "Quantity"
          Top             =   3960
          Width           =   985
@@ -1089,7 +1089,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   6
          Left            =   240
-         TabIndex        =   68
+         TabIndex        =   71
          Tag             =   "Store"
          Top             =   3960
          Width           =   1215
@@ -1130,7 +1130,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   25
          Left            =   240
-         TabIndex        =   65
+         TabIndex        =   68
          Tag             =   "Sale Price 1"
          Top             =   1920
          Width           =   1455
@@ -1151,7 +1151,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   24
          Left            =   2880
-         TabIndex        =   64
+         TabIndex        =   67
          Tag             =   "VAT Rate (%)"
          Top             =   1920
          Width           =   1455
@@ -1185,7 +1185,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   13
          Left            =   240
-         TabIndex        =   40
+         TabIndex        =   43
          Tag             =   "Notes"
          Top             =   1560
          Width           =   615
@@ -1214,7 +1214,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   10
          Left            =   240
-         TabIndex        =   39
+         TabIndex        =   42
          Tag             =   "P. Price"
          Top             =   2880
          Width           =   615
@@ -1248,7 +1248,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   12
          Left            =   2880
-         TabIndex        =   31
+         TabIndex        =   34
          Tag             =   "Max"
          Top             =   3240
          Width           =   495
@@ -1268,7 +1268,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   0
          Left            =   240
-         TabIndex        =   30
+         TabIndex        =   33
          Tag             =   "Minimum Stock"
          Top             =   3240
          Width           =   1455
@@ -1295,7 +1295,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   8
          Left            =   240
-         TabIndex        =   29
+         TabIndex        =   32
          Tag             =   "Current Stock"
          Top             =   3650
          Width           =   1455
@@ -1315,7 +1315,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   3
          Left            =   240
-         TabIndex        =   28
+         TabIndex        =   31
          Tag             =   "Unit"
          Top             =   1200
          Width           =   975
@@ -1349,7 +1349,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   2
          Left            =   240
-         TabIndex        =   27
+         TabIndex        =   30
          Tag             =   "Desc."
          Top             =   720
          Width           =   735
@@ -1369,7 +1369,7 @@ Begin VB.Form FrmVattu
          Height          =   255
          Index           =   1
          Left            =   240
-         TabIndex        =   26
+         TabIndex        =   29
          Tag             =   "Code"
          Top             =   240
          Width           =   855
@@ -1390,7 +1390,7 @@ Begin VB.Form FrmVattu
       Left            =   7320
       List            =   "Frmvattu.frx":115E8
       Style           =   2  'Dropdown List
-      TabIndex        =   41
+      TabIndex        =   44
       Top             =   360
       Visible         =   0   'False
       Width           =   1095
@@ -1408,7 +1408,7 @@ Begin VB.Form FrmVattu
       Height          =   285
       Index           =   1
       Left            =   9240
-      TabIndex        =   50
+      TabIndex        =   53
       ToolTipText     =   "Ghi ph¸t sinh"
       Top             =   5400
       Width           =   255
@@ -1428,7 +1428,7 @@ Begin VB.Form FrmVattu
       Index           =   6
       Left            =   8400
       MaxLength       =   20
-      TabIndex        =   49
+      TabIndex        =   52
       Top             =   5400
       Width           =   855
    End
@@ -1448,7 +1448,7 @@ Begin VB.Form FrmVattu
       Left            =   6360
       Locked          =   -1  'True
       MaxLength       =   50
-      TabIndex        =   48
+      TabIndex        =   51
       TabStop         =   0   'False
       Top             =   5400
       Width           =   2055
@@ -1468,7 +1468,7 @@ Begin VB.Form FrmVattu
       Index           =   4
       Left            =   3600
       MaxLength       =   20
-      TabIndex        =   47
+      TabIndex        =   50
       Top             =   5160
       Visible         =   0   'False
       Width           =   1215
@@ -1481,7 +1481,7 @@ Begin VB.Form FrmVattu
       Left            =   6840
       MaxLength       =   12
       MultiLine       =   -1  'True
-      TabIndex        =   51
+      TabIndex        =   54
       Text            =   "Frmvattu.frx":115EA
       Top             =   5880
       Width           =   1095
@@ -1502,7 +1502,7 @@ Begin VB.Form FrmVattu
       Index           =   4
       Left            =   10160
       Style           =   1  'Graphical
-      TabIndex        =   21
+      TabIndex        =   24
       Tag             =   "&Norm"
       Top             =   7680
       Width           =   1095
@@ -1511,7 +1511,7 @@ Begin VB.Form FrmVattu
       Height          =   1575
       Index           =   0
       Left            =   5400
-      TabIndex        =   52
+      TabIndex        =   55
       Tag             =   "10"
       Top             =   1440
       Width           =   4335
@@ -1550,7 +1550,7 @@ Begin VB.Form FrmVattu
       Index           =   0
       Left            =   3240
       MaxLength       =   20
-      TabIndex        =   42
+      TabIndex        =   45
       Top             =   2880
       Visible         =   0   'False
       Width           =   855
@@ -1571,7 +1571,7 @@ Begin VB.Form FrmVattu
       Left            =   6000
       Locked          =   -1  'True
       MaxLength       =   50
-      TabIndex        =   43
+      TabIndex        =   46
       TabStop         =   0   'False
       Top             =   3000
       Width           =   1695
@@ -1592,7 +1592,7 @@ Begin VB.Form FrmVattu
       Left            =   7680
       Locked          =   -1  'True
       MaxLength       =   20
-      TabIndex        =   44
+      TabIndex        =   47
       TabStop         =   0   'False
       Top             =   3000
       Width           =   735
@@ -1612,7 +1612,7 @@ Begin VB.Form FrmVattu
       Index           =   3
       Left            =   8400
       MaxLength       =   20
-      TabIndex        =   45
+      TabIndex        =   48
       Top             =   3000
       Width           =   855
    End
@@ -1629,7 +1629,7 @@ Begin VB.Form FrmVattu
       Height          =   285
       Index           =   0
       Left            =   9240
-      TabIndex        =   46
+      TabIndex        =   49
       ToolTipText     =   "Ghi ph¸t sinh"
       Top             =   3000
       Width           =   255
@@ -1649,7 +1649,7 @@ Begin VB.Form FrmVattu
       Left            =   11280
       Picture         =   "Frmvattu.frx":115EE
       Style           =   1  'Graphical
-      TabIndex        =   23
+      TabIndex        =   26
       Tag             =   "&Return"
       Top             =   7680
       Width           =   1095
@@ -1669,7 +1669,7 @@ Begin VB.Form FrmVattu
       Left            =   9000
       Picture         =   "Frmvattu.frx":12A10
       Style           =   1  'Graphical
-      TabIndex        =   24
+      TabIndex        =   27
       Tag             =   "&Delete"
       Top             =   7680
       Width           =   1095
@@ -1689,7 +1689,7 @@ Begin VB.Form FrmVattu
       Left            =   7880
       Picture         =   "Frmvattu.frx":13EF2
       Style           =   1  'Graphical
-      TabIndex        =   20
+      TabIndex        =   23
       Tag             =   "&Save"
       Top             =   7680
       Width           =   1095
@@ -1709,7 +1709,7 @@ Begin VB.Form FrmVattu
       Left            =   6720
       Picture         =   "Frmvattu.frx":15320
       Style           =   1  'Graphical
-      TabIndex        =   22
+      TabIndex        =   25
       Tag             =   "&Add"
       Top             =   7680
       Width           =   1095
@@ -1727,7 +1727,7 @@ Begin VB.Form FrmVattu
       EndProperty
       Height          =   360
       Left            =   5280
-      TabIndex        =   38
+      TabIndex        =   41
       Top             =   7680
       Width           =   495
    End
@@ -1746,7 +1746,7 @@ Begin VB.Form FrmVattu
       Height          =   255
       Index           =   1
       Left            =   1080
-      TabIndex        =   37
+      TabIndex        =   40
       Tag             =   "Desc."
       Top             =   7800
       Width           =   855
@@ -1766,7 +1766,7 @@ Begin VB.Form FrmVattu
       Height          =   255
       Index           =   0
       Left            =   120
-      TabIndex        =   36
+      TabIndex        =   39
       Tag             =   "Code"
       Top             =   7800
       Value           =   -1  'True
@@ -1794,7 +1794,7 @@ Begin VB.Form FrmVattu
       Height          =   1335
       Index           =   1
       Left            =   5400
-      TabIndex        =   62
+      TabIndex        =   65
       Tag             =   "10"
       Top             =   4080
       Width           =   4335
@@ -1846,7 +1846,7 @@ Begin VB.Form FrmVattu
       Height          =   255
       Index           =   28
       Left            =   4680
-      TabIndex        =   66
+      TabIndex        =   69
       Tag             =   "Norm applied from month"
       Top             =   840
       Width           =   2055
@@ -1870,7 +1870,7 @@ Begin VB.Form FrmVattu
       Height          =   255
       Index           =   17
       Left            =   5160
-      TabIndex        =   56
+      TabIndex        =   59
       Tag             =   "Code"
       Top             =   1200
       Width           =   855
@@ -1894,7 +1894,7 @@ Begin VB.Form FrmVattu
       Height          =   255
       Index           =   16
       Left            =   6000
-      TabIndex        =   55
+      TabIndex        =   58
       Tag             =   "Description"
       Top             =   1200
       Width           =   1695
@@ -1918,7 +1918,7 @@ Begin VB.Form FrmVattu
       Height          =   255
       Index           =   22
       Left            =   6360
-      TabIndex        =   60
+      TabIndex        =   63
       Tag             =   "Description"
       Top             =   3840
       Width           =   2055
@@ -1942,7 +1942,7 @@ Begin VB.Form FrmVattu
       Height          =   255
       Index           =   21
       Left            =   5160
-      TabIndex        =   59
+      TabIndex        =   62
       Tag             =   "Code"
       Top             =   3840
       Width           =   1215
@@ -1962,7 +1962,7 @@ Begin VB.Form FrmVattu
       Height          =   255
       Index           =   20
       Left            =   5400
-      TabIndex        =   63
+      TabIndex        =   66
       Tag             =   "Rate of Depriciation"
       Top             =   3480
       Width           =   3255
@@ -1986,7 +1986,7 @@ Begin VB.Form FrmVattu
       Height          =   255
       Index           =   23
       Left            =   8400
-      TabIndex        =   61
+      TabIndex        =   64
       Tag             =   "Rate"
       Top             =   3840
       Width           =   855
@@ -2013,7 +2013,7 @@ Begin VB.Form FrmVattu
       Height          =   255
       Index           =   19
       Left            =   5160
-      TabIndex        =   58
+      TabIndex        =   61
       Tag             =   "Norm of Labour"
       Top             =   5880
       Width           =   1575
@@ -2033,7 +2033,7 @@ Begin VB.Form FrmVattu
       Height          =   255
       Index           =   18
       Left            =   5160
-      TabIndex        =   57
+      TabIndex        =   60
       Tag             =   "Norm of Material"
       Top             =   840
       Width           =   1935
@@ -2057,7 +2057,7 @@ Begin VB.Form FrmVattu
       Height          =   255
       Index           =   15
       Left            =   7680
-      TabIndex        =   54
+      TabIndex        =   57
       Tag             =   "Unit"
       Top             =   1200
       Width           =   735
@@ -2081,7 +2081,7 @@ Begin VB.Form FrmVattu
       Height          =   255
       Index           =   14
       Left            =   8400
-      TabIndex        =   53
+      TabIndex        =   56
       Tag             =   "Quantity"
       Top             =   1200
       Width           =   855
@@ -2094,7 +2094,7 @@ Begin VB.Form FrmVattu
       Height          =   7310
       Index           =   5
       Left            =   5040
-      TabIndex        =   34
+      TabIndex        =   37
       Top             =   165
       Width           =   5655
    End
@@ -2106,7 +2106,7 @@ Begin VB.Form FrmVattu
       Height          =   6255
       Index           =   4
       Left            =   5040
-      TabIndex        =   33
+      TabIndex        =   36
       Top             =   240
       Width           =   5415
    End
@@ -2124,7 +2124,7 @@ Begin VB.Form FrmVattu
       Height          =   6900
       Index           =   9
       Left            =   120
-      TabIndex        =   32
+      TabIndex        =   35
       Top             =   540
       Width           =   4815
    End
@@ -2883,7 +2883,7 @@ Private Sub TxtVT_Change(Index As Integer)
     End If
 End Sub
 
-Private Sub Txtvt_GotFocus(Index As Integer)
+Private Sub txtVT_GotFocus(Index As Integer)
     AutoSelect txtVT(Index)
 End Sub
 
