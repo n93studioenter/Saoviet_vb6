@@ -113,6 +113,15 @@ Begin VB.Form frmMain
          EndProperty
       EndProperty
    End
+   Begin VB.CommandButton Command3 
+      Caption         =   "Command3"
+      Height          =   375
+      Left            =   240
+      TabIndex        =   80
+      Top             =   10320
+      Visible         =   0   'False
+      Width           =   1095
+   End
    Begin MSComctlLib.ProgressBar ProgressBar1 
       Height          =   375
       Left            =   13080
@@ -199,23 +208,19 @@ Begin VB.Form frmMain
          BeginProperty Panel1 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Object.Width           =   8819
             MinWidth        =   8819
-            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel2 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Object.Width           =   12347
             MinWidth        =   12347
-            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel3 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
-            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel4 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Style           =   6
-            TextSave        =   "10/04/26"
-            Key             =   ""
+            TextSave        =   "21/04/26"
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -2422,9 +2427,10 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+Public typeprint As Integer
 Private g_NcmBackup As NONCLIENTMETRICS
 Private g_HasBackup As Boolean
-
+Public keyhasregistry As String
 Private Declare Function MulDiv Lib "Kernel32" ( _
                                 ByVal nNumber As Long, _
                                 ByVal nNumerator As Long, _
@@ -2486,15 +2492,15 @@ Dim MenuCount As Integer
 Dim CurrentMenu As Integer
 Dim ItemCount As Integer
 Dim fontmenu As String, fontcaption As String, ncm As NONCLIENTMETRICS
-Attribute fontcaption.VB_VarUserMemId = 1073938437
-Attribute ncm.VB_VarUserMemId = 1073938437
+Attribute fontcaption.VB_VarUserMemId = 1073938439
+Attribute ncm.VB_VarUserMemId = 1073938439
 'end Module tieng viet
 Public gSubMenu As frmSubMenu
 Attribute gSubMenu.VB_VarUserMemId = 1073938438
 Public gCurrentMenu As Integer
 Attribute gCurrentMenu.VB_VarUserMemId = 1073938439
 
-Private Declare Sub CopyMemory Lib "Kernel32" Alias "RtlMoveMemory" (Destination As Any, source As Any, ByVal length As Long)
+Private Declare Sub CopyMemory Lib "Kernel32" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal length As Long)
 Private Declare Function GetAdaptersInfo Lib "iphlpapi" (lpAdapterInfo As Any, lpSize As Long) As Long
 
 Public Tudongtinhgiavon As Boolean
@@ -2567,6 +2573,7 @@ Private Const OptLDBLoggedUsers = &H2
 'End Sub
 
 Private Sub Command_Click(Index As Integer)
+    frmMain.typeprint = 0
     Select Case Index
     Case 0:
 
@@ -2673,6 +2680,10 @@ End Sub
 
 Private Sub Command2_Click()
     Taifilecapnhat
+End Sub
+
+Private Sub Command3_Click()
+    ftmtest.Show vbModal
 End Sub
 
 Private Sub CTTimer_Timer()
@@ -2868,8 +2879,8 @@ Public Sub Taifilecapnhat()
         ProgressBar1.Value = i
         DoEvents
     Next i
-    Dim result As Long
-    result = ShellExecute(0, "open", destFile, "", destFolder, 0)
+    Dim Result As Long
+    Result = ShellExecute(0, "open", destFile, "", destFolder, 0)
 ErrorHandler:
     'MsgBox "L?i khi t?i file update.exe:" & vbCrLf & Err.Description, vbCritical
     ProgressBar1.Value = 100
@@ -2903,6 +2914,7 @@ End Sub
 Private Sub Form_Activate()
     CheckAndCreateTBCpu
     ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
+     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD Printername text")
     Dim cmg As Long
     cmg = SelectSQL("select CMG AS f1 from  License")
     If cmg = 249991 Then
@@ -3040,15 +3052,15 @@ Private Function GetFontName(fontFace As String) As String
         GetFontName = fontFace
     End If
 End Function
-Private Function ReadTxt(FilePath As String) As String
+Private Function ReadTxt(filePath As String) As String
     Dim fileNumber As Integer
     Dim content As String
 
     On Error GoTo ErrorHandler
 
     ' Ki?m tra file t?n t?i
-    If Dir(FilePath) = "" Then
-        ReadTxt = "File không t?n t?i: " & FilePath
+    If Dir(filePath) = "" Then
+        ReadTxt = "File không t?n t?i: " & filePath
         Exit Function
     End If
 
@@ -3056,7 +3068,7 @@ Private Function ReadTxt(FilePath As String) As String
     fileNumber = FreeFile
 
     ' M? file d? d?c
-    Open FilePath For Input As #fileNumber
+    Open filePath For Input As #fileNumber
 
     ' Ð?c toàn b? n?i dung
     If LOF(fileNumber) > 0 Then
@@ -3407,6 +3419,7 @@ Public Sub CheckAndCreateTBCpu()
 End Sub
 Private Sub Form_Load()
     CheckAndCreateTBCpu
+    ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD tk155 text")
     ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
     frmMain.sbStatusBar.Panels(4).ToolTipText = "Log On Time: " + Format(Time, "hh:mm:ss")
     Label5.Caption = "  (" & ABCtoVNI("Phiªn b¶n dïng thö") & ")"
@@ -3438,9 +3451,12 @@ Private Sub Form_Load()
         mnTT.Caption = "TT-99/2025-BTC"
         'mnTT.Visible = False
     End If
+    
     LoadMenuform
     Kiemtraphienbanht
     'Taifilecapnhat
+    
+    
     Dim X1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer
 
     'ResetSystemFontToDefault
@@ -3660,9 +3676,7 @@ Private Sub Image2_Click()
     Taifilecapnhat
     Label4.Visible = False
 End Sub
-
-
-
+ 
 Public Sub mnCn_Click(Index As Integer)
     If Index = 12 Then
         Dim sMsg As String
@@ -4919,7 +4933,7 @@ Private Sub GetLicense()
         End If
     End If
 
-    pTenCty = rs_license!TenCty
+    pTenCty = rs_license!tencty
     pTenCn = rs_license!tencn
 
     LbCty(2).Caption = rs_license!DiaChi

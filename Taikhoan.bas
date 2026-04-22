@@ -165,6 +165,9 @@ Public Function InSocaiTk(taikhoan As ClsTaikhoan, tdau As Integer, tcuoi As Int
             '           End If
             '      End If
             ' them theo cai tien
+ 
+
+            '===== 1. Ch?n report =====
             If loai = 0 Then
                 frmMain.Rpt.ReportFileName = "SOCAI3.RPT"
             Else

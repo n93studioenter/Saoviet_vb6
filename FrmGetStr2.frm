@@ -2,18 +2,27 @@ VERSION 5.00
 Begin VB.Form FrmGetStr2 
    BackColor       =   &H00FFFFC0&
    Caption         =   """NhËp m· sè cµi ®Æt"""
-   ClientHeight    =   1215
+   ClientHeight    =   1275
    ClientLeft      =   60
    ClientTop       =   345
-   ClientWidth     =   6885
+   ClientWidth     =   8805
    LinkTopic       =   "Form4"
-   ScaleHeight     =   1215
-   ScaleWidth      =   6885
+   ScaleHeight     =   1275
+   ScaleWidth      =   8805
    StartUpPosition =   2  'CenterScreen
+   Begin VB.TextBox Text 
+      Height          =   285
+      Index           =   5
+      Left            =   6720
+      MaxLength       =   6
+      TabIndex        =   10
+      Top             =   360
+      Width           =   1965
+   End
    Begin VB.CommandButton Command2 
       Caption         =   "Paste"
       Height          =   375
-      Left            =   6000
+      Left            =   7920
       TabIndex        =   9
       Top             =   720
       Width           =   735
@@ -24,7 +33,6 @@ Begin VB.Form FrmGetStr2
       TabIndex        =   8
       Text            =   "Text1"
       Top             =   1560
-      Visible         =   0   'False
       Width           =   7335
    End
    Begin VB.TextBox Text 
@@ -75,7 +83,7 @@ Begin VB.Form FrmGetStr2
    Begin VB.CommandButton Command1 
       Caption         =   "Copy"
       Height          =   375
-      Left            =   5160
+      Left            =   7080
       TabIndex        =   0
       Top             =   720
       Width           =   735
@@ -127,15 +135,21 @@ Attribute VB_Exposed = False
 Option Explicit
 Public bakStr As String
 Public Status As Integer
+Public isDangky As Boolean
+
 
 Private Sub Command1_Click()
     Clipboard.Clear
     Clipboard.SetText Trim(Text1.Text)
 End Sub
 Public Function CheckLicense() As Boolean
+
     FrmOptions.active_Click
-    
-    If FrmOptions.KiemTraKey(bakStr) = True Then
+
+    Dim seleecttext As String
+    Clipboard.GetText
+    seleecttext = Clipboard.GetText()
+    If FrmOptions.KiemTraKey(seleecttext) = True Then
         CheckLicense = True
         bakStr = ""
     Else
@@ -154,8 +168,8 @@ Private Sub Command2_Click()
     ' 2. Dán n?i dung t? Clipboard vào TextBox1
     Clipboard.GetText
     Text(0).SelText = Clipboard.GetText()
-    Form_KeyPress 13
-
+    'Form_KeyPress 13
+     
 End Sub
 
 Private Sub Text_Change(Index As Integer)
@@ -171,6 +185,7 @@ Private Sub Text_Change(Index As Integer)
         Text(2).Text = a(2)
         Text(3).Text = a(3)
         Text(4).Text = a(4)
+        Text(4).Text = a(5)
         Form_KeyPress 13
 
     End If
@@ -189,11 +204,15 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
         Text(2).Text = ""
         Text(3).Text = ""
         Text(4).Text = ""
-
-        If FrmOptions.KiemTraKey(bakStr) = True Then
+        Dim seleecttext As String
+        Clipboard.GetText
+        seleecttext = Clipboard.GetText()
+        If FrmOptions.KiemTraKey(seleecttext) = True Then
             FrmOptions.UpdateLicnes
+            isDangky = True
+            frmMain.keyhasregistry = ""
+            Me.Hide
 
-             Unload Me
         Else
             Dim s As String
             s = ChrW(272) & ChrW(259) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(107) & ChrW(253) & ChrW(32) & ChrW(116) & ChrW(104) & ChrW(7845) & ChrW(116) & ChrW(32) & ChrW(98) & ChrW(7841) & ChrW(105)

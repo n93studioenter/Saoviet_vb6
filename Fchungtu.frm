@@ -3751,33 +3751,41 @@ Begin VB.Form FrmChungtu
          Tag             =   "Print Inventory Export Voucher"
       End
       Begin VB.Menu mnDD 
-         Caption         =   "-"
+         Caption         =   "In phieu so cai"
          Index           =   24
       End
       Begin VB.Menu mnDD 
-         Caption         =   "§¬n gi¸ nhËp míi nhÊt"
+         Caption         =   "In phieu so cai2"
          Index           =   25
+      End
+      Begin VB.Menu mnDD 
+         Caption         =   "-"
+         Index           =   26
+      End
+      Begin VB.Menu mnDD 
+         Caption         =   "§¬n gi¸ nhËp míi nhÊt"
+         Index           =   27
          Tag             =   "Unit price List"
          Visible         =   0   'False
       End
       Begin VB.Menu mnDD 
          Caption         =   "-"
-         Index           =   26
-         Visible         =   0   'False
-      End
-      Begin VB.Menu mnDD 
-         Caption         =   "Th«ng tin chøng tõ 1"
-         Index           =   27
-         Visible         =   0   'False
-      End
-      Begin VB.Menu mnDD 
-         Caption         =   "Th«ng tin chøng tõ 2"
          Index           =   28
          Visible         =   0   'False
       End
       Begin VB.Menu mnDD 
-         Caption         =   "Th«ng tin chøng tõ 3"
+         Caption         =   "Th«ng tin chøng tõ 1"
          Index           =   29
+         Visible         =   0   'False
+      End
+      Begin VB.Menu mnDD 
+         Caption         =   "Th«ng tin chøng tõ 2"
+         Index           =   30
+         Visible         =   0   'False
+      End
+      Begin VB.Menu mnDD 
+         Caption         =   "Th«ng tin chøng tõ 3"
+         Index           =   31
          Visible         =   0   'False
       End
    End
@@ -3847,7 +3855,7 @@ Private Declare Function SetTimer Lib "user32" (ByVal hwnd As Long, ByVal nIDEve
 Private Declare Function KillTimer Lib "user32" (ByVal hwnd As Long, ByVal nIDEvent As Long) As Long
 Private Declare Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As Integer
 
-Private Declare Function WideCharToMultiByte Lib "Kernel32" ( _
+Private Declare Function WideCharToMultiByte Lib "kernel32" ( _
                                              ByVal CodePage As Long, _
                                              ByVal dwFlags As Long, _
                                              ByVal lpWideCharStr As Long, _
@@ -3951,7 +3959,7 @@ Private Const MIIM_STRING = &H40
 Private Const MIIM_FTYPE = &H100
 Private Const MFT_STRING = &H0
 
-Private Declare Sub Sleep Lib "Kernel32" (ByVal dwMilliseconds As Long)
+Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 
 Dim isclicktt As Integer
 Const TM = "111"
@@ -5906,7 +5914,7 @@ End Sub
 Private Function StringToUTF8(str As String) As Byte()
     Dim buffer() As Byte
     Dim bufferSize As Long
-    Dim result As Long
+    Dim Result As Long
 
     ' L?y kích thu?c buffer c?n thi?t
     bufferSize = WideCharToMultiByte(CP_UTF8, 0, StrPtr(str), Len(str), 0, 0, 0, 0)
@@ -5915,9 +5923,9 @@ Private Function StringToUTF8(str As String) As Byte()
         ReDim buffer(bufferSize - 1)
 
         ' Chuy?n d?i sang UTF-8
-        result = WideCharToMultiByte(CP_UTF8, 0, StrPtr(str), Len(str), VarPtr(buffer(0)), bufferSize, 0, 0)
+        Result = WideCharToMultiByte(CP_UTF8, 0, StrPtr(str), Len(str), VarPtr(buffer(0)), bufferSize, 0, 0)
 
-        If result > 0 Then
+        If Result > 0 Then
             StringToUTF8 = buffer
         End If
     End If
@@ -7047,6 +7055,7 @@ Private Sub btnImportXML_Click()
             "AND t.ID = (" & _
           "   SELECT MIN(t2.ID) FROM tbimport AS t2 " & _
           "   WHERE t2.SHDon = t.SHDon " & _
+          " And t2.KHHDon = t.KHHDon " & _
           "   AND t2.Type = t.Type " & _
           "   AND DateValue(t2.NLap) = DateValue(t.NLap)" & _
             ") " & _
@@ -7054,6 +7063,7 @@ Private Sub btnImportXML_Click()
           "   SELECT * FROM HoaDon AS h " & _
           "   INNER JOIN ChungTu AS c ON h.MaSo = c.MaSo " & _
           "   WHERE t.SHDon = h.SoHD " & _
+          " AND t.KHHDon = h.KyHieu " & _
           "   AND ( " & _
           "       (t.Type = '1' AND h.Loai = -1) " & _
           "       OR (t.Type = '2' AND h.Loai = 1) " & _
@@ -7404,7 +7414,7 @@ Private Sub CboThang_DblClick()
     Label(26).Caption = ""
 End Sub
 
-Private Sub CboThang_DragDrop(source As Control, X As Single, Y As Single)
+Private Sub CboThang_DragDrop(Source As Control, X As Single, Y As Single)
     Label(26).Caption = ""
 End Sub
 
@@ -8341,7 +8351,7 @@ A1:
                 Next
             End With
         Else
-C1:
+c1:
             frmMain.Rpt.ReportFileName = IIf(Index = 0, "PHIEUCHI.RPT", "CHINH.RPT")
             ttien = 0
             With GrdChungtu
@@ -8723,7 +8733,7 @@ B:
             SetRptInfo
             tiennt = 0
             sodu = 0
-            GoTo C1
+            GoTo c1
         End If
     End If
 KT:
@@ -8937,7 +8947,7 @@ Sub In_hoa_don1(sotien As String, i As Integer, k As Integer, xxx As String, sod
     Dim lisen
     Set lisen = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     If lisen.recordCount > 0 Then
-        frmMain.Rpt.Formulas(1) = "TenCty='" + lisen!TenCty + "'"    ' 'lisen!Tenhoadon
+        frmMain.Rpt.Formulas(1) = "TenCty='" + lisen!tencty + "'"    ' 'lisen!Tenhoadon
         frmMain.Rpt.Formulas(2) = "TenCn='" + lisen!tencn + "'"
         frmMain.Rpt.Formulas(3) = "DC1='" + lisen!DiaChi + "'"
         frmMain.Rpt.Formulas(4) = "Fax='" + lisen!Fax + "'"
@@ -10831,8 +10841,173 @@ Public Function MsgBoxU(ByVal sText As String, _
 End Function
 
 
+Private Sub Form_Load()
+
+    isclicktt = 0
+    hPopup = CreateUnicodePopup()
+    lblTitle(11).AutoSize = True
+
+    Me.Height = Me.Height + TITLE_HEIGHT
+
+    picFakeTitle.Width = Me.ScaleWidth
+    picFakeTitle.Height = TITLE_HEIGHT
+    picIcon(1).Top = (picFakeTitle.Height - picIcon(1).Height) \ 2
+    lblTitle(11).Left = picIcon(1).Left + picIcon(1).Width + 90
+    lblTitle(11).Top = (picFakeTitle.Height - picIcon(1).Height) \ 2 + 50
+
+    lblClose.Top = 80
+    'lblClose.Left = picFakeTitle.ScaleWidth \ 2
+
+    AnControl
+
+    stt = 1
+    ListReset
+    ColumnSetUp Grid2, 0, 1300, 2
+    ColumnSetUp Grid2, 1, 940, 2
+    ColumnSetUp Grid2, 2, 940, 2
+    ColumnSetUp Grid2, 3, 4610, 0
+    ColumnSetUp Grid2, 4, 1690, 1
+    ColumnSetUp Grid2, 5, 1, 0
+    ColumnSetUp Grid2, 6, 340 + 370, 1
+    ColumnSetUp Grid2, 7, 940 + 240, 1
+    '   OptLoai(0).BackColor = 8438015
+    Dim chi_so As Integer
+    ExecuteSQL5_Themmoi ("ALTER TABLE chungtu  ADD MauSoHD text")
+    ExecuteSQL5_Themmoi ("ALTER TABLE chungtuP  ADD MauSoHD text")
+
+    ExecuteSQL5_Themmoi ("ALTER TABLE chungtu  ADD phantramchietkhau text")
+    ExecuteSQL5_Themmoi ("ALTER TABLE chungtu  ADD sotienchietkhau text")
+
+    ColumnSetUp GrdChungtu, 0, 340, 2  '340, 2
+    ColumnSetUp GrdChungtu, 1, 1060 + 20 - 300, 2
+    ColumnSetUp GrdChungtu, 2, 2260 + 600, 0
+    ColumnSetUp GrdChungtu, 3, 1300, 2
+    ColumnSetUp GrdChungtu, 4, 1060, 1
+    ColumnSetUp GrdChungtu, 5, 1300 + 250, 1
+    ColumnSetUp GrdChungtu, 6, 1300 + 350, 1
+    ColumnSetUp GrdChungtu, 7, 1300 + 350, 1
+    ColumnSetUp GrdChungtu, 8, 1, 0                     ' Cét chøa m· TK
+    ColumnSetUp GrdChungtu, 9, 1, 0                     ' Cét chøa m· VT
+    ColumnSetUp GrdChungtu, 10, 1, 0                     ' "0" nÕu trong b¶ng, "1" nÕu ngoµi b¶ng
+    ColumnSetUp GrdChungtu, 11, 1, 0                     ' M· TKTC
+    ColumnSetUp GrdChungtu, 12, 1, 0                     ' M· phiÕu nhËp
+    ColumnSetUp GrdChungtu, 13, 1, 0                     ' M· TK chi tiÕt ®èi øng
+    ColumnSetUp GrdChungtu, 14, 1, 0                     ' M· TKTC doi ung
+    ColumnSetUp GrdChungtu, 15, 1, 0                     ' M· vËt t­
+    ColumnSetUp GrdChungtu, 16, 1, 0                     ' Sè l­îng
+    ColumnSetUp GrdChungtu, 17, 1, 0                     ' MaKH No
+    ColumnSetUp GrdChungtu, 18, 1, 0                     ' Ghi chu
+    ColumnSetUp GrdChungtu, 19, 1, 0                     ' Ghi chu
+    ColumnSetUp GrdChungtu, 20, 1, 0                     ' MaKHCo
+    ColumnSetUp GrdChungtu, 21, 1, 0                     ' Ghi chu
+    ColumnSetUp GrdChungtu, 22, 1, 0                     ' Ghi chu
+    ColumnSetUp GrdChungtu, 23, 1, 0                     ' §.v.t
+    ColumnSetUp GrdChungtu, 24, 1, 0                     ' price by usd
+    ColumnSetUp GrdChungtu, 25, 340 + 200, 1
+    ColumnSetUp GrdChungtu, 26, 940 + 200, 1
+
+    dathuchien = False    ' da thuc hien luu khoi tao
+
+    AddMonthToCbo CboThang
+    AddMonthToCbo CboThang1(1)
+    AddMonthToCbo CboThang1(2)
+    For chi_so = 0 To 1
+        InitDateVars MedNgay(chi_so), ngay(chi_so)
+    Next
+    SetLoaiEnable = True
+    SetLoaiChungtu 0
+    MaSoCT = 0
+
+    ' LiÖt kª danh s¸ch kho hµng
+    If STDetail Then Int_RecsetToCbo "SELECT MaSo As F2,TenKho As F1 FROM KhoHang ORDER BY TenKho", CboNguon(1)
+    If User_Right = 0 Then
+a:
+        Int_RecsetToCbo "SELECT MaSo As F2,SoHieu+ ' - '+DienGiai As F1 FROM CTGhiSo ORDER BY SoHieu", CboNguon(3)
+    Else
+        Int_RecsetToCbo "SELECT MaSo As F2,SoHieu As F1 FROM CTGhiSo INNER JOIN User2 ON CTGhiSo.MaSo=User2.CTGS WHERE User2.User=" + CStr(UserID) + " ORDER BY SoHieu", CboNguon(3)
+        If CboNguon(3).ListCount = 0 Then GoTo a
+    End If
+    Int_RecsetToCbo "SELECT DoituongCT.MaSo As F2,(IIF(DoituongCT.MaKhachHang>0,KhachHang.Ten+' - '+DoituongCT.Sohieu+' - ','')+DienGiai) As F1 FROM DoituongCT LEFT JOIN KhachHang ON DoituongCT.MaKhachHang=KhachHang.MaSo ORDER BY  KhachHang.Ten,DoituongCT.SoHieu,DienGiai", CboNguon(2)
+
+    VTEnable = True
+    'Caption = Caption + " - " + CStr(pNamTC)
+    lblTitle(11).Caption = "NhËp chøng tõ kÕ to¸n" + " - " + CStr(pNamTC)
 
 
+    OptLoai(1).Enabled = STDetail
+    OptLoai(2).Enabled = STDetail
+    OptLoai(8).Enabled = STDetail
+
+    OptLoai(9).Enabled = FADetail
+    OptLoai(10).Enabled = FADetail
+    OptLoai(11).Enabled = FADetail
+    OptLoai(12).Enabled = FADetail
+
+    KhongNhapTS = True
+
+    KiemTraUser
+
+    pVAT1 = GetSetting(IniPath, "Invoice", "VAT1", 0)
+    pVAT2 = GetSetting(IniPath, "Invoice", "VATCheck", 0)
+
+    Ppthu = GetSetting(IniPath, "Environment", "DInvoice", 2)
+    Ppchi = GetSetting(IniPath, "Environment", "CInvoice", 2)
+    Ppunc = GetSetting(IniPath, "Environment", "UNC", 2)
+
+    hdcount = -1
+
+    Label(15).Visible = (pSoKT Mod 100 >= 10)
+    CboNguon(3).Visible = (pSoKT Mod 100 >= 10)
+
+    Label(16).Visible = pSongNgu
+    txt(2).Visible = pSongNgu
+
+    Label(17).Visible = (pTygia > 0)
+    txtchungtu(7).Visible = (pTygia > 0)
+    pRate = TyGiaNT(0)
+    txtchungtu(7).Text = Format(pRate, Mask_2)
+
+    'If pGiaUSD = 0  Then pRate = 1
+
+    Command(1).Enabled = ChoNhapTiep
+
+    'If pPhieu > 0 Then Me.Caption = IIf(pNN = 0, "NhËp phiÕu", "Template Voucher")
+    If frmMain.Command(4).Visible Then
+        If pPhieu = 1 Then
+            OptLoai(3).Enabled = False
+            For chi_so = 9 To 12
+                OptLoai(chi_so).Enabled = False
+            Next
+        Else
+            For chi_so = 0 To 2
+                CmdPhieu(chi_so).Enabled = False
+            Next
+        End If
+    End If
+
+    txtchungtu(8).Visible = (pCongNoHD > 0)
+    Label(22).Visible = (pCongNoHD > 0)
+
+
+
+    If pNVBH = 0 Then txt(1).Width = 7935
+
+    txt(1).Width = 5400
+
+    mnDD(26).Visible = (pSoVV > 0)
+
+    For chi_so = 1 To pSoVV
+        LbTT(chi_so - 1).Visible = True
+        CboVV(chi_so - 1).Visible = True
+        mnDD(26 + chi_so).Visible = True
+        Int_RecsetToCbo "SELECT MaSo As F2,DienGiai As F1 FROM DoituongCT" + CStr(chi_so) + " ORDER BY DoituongCT" + CStr(chi_so) + ".DienGiai", CboVV(chi_so - 1)
+    Next
+    hien_thong_tin_mau_HD
+    SetFont Me
+
+LoiNgay:
+
+End Sub
 
 Private Sub Form_Activate()
     isimportnk = False
@@ -10863,6 +11038,8 @@ Private Sub Form_Activate()
     If (Len(CboLoai.Text) <= 0) Then
         Int_RecsetToCbo "SELECT DISTINCTROW MaSo As F2,SoHieu + ' - '  + TenPhanLoai As F1 FROM PhanLoaiKhachHang WHERE PLCon=0 AND LEFT(SoHieu,1)<>'#' ORDER BY SoHieu", CboLoai
     End If
+    On Error Resume Next
+
     If Len(txtVT(0).Text) <= 0 Then txtVT(0).Text = "..."
     If Len(txtVT(1).Text) <= 0 Then txtVT(1).Text = "..."
     If Len(txtVT(7).Text) <= 0 Then txtVT(7).Text = "..."
@@ -10874,7 +11051,7 @@ Private Sub Form_Activate()
         '        If OptLoai.item(8).Value = False Then
         txtVT(2).Text = "01GTKT3/001"
     End If
-    '  End If
+    On Error GoTo 0
     hien_thong_tin_mau_HD
     If Len(txtVT(3).Text) <= 0 Then txtVT(3).Text = "01GTKT"
     ExecuteSQL5_Themmoi ("ALTER TABLE chungtuP  ADD Nguoimuahang text")
@@ -11226,8 +11403,10 @@ Public Function CreateUnicodePopup() As Long
     AddUniMenu hMenu, p, 1016, UniFromCodes(73, 110, 32, 116, 111, 224, 110, 32, 98, 7897, 32, 112, 104, 105, 7871, 117, 32, 116, 104, 117), mii: p = p + 1
     AddUniMenu hMenu, p, 1017, UniFromCodes(73, 110, 32, 116, 111, 224, 110, 32, 98, 7897, 32, 112, 104, 105, 7871, 117, 32, 99, 104, 105), mii: p = p + 1
     AddUniMenu hMenu, p, 1018, UniFromCodes(73, 110, 32, 116, 111, 224, 110, 32, 98, 7897, 32, 112, 104, 105, 7871, 117, 32, 110, 104, 7853, 112), mii: p = p + 1
-    AddUniMenu hMenu, p, 1019, UniFromCodes(73, 110, 32, 116, 111, 224, 110, 32, 98, 7897, 32, 112, 104, 105, 7871, 117, 32, 120, 117, 7845, 116), mii
-
+    AddUniMenu hMenu, p, 1019, UniFromCodes(73, 110, 32, 116, 111, 224, 110, 32, 98, 7897, 32, 112, 104, 105, 7871, 117, 32, 120, 117, 7845, 116), mii: p = p + 1
+    AddSeparator hMenu, p, mii: p = p + 1
+    AddUniMenu hMenu, p, 1020, UniFromCodes(73, 110, 32, 116, 111, 224, 110, 32, 98, 7897, 32, 115, 7893, 32, 99, 225, 105), mii: p = p + 1
+    AddUniMenu hMenu, p, 1021, UniFromCodes(73, 110, 32, 116, 111, 224, 110, 32, 98, 7897, 32, 115, 7893, 32, 99, 104, 105, 32, 116, 105, 7871, 116), mii: p = p + 1
     CreateUnicodePopup = hMenu
 End Function
 
@@ -11312,173 +11491,7 @@ Private Sub txtNoidung_Change()
 End Sub
 
 
-Private Sub Form_Load()
-    isclicktt = 0
-    hPopup = CreateUnicodePopup()
-    lblTitle(11).AutoSize = True
-
-    Me.Height = Me.Height + TITLE_HEIGHT
-
-    picFakeTitle.Width = Me.ScaleWidth
-    picFakeTitle.Height = TITLE_HEIGHT
-    picIcon(1).Top = (picFakeTitle.Height - picIcon(1).Height) \ 2
-    lblTitle(11).Left = picIcon(1).Left + picIcon(1).Width + 90
-    lblTitle(11).Top = (picFakeTitle.Height - picIcon(1).Height) \ 2 + 50
-
-    lblClose.Top = 80
-    'lblClose.Left = picFakeTitle.ScaleWidth \ 2
-
-    AnControl
-
-    stt = 1
-    ListReset
-    ColumnSetUp Grid2, 0, 1300, 2
-    ColumnSetUp Grid2, 1, 940, 2
-    ColumnSetUp Grid2, 2, 940, 2
-    ColumnSetUp Grid2, 3, 4610, 0
-    ColumnSetUp Grid2, 4, 1690, 1
-    ColumnSetUp Grid2, 5, 1, 0
-    ColumnSetUp Grid2, 6, 340 + 370, 1
-    ColumnSetUp Grid2, 7, 940 + 240, 1
-    '   OptLoai(0).BackColor = 8438015
-    Dim chi_so As Integer
-    ExecuteSQL5_Themmoi ("ALTER TABLE chungtu  ADD MauSoHD text")
-    ExecuteSQL5_Themmoi ("ALTER TABLE chungtuP  ADD MauSoHD text")
-
-    ExecuteSQL5_Themmoi ("ALTER TABLE chungtu  ADD phantramchietkhau text")
-    ExecuteSQL5_Themmoi ("ALTER TABLE chungtu  ADD sotienchietkhau text")
-
-    ColumnSetUp GrdChungtu, 0, 340, 2  '340, 2
-    ColumnSetUp GrdChungtu, 1, 1060 + 20 - 300, 2
-    ColumnSetUp GrdChungtu, 2, 2260 + 600, 0
-    ColumnSetUp GrdChungtu, 3, 1300, 2
-    ColumnSetUp GrdChungtu, 4, 1060, 1
-    ColumnSetUp GrdChungtu, 5, 1300 + 250, 1
-    ColumnSetUp GrdChungtu, 6, 1300 + 350, 1
-    ColumnSetUp GrdChungtu, 7, 1300 + 350, 1
-    ColumnSetUp GrdChungtu, 8, 1, 0                     ' Cét chøa m· TK
-    ColumnSetUp GrdChungtu, 9, 1, 0                     ' Cét chøa m· VT
-    ColumnSetUp GrdChungtu, 10, 1, 0                     ' "0" nÕu trong b¶ng, "1" nÕu ngoµi b¶ng
-    ColumnSetUp GrdChungtu, 11, 1, 0                     ' M· TKTC
-    ColumnSetUp GrdChungtu, 12, 1, 0                     ' M· phiÕu nhËp
-    ColumnSetUp GrdChungtu, 13, 1, 0                     ' M· TK chi tiÕt ®èi øng
-    ColumnSetUp GrdChungtu, 14, 1, 0                     ' M· TKTC doi ung
-    ColumnSetUp GrdChungtu, 15, 1, 0                     ' M· vËt t­
-    ColumnSetUp GrdChungtu, 16, 1, 0                     ' Sè l­îng
-    ColumnSetUp GrdChungtu, 17, 1, 0                     ' MaKH No
-    ColumnSetUp GrdChungtu, 18, 1, 0                     ' Ghi chu
-    ColumnSetUp GrdChungtu, 19, 1, 0                     ' Ghi chu
-    ColumnSetUp GrdChungtu, 20, 1, 0                     ' MaKHCo
-    ColumnSetUp GrdChungtu, 21, 1, 0                     ' Ghi chu
-    ColumnSetUp GrdChungtu, 22, 1, 0                     ' Ghi chu
-    ColumnSetUp GrdChungtu, 23, 1, 0                     ' §.v.t
-    ColumnSetUp GrdChungtu, 24, 1, 0                     ' price by usd
-    ColumnSetUp GrdChungtu, 25, 340 + 200, 1
-    ColumnSetUp GrdChungtu, 26, 940 + 200, 1
-
-    dathuchien = False    ' da thuc hien luu khoi tao
-
-    AddMonthToCbo CboThang
-    AddMonthToCbo CboThang1(1)
-    AddMonthToCbo CboThang1(2)
-    For chi_so = 0 To 1
-        InitDateVars MedNgay(chi_so), ngay(chi_so)
-    Next
-    SetLoaiEnable = True
-    SetLoaiChungtu 0
-    MaSoCT = 0
-
-    ' LiÖt kª danh s¸ch kho hµng
-    If STDetail Then Int_RecsetToCbo "SELECT MaSo As F2,TenKho As F1 FROM KhoHang ORDER BY TenKho", CboNguon(1)
-    If User_Right = 0 Then
-a:
-        Int_RecsetToCbo "SELECT MaSo As F2,SoHieu+ ' - '+DienGiai As F1 FROM CTGhiSo ORDER BY SoHieu", CboNguon(3)
-    Else
-        Int_RecsetToCbo "SELECT MaSo As F2,SoHieu As F1 FROM CTGhiSo INNER JOIN User2 ON CTGhiSo.MaSo=User2.CTGS WHERE User2.User=" + CStr(UserID) + " ORDER BY SoHieu", CboNguon(3)
-        If CboNguon(3).ListCount = 0 Then GoTo a
-    End If
-    Int_RecsetToCbo "SELECT DoituongCT.MaSo As F2,(IIF(DoituongCT.MaKhachHang>0,KhachHang.Ten+' - '+DoituongCT.Sohieu+' - ','')+DienGiai) As F1 FROM DoituongCT LEFT JOIN KhachHang ON DoituongCT.MaKhachHang=KhachHang.MaSo ORDER BY  KhachHang.Ten,DoituongCT.SoHieu,DienGiai", CboNguon(2)
-
-    VTEnable = True
-    'Caption = Caption + " - " + CStr(pNamTC)
-    lblTitle(11).Caption = "NhËp chøng tõ kÕ to¸n" + " - " + CStr(pNamTC)
-
-
-    OptLoai(1).Enabled = STDetail
-    OptLoai(2).Enabled = STDetail
-    OptLoai(8).Enabled = STDetail
-
-    OptLoai(9).Enabled = FADetail
-    OptLoai(10).Enabled = FADetail
-    OptLoai(11).Enabled = FADetail
-    OptLoai(12).Enabled = FADetail
-
-    KhongNhapTS = True
-
-    KiemTraUser
-
-    pVAT1 = GetSetting(IniPath, "Invoice", "VAT1", 0)
-    pVAT2 = GetSetting(IniPath, "Invoice", "VATCheck", 0)
-
-    Ppthu = GetSetting(IniPath, "Environment", "DInvoice", 2)
-    Ppchi = GetSetting(IniPath, "Environment", "CInvoice", 2)
-    Ppunc = GetSetting(IniPath, "Environment", "UNC", 2)
-
-    hdcount = -1
-
-    Label(15).Visible = (pSoKT Mod 100 >= 10)
-    CboNguon(3).Visible = (pSoKT Mod 100 >= 10)
-
-    Label(16).Visible = pSongNgu
-    txt(2).Visible = pSongNgu
-
-    Label(17).Visible = (pTygia > 0)
-    txtchungtu(7).Visible = (pTygia > 0)
-    pRate = TyGiaNT(0)
-    txtchungtu(7).Text = Format(pRate, Mask_2)
-
-    'If pGiaUSD = 0  Then pRate = 1
-
-    Command(1).Enabled = ChoNhapTiep
-
-    'If pPhieu > 0 Then Me.Caption = IIf(pNN = 0, "NhËp phiÕu", "Template Voucher")
-    If frmMain.Command(4).Visible Then
-        If pPhieu = 1 Then
-            OptLoai(3).Enabled = False
-            For chi_so = 9 To 12
-                OptLoai(chi_so).Enabled = False
-            Next
-        Else
-            For chi_so = 0 To 2
-                CmdPhieu(chi_so).Enabled = False
-            Next
-        End If
-    End If
-
-    txtchungtu(8).Visible = (pCongNoHD > 0)
-    Label(22).Visible = (pCongNoHD > 0)
-
-
-
-    If pNVBH = 0 Then txt(1).Width = 7935
-
-    txt(1).Width = 5400
-
-    mnDD(26).Visible = (pSoVV > 0)
-
-    For chi_so = 1 To pSoVV
-        LbTT(chi_so - 1).Visible = True
-        CboVV(chi_so - 1).Visible = True
-        mnDD(26 + chi_so).Visible = True
-        Int_RecsetToCbo "SELECT MaSo As F2,DienGiai As F1 FROM DoituongCT" + CStr(chi_so) + " ORDER BY DoituongCT" + CStr(chi_so) + ".DienGiai", CboVV(chi_so - 1)
-    Next
-    hien_thong_tin_mau_HD
-    SetFont Me
-
-LoiNgay:
-
-
-End Sub
+ 
 
 'Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
 'If Button = 2 Then PopupMenu mnPU
@@ -11613,7 +11626,12 @@ Public Sub HandleMenuCommand(ByVal cmdID As Long)
         InNX 1
     Case 1019    ' In toàn b? phi?u xu?t
         InNX 2
-
+    Case 1020
+        frmInReport.typeprint = 1
+        frmInReport.Show vbModal
+    Case 1021
+        frmInReport.typeprint = 2
+        frmInReport.Show vbModal
     End Select
 
     Me.MousePointer = 0
@@ -11911,7 +11929,9 @@ Public Sub NhapkhoTPChitiet()
 
 
     If Not rs_importNKDetail.EOF Then
-        txtchungtu(0).Text = "155"
+        Dim tk155 As String
+        tk155 = SelectSQL("SELECT tk155 AS F1 FROM tbRegister")
+        txtchungtu(0).Text = tk155
         txtChungtu_LostFocus (0)
         RFocus txtchungtu(2)
         txtchungtu(2).Text = rs_importNKDetail!sohieu
@@ -16256,7 +16276,7 @@ Private Sub txtVT_DblClick(Index As Integer)
     End Select
 End Sub
 
-Private Sub txtVT_GotFocus(Index As Integer)
+Private Sub Txtvt_GotFocus(Index As Integer)
 
     AutoSelect txtVT(Index)
 End Sub

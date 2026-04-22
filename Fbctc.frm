@@ -2705,7 +2705,7 @@ Public Sub Command_Click(Index As Integer)
             Set rs_tk = Nothing
             GoTo KhongInBC
         Case 3:
-            frmMain.Rpt.Formulas(30) = "diachi='" + frmMain.LbCty(2).Caption + ", " + frmMain.LbCty(10).Caption + ", " + frmMain.LbCty(11).Caption + "'"
+            frmMain.Rpt.Formulas(30) = "diachi='" + frmMain.lbCty(2).Caption + ", " + frmMain.lbCty(10).Caption + ", " + frmMain.lbCty(11).Caption + "'"
             If OptKqkd(0).Value Then InKqkd tdau, tcuoi, IIf(ChkDu(5).Value = 1, CboNK(2).ListIndex + 2, 0), nn
             If OptKqkd(1).Value Then InThue tdau, tcuoi
             If OptKqkd(2).Value Then InVAT tdau, tcuoi
@@ -2736,7 +2736,7 @@ Public Sub Command_Click(Index As Integer)
                 GoTo KhongInBC
             End If
         Case 4:
-            frmMain.Rpt.Formulas(30) = "diachi='" + frmMain.LbCty(2).Caption + ", " + frmMain.LbCty(10).Caption + ", " + frmMain.LbCty(11).Caption + "'"
+            frmMain.Rpt.Formulas(30) = "diachi='" + frmMain.lbCty(2).Caption + ", " + frmMain.lbCty(10).Caption + ", " + frmMain.lbCty(11).Caption + "'"
             ' them tai khoan 244
             If SelectSQL("SELECT count(maso) AS F1 from HethongTK where SoHieu LIKE '621*'") <= 0 Then
 
@@ -2749,7 +2749,7 @@ Public Sub Command_Click(Index As Integer)
             End If
             If OptCD(0).Value Then
                 If pVersion <> 3 Then
-                    InCdts tdau, tcuoi, Chk(2).Value, nn
+                    InCdts tdau, tcuoi, chk(2).Value, nn
                 Else
                     InCdts_HCSN tdau, tcuoi, CboNK(1).ListIndex + 1
                 End If
@@ -2770,7 +2770,7 @@ Public Sub Command_Click(Index As Integer)
             End If
 
             'In bang ke
-            If OptVAT(3).Value And Chk(1).Value = 0 Then    ' bang ke ra
+            If OptVAT(3).Value And chk(1).Value = 0 Then    ' bang ke ra
                 '   If Not InVATDauRa(tdau, tcuoi, CInt(CboTL.ItemData(CboTL.ListIndex)), taikhoan) Then GoTo KhongInBC
                 ' If Not InVATDauRa_exel(tdau, tcuoi, CInt(CboTL.ItemData(CboTL.ListIndex)), taikhoan) Then GoTo KhongInBC
                 ' MsgBox " thanh cong"
@@ -2791,11 +2791,11 @@ Public Sub Command_Click(Index As Integer)
                 'End If
             End If
             'In bang ke
-            If OptVAT(3).Value And Chk(1).Value = 1 Then
+            If OptVAT(3).Value And chk(1).Value = 1 Then
                 InVATDauRaMV tcuoi, CInt5(CboTL.ItemData(CboTL.ListIndex)), taikhoan
                 GoTo KhongInBC
             End If
-            If OptVAT(4).Value And Chk(1).Value = 0 Then
+            If OptVAT(4).Value And chk(1).Value = 0 Then
                 '  If Not InVATDauVao2(tdau, tcuoi, CInt(CboTL.ItemData(CboTL.ListIndex)), 1, taikhoan) Then GoTo KhongInBC
                 'bang ke vao ///////////////////////////////////////////////////////
                 s = ChrW(66) & ChrW(7841) & ChrW(110) & ChrW(32) & ChrW(99) & ChrW(243) & ChrW(32) & ChrW(109) & ChrW(7889) & ChrW(110) & ChrW(32) & ChrW(99) & ChrW(104) & ChrW(117) & ChrW(121) & ChrW(7875) & ChrW(110) & ChrW(32) & ChrW(114) & ChrW(97) & ChrW(32) & ChrW(101) & ChrW(120) & ChrW(99) & ChrW(101) & ChrW(108) & ChrW(32) & ChrW(273) & ChrW(7875) & ChrW(32) & ChrW(99) & ChrW(7853) & ChrW(112) & ChrW(32) & ChrW(110) & ChrW(104) & ChrW(7853) & ChrW(116) & ChrW(32) & ChrW(118) & ChrW(224) & ChrW(111) & ChrW(32) & ChrW(109) & ChrW(227) & ChrW(32) & ChrW(118) & ChrW(7841) & ChrW(99) & ChrW(104) & ChrW(63)
@@ -2812,21 +2812,21 @@ Public Sub Command_Click(Index As Integer)
                 'If Not InVATDauVao2(tdau, tcuoi, CInt(CboTL.ItemData(CboTL.ListIndex)), 1, taikhoan) Then GoTo KhongInBC
                 'End If
             End If
-            If OptVAT(4).Value And Chk(1).Value = 1 Then
+            If OptVAT(4).Value And chk(1).Value = 1 Then
                 InVATDauVaoMV tcuoi, CInt(CboTL.ItemData(CboTL.ListIndex)), 1, taikhoan
                 GoTo KhongInBC
             End If
-            If OptVAT(2).Value And Chk(1).Value = 0 Then
+            If OptVAT(2).Value And chk(1).Value = 0 Then
                 If Not InVATDauVao2(tdau, tcuoi, -1, 0, taikhoan) Then GoTo KhongInBC
             End If
-            If OptVAT(2).Value And Chk(1).Value = 1 Then
+            If OptVAT(2).Value And chk(1).Value = 1 Then
                 InVATDauVaoMV tcuoi, -1, 0, taikhoan
                 GoTo KhongInBC
             End If
-            If OptVAT(5).Value And Chk(1).Value = 0 Then
+            If OptVAT(5).Value And chk(1).Value = 0 Then
                 ToKhaiVAT tdau, tcuoi, taikhoan
             End If
-            If OptVAT(5).Value And Chk(1).Value = 1 Then
+            If OptVAT(5).Value And chk(1).Value = 1 Then
                 ToKhaiVAT2 tcuoi, taikhoan
                 GoTo KhongInBC
             End If
@@ -2834,7 +2834,7 @@ Public Sub Command_Click(Index As Integer)
             If OptVAT(7).Value Then BangKeBanRa tdau, tcuoi, taikhoan
             If OptVAT(8).Value Then ToKhaiTTDB tdau, tcuoi, taikhoan
             If OptVAT(9).Value Or OptVAT(10).Value Then
-                InBKTheoTK IIf(OptVAT(9).Value, -1, 1), tdau, tcuoi, txtShTk(5).Text, IIf(Chk(0).Value = 1, txtShTk(6).Text, "")
+                InBKTheoTK IIf(OptVAT(9).Value, -1, 1), tdau, tcuoi, txtShTk(5).Text, IIf(chk(0).Value = 1, txtShTk(6).Text, "")
             End If
         Case 11:
             InLCTT2 tdau, tcuoi
@@ -2943,8 +2943,16 @@ a:
         '   frmMain.Rpt.WindowTitle = OptBC(104).Caption
         On Error GoTo LoiIn
         DoEvents
-        frmMain.Rpt.Action = 1
-        On Error GoTo 0
+
+        If frmMain.typeprint <> 2 Then
+            With frmMain.Rpt
+                '.Destination = 1          'crptToFile
+                '.PrintFileType = 4        'Excel 80
+                '.PrintFileName = "C:\report.xls"
+                .Action = 1
+            End With
+        End If
+
         GoTo KhongInBC
     Case 2:
         Unload Me
@@ -2965,7 +2973,7 @@ KhongInBC:
     HienThongBao Me.Caption, 1
     Me.MousePointer = 0
 
-    
+
 End Sub
 
 Private Sub Command1_Click()
@@ -3648,7 +3656,7 @@ End Function
 Private Function InVATDauVao2(tdau As Integer, tcuoi As Integer, tl As Integer, HD As Integer, TK As ClsTaikhoan) As Boolean
     Dim sql As String, tk2 As New ClsTaikhoan, Fx As Integer
 
-    Fx = IIf(Left(frmMain.LbCty(8).Caption, 2) = "35" Or Left(frmMain.LbCty(3).Caption, 2) = "64", 35, 0)
+    Fx = IIf(Left(frmMain.lbCty(8).Caption, 2) = "35" Or Left(frmMain.lbCty(3).Caption, 2) = "64", 35, 0)
 
     tk2.InitTaikhoanSohieu "33312"
     If tk2.tk_id = GTGTKT_ID Then
@@ -3680,7 +3688,7 @@ Private Function InVATDauVao2(tdau As Integer, tcuoi As Integer, tl As Integer, 
         Case Else
             SetSQL "QNhatky", "SELECT DISTINCTROW KyHieu,SoHD,ChungTu.NgayCT as NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,KhachHang.MST,ChungTu.SoHieu,SoPS,KhachHang.DiaChi,TyLe,HTTT,MauSo,MaCT,HoaDon.MaSo,KCT FROM " + ChungTu2TKHD(10) + " WHERE Loai=-1 AND TyLe=" + CStr(tl) + " AND HD=" + CStr(HD) + " AND " + WThang("ThangCT", tdau, tcuoi) + " AND KCT=0 AND HDBL=0 AND (HoaDon.DC=0 OR HD=1) ORDER BY NgayPH,MaCT"
         End Select
-        frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.LbCty(2).Caption + "'"
+        frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.lbCty(2).Caption + "'"
     Else
         Select Case tl
         Case -3:
@@ -3788,7 +3796,7 @@ Private Function InVATDauVao2(tdau As Integer, tcuoi As Integer, tl As Integer, 
     End If
     RptSetDate NgayCuoiThang(pNamTC, tcuoi), nn
     frmMain.Rpt.Formulas(3) = "ThoiGian='" + ThoiGian(tdau, tcuoi, nn) + "'"
-    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.LbCty(8).Caption + "'"
+    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.lbCty(8).Caption + "'"
     frmMain.Rpt.Formulas(7) = "TLKT = " + CStr(tl)
     InVATDauVao2 = True
     Set tk2 = Nothing
@@ -3843,7 +3851,7 @@ Private Function InVATDauRa(tdau As Integer, tcuoi As Integer, tl As Integer, TK
             Case Else
                 SetSQL "QNhatky", "SELECT DISTINCTROW KyHieu,SoHD,ChungTu.NgayCT as NgayPH,MatHang,SoLuong,ThanhTien,KhachHang.Ten,KhachHang.MST,ChungTu.SoHieu,IIF(TK_ID=" + CStr(GTGTPN_ID) + ",SoPS,-SoPS) AS Thue,ChungTu.MauSoHD as DiaChi,TyLe,HTTT,MauSo,MaCT,KCT FROM " + ChungTu2TKHD(2) + " WHERE HoaDon.Loai=1 AND TyLe=" + CStr(tl) + " AND " + WThang("ThangCT", tdau, tcuoi) + " AND KCT=0 AND (HoaDon.DC=0 OR HD=1) ORDER BY NgayPH"
         End Select
-        frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.LbCty(2).Caption + "'"
+        frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.lbCty(2).Caption + "'"
     Else
         Select Case tl
             Case -3:
@@ -3872,7 +3880,7 @@ Private Function InVATDauRa(tdau As Integer, tcuoi As Integer, tl As Integer, TK
     End If
     RptSetDate NgayCuoiThang(pNamTC, tcuoi), nn
     frmMain.Rpt.Formulas(3) = "ThoiGian='" + ThoiGian(tdau, tcuoi, nn) + "'"
-    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.LbCty(8).Caption + "'"
+    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.lbCty(8).Caption + "'"
     frmMain.Rpt.Formulas(8) = "TLKT = " + CStr(tl)
     InVATDauRa = True
 End Function
@@ -6637,10 +6645,10 @@ End Sub
 
 Private Sub InQTThue(tdau As Integer, tcuoi As Integer)
     InThue tdau, tcuoi
-    frmMain.Rpt.Formulas(30) = "DiaChi = '" + frmMain.LbCty(2).Caption + "'"
-    frmMain.Rpt.Formulas(31) = "MST = '" + frmMain.LbCty(8).Caption + "'"
-    frmMain.Rpt.Formulas(32) = "Tel='" + frmMain.LbCty(3).Caption + "'"
-    frmMain.Rpt.Formulas(33) = "Fax='" + frmMain.LbCty(4).Caption + "'"
+    frmMain.Rpt.Formulas(30) = "DiaChi = '" + frmMain.lbCty(2).Caption + "'"
+    frmMain.Rpt.Formulas(31) = "MST = '" + frmMain.lbCty(8).Caption + "'"
+    frmMain.Rpt.Formulas(32) = "Tel='" + frmMain.lbCty(3).Caption + "'"
+    frmMain.Rpt.Formulas(33) = "Fax='" + frmMain.lbCty(4).Caption + "'"
     frmMain.Rpt.ReportFileName = "XTHUE.RPT"
     RptSetDate NgayCuoiThang(pNamTC, 12), nn
     
@@ -6673,11 +6681,11 @@ Private Sub InQTTTN(tdau As Integer, tcuoi As Integer)
     On Error GoTo 0
     
     xlsheet.Cells(5, 1) = xlsheet.Cells(5, 1) + ThoiGian(tdau, tcuoi, nn)
-    xlsheet.Cells(7, 1) = xlsheet.Cells(7, 1) + frmMain.LbCty(8).Caption
+    xlsheet.Cells(7, 1) = xlsheet.Cells(7, 1) + frmMain.lbCty(8).Caption
     xlsheet.Cells(8, 1) = xlsheet.Cells(8, 1) + pTenCty
-    xlsheet.Cells(9, 1) = xlsheet.Cells(9, 1) + frmMain.LbCty(2).Caption
-    xlsheet.Cells(10, 1) = xlsheet.Cells(10, 1) + frmMain.LbCty(10).Caption + "                 " + ABCtoVNI("TØnh, thµnh phè: ") + frmMain.LbCty(11).Caption
-    xlsheet.Cells(11, 1) = xlsheet.Cells(11, 1) + frmMain.LbCty(3).Caption + "                 Fax: " + frmMain.LbCty(4).Caption + "                 Email: " + frmMain.LbCty(9).Caption
+    xlsheet.Cells(9, 1) = xlsheet.Cells(9, 1) + frmMain.lbCty(2).Caption
+    xlsheet.Cells(10, 1) = xlsheet.Cells(10, 1) + frmMain.lbCty(10).Caption + "                 " + ABCtoVNI("TØnh, thµnh phè: ") + frmMain.lbCty(11).Caption
+    xlsheet.Cells(11, 1) = xlsheet.Cells(11, 1) + frmMain.lbCty(3).Caption + "                 Fax: " + frmMain.lbCty(4).Caption + "                 Email: " + frmMain.lbCty(9).Caption
     
     For i = 15 To 120
         j = 7
@@ -6716,10 +6724,10 @@ Private Sub BKNopThue(tdau As Integer, tcuoi As Integer)
     
     frmMain.Rpt.ReportFileName = "NOPTHUE.RPT"
     RptSetDate NgayCuoiThang(pNamTC, 12)
-    frmMain.Rpt.Formulas(3) = "DiaChi = '" + frmMain.LbCty(2).Caption + "'"
-    frmMain.Rpt.Formulas(4) = "MST = '" + frmMain.LbCty(8).Caption + "'"
-    frmMain.Rpt.Formulas(5) = "Tel='" + frmMain.LbCty(3).Caption + "'"
-    frmMain.Rpt.Formulas(6) = "Fax='" + frmMain.LbCty(4).Caption + "'"
+    frmMain.Rpt.Formulas(3) = "DiaChi = '" + frmMain.lbCty(2).Caption + "'"
+    frmMain.Rpt.Formulas(4) = "MST = '" + frmMain.lbCty(8).Caption + "'"
+    frmMain.Rpt.Formulas(5) = "Tel='" + frmMain.lbCty(3).Caption + "'"
+    frmMain.Rpt.Formulas(6) = "Fax='" + frmMain.lbCty(4).Caption + "'"
     
     frmMain.Rpt.Formulas(7) = "ThoiGian='" + ThoiGian(tdau, tcuoi, nn) + "'"
 End Sub
@@ -6729,8 +6737,8 @@ Private Sub QTDauVao(tdau As Integer, tcuoi As Integer)
     
     'frmMain.Rpt.Formulas(3) = "thang = " + CStr(1)
     'frmMain.Rpt.Formulas(4) = "ThangCuoi = " + CStr(tcuoi)
-    frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.LbCty(2).Caption + "'"
-    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.LbCty(8).Caption + "'"
+    frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.lbCty(2).Caption + "'"
+    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.lbCty(8).Caption + "'"
     frmMain.Rpt.ReportFileName = "QTV.RPT"
     d = SelectSQL("SELECT SUM(ThanhTien) AS F1,SUM(SoPS) AS F2 FROM " + ChungTu2TKHD(0) + " WHERE HoaDon.Loai=-1 AND TyLe=3 AND KCT=0 AND " + WThang("ThangCT", tdau, tcuoi), v)
     frmMain.Rpt.Formulas(7) = "D3=" + DoiDau(d)
@@ -6753,8 +6761,8 @@ Private Sub QTDauRa()
     
     'frmMain.Rpt.Formulas(3) = "thang = " + CStr(1)
     'frmMain.Rpt.Formulas(4) = "ThangCuoi = " + CStr(tcuoi)
-    frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.LbCty(2).Caption + "'"
-    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.LbCty(8).Caption + "'"
+    frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.lbCty(2).Caption + "'"
+    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.lbCty(8).Caption + "'"
     frmMain.Rpt.ReportFileName = "QTR.RPT"
     d = SelectSQL("SELECT SUM(ThanhTien) AS F1 FROM " + ChungTu2TKHD(1) + " WHERE SoPS=0 AND ThangCT<7 AND HoaDon.Loai=1 AND KCT=1")
     frmMain.Rpt.Formulas(7) = "Dk=" + DoiDau(d)
@@ -6806,8 +6814,8 @@ Private Function InThueTTDB(tdau As Integer, tcuoi As Integer, tl As Integer, TK
     frmMain.Rpt.ReportFileName = "BANGKER2.RPT"
     RptSetDate NgayCuoiThang(pNamTC, tcuoi), nn
     frmMain.Rpt.Formulas(3) = "ThoiGian='" + ThoiGian(tdau, tcuoi, nn) + "'"
-    frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.LbCty(2).Caption + "'"
-    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.LbCty(8).Caption + "'"
+    frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.lbCty(2).Caption + "'"
+    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.lbCty(8).Caption + "'"
     frmMain.Rpt.Formulas(8) = "TLKT = " + CStr(tl)
     InThueTTDB = True
 End Function
@@ -6828,8 +6836,8 @@ Private Sub BangKeBanRa(tdau As Integer, tcuoi As Integer, TK As ClsTaikhoan)
     frmMain.Rpt.ReportFileName = "BANGKER3.RPT"
     RptSetDate NgayCuoiThang(pNamTC, tcuoi), nn
     frmMain.Rpt.Formulas(3) = "ThoiGian='" + ThoiGian(tdau, tcuoi, nn) + "'"
-    frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.LbCty(2).Caption + "'"
-    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.LbCty(8).Caption + "'"
+    frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.lbCty(2).Caption + "'"
+    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.lbCty(8).Caption + "'"
     GauGe.Value = 1
 End Sub
 
@@ -6854,8 +6862,8 @@ Private Sub ToKhaiTTDB(tdau As Integer, tcuoi As Integer, TK As ClsTaikhoan)
     
     RptSetDate NgayCuoiThang(pNamTC, tcuoi), nn
     frmMain.Rpt.Formulas(3) = "ThoiGian='" + ThoiGian(tdau, tcuoi, nn) + "'"
-    frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.LbCty(2).Caption + "'"
-    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.LbCty(8).Caption + "'"
+    frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.lbCty(2).Caption + "'"
+    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.lbCty(8).Caption + "'"
     st = CStr(CThangDB(ThangTruoc(tdau)))
     frmMain.Rpt.Formulas(7) = "KT = " + DoiDau(SelectSQL("SELECT Sum(DuCo_" + st + "-DuNo_" + st + ") AS F1 FROM HethongTK WHERE TKCon=0 AND TK_ID=" + CStr(TTDB_ID) + " AND SoHieu LIKE '" + TK.sohieu + "*'"))
     kn = SelectSQL("SELECT Sum(DuCo_" + CStr(CThangDB(tcuoi)) + "-DuNo_" + CStr(CThangDB(tcuoi)) + ") AS F1 FROM HethongTK WHERE TKCon=0 AND TK_ID=" + CStr(TTDB_ID) + " AND SoHieu LIKE '" + TK.sohieu + "*'")
@@ -7483,7 +7491,7 @@ Private Sub ToKhaiVAT(tdau As Integer, tcuoi As Integer, taikhoan As ClsTaikhoan
     Dim KT As Double, shct As String, Fx As Integer
     Dim dkn As Double, dkc As Double, dknt As Double, TK As New ClsTaikhoan
 
-    Fx = IIf(Left(frmMain.LbCty(8).Caption, 2) = "35" Or Left(frmMain.LbCty(3).Caption, 2) = "64", 35, 0)
+    Fx = IIf(Left(frmMain.lbCty(8).Caption, 2) = "35" Or Left(frmMain.lbCty(3).Caption, 2) = "64", 35, 0)
 
     TK.InitTaikhoanSohieu "33312"
     If TK.tk_id = GTGTKT_ID Then
@@ -7496,19 +7504,19 @@ Private Sub ToKhaiVAT(tdau As Integer, tcuoi As Integer, taikhoan As ClsTaikhoan
     frmMain.Rpt.Formulas(3) = "Thang = " + CStr(tdau)
     frmMain.Rpt.Formulas(4) = "ThangCuoi = " + CStr(tcuoi)
     If taikhoan.MaSo = 0 Then
-        frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.LbCty(2).Caption + "'"
+        frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.lbCty(2).Caption + "'"
     Else
         frmMain.Rpt.Formulas(1) = "TenCN = '" + taikhoan.Ten + "'"
         frmMain.Rpt.Formulas(5) = "DiaChi = '" + taikhoan.GhiChu + "'"
     End If
-    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.LbCty(8).Caption + "'"
+    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.lbCty(8).Caption + "'"
     frmMain.Rpt.Formulas(7) = "SoHieuTK = '" + vatr + "'"
 
-    frmMain.Rpt.Formulas(30) = "Quan = '" + frmMain.LbCty(10).Caption + "'"
-    frmMain.Rpt.Formulas(31) = "TP = '" + frmMain.LbCty(11).Caption + "'"
-    frmMain.Rpt.Formulas(32) = "Tel = '" + frmMain.LbCty(3).Caption + "'"
-    frmMain.Rpt.Formulas(33) = "Fax = '" + frmMain.LbCty(4).Caption + "'"
-    frmMain.Rpt.Formulas(34) = "Email = '" + frmMain.LbCty(9).Caption + "'"
+    frmMain.Rpt.Formulas(30) = "Quan = '" + frmMain.lbCty(10).Caption + "'"
+    frmMain.Rpt.Formulas(31) = "TP = '" + frmMain.lbCty(11).Caption + "'"
+    frmMain.Rpt.Formulas(32) = "Tel = '" + frmMain.lbCty(3).Caption + "'"
+    frmMain.Rpt.Formulas(33) = "Fax = '" + frmMain.lbCty(4).Caption + "'"
+    frmMain.Rpt.Formulas(34) = "Email = '" + frmMain.lbCty(9).Caption + "'"
 
     shct = taikhoan.SHChiTiet()
     vr = SelectSQL("SELECT SUM(ThanhTien) AS F1 FROM " + ChungTu2TKHD(1) + " WHERE HoaDon.Loai=1 AND " + WThang("ThangCT", tdau, tcuoi) + " AND KCT=1 AND DC=0 AND RIGHT(HethongTK.SoHieu," + CStr(Len(shct)) + ") = '" + shct + "'")
@@ -7700,28 +7708,28 @@ Private Sub ToKhaiVAT(tdau As Integer, tcuoi As Integer, taikhoan As ClsTaikhoan
 
     ExecuteSQL5 QueryUpdate
 
-    Dim result As String
+    Dim Result As String
     If tdau = tcuoi Then
-        result = "T" & tdau
+        Result = "T" & tdau
     End If
 
     If tdau = 1 And tcuoi = 3 Then
-        result = "Q1"
+        Result = "Q1"
     End If
     If tdau = 4 And tcuoi = 6 Then
-        result = "Q2"
+        Result = "Q2"
     End If
     If tdau = 7 And tcuoi = 9 Then
-        result = "Q3"
+        Result = "Q3"
     End If
     If tdau = 10 And tcuoi = 12 Then
-        result = "Q4"
+        Result = "Q4"
     End If
     Dim URL As String
 
     ' T?o URL
     URL = "http://localhost:8081/home/index?path=" & Replace(pDataPath, "\", "/")
-    URL = URL & "&ky=" & result
+    URL = URL & "&ky=" & Result
     ' M? URL trong trình duy?t
     Shell "explorer.exe """ & URL & """", vbNormalFocus
 
@@ -8010,8 +8018,8 @@ Private Sub InBKTheoTK(loai As Integer, tdau As Integer, tcuoi As Integer, shtk 
     RptSetDate NgayCuoiThang(pNamTC, tcuoi)
     frmMain.Rpt.Formulas(3) = "thang = " + CStr(tdau)
     frmMain.Rpt.Formulas(4) = "ThangCuoi = " + CStr(tcuoi)
-    frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.LbCty(2).Caption + "'"
-    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.LbCty(8).Caption + "'"
+    frmMain.Rpt.Formulas(5) = "DiaChi = '" + frmMain.lbCty(2).Caption + "'"
+    frmMain.Rpt.Formulas(6) = "MSThue = '" + frmMain.lbCty(8).Caption + "'"
     frmMain.Rpt.Formulas(8) = "TK = '" + IIf(Len(shtk) > 0, "Tµi kho¶n: " + shtk, "") + IIf(Len(shdu) > 0, " - §èi øng: " + shdu, "") + "'"
 End Sub
 
@@ -8998,7 +9006,7 @@ Private Function InVATDauvao_exel(tdau As Integer, tcuoi As Integer, tl As Integ
 
     Dim tk2 As New ClsTaikhoan, Fx As Integer
     
-    Fx = IIf(Left(frmMain.LbCty(8).Caption, 2) = "35" Or Left(frmMain.LbCty(3).Caption, 2) = "64", 35, 0)
+    Fx = IIf(Left(frmMain.lbCty(8).Caption, 2) = "35" Or Left(frmMain.lbCty(3).Caption, 2) = "64", 35, 0)
     
     tk2.InitTaikhoanSohieu "33312"
     If tk2.tk_id = GTGTKT_ID Then

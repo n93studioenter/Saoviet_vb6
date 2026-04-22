@@ -992,7 +992,7 @@ Public Function CurrentDrive() As String
 End Function
 
 Public Function ABCtoVNI(st As String) As String
-    Dim i As Integer, L As Integer, c As Integer, C1 As Integer, c2 As Integer
+    Dim i As Integer, L As Integer, c As Integer, c1 As Integer, c2 As Integer
     
     If FontFlag <> 2 Then
         ABCtoVNI = st
@@ -1004,175 +1004,175 @@ Public Function ABCtoVNI(st As String) As String
         c = Asc(Mid(st, i, 1))
         c2 = 0
         Select Case c
-            Case 181:   C1 = 97
+            Case 181:   c1 = 97
                                    c2 = 248
-            Case 184:   C1 = 97
+            Case 184:   c1 = 97
                                    c2 = 249
-            Case 182:   C1 = 97
+            Case 182:   c1 = 97
                                    c2 = 251
-            Case 183:   C1 = 97
+            Case 183:   c1 = 97
                                    c2 = 245
-            Case 185:   C1 = 97
+            Case 185:   c1 = 97
                                    c2 = 239
-            Case 169:   C1 = 97
+            Case 169:   c1 = 97
                                    c2 = 226
-            Case 199:   C1 = 97
+            Case 199:   c1 = 97
                                    c2 = 224
-            Case 202:   C1 = 97
+            Case 202:   c1 = 97
                                    c2 = 225
-            Case 200:   C1 = 97
+            Case 200:   c1 = 97
                                    c2 = 229
-            Case 201:   C1 = 97
+            Case 201:   c1 = 97
                                    c2 = 227
-            Case 203:   C1 = 97
+            Case 203:   c1 = 97
                                    c2 = 228
-            Case 174:   C1 = 241
-            Case 204:   C1 = 101
+            Case 174:   c1 = 241
+            Case 204:   c1 = 101
                                    c2 = 248
-            Case 208:   C1 = 101
+            Case 208:   c1 = 101
                                    c2 = 249
-            Case 206:   C1 = 101
+            Case 206:   c1 = 101
                                    c2 = 251
-            Case 207:   C1 = 101
+            Case 207:   c1 = 101
                                    c2 = 245
-            Case 209:   C1 = 101
+            Case 209:   c1 = 101
                                    c2 = 239
-            Case 170:   C1 = 101
+            Case 170:   c1 = 101
                                    c2 = 226
-            Case 210:   C1 = 101
+            Case 210:   c1 = 101
                                    c2 = 224
-            Case 213:   C1 = 101
+            Case 213:   c1 = 101
                                    c2 = 225
-            Case 211:   C1 = 101
+            Case 211:   c1 = 101
                                    c2 = 229
-            Case 212:   C1 = 101
+            Case 212:   c1 = 101
                                    c2 = 227
-            Case 214:   C1 = 101
+            Case 214:   c1 = 101
                                    c2 = 228
-            Case 215:   C1 = 236
-            Case 221:   C1 = 237
-            Case 216:   C1 = 230
-            Case 220:   C1 = 243
-            Case 222:   C1 = 242
-            Case 223:   C1 = 111
+            Case 215:   c1 = 236
+            Case 221:   c1 = 237
+            Case 216:   c1 = 230
+            Case 220:   c1 = 243
+            Case 222:   c1 = 242
+            Case 223:   c1 = 111
                                    c2 = 248
-            Case 227:   C1 = 111
+            Case 227:   c1 = 111
                                    c2 = 249
-            Case 225:   C1 = 111
+            Case 225:   c1 = 111
                                    c2 = 251
-            Case 226:   C1 = 111
+            Case 226:   c1 = 111
                                    c2 = 245
-            Case 228:   C1 = 111
+            Case 228:   c1 = 111
                                    c2 = 239
-            Case 171:   C1 = 111
+            Case 171:   c1 = 111
                                    c2 = 226
-            Case 229:   C1 = 111
+            Case 229:   c1 = 111
                                    c2 = 224
-            Case 232:   C1 = 111
+            Case 232:   c1 = 111
                                    c2 = 225
-            Case 230:   C1 = 111
+            Case 230:   c1 = 111
                                    c2 = 229
-            Case 231:   C1 = 111
+            Case 231:   c1 = 111
                                    c2 = 227
-            Case 233:   C1 = 111
+            Case 233:   c1 = 111
                                    c2 = 228
-            Case 172:   C1 = 244
-            Case 234:   C1 = 244
+            Case 172:   c1 = 244
+            Case 234:   c1 = 244
                                    c2 = 248
-            Case 237:   C1 = 244
+            Case 237:   c1 = 244
                                    c2 = 249
-            Case 235:   C1 = 244
+            Case 235:   c1 = 244
                                    c2 = 251
-            Case 236:   C1 = 244
+            Case 236:   c1 = 244
                                    c2 = 245
-            Case 238:   C1 = 244
+            Case 238:   c1 = 244
                                    c2 = 239
-            Case 239:   C1 = 117
+            Case 239:   c1 = 117
                                    c2 = 248
-            Case 243:   C1 = 117
+            Case 243:   c1 = 117
                                    c2 = 249
-            Case 241:   C1 = 117
+            Case 241:   c1 = 117
                                    c2 = 251
-            Case 242:   C1 = 117
+            Case 242:   c1 = 117
                                    c2 = 245
-            Case 244:   C1 = 117
+            Case 244:   c1 = 117
                                    c2 = 239
-            Case 173:   C1 = 249
+            Case 173:   c1 = 249
                                     c2 = 246
-            Case 245:   C1 = 246
+            Case 245:   c1 = 246
                                    c2 = 248
-            Case 248:   C1 = 246
+            Case 248:   c1 = 246
                                    c2 = 249
-            Case 246:   C1 = 246
+            Case 246:   c1 = 246
                                    c2 = 251
-            Case 247:   C1 = 246
+            Case 247:   c1 = 246
                                    c2 = 245
-            Case 249:   C1 = 246
+            Case 249:   c1 = 246
                                    c2 = 239
-            Case 250:   C1 = 121
+            Case 250:   c1 = 121
                                    c2 = 248
-            Case 253:   C1 = 121
+            Case 253:   c1 = 121
                                    c2 = 249
-            Case 251:   C1 = 121
+            Case 251:   c1 = 121
                                    c2 = 251
-            Case 252:   C1 = 121
+            Case 252:   c1 = 121
                                    c2 = 245
-            Case 254:   C1 = 238
-            Case 168:   C1 = 97
+            Case 254:   c1 = 238
+            Case 168:   c1 = 97
                                    c2 = 234
-            Case 187:   C1 = 97
+            Case 187:   c1 = 97
                                    c2 = 232
-            Case 190:   C1 = 97
+            Case 190:   c1 = 97
                                    c2 = 233
-            Case 188:   C1 = 97
+            Case 188:   c1 = 97
                                    c2 = 250
-            Case 189:   C1 = 97
+            Case 189:   c1 = 97
                                    c2 = 252
-            Case 198:   C1 = 97
+            Case 198:   c1 = 97
                                    c2 = 235
-            Case 162:   C1 = 65
+            Case 162:   c1 = 65
                                    c2 = 194
-            Case 161:   C1 = 65
+            Case 161:   c1 = 65
                                     c2 = 202
-            Case 167:   C1 = 209
-            Case 163:   C1 = 69
+            Case 167:   c1 = 209
+            Case 163:   c1 = 69
                                     c2 = 194
-            Case 164:   C1 = 79
+            Case 164:   c1 = 79
                                     c2 = 194
-            Case 165:   C1 = 212
-            Case 166:   C1 = 214
+            Case 165:   c1 = 212
+            Case 166:   c1 = 214
             Case Else
-                                    C1 = c
+                                    c1 = c
         End Select
-        ABCtoVNI = ABCtoVNI + Chr(C1) + IIf(c2 > 0, Chr(c2), "")
+        ABCtoVNI = ABCtoVNI + Chr(c1) + IIf(c2 > 0, Chr(c2), "")
     Next
 End Function
 
 Public Function ABCtoKDau(st As String) As String
-    Dim i As Integer, L As Integer, c As Integer, C1 As Integer
+    Dim i As Integer, L As Integer, c As Integer, c1 As Integer
         
     L = Len(st)
     For i = 1 To L
         c = Asc(Mid(st, i, 1))
         Select Case c
-            Case 181, 184, 182, 183, 185, 169, 199, 202, 200, 201, 203: C1 = 97
-            Case 204, 208, 206, 207, 209, 170, 210, 213, 211, 212, 214: C1 = 101
-            Case 215, 221, 216, 221, 222:  C1 = 105
-            Case 223, 227, 225, 226, 228, 171, 229, 232, 230, 231, 233, 172, 234, 235, 236, 237, 238: C1 = 111
-            Case 239, 243, 241, 242, 244, 173, 245, 246, 247, 248, 249: C1 = 117
-            Case 174:   C1 = 100
-            Case 250, 253, 251, 252: C1 = 121
-            Case 254:   C1 = 238
-            Case 168, 187, 190, 188, 189, 198: C1 = 97
-            Case 162, 161:  C1 = 65
-            Case 167:   C1 = 68
-            Case 163:   C1 = 69
-            Case 164, 165:  C1 = 79
-            Case 166:   C1 = 85
+            Case 181, 184, 182, 183, 185, 169, 199, 202, 200, 201, 203: c1 = 97
+            Case 204, 208, 206, 207, 209, 170, 210, 213, 211, 212, 214: c1 = 101
+            Case 215, 221, 216, 221, 222:  c1 = 105
+            Case 223, 227, 225, 226, 228, 171, 229, 232, 230, 231, 233, 172, 234, 235, 236, 237, 238: c1 = 111
+            Case 239, 243, 241, 242, 244, 173, 245, 246, 247, 248, 249: c1 = 117
+            Case 174:   c1 = 100
+            Case 250, 253, 251, 252: c1 = 121
+            Case 254:   c1 = 238
+            Case 168, 187, 190, 188, 189, 198: c1 = 97
+            Case 162, 161:  c1 = 65
+            Case 167:   c1 = 68
+            Case 163:   c1 = 69
+            Case 164, 165:  c1 = 79
+            Case 166:   c1 = 85
             Case Else
-                C1 = c
+                c1 = c
         End Select
-        ABCtoKDau = ABCtoKDau + Chr(C1)
+        ABCtoKDau = ABCtoKDau + Chr(c1)
     Next
 End Function
 
@@ -1188,7 +1188,7 @@ Public Function FontDaCo(st As String) As Boolean
 End Function
 
 Public Function VNItoABC(st As String, Optional ktra As Integer = 0) As String
-    Dim i As Integer, L As Integer, C1 As Integer, c2 As Integer, c As Integer
+    Dim i As Integer, L As Integer, c1 As Integer, c2 As Integer, c As Integer
     
     If FontFlag = 2 And ktra = 0 Then
         VNItoABC = st
@@ -1198,11 +1198,11 @@ Public Function VNItoABC(st As String, Optional ktra As Integer = 0) As String
     L = Len(st)
     i = 1
         Do While i <= L
-        C1 = CInt5(Asc(Mid(st, i, 1)))
+        c1 = CInt5(Asc(Mid(st, i, 1)))
         c = 0
         If i = L Then GoTo a
         c2 = CInt5(Asc(Mid(st, i + 1, 1)))
-        If C1 = 97 Then
+        If c1 = 97 Then
             Select Case c2
                 Case 248:   c = 181
                 Case 249:   c = 184
@@ -1223,7 +1223,7 @@ Public Function VNItoABC(st As String, Optional ktra As Integer = 0) As String
                 Case 235:   c = 198
             End Select
         End If
-        If C1 = 65 Then
+        If c1 = 65 Then
             Select Case c2
                 Case 216:   c = 181
                 Case 217:   c = 184
@@ -1245,7 +1245,7 @@ Public Function VNItoABC(st As String, Optional ktra As Integer = 0) As String
                 Case 202:   c = 161
             End Select
         End If
-        If C1 = 69 Then
+        If c1 = 69 Then
             Select Case c2
                 Case 216:   c = 204
                 Case 217:   c = 208
@@ -1260,7 +1260,7 @@ Public Function VNItoABC(st As String, Optional ktra As Integer = 0) As String
                 Case 196:   c = 214
             End Select
         End If
-        If C1 = 79 Then
+        If c1 = 79 Then
             Select Case c2
                 Case 216:   c = 223
                 Case 217:   c = 227
@@ -1275,7 +1275,7 @@ Public Function VNItoABC(st As String, Optional ktra As Integer = 0) As String
                 Case 196:   c = 233
             End Select
         End If
-        If C1 = 212 Then
+        If c1 = 212 Then
             Select Case c2
                 Case 216:   c = 234
                 Case 217:   c = 237
@@ -1284,7 +1284,7 @@ Public Function VNItoABC(st As String, Optional ktra As Integer = 0) As String
                 Case 207:   c = 238
             End Select
         End If
-        If C1 = 85 Then
+        If c1 = 85 Then
             Select Case c2
                 Case 216:   c = 239
                 Case 217:   c = 243
@@ -1293,7 +1293,7 @@ Public Function VNItoABC(st As String, Optional ktra As Integer = 0) As String
                 Case 207:   c = 244
             End Select
         End If
-        If C1 = 214 Then
+        If c1 = 214 Then
             Select Case c2
                 Case 216:   c = 245
                 Case 217:   c = 248
@@ -1302,7 +1302,7 @@ Public Function VNItoABC(st As String, Optional ktra As Integer = 0) As String
                 Case 207:   c = 249
             End Select
         End If
-        If C1 = 89 Then
+        If c1 = 89 Then
             Select Case c2
                 Case 216:   c = 250
                 Case 217:   c = 253
@@ -1311,7 +1311,7 @@ Public Function VNItoABC(st As String, Optional ktra As Integer = 0) As String
                 Case 206:   c = 254
             End Select
         End If
-        If C1 = 101 Then
+        If c1 = 101 Then
             Select Case c2
                 Case 248:   c = 204
                 Case 249:   c = 208
@@ -1326,7 +1326,7 @@ Public Function VNItoABC(st As String, Optional ktra As Integer = 0) As String
                 Case 228:   c = 214
             End Select
         End If
-        If C1 = 111 Then
+        If c1 = 111 Then
             Select Case c2
                 Case 248:   c = 223
                 Case 249:   c = 227
@@ -1341,7 +1341,7 @@ Public Function VNItoABC(st As String, Optional ktra As Integer = 0) As String
                 Case 228:   c = 233
             End Select
         End If
-        If C1 = 244 Then
+        If c1 = 244 Then
             Select Case c2
                 Case 248:   c = 234
                 Case 249:   c = 237
@@ -1350,7 +1350,7 @@ Public Function VNItoABC(st As String, Optional ktra As Integer = 0) As String
                 Case 239:   c = 238
             End Select
         End If
-        If C1 = 117 Then
+        If c1 = 117 Then
             Select Case c2
                 Case 248:   c = 239
                 Case 249:   c = 243
@@ -1359,8 +1359,8 @@ Public Function VNItoABC(st As String, Optional ktra As Integer = 0) As String
                 Case 239:   c = 244
             End Select
         End If
-        If C1 = 249 And c2 = 246 Then c = 173
-        If C1 = 246 Then
+        If c1 = 249 And c2 = 246 Then c = 173
+        If c1 = 246 Then
             Select Case c2
                 Case 248:   c = 245
                 Case 249:   c = 248
@@ -1369,7 +1369,7 @@ Public Function VNItoABC(st As String, Optional ktra As Integer = 0) As String
                 Case 239:   c = 249
             End Select
         End If
-        If C1 = 121 Then
+        If c1 = 121 Then
             Select Case c2
                 Case 248:   c = 250
                 Case 249:   c = 253
@@ -1382,7 +1382,7 @@ Public Function VNItoABC(st As String, Optional ktra As Integer = 0) As String
             GoTo KT
         End If
 a:
-        Select Case C1
+        Select Case c1
             Case 241:   c = 174
             Case 236, 204:  c = 215
             Case 237, 205:  c = 221
@@ -1402,7 +1402,7 @@ a:
         End If
         If c = 0 Then
             i = i + 1
-            c = C1
+            c = c1
         End If
 KT:
         VNItoABC = VNItoABC + Chr(c)
@@ -1452,190 +1452,190 @@ Public Sub ChuyenDoiFont(ABC2VNI As Boolean)
 End Sub
 
 Public Function ABCtoUNICODE(st As String) As String
-    Dim i As Integer, L As Integer, c As Integer, C1 As Integer
+    Dim i As Integer, L As Integer, c As Integer, c1 As Integer
     
     L = Len(st)
     For i = 1 To L
         c = Asc(Mid(st, i, 1))
-        C1 = c
+        c1 = c
         Select Case c
-            Case 181:   C1 = 224
-            Case 184:   C1 = 225
-            Case 182:   C1 = 7843
-            Case 183:   C1 = 227
-            Case 185:   C1 = 7841
-            Case 162:   C1 = 194
-            Case 169:   C1 = 226
-            Case 199:   C1 = 7847
-            Case 202:   C1 = 7845
-            Case 200:   C1 = 7849
-            Case 201:   C1 = 7851
-            Case 203:   C1 = 7853
-            Case 161:   C1 = 258
-            Case 168:   C1 = 259
-            Case 187:   C1 = 7857
-            Case 190:   C1 = 7855
-            Case 188:   C1 = 7859
-            Case 189:   C1 = 7861
-            Case 198:   C1 = 7863
-            Case 167:   C1 = 272
-            Case 174:   C1 = 273
-            Case 204:   C1 = 232
-            Case 208:   C1 = 233
-            Case 206:   C1 = 7867
-            Case 207:   C1 = 7869
-            Case 209:   C1 = 7865
-            Case 163:   C1 = 202
-            Case 170:   C1 = 234
-            Case 210:   C1 = 7873
-            Case 213:   C1 = 7871
-            Case 211:   C1 = 7875
-            Case 212:   C1 = 7877
-            Case 214:   C1 = 7879
-            Case 215:   C1 = 236
-            Case 221:   C1 = 237
-            Case 216:   C1 = 7881
-            Case 220:   C1 = 297
-            Case 222:   C1 = 7883
-            Case 223:   C1 = 242
-            Case 227:   C1 = 243
-            Case 225:   C1 = 7887
-            Case 226:   C1 = 245
-            Case 228:   C1 = 7885
-            Case 164:   C1 = 212
-            Case 171:   C1 = 244
-            Case 229:   C1 = 7891
-            Case 232:    C1 = 7889
-            Case 230:   C1 = 7893
-            Case 231:   C1 = 7895
-            Case 233:   C1 = 7897
-            Case 165:   C1 = 416
-            Case 172:   C1 = 417
-            Case 234:   C1 = 7901
-            Case 237:   C1 = 7899
-            Case 235:   C1 = 7903
-            Case 236:   C1 = 7905
-            Case 238:   C1 = 7907
-            Case 239:   C1 = 249
-            Case 243:   C1 = 250
-            Case 241:   C1 = 7911
-            Case 242:   C1 = 361
-            Case 244:   C1 = 7909
-            Case 166:   C1 = 431
-            Case 173:   C1 = 432
-            Case 245:   C1 = 7915
-            Case 248:   C1 = 7913
-            Case 246:   C1 = 7917
-            Case 247:   C1 = 7919
-            Case 249:   C1 = 7921
-            Case 250:   C1 = 7923
-            Case 251:   C1 = 7927
-            Case 252:   C1 = 7929
-            Case 254:   C1 = 7925
+            Case 181:   c1 = 224
+            Case 184:   c1 = 225
+            Case 182:   c1 = 7843
+            Case 183:   c1 = 227
+            Case 185:   c1 = 7841
+            Case 162:   c1 = 194
+            Case 169:   c1 = 226
+            Case 199:   c1 = 7847
+            Case 202:   c1 = 7845
+            Case 200:   c1 = 7849
+            Case 201:   c1 = 7851
+            Case 203:   c1 = 7853
+            Case 161:   c1 = 258
+            Case 168:   c1 = 259
+            Case 187:   c1 = 7857
+            Case 190:   c1 = 7855
+            Case 188:   c1 = 7859
+            Case 189:   c1 = 7861
+            Case 198:   c1 = 7863
+            Case 167:   c1 = 272
+            Case 174:   c1 = 273
+            Case 204:   c1 = 232
+            Case 208:   c1 = 233
+            Case 206:   c1 = 7867
+            Case 207:   c1 = 7869
+            Case 209:   c1 = 7865
+            Case 163:   c1 = 202
+            Case 170:   c1 = 234
+            Case 210:   c1 = 7873
+            Case 213:   c1 = 7871
+            Case 211:   c1 = 7875
+            Case 212:   c1 = 7877
+            Case 214:   c1 = 7879
+            Case 215:   c1 = 236
+            Case 221:   c1 = 237
+            Case 216:   c1 = 7881
+            Case 220:   c1 = 297
+            Case 222:   c1 = 7883
+            Case 223:   c1 = 242
+            Case 227:   c1 = 243
+            Case 225:   c1 = 7887
+            Case 226:   c1 = 245
+            Case 228:   c1 = 7885
+            Case 164:   c1 = 212
+            Case 171:   c1 = 244
+            Case 229:   c1 = 7891
+            Case 232:    c1 = 7889
+            Case 230:   c1 = 7893
+            Case 231:   c1 = 7895
+            Case 233:   c1 = 7897
+            Case 165:   c1 = 416
+            Case 172:   c1 = 417
+            Case 234:   c1 = 7901
+            Case 237:   c1 = 7899
+            Case 235:   c1 = 7903
+            Case 236:   c1 = 7905
+            Case 238:   c1 = 7907
+            Case 239:   c1 = 249
+            Case 243:   c1 = 250
+            Case 241:   c1 = 7911
+            Case 242:   c1 = 361
+            Case 244:   c1 = 7909
+            Case 166:   c1 = 431
+            Case 173:   c1 = 432
+            Case 245:   c1 = 7915
+            Case 248:   c1 = 7913
+            Case 246:   c1 = 7917
+            Case 247:   c1 = 7919
+            Case 249:   c1 = 7921
+            Case 250:   c1 = 7923
+            Case 251:   c1 = 7927
+            Case 252:   c1 = 7929
+            Case 254:   c1 = 7925
         End Select
-        ABCtoUNICODE = ABCtoUNICODE + ChrW(C1)
+        ABCtoUNICODE = ABCtoUNICODE + ChrW(c1)
     Next
 End Function
 
 Public Function UNICODEtoABC(st As String) As String
-    Dim i As Integer, L As Integer, c As Integer, C1 As Integer
+    Dim i As Integer, L As Integer, c As Integer, c1 As Integer
     
     L = Len(st)
     For i = 1 To L
         c = AscW(Mid(st, i, 1))
-        C1 = c
+        c1 = c
         Select Case c
-            Case 224, 192:  C1 = 181
-            Case 225, 193:  C1 = 184
-            Case 7843, 7842:  C1 = 182
-            Case 227, 195:  C1 = 183
-            Case 7841, 7840:  C1 = 185
-            Case 194:   C1 = 162
-            Case 226:   C1 = 169
-            Case 7847, 7846: C1 = 199
-            Case 7845, 7844:  C1 = 202
-            Case 7849, 7848:  C1 = 200
-            Case 7851, 7850:  C1 = 201
-            Case 7853, 7852:  C1 = 203
-            Case 258:   C1 = 161
-            Case 259:   C1 = 168
-            Case 7857, 7856:  C1 = 187
-            Case 7855, 7854:  C1 = 190
-            Case 7859, 7858:  C1 = 188
-            Case 7861, 7860:  C1 = 189
-            Case 7863, 7862:  C1 = 198
-            Case 272:   C1 = 167
-            Case 273:   C1 = 174
-            Case 232, 200:  C1 = 204
-            Case 233, 201:  C1 = 208
-            Case 7867, 7866:  C1 = 206
-            Case 7869, 7868:  C1 = 207
-            Case 7865, 7864:  C1 = 209
-            Case 202:   C1 = 163
-            Case 234:   C1 = 170
-            Case 7873, 7872:  C1 = 210
-            Case 7871, 7870:  C1 = 213
-            Case 7875, 7874:  C1 = 211
-            Case 7877, 7876:  C1 = 212
-            Case 7879, 7878:  C1 = 214
-            Case 236, 204:  C1 = 215
-            Case 237, 205:  C1 = 221
-            Case 7881, 7880:  C1 = 216
-            Case 297, 296:  C1 = 220
-            Case 7883, 7882:  C1 = 222
-            Case 242, 210:  C1 = 223
-            Case 243, 211:  C1 = 227
-            Case 7887, 7886:  C1 = 225
-            Case 245, 213:  C1 = 226
-            Case 7885, 7884:  C1 = 228
-            Case 212:   C1 = 164
-            Case 244:   C1 = 171
-            Case 7891, 7890:  C1 = 229
-            Case 7889, 7888:   C1 = 232
-            Case 7893, 7892:  C1 = 230
-            Case 7895, 7894:  C1 = 231
-            Case 7897, 7896:  C1 = 233
-            Case 416:   C1 = 165
-            Case 417:   C1 = 172
-            Case 7901, 7900:  C1 = 234
-            Case 7899, 7898:  C1 = 237
-            Case 7903, 7902:  C1 = 235
-            Case 7905, 7904:  C1 = 236
-            Case 7907, 7906:  C1 = 238
-            Case 249, 217:  C1 = 239
-            Case 250, 218:  C1 = 243
-            Case 7911, 7910:  C1 = 241
-            Case 361, 360:  C1 = 242
-            Case 7909, 7908:  C1 = 244
-            Case 431:   C1 = 166
-            Case 432:   C1 = 173
-            Case 7915, 7914:  C1 = 245
-            Case 7913, 7912:  C1 = 248
-            Case 7917, 7916:  C1 = 246
-            Case 7919, 7918:  C1 = 247
-            Case 7921, 7920:  C1 = 249
-            Case 7923, 7922:  C1 = 250
-            Case 221:   C1 = 253
-            Case 7927, 7926:  C1 = 251
-            Case 7929, 7928:  C1 = 252
-            Case 7925, 7924:  C1 = 254
+            Case 224, 192:  c1 = 181
+            Case 225, 193:  c1 = 184
+            Case 7843, 7842:  c1 = 182
+            Case 227, 195:  c1 = 183
+            Case 7841, 7840:  c1 = 185
+            Case 194:   c1 = 162
+            Case 226:   c1 = 169
+            Case 7847, 7846: c1 = 199
+            Case 7845, 7844:  c1 = 202
+            Case 7849, 7848:  c1 = 200
+            Case 7851, 7850:  c1 = 201
+            Case 7853, 7852:  c1 = 203
+            Case 258:   c1 = 161
+            Case 259:   c1 = 168
+            Case 7857, 7856:  c1 = 187
+            Case 7855, 7854:  c1 = 190
+            Case 7859, 7858:  c1 = 188
+            Case 7861, 7860:  c1 = 189
+            Case 7863, 7862:  c1 = 198
+            Case 272:   c1 = 167
+            Case 273:   c1 = 174
+            Case 232, 200:  c1 = 204
+            Case 233, 201:  c1 = 208
+            Case 7867, 7866:  c1 = 206
+            Case 7869, 7868:  c1 = 207
+            Case 7865, 7864:  c1 = 209
+            Case 202:   c1 = 163
+            Case 234:   c1 = 170
+            Case 7873, 7872:  c1 = 210
+            Case 7871, 7870:  c1 = 213
+            Case 7875, 7874:  c1 = 211
+            Case 7877, 7876:  c1 = 212
+            Case 7879, 7878:  c1 = 214
+            Case 236, 204:  c1 = 215
+            Case 237, 205:  c1 = 221
+            Case 7881, 7880:  c1 = 216
+            Case 297, 296:  c1 = 220
+            Case 7883, 7882:  c1 = 222
+            Case 242, 210:  c1 = 223
+            Case 243, 211:  c1 = 227
+            Case 7887, 7886:  c1 = 225
+            Case 245, 213:  c1 = 226
+            Case 7885, 7884:  c1 = 228
+            Case 212:   c1 = 164
+            Case 244:   c1 = 171
+            Case 7891, 7890:  c1 = 229
+            Case 7889, 7888:   c1 = 232
+            Case 7893, 7892:  c1 = 230
+            Case 7895, 7894:  c1 = 231
+            Case 7897, 7896:  c1 = 233
+            Case 416:   c1 = 165
+            Case 417:   c1 = 172
+            Case 7901, 7900:  c1 = 234
+            Case 7899, 7898:  c1 = 237
+            Case 7903, 7902:  c1 = 235
+            Case 7905, 7904:  c1 = 236
+            Case 7907, 7906:  c1 = 238
+            Case 249, 217:  c1 = 239
+            Case 250, 218:  c1 = 243
+            Case 7911, 7910:  c1 = 241
+            Case 361, 360:  c1 = 242
+            Case 7909, 7908:  c1 = 244
+            Case 431:   c1 = 166
+            Case 432:   c1 = 173
+            Case 7915, 7914:  c1 = 245
+            Case 7913, 7912:  c1 = 248
+            Case 7917, 7916:  c1 = 246
+            Case 7919, 7918:  c1 = 247
+            Case 7921, 7920:  c1 = 249
+            Case 7923, 7922:  c1 = 250
+            Case 221:   c1 = 253
+            Case 7927, 7926:  c1 = 251
+            Case 7929, 7928:  c1 = 252
+            Case 7925, 7924:  c1 = 254
         End Select
-        If C1 > 255 Then C1 = 255
-        UNICODEtoABC = UNICODEtoABC + Chr(C1)
+        If c1 > 255 Then c1 = 255
+        UNICODEtoABC = UNICODEtoABC + Chr(c1)
     Next
 End Function
 
 Public Function VniToUnicode(st As String) As String
-    Dim i As Integer, L As Integer, C1 As Integer, c2 As Integer, c As Integer
+    Dim i As Integer, L As Integer, c1 As Integer, c2 As Integer, c As Integer
         
     L = Len(st)
     i = 1
     Do While i <= L
-        C1 = CInt5(Asc(Mid(st, i, 1)))
+        c1 = CInt5(Asc(Mid(st, i, 1)))
         c = 0
         If i = L Then GoTo a
         c2 = CInt5(Asc(Mid(st, i + 1, 1)))
-        If C1 = 97 Then
+        If c1 = 97 Then
             Select Case c2
                 Case 248:   c = 224
                 Case 249:   c = 225
@@ -1656,7 +1656,7 @@ Public Function VniToUnicode(st As String) As String
                 Case 235:   c = 7863
             End Select
         End If
-        If C1 = 65 Then
+        If c1 = 65 Then
             Select Case c2
                 Case 216:   c = 192
                 Case 217:   c = 193
@@ -1677,7 +1677,7 @@ Public Function VniToUnicode(st As String) As String
                 Case 202:   c = 258
             End Select
         End If
-        If C1 = 69 Then
+        If c1 = 69 Then
             Select Case c2
                 Case 216:   c = 200
                 Case 217:   c = 201
@@ -1692,7 +1692,7 @@ Public Function VniToUnicode(st As String) As String
                 Case 196:   c = 7878
             End Select
         End If
-        If C1 = 79 Then
+        If c1 = 79 Then
             Select Case c2
                 Case 216:   c = 210
                 Case 217:   c = 211
@@ -1707,7 +1707,7 @@ Public Function VniToUnicode(st As String) As String
                 Case 196:   c = 7896
             End Select
         End If
-        If C1 = 212 Then
+        If c1 = 212 Then
             Select Case c2
                 Case 216:   c = 7900
                 Case 217:   c = 7898
@@ -1716,7 +1716,7 @@ Public Function VniToUnicode(st As String) As String
                 Case 207:   c = 7906
             End Select
         End If
-        If C1 = 85 Then
+        If c1 = 85 Then
             Select Case c2
                 Case 216:   c = 217
                 Case 217:   c = 218
@@ -1725,7 +1725,7 @@ Public Function VniToUnicode(st As String) As String
                 Case 207:   c = 7908
             End Select
         End If
-        If C1 = 214 Then
+        If c1 = 214 Then
             Select Case c2
                 Case 216:   c = 7914
                 Case 217:   c = 7912
@@ -1734,7 +1734,7 @@ Public Function VniToUnicode(st As String) As String
                 Case 207:   c = 7920
             End Select
         End If
-        If C1 = 89 Then
+        If c1 = 89 Then
             Select Case c2
                 Case 216:   c = 7922
                 Case 217:   c = 221
@@ -1742,7 +1742,7 @@ Public Function VniToUnicode(st As String) As String
                 Case 213:   c = 7928
             End Select
         End If
-        If C1 = 101 Then
+        If c1 = 101 Then
             Select Case c2
                 Case 248:   c = 232
                 Case 249:   c = 233
@@ -1757,7 +1757,7 @@ Public Function VniToUnicode(st As String) As String
                 Case 228:   c = 7879
             End Select
         End If
-        If C1 = 111 Then
+        If c1 = 111 Then
             Select Case c2
                 Case 248:   c = 242
                 Case 249:   c = 243
@@ -1772,7 +1772,7 @@ Public Function VniToUnicode(st As String) As String
                 Case 228:   c = 7897
             End Select
         End If
-        If C1 = 244 Then
+        If c1 = 244 Then
             Select Case c2
                 Case 248:   c = 7901
                 Case 249:   c = 7899
@@ -1781,7 +1781,7 @@ Public Function VniToUnicode(st As String) As String
                 Case 239:   c = 7907
             End Select
         End If
-        If C1 = 117 Then
+        If c1 = 117 Then
             Select Case c2
                 Case 248:   c = 249
                 Case 249:   c = 250
@@ -1790,8 +1790,8 @@ Public Function VniToUnicode(st As String) As String
                 Case 239:   c = 7909
             End Select
         End If
-        If C1 = 249 And c2 = 246 Then c = 432
-        If C1 = 246 Then
+        If c1 = 249 And c2 = 246 Then c = 432
+        If c1 = 246 Then
             Select Case c2
                 Case 248:   c = 7915
                 Case 249:   c = 7913
@@ -1800,7 +1800,7 @@ Public Function VniToUnicode(st As String) As String
                 Case 239:   c = 7921
             End Select
         End If
-        If C1 = 121 Then
+        If c1 = 121 Then
             Select Case c2
                 Case 248:   c = 7923
                 Case 249:   c = 253
@@ -1813,7 +1813,7 @@ Public Function VniToUnicode(st As String) As String
             GoTo KT
         End If
 a:
-        Select Case C1
+        Select Case c1
             Case 241:   c = 273
             Case 236:  c = 236
             Case 204:   c = 204
@@ -1839,27 +1839,27 @@ a:
         End If
         If c = 0 Then
             i = i + 1
-            c = C1
+            c = c1
         End If
 KT:
         VniToUnicode = VniToUnicode + ChrW(c)
     Loop
 End Function
 Public Function UnicodeToVni(st As String) As String
-    Dim i As Integer, L As Integer, C1 As Integer, c As Long
+    Dim i As Integer, L As Integer, c1 As Integer, c As Long
     Dim vniChar As String
     
     L = Len(st)
     i = 1
     Do While i <= L
         ' L?y mã Unicode c?a ký t? hi?n t?i
-        C1 = AscW(Mid(st, i, 1))
-        If C1 < 0 Then C1 = C1 + 65536 ' X? lý ký t? Unicode > 32767
+        c1 = AscW(Mid(st, i, 1))
+        If c1 < 0 Then c1 = c1 + 65536 ' X? lý ký t? Unicode > 32767
         
         vniChar = ""
         
         ' X? lý các ký t? có d?u ti?ng Vi?t
-        Select Case C1
+        Select Case c1
             ' Ch? thu?ng
             Case 224: vniChar = Chr(97) & Chr(248)    ' à
             Case 225: vniChar = Chr(97) & Chr(249)    ' á
@@ -2017,7 +2017,7 @@ Public Function UnicodeToVni(st As String) As String
             Case 7882: vniChar = Chr(210)              ' ? (Ô?)
             
             ' N?u không ph?i ký t? d?c bi?t, gi? nguyên
-            Case Else: vniChar = ChrW(C1)
+            Case Else: vniChar = ChrW(c1)
         End Select
         
         UnicodeToVni = UnicodeToVni & vniChar

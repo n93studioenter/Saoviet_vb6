@@ -20,8 +20,8 @@ Private Type IP_ADAPTER_INFO
 End Type
 
 
-
-Private Declare Sub CopyMemory Lib "Kernel32" Alias "RtlMoveMemory" (Destination As Any, source As Any, ByVal length As Long)
+Private Const Base64Table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+Private Declare Sub CopyMemory Lib "Kernel32" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal length As Long)
 Private Declare Function GetAdaptersInfo Lib "iphlpapi" (lpAdapterInfo As Any, lpSize As Long) As Long
 
 Public Const CLR_MENU_NORMAL As Long = &HE0E0E0
@@ -120,10 +120,111 @@ Public Function IsValidMST_Format(ByVal mst As String) As Boolean
         IsValidMST_Format = True
     End If
 End Function
+'ma hoa ten cong ty
+'========================= ENCODE =========================
+Public Function EncodeLicense(ByVal TenCongTy As String, ByVal SoBiMat As String) As String
+    Dim s As String
+    
+    TenCongTy = Trim(TenCongTy)
+    If Len(SoBiMat) <> 2 Or Not IsNumeric(SoBiMat) Then SoBiMat = "00"
+    
+    s = TenCongTy & "|" & SoBiMat
+    
+    EncodeLicense = Base64Encode(StrConv(s, vbFromUnicode))
+End Function
+
+'========================= DECODE (C?n thêm SoBiMat) =========================
+Public Function DecodeLicense(ByVal key As String) As String
+    Dim s As String
+    
+    s = StrConv(Base64Decode(key), vbUnicode)
+    
+    If InStr(s, "|") > 0 Then
+        DecodeLicense = Left(s, InStr(s, "|") - 1)
+    Else
+        DecodeLicense = s
+    End If
+End Function
+
+
+Public Function Base64Encode(inData() As Byte) As String
+    Dim i As Long
+    Dim outStr As String
+    Dim c1 As Byte, c2 As Byte, c3 As Byte
+
+    For i = 0 To UBound(inData) Step 3
+        c1 = inData(i)
+
+        If i + 1 <= UBound(inData) Then c2 = inData(i + 1) Else c2 = 0
+        If i + 2 <= UBound(inData) Then c3 = inData(i + 2) Else c3 = 0
+
+        outStr = outStr & _
+                 Mid(Base64Table, (c1 \ 4) + 1, 1) & _
+                 Mid(Base64Table, ((c1 And 3) * 16 + (c2 \ 16)) + 1, 1) & _
+                 IIf(i + 1 <= UBound(inData), Mid(Base64Table, ((c2 And 15) * 4 + (c3 \ 64)) + 1, 1), "=") & _
+                 IIf(i + 2 <= UBound(inData), Mid(Base64Table, (c3 And 63) + 1, 1), "=")
+    Next i
+
+    Base64Encode = outStr
+End Function
+Public Function Base64Decode(ByVal sInput As String) As Byte()
+    Dim i As Long, j As Long
+    Dim c(3) As Long
+    Dim out() As Byte
+    Dim outLen As Long
+    Dim pos As Long
+    
+    ' tính d? dài th?t
+    outLen = (Len(sInput) \ 4) * 3
+    
+    If Right(sInput, 2) = "==" Then
+        outLen = outLen - 2
+    ElseIf Right(sInput, 1) = "=" Then
+        outLen = outLen - 1
+    End If
+    
+    If outLen <= 0 Then
+        ReDim out(0)
+        Base64Decode = out
+        Exit Function
+    End If
+    
+    ReDim out(outLen - 1)
+    
+    pos = 0
+    
+    For i = 1 To Len(sInput) Step 4
+        For j = 0 To 3
+            If Mid(sInput, i + j, 1) = "=" Then
+                c(j) = 0
+            Else
+                c(j) = InStr(1, Base64Table, Mid(sInput, i + j, 1)) - 1
+            End If
+        Next j
+        
+        If pos <= UBound(out) Then
+            out(pos) = (c(0) * 4) Or (c(1) \ 16)
+            pos = pos + 1
+        End If
+        
+        If pos <= UBound(out) Then
+            out(pos) = ((c(1) And 15) * 16) Or (c(2) \ 4)
+            pos = pos + 1
+        End If
+        
+        If pos <= UBound(out) Then
+            out(pos) = ((c(2) And 3) * 64) Or c(3)
+            pos = pos + 1
+        End If
+    Next i
+    
+    Base64Decode = out
+End Function
+'end ma hoa ten cty
 Public Function VniToUnicode2(ByVal sVNI As String) As String
     Dim VNI As String, UNI As String
     Dim arrVNI() As String, arrUNI() As String
-    Dim i As Long, j As Long, result As String
+    Dim i As Long, j As Long, Result As String
 
     ' B?ng mapping VNI Windows ? Unicode (hex)
     VNI = "aù,aø,aû,aõ,aï,aâ,aê,aá,aà,aå,aã,aä,aé,aè,aú,aü,aë," & _
@@ -153,15 +254,15 @@ Public Function VniToUnicode2(ByVal sVNI As String) As String
     arrVNI = Split(VNI, ",")
     arrUNI = Split(UNI, ",")
 
-    result = sVNI   ' B?t d?u t? nguyên b?n
+    Result = sVNI   ' B?t d?u t? nguyên b?n
 
     For i = 0 To UBound(arrVNI)
         If Len(arrVNI(i)) > 0 Then
-            result = Replace(result, arrVNI(i), ChrW(CLng("&H" & arrUNI(i))))
+            Result = Replace(Result, arrVNI(i), ChrW(CLng("&H" & arrUNI(i))))
         End If
     Next i
 
-    VniToUnicode2 = result
+    VniToUnicode2 = Result
 End Function
 Public Function GetMainboardSerial() As String
     On Error Resume Next
@@ -253,7 +354,7 @@ Public Function GetMacAddress2() As String
         Call GetAdaptersInfo(baBuffer(0), lSize)
         Call CopyMemory(lSize, baBuffer(OFFSET_LENGTH), 4)
         For lIdx = OFFSET_LENGTH + 4 To OFFSET_LENGTH + 4 + lSize - 1
-            sRetVal = IIf(LenB(sRetVal) <> 0, sRetVal & ":", vbNullString) & Right$("0" & hex$(baBuffer(lIdx)), 2)
+            sRetVal = IIf(LenB(sRetVal) <> 0, sRetVal & ":", vbNullString) & Right$("0" & Hex$(baBuffer(lIdx)), 2)
         Next
     End If
     GetMacAddress2 = sRetVal
@@ -280,7 +381,7 @@ Public Function GetMacAddress() As String
             CopyMemory ai, buffer(0), Len(ai)
 
             For i = 0 To ai.AddressLength - 1
-                sMac = sMac & Right$("0" & hex$(ai.Address(i)), 2)
+                sMac = sMac & Right$("0" & Hex$(ai.Address(i)), 2)
                 If i < ai.AddressLength - 1 Then sMac = sMac & ":"
             Next
 
