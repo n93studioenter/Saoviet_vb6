@@ -45,78 +45,86 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
 Dim plct As Integer
+Public types As String
+
 Private Sub Form_Load()
-    Dim namct As Integer
-    namct = SelectSQL("SELECT NamTC as F1 FROM License ")
-    Dim mypath As String
-    Dim folderName As String
-    folderName = "HD" & namct
-    mypath = App.path & "\Hoadon\" & folderName
-    Dim LoaiHD As String
-    If FrmChungtu.txtPhanloaichungtu.Text = 1 Or FrmChungtu.txtPhanloaichungtu.Text = 0 Then
-        LoaiHD = "\HDVao"
-    Else
-        LoaiHD = "\HDRa"
+
+    If types = "0" Then
+        Dim namct As Integer
+        namct = SelectSQL("SELECT NamTC as F1 FROM License ")
+        Dim mypath As String
+        Dim folderName As String
+        folderName = "HD" & namct
+        mypath = App.path & "\Hoadon\" & folderName
+        Dim LoaiHD As String
+        If FrmChungtu.txtPhanloaichungtu.Text = 1 Or FrmChungtu.txtPhanloaichungtu.Text = 0 Then
+            LoaiHD = "\HDVao"
+        Else
+            LoaiHD = "\HDRa"
+        End If
+        Dim kyhhd As String
+        kyhhd = FrmChungtu.txtVT(1).Text
+        If Left(kyhhd, 1) = "1" Then
+            kyhhd = Mid(kyhhd, 2)    ' B? di ký t? d?u tiên
+        End If
+
+        Dim mst As String
+        Dim sohd As String
+        sohd = FrmChungtu.txt(0).Text
+        Do While Left(sohd, 1) = "0" And sohd <> ""
+            sohd = Mid(sohd, 2)
+        Loop
+
+        'mypath = mypath & LoaiHD & "\" & month(CDate(FrmChungtu.CboThang.Text)) & "\" & sohd & "_" & kyhhd & ".html"
+        If LoaiHD = "\HDVao" Then
+            mst = FrmChungtu.txtVT(9).Text
+        Else
+            mst = SelectSQL("select MaSoThue AS f1 from  License")
+        End If
+        If mst = "8046549703" Then
+            mst = "048172000197"
+        End If
+        mypath = mypath & LoaiHD & "\" & month(CDate(FrmChungtu.CboThang.Text)) & "\" & mst & "_" & sohd & "_" & kyhhd & ".html"
+
+        'MsgBox FrmChungtu.
+
+
+        ' Ki?m tra file có t?n t?i không
+        If Dir(mypath) = "" Then
+
+            Dim txtPath As String
+            Dim FileNum As Integer
+
+            txtPath = App.path & "\Hoadon\hdlink.txt"
+            FileNum = FreeFile    ' L?y s? file còn tr?ng
+
+            ' M? t?p d? ghi dè n?i dung
+            Open txtPath For Output As #FileNum
+
+
+            Print #FileNum, FrmChungtu.txtVT(9).Text & "_" & FrmChungtu.txtPhanloaichungtu & "_" & sohd & "_" & kyhhd & "_" & month(CDate(FrmChungtu.CboThang.Text))
+            Close #FileNum
+            Dim exePath As String
+            exePath = App.path & "\\Tools\\Debug\\SaovietTax.exe"
+
+            ' Shell d? m? ?ng d?ng
+            Shell exePath, vbMinimizedNoFocus
+
+        End If
+        While Dir(mypath) = ""
+            ' Có th? thêm m?t th?i gian ch? nh? d? tránh vi?c l?p quá nhanh
+            DoEvents
+        Wend
+        Dim FilePath As String
+        FilePath = mypath
+        WebBrowser1.Navigate FilePath
+      
     End If
-    Dim kyhhd As String
-    kyhhd = FrmChungtu.txtVT(1).Text
-    If Left(kyhhd, 1) = "1" Then
-        kyhhd = Mid(kyhhd, 2)    ' B? di ký t? d?u tiên
-    End If
 
-    Dim mst As String
-    Dim sohd As String
-    sohd = FrmChungtu.txt(0).Text
-    Do While Left(sohd, 1) = "0" And sohd <> ""
-        sohd = Mid(sohd, 2)
-    Loop
-
-    'mypath = mypath & LoaiHD & "\" & month(CDate(FrmChungtu.CboThang.Text)) & "\" & sohd & "_" & kyhhd & ".html"
-    If LoaiHD = "\HDVao" Then
-        mst = FrmChungtu.txtVT(9).Text
-    Else
-        mst = SelectSQL("select MaSoThue AS f1 from  License")
-    End If
-    If mst = "8046549703" Then
-        mst = "048172000197"
-    End If
-    mypath = mypath & LoaiHD & "\" & month(CDate(FrmChungtu.CboThang.Text)) & "\" & mst & "_" & sohd & "_" & kyhhd & ".html"
-
-    'MsgBox FrmChungtu.
-
-
-    ' Ki?m tra file có t?n t?i không
-    If Dir(mypath) = "" Then
-
-        Dim txtPath As String
-        Dim FileNum As Integer
-
-        txtPath = App.path & "\Hoadon\hdlink.txt"
-        FileNum = FreeFile    ' L?y s? file còn tr?ng
-
-        ' M? t?p d? ghi dè n?i dung
-        Open txtPath For Output As #FileNum
-
-
-        Print #FileNum, FrmChungtu.txtVT(9).Text & "_" & FrmChungtu.txtPhanloaichungtu & "_" & sohd & "_" & kyhhd & "_" & month(CDate(FrmChungtu.CboThang.Text))
-        Close #FileNum
-        Dim exePath As String
-        exePath = App.path & "\\Tools\\Debug\\SaovietTax.exe"
-
-        ' Shell d? m? ?ng d?ng
-        Shell exePath, vbMinimizedNoFocus
-
-    End If
-    While Dir(mypath) = ""
-        ' Có th? thêm m?t th?i gian ch? nh? d? tránh vi?c l?p quá nhanh
-        DoEvents
-    Wend
-    Dim FilePath As String
-    FilePath = mypath
-    WebBrowser1.Navigate FilePath
 End Sub
-Private Sub WebBrowser1_DocumentComplete(ByVal pDisp As Object, URL As Variant)
+Private Sub WebBrowser1_DocumentComplete(ByVal pDisp As Object, url As Variant)
     SetZoomTo50Percent
 
 End Sub

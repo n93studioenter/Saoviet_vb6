@@ -5,12 +5,12 @@ Begin VB.Form FThuChi
    Appearance      =   0  'Flat
    AutoRedraw      =   -1  'True
    BackColor       =   &H80000005&
-   BorderStyle     =   3  'Fixed Dialog
+   BorderStyle     =   0  'None
    Caption         =   "Th«ng tin vÒ phiÕu thu - chi"
-   ClientHeight    =   2895
-   ClientLeft      =   3780
-   ClientTop       =   4050
-   ClientWidth     =   7740
+   ClientHeight    =   3195
+   ClientLeft      =   3735
+   ClientTop       =   3720
+   ClientWidth     =   7905
    ClipControls    =   0   'False
    ControlBox      =   0   'False
    BeginProperty Font 
@@ -27,11 +27,48 @@ Begin VB.Form FThuChi
    LinkTopic       =   "Additional Voucher Information"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   2895
-   ScaleWidth      =   7740
+   ScaleHeight     =   3195
+   ScaleWidth      =   7905
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Tag             =   "0"
+   Begin VB.ComboBox Combo1 
+      Height          =   315
+      Left            =   2040
+      TabIndex        =   29
+      Text            =   "Combo1"
+      Top             =   2640
+      Width           =   4095
+   End
+   Begin VB.Timer timerImport 
+      Enabled         =   0   'False
+      Interval        =   100
+      Left            =   5160
+      Top             =   4920
+   End
+   Begin VB.CommandButton Command2 
+      BackColor       =   &H0000FF00&
+      Caption         =   "Ph¸t hµnh"
+      Height          =   375
+      Left            =   6000
+      Style           =   1  'Graphical
+      TabIndex        =   28
+      Top             =   2040
+      Visible         =   0   'False
+      Width           =   1455
+   End
+   Begin VB.CommandButton Command1 
+      BackColor       =   &H000000FF&
+      Caption         =   "L­u nh¸p"
+      Height          =   375
+      Left            =   4080
+      MaskColor       =   &H00FFFFFF&
+      Style           =   1  'Graphical
+      TabIndex        =   27
+      Top             =   2040
+      Visible         =   0   'False
+      Width           =   1695
+   End
    Begin VB.PictureBox picFakeTitle 
       BackColor       =   &H00FFFFFF&
       BorderStyle     =   0  'None
@@ -57,9 +94,9 @@ Begin VB.Form FThuChi
             Strikethrough   =   0   'False
          EndProperty
          Height          =   405
-         Left            =   7320
+         Left            =   7200
          TabIndex        =   26
-         Top             =   120
+         Top             =   0
          Width           =   480
       End
       Begin VB.Image Image1 
@@ -95,7 +132,7 @@ Begin VB.Form FThuChi
          EndProperty
          Height          =   405
          Index           =   11
-         Left            =   600
+         Left            =   480
          TabIndex        =   25
          Top             =   0
          Width           =   4455
@@ -126,9 +163,9 @@ Begin VB.Form FThuChi
       BackColor       =   &H00E0E0E0&
       Caption         =   "Lien 3"
       Height          =   375
-      Left            =   1920
+      Left            =   600
       TabIndex        =   21
-      Top             =   3000
+      Top             =   4560
       Value           =   1  'Checked
       Visible         =   0   'False
       Width           =   1215
@@ -137,9 +174,9 @@ Begin VB.Form FThuChi
       BackColor       =   &H00E0E0E0&
       Caption         =   "Lien 2"
       Height          =   375
-      Left            =   4560
+      Left            =   6600
       TabIndex        =   20
-      Top             =   3000
+      Top             =   4800
       Value           =   1  'Checked
       Visible         =   0   'False
       Width           =   855
@@ -152,7 +189,7 @@ Begin VB.Form FThuChi
       Left            =   3240
       MaskColor       =   &H8000000A&
       TabIndex        =   19
-      Top             =   2880
+      Top             =   5040
       Value           =   1  'Checked
       Visible         =   0   'False
       Width           =   1215
@@ -250,12 +287,12 @@ Begin VB.Form FThuChi
    Begin VB.CommandButton Command 
       BackColor       =   &H80000013&
       Height          =   375
-      Left            =   6480
+      Left            =   6360
       Picture         =   "FThuChi.frx":11A36
       Style           =   1  'Graphical
       TabIndex        =   7
       Tag             =   "&Save"
-      Top             =   2400
+      Top             =   2640
       Width           =   1095
    End
    Begin MSMask.MaskEdBox MedNgay 
@@ -282,6 +319,15 @@ Begin VB.Form FThuChi
       EndProperty
       Mask            =   "99/99/99"
       PromptChar      =   "_"
+   End
+   Begin VB.Label Label2 
+      BackStyle       =   0  'Transparent
+      Caption         =   "MÉu ho¸ ®¬n"
+      Height          =   255
+      Left            =   240
+      TabIndex        =   30
+      Top             =   2640
+      Width           =   1575
    End
    Begin VB.Label Label1 
       BackColor       =   &H00FFFFFF&
@@ -382,15 +428,17 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-
+Dim hWndApp As Long
+Private Declare Function IsWindow Lib "user32" (ByVal hwnd As Long) As Long
+Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
+Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" _
+                                    ()
 Public FThuChiForm As Integer
-
-
 Dim s(0 To 3) As String
 Dim kh As New ClsKhachHang
 Dim ngay As Date
 Dim f1 As Integer
-Public Sub test()
+Public Sub Test()
  
     Unload Me
 End Sub
@@ -399,6 +447,33 @@ Private Sub Timer1_Timer()
 End Sub
 
 Public Sub Command_Click()
+    If Combo1.ListIndex = -1 Then
+        Combo1.ListIndex = 0
+    End If
+    Dim id As Long
+    id = Combo1.ItemData(Combo1.ListIndex)
+    Dim FilePath As String
+    FilePath = App.path & "\\HoaDon\\invoice.txt"
+    Dim content As String
+    content = FrmChungtu.txt(0).Text & "_" & FrmChungtu.TxtVT(1).Text & "_" & FrmChungtu.MedNgay(0).Text & "_" & id
+    Dim fileNumber As Integer
+    If Not FileExists(FilePath) Then
+        'Loai_thangbd_thangkt
+        Dim iscreate As Boolean
+        iscreate = CreateVersionFile(FilePath, content)
+    Else
+        fileNumber = FreeFile
+        On Error Resume Next
+        Open FilePath For Output As #fileNumber
+        If Err.number = 0 Then
+            Print #fileNumber, content;
+            Close #fileNumber
+            'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+        Else
+            MsgBox "L?i khi ghi dè file!", vbExclamation
+        End If
+    End If
+
     Dim i As Integer
     '  ExecuteSQL5 "update chungtu set nguoimuahang = '" + T(4).Text + "'  where sohieu = '" + FrmChungtu.txt(0).Text + "'"
     ExecuteSQL5 "update chungtu set nguoimuahang = '" + T(4).Text + "',hinhthucthanhtoan = '" + ComboBox1.Text + "',sophieudathang = '" + T(3).Text + "' ,chondiengiai = '" + str(Check1.Value) + "'  where sohieu = '" + FrmChungtu.txt(0).Text + "'"
@@ -415,7 +490,13 @@ Public Sub Command_Click()
     FrmChungtu.CheckBox3 = CheckBox3.Value
     FrmChungtu.checkinbangke.Value = checkinbangke.Value
     FrmChungtu.Checkinbangkevahoadon.Value = Checkinbangkevahoadon.Value
-    Unload Me
+    If FThuChi.FThuChiForm <> 0 Then
+        Unload Me
+    Else
+        Command1.Visible = True
+        Command2.Visible = True
+        Command2.Enabled = False
+    End If
     If FThuChiForm = 1 Then
         ' FrmChungtu.DoneSetup
         FrmChungtu.timerNext.Enabled = True
@@ -427,6 +508,156 @@ Public Sub Command_Click()
 
 End Sub
 
+Public Function FileExists(FilePath As String) As Boolean
+    On Error GoTo ErrorHandler
+
+    If Dir(FilePath) <> "" Then
+        FileExists = True
+    Else
+        FileExists = False
+    End If
+
+    Exit Function
+
+ErrorHandler:
+    FileExists = False
+End Function
+Public Function CreateVersionFile(FilePath As String, content As String) As Boolean
+    Dim fileNumber As Integer
+
+    On Error GoTo ErrorHandler
+
+    ' L?y file number
+    fileNumber = FreeFile
+
+    ' T?o file m?i (Output mode s? t?o file n?u chua có)
+    Open FilePath For Output As #fileNumber
+
+    ' Ghi n?i dung
+    Print #fileNumber, content
+
+    ' Ðóng file
+    Close #fileNumber
+
+    ' Ki?m tra file dã du?c t?o
+    CreateVersionFile = FileExists(FilePath)
+
+    Exit Function
+
+ErrorHandler:
+    CreateVersionFile = False
+    On Error Resume Next
+    Close #fileNumber
+End Function
+Private Sub GhiChutxt(ByVal content As Integer)
+    Dim FilePath As String
+    FilePath = App.path & "\\Hoadon\\status.txt"
+
+    Dim FileNum As Integer
+    FileNum = FreeFile  ' L?y s? file tr?ng
+
+    Dim lineText As String
+    Dim allText As String
+
+    ' M? file d? d?c
+    Open FilePath For Input As #FileNum
+
+    ' Ð?c t?ng dòng d?n h?t file
+    Do Until EOF(FileNum)
+        Line Input #FileNum, lineText
+        allText = allText & lineText & vbCrLf  ' N?i dòng và xu?ng dòng
+    Loop
+
+    ' Ðóng file
+    Close #FileNum
+
+    ' M? file d? ghi dè n?i dung
+    FileNum = FreeFile    ' L?y l?i s? file tr?ng
+
+    ' M? file d? ghi
+    Open FilePath For Output As #FileNum
+    Print #FileNum, content  ' Ghi n?i dung m?i (tham s? integer) vào file
+
+    ' Ðóng file
+    Close #FileNum
+End Sub
+Private Sub Command1_Click()
+    GhiChutxt 5
+    Dim exePath As String
+    exePath = App.path & "\\Tools\\Debug\\SaovietTax.exe"
+
+    ' Shell d? m? ?ng d?ng
+    Shell exePath, vbNormalFocus
+
+    Exit Sub
+    DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
+
+    ' L?y handle c?a c?a s? ?ng d?ng
+    hWndApp = 0  ' Kh?i t?o bi?n hWndApp
+
+    While hWndApp = 0
+        hWndApp = FindWindow(vbNullString, "frmMain")  ' Thay d?i tiêu d? c?a ?ng d?ng
+        DoEvents  ' Cho phép x? lý s? ki?n khác
+    Wend
+
+    ' Ki?m tra handle có h?p l? hay không
+    If hWndApp = 0 Then
+        MsgBox "Không tìm th?y ?ng d?ng."
+    Else
+        ' Ð?i m?t chút tru?c khi ki?m tra l?i
+        Sleep 1000
+        CheckWindow
+    End If
+End Sub
+Private Sub CheckWindow()
+' Ki?m tra liên t?c xem c?a s? còn t?n t?i hay không
+    Do
+        If IsWindow(hWndApp) = 0 Then
+            ' Ð?c file status.txt khi c?a s? không còn t?n t?i
+            Dim FilePath As String
+            FilePath = App.path & "\\Hoadon\\status.txt"
+
+            Dim FileNum As Integer
+            FileNum = FreeFile  ' L?y s? file tr?ng
+
+            Dim lineText As String
+            Dim allText As String
+
+            ' M? file d? d?c
+            Open FilePath For Input As #FileNum
+
+            ' Ð?c t?ng dòng d?n h?t file
+            Do Until EOF(FileNum)
+                Line Input #FileNum, lineText
+                allText = allText & lineText & vbCrLf  ' N?i dòng và xu?ng dòng
+            Loop
+
+            ' Ðóng file
+            Close #FileNum
+
+            ' Ki?m tra n?i dung file
+            Dim textss As String
+            textss = "ButtonClicked"
+            Dim textss2 As String
+            textss2 = SuperTrim(allText)
+
+            If textss = textss2 Then
+                timerImport.Enabled = True
+            End If
+
+            Exit Do
+        End If
+        DoEvents  ' Cho phép ?ng d?ng x? lý các s? ki?n khác
+    Loop
+End Sub
+Function SuperTrim(ByVal s As String) As String
+' Xóa t?t c? ký t? tr?ng (kho?ng tr?ng, tab, xu?ng dòng)
+    s = Replace(s, vbTab, "")
+    s = Replace(s, vbCrLf, "")
+    s = Replace(s, vbCr, "")
+    s = Replace(s, vbLf, "")
+    SuperTrim = Trim(s)  ' Xóa kho?ng tr?ng d?u/cu?i (ASCII 32)
+End Function
 Private Sub Form_Activate()
     If FThuChi.FThuChiForm = 5 Then
         Unload Me
@@ -513,6 +744,102 @@ Private Sub lblTitle_MouseDown(Index As Integer, Button As Integer, Shift As Int
     picFakeTitle_MouseDown Button, Shift, X, Y
 End Sub
 Private Sub Form_Load()
+    Dim rsports As Recordset
+
+    Set rsports = DBKetoan.OpenRecordset("select IdNhap AS f1 FROM HoaDon " & _
+                                         "inner join ChungTu on HoaDon.MaSo = ChungTu.MaSo " & _
+                                         "where ChungTu.SoHieu = '" & FrmChungtu.txt(0).Text & "' " & _
+                                         "and HoaDon.KyHieu = '" & FrmChungtu.TxtVT(1).Text & "' " & _
+                                         "and ChungTu.NgayCT = #" & Format(FrmChungtu.MedNgay(0).Text, "yyyy-mm-dd") & "#", dbOpenSnapshot)
+    If Not rsports.EOF Then
+        ' L?y giá tr? IdNhap
+        Dim IdNhap As String
+        If Not IsNull(rsports!f1) Then
+
+            IdNhap = rsports!f1  ' ho?c rsport.Fields("f1").Value
+            Command1.Visible = True
+            Command2.Visible = True
+            Command2.Enabled = True
+            rsports.Close
+            Set rsports = Nothing
+        Else
+
+        End If
+
+    End If
+ 
+
+    Dim countAccount As Integer
+    countAccount = SelectSQL("select count(*) AS f1 from  tbInvoiceTemplate")
+    Dim countinvoiceinfo As Integer
+    countinvoiceinfo = SelectSQL("select count(*) AS f1 from  tbInvoiceInfo")
+    'Neu chua co thi load danh sach
+    If countAccount = 0 And countinvoiceinfo > 0 Then
+        Dim FilePath As String
+        FilePath = App.path & "\\HoaDon\\invoice.txt"
+        Dim content As String
+        content = "1"
+        Dim fileNumber As Integer
+        If Not FileExists(FilePath) Then
+
+            'Loai_thangbd_thangkt
+            Dim iscreate As Boolean
+            iscreate = CreateVersionFile(FilePath, content)
+        Else
+            fileNumber = FreeFile
+            On Error Resume Next
+            Open FilePath For Output As #fileNumber
+            If Err.number = 0 Then
+                Print #fileNumber, content;
+                Close #fileNumber
+                'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+            Else
+                MsgBox "L?i khi ghi dè file!", vbExclamation
+            End If
+        End If
+
+        GhiChutxt 5
+        Dim exePath As String
+        exePath = App.path & "\\Tools\\Debug\\SaovietTax.exe"
+
+        ' Shell d? m? ?ng d?ng
+        Shell exePath, vbNormalFocus
+
+        Exit Sub
+        DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
+
+        ' L?y handle c?a c?a s? ?ng d?ng
+        hWndApp = 0  ' Kh?i t?o bi?n hWndApp
+
+        While hWndApp = 0
+            hWndApp = FindWindow(vbNullString, "frmMain")  ' Thay d?i tiêu d? c?a ?ng d?ng
+            DoEvents  ' Cho phép x? lý s? ki?n khác
+        Wend
+
+        ' Ki?m tra handle có h?p l? hay không
+        If hWndApp = 0 Then
+            MsgBox "Không tìm th?y ?ng d?ng."
+        Else
+            ' Ð?i m?t chút tru?c khi ki?m tra l?i
+            Sleep 1000
+            CheckWindow
+        End If
+    End If
+
+    'Load danh sach cbb
+    ' Combo1.AddItem ("Tieàn maët")
+    Dim rsport As Recordset
+    Set rsport = DBKetoan.OpenRecordset("SELECT DISTINCTROW tbInvoiceTemplate.* FROM tbInvoiceTemplate", dbOpenSnapshot)
+
+    If Not rsport.EOF Then
+        rsport.MoveFirst
+        Do While Not rsport.EOF
+            Combo1.AddItem rsport!code & "-" & UnicodeToVni(rsport!name)
+            Combo1.ItemData(Combo1.NewIndex) = rsport!id
+            Combo1.Text = rsport!code & "-" & UnicodeToVni(rsport!name)
+            rsport.MoveNext
+        Loop
+    End If
 
     lblTitle(11).AutoSize = True
     Me.Height = Me.Height + 350 + 10
@@ -531,7 +858,7 @@ Private Sub Form_Load()
     ngay = CVDate("01/01/1900")
 
     SetFont Me
-  
+
 End Sub
 
 Private Sub T_GotFocus(Index As Integer)

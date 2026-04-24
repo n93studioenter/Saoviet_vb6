@@ -2883,7 +2883,7 @@ Private Sub TxtVT_Change(Index As Integer)
     End If
 End Sub
 
-Private Sub txtVT_GotFocus(Index As Integer)
+Private Sub Txtvt_GotFocus(Index As Integer)
     AutoSelect txtVT(Index)
 End Sub
 

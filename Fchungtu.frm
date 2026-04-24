@@ -64,7 +64,7 @@ Begin VB.Form FrmChungtu
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   10800
+      Left            =   10320
       MaskColor       =   &H00FFFFFF&
       Picture         =   "Fchungtu.frx":68AC
       TabIndex        =   195
@@ -440,7 +440,7 @@ Begin VB.Form FrmChungtu
    Begin VB.CommandButton Command5 
       Caption         =   " Ho¸ ®¬n"
       Height          =   375
-      Left            =   12240
+      Left            =   12360
       TabIndex        =   173
       Top             =   4680
       Width           =   975
@@ -3929,6 +3929,7 @@ Const IDOK As Long = 1
 Dim bakThangNK As Integer
 ' Bi?n toàn c?c d? luu handle c?a c?a s? ?ng d?ng dã m?
 Dim hWndApp As Long
+Public bakIdNhap As String
 Dim isGhi As Boolean
 Dim HasChitiet As Boolean
 Dim sttTongHop As Integer
@@ -4018,18 +4019,18 @@ Dim SetLoaiEnable As Boolean
 Dim shct As String
 Dim xddu As Boolean
 Dim TenTC As String, DiachiTC As String, ctgoc As String, TenNX As String, DiaChiNX As String, TenBH As String, DiaChiBH As String, MSTBH As String, unc1 As String, unc2 As String, unc3 As String, MaKHBH As Long, HanTT As Date
-Attribute DiachiTC.VB_VarUserMemId = 1073938540
-Attribute ctgoc.VB_VarUserMemId = 1073938540
-Attribute TenNX.VB_VarUserMemId = 1073938540
-Attribute DiaChiNX.VB_VarUserMemId = 1073938540
-Attribute TenBH.VB_VarUserMemId = 1073938540
-Attribute DiaChiBH.VB_VarUserMemId = 1073938540
-Attribute MSTBH.VB_VarUserMemId = 1073938540
-Attribute unc1.VB_VarUserMemId = 1073938540
-Attribute unc2.VB_VarUserMemId = 1073938540
-Attribute unc3.VB_VarUserMemId = 1073938540
-Attribute MaKHBH.VB_VarUserMemId = 1073938540
-Attribute HanTT.VB_VarUserMemId = 1073938540
+Attribute DiachiTC.VB_VarUserMemId = 1073938541
+Attribute ctgoc.VB_VarUserMemId = 1073938541
+Attribute TenNX.VB_VarUserMemId = 1073938541
+Attribute DiaChiNX.VB_VarUserMemId = 1073938541
+Attribute TenBH.VB_VarUserMemId = 1073938541
+Attribute DiaChiBH.VB_VarUserMemId = 1073938541
+Attribute MSTBH.VB_VarUserMemId = 1073938541
+Attribute unc1.VB_VarUserMemId = 1073938541
+Attribute unc2.VB_VarUserMemId = 1073938541
+Attribute unc3.VB_VarUserMemId = 1073938541
+Attribute MaKHBH.VB_VarUserMemId = 1073938541
+Attribute HanTT.VB_VarUserMemId = 1073938541
 Dim HD() As tpHoaDon, hdcount As Integer
 Attribute HD.VB_VarUserMemId = 1073938518
 Attribute hdcount.VB_VarUserMemId = 1073938518
@@ -4092,13 +4093,13 @@ Public Sub AutoCLickLoai()
     RFocus CboThang
     DisplayFileImportList
 End Sub
-Public Sub AddImportData(ByVal id As String, ByVal Name As String, ByVal mst As String, ByVal sohd As String, ByVal khHD As String, ByVal ngay As Date, ByVal types As String, ByVal path As String, ByVal tkno As String, ByVal TkCo As String, ByVal tkThue As String, ByVal diengiai As String, ByVal TongTien As String, ByVal VAT As String, ByVal sohieutp As String, ByVal TgTCThue As String, ByVal TgTThue As String, ByVal Ishaschild As String)
+Public Sub AddImportData(ByVal id As String, ByVal name As String, ByVal mst As String, ByVal sohd As String, ByVal khHD As String, ByVal ngay As Date, ByVal types As String, ByVal path As String, ByVal tkno As String, ByVal TkCo As String, ByVal tkThue As String, ByVal diengiai As String, ByVal TongTien As String, ByVal VAT As String, ByVal sohieutp As String, ByVal TgTCThue As String, ByVal TgTThue As String, ByVal Ishaschild As String)
     Dim fileImport As ClsFileImport
     Set fileImport = New ClsFileImport
 
     ' Gán giá tr? cho các thu?c tính
     fileImport.id = id
-    fileImport.Name = Name
+    fileImport.name = name
     fileImport.mst = mst
     fileImport.sohd = sohd
     fileImport.khHD = khHD
@@ -7038,6 +7039,9 @@ Function RemoveLeadingZeros(ByVal str As String) As String
 End Function
 
 Private Sub btnImportXML_Click()
+    Dim kq As String
+    kq = LayThongTinMST_Masothue("037051000158-bui-duc-cuong")
+
     btnReset_Click
     dshdloi = ""
     'IsImport = True
@@ -9749,6 +9753,33 @@ Public Sub TuDongNhapKho()
     ExecuteSQL5 "UPDATE License SET Lock12=10+ Lock12 Mod 10 + Lock12 \100"
 End Sub
 Public Sub Command_Click(Index As Integer)
+
+'bak nhapid
+    If Index = 1 Then
+        Dim rsport As Recordset
+        Set rsport = DBKetoan.OpenRecordset("select IdNhap AS f1 FROM HoaDon " & _
+                                            "inner join ChungTu on HoaDon.MaSo = ChungTu.MaSo " & _
+                                            "where ChungTu.SoHieu = '" & FrmChungtu.txt(0).Text & "' " & _
+                                            "and HoaDon.KyHieu = '" & FrmChungtu.txtVT(1).Text & "' " & _
+                                            "and ChungTu.NgayCT = #" & Format(FrmChungtu.MedNgay(0).Text, "yyyy-mm-dd") & "#", dbOpenSnapshot)
+        If Not rsport.EOF Then
+            ' L?y giá tr? IdNhap
+            Dim IdNhap As String
+            If Not IsNull(rsport!f1) Then
+
+                IdNhap = rsport!f1  ' ho?c rsport.Fields("f1").Value
+                bakIdNhap = IdNhap
+                rsport.Close
+                Set rsport = Nothing
+
+            End If
+
+        End If
+    End If
+
+
+
+
     If Index = 0 Then
         txtNoidung.Text = ""
     End If
@@ -10618,7 +10649,7 @@ Private Sub Command3_Click()
 End Sub
 
 
-Sub GetcustomerByMST(ByVal mst As String, ByVal Name As String, ByVal Address As String)
+Sub GetcustomerByMST(ByVal mst As String, ByVal name As String, ByVal address As String)
     Dim rs_ktra As Recordset
     Dim Query As String
 
@@ -10640,10 +10671,10 @@ Sub GetcustomerByMST(ByVal mst As String, ByVal Name As String, ByVal Address As
         Dim getMst As String
         getMst = Right(txtVT(9).Text, 4)
         txtVT(0).Text = getMst
-        txtVT(7).Text = Name
-        txtTenKH.Text = VniToUnicode(Name)
-        txtVT(8).Text = Address
-        txtDiaChi.Text = VniToUnicode(Address)
+        txtVT(7).Text = name
+        txtTenKH.Text = VniToUnicode(name)
+        txtVT(8).Text = address
+        txtDiaChi.Text = VniToUnicode(address)
     End If
 
     ' Ðóng Recordset
@@ -10791,11 +10822,43 @@ Public Sub cmdReset_Click()
 End Sub
 
 Private Sub Command5_Click()
-    Me.MousePointer = 11
-    DoEvents
-    GhiChutxt 3
-    frmBrowser.Show vbModal
-    Me.MousePointer = vbDefault
+
+'Kiem tra dang hoa don truoc
+'txt(0)
+'txtVT(1)
+'MedNgay(0)
+    Dim rsport As Recordset
+    Set rsport = DBKetoan.OpenRecordset("select IdNhap AS f1 FROM HoaDon " & _
+                                        "inner join ChungTu on HoaDon.MaSo = ChungTu.MaSo " & _
+                                        "where ChungTu.SoHieu = '" & FrmChungtu.txt(0).Text & "' " & _
+                                        "and HoaDon.KyHieu = '" & FrmChungtu.txtVT(1).Text & "' " & _
+                                        "and ChungTu.NgayCT = #" & Format(FrmChungtu.MedNgay(0).Text, "yyyy-mm-dd") & "#", dbOpenSnapshot)
+    If Not rsport.EOF Then
+        ' L?y giá tr? IdNhap
+        Dim IdNhap As String
+        If Not IsNull(rsport!f1) Then
+
+            IdNhap = rsport!f1  ' ho?c rsport.Fields("f1").Value
+            Dim url As String
+            url = App.path & "\HoaDon\HdNhap\" & IdNhap & ".pdf"
+            Shell "rundll32.exe url.dll,FileProtocolHandler " & url, vbNormalFocus
+
+            rsport.Close
+            Set rsport = Nothing
+            Exit Sub
+        Else
+            Me.MousePointer = 11
+            DoEvents
+            GhiChutxt 3
+            frmBrowser.types = "0"
+            frmBrowser.Show vbModal
+            Me.MousePointer = vbDefault
+        End If
+
+    End If
+
+    ' Ðóng recordset sau khi dùng
+
 End Sub
 Public Sub Show1()
     OptLoai_Click 9
@@ -10840,7 +10903,43 @@ Public Function MsgBoxU(ByVal sText As String, _
     MsgBoxU = MessageBoxW(0, StrPtr(sText), StrPtr(sCaption), uType)
 End Function
 
+Private Sub ReadMst(mst As String)
+    Dim http As Object
+    Dim json As Object
+    Dim url As String
+    Dim res As String
 
+    url = "https://api.vietqr.io/v2/business/" & mst
+
+    Set http = CreateObject("WinHttp.WinHttpRequest.5.1")
+    http.Open "GET", url, False
+    http.send
+
+    If http.Status = 200 Then
+
+        res = http.responseText
+
+        ' Parse JSON
+        Set json = JsonConverter.ParseJson(res)
+
+        ' L?y d? li?u
+        Dim code As String
+        Dim name As String
+        Dim address As String
+
+        code = json("code")
+        name = json("data")("name")
+        address = json("data")("address")
+
+        'MsgBox "Code: " & code
+        'MsgBox "Tên: " & name
+        txtTenKH.Text = name
+        'MsgBox "Ð?a ch?: " & address
+        txtDiaChi.Text = address
+    Else
+        Debug.Print " & http.Status"
+    End If
+End Sub
 Private Sub Form_Load()
 
     isclicktt = 0
@@ -11290,7 +11389,7 @@ Private Sub AnControl()
              "MSHFlexGrid", "DataGrid", "MaskEdBox"
 
             ' b? qua title gi?
-            If ctl.Name <> "picFakeTitle" And ctl.Name <> "lblTitle" And ctl.Name <> "lblClose" Then
+            If ctl.name <> "picFakeTitle" And ctl.name <> "lblTitle" And ctl.name <> "lblClose" Then
                 ctl.Top = ctl.Top + TITLE_HEIGHT
             End If
             If (ctl.ToolTipText = "SKIP") Then
@@ -16212,6 +16311,10 @@ Private Sub TxtVT_Change(Index As Integer)
                 'RFocus txt(1)
                 RFocus txtNoidung
             End If
+        Else
+            If txtVT(9).Text <> "" And txtVT(9).Text <> "..." Then
+               ' ReadMst txtVT(9).Text
+            End If
         End If
 
     Else
@@ -16665,7 +16768,73 @@ End Sub
 '    End Sub
 '
 
+Private Function LayThongTinMST_Masothue(ByVal sMST As String) As String
+    Dim http As WinHttp.WinHttpRequest
+    Dim sURL As String, sHTML As String
+    Dim sTenDN As String, sDiaChi As String, sNguoiDD As String, sNgayCap As String, sTrangThai As String
+    
+    On Error GoTo XuLyLoi
+    
+    ' T?o URL t? MST
+    sURL = "https://masothue.com/" & sMST
+    
+    Set http = New WinHttp.WinHttpRequest
+    http.Open "GET", sURL, False
+    http.setRequestHeader "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+    http.Option(6) = True ' WinHttpRequestOption_EnableRedirects
+    http.send
+    
+    If http.Status <> 200 Then
+        LayThongTinMST_Masothue = "Loi HTTP: " & http.Status
+        Exit Function
+    End If
+    
+    sHTML = http.responseText
+    Set http = Nothing
+    
+    ' Parse HTML b?ng cách tìm th? <td> theo tiêu d?
+    sTenDN = TachDuLieu(sHTML, "Tên chính th?c</th>", "</td>")
+    sDiaChi = TachDuLieu(sHTML, "Ð?a ch?</th>", "</td>")
+    sNguoiDD = TachDuLieu(sHTML, "Ngu?i d?i di?n</th>", "</td>")
+    sNgayCap = TachDuLieu(sHTML, "Ngày c?p</th>", "</td>")
+    sTrangThai = TachDuLieu(sHTML, "Tình tr?ng</th>", "</td>")
+    
+    ' G?p k?t qu?
+    LayThongTinMST_Masothue = "Ten DN: " & sTenDN & vbCrLf & _
+                              "Dia chi: " & sDiaChi & vbCrLf & _
+                              "Nguoi DD: " & sNguoiDD & vbCrLf & _
+                              "Ngay cap: " & sNgayCap & vbCrLf & _
+                              "Trang thai: " & sTrangThai
+    Exit Function
+    
+XuLyLoi:
+    LayThongTinMST_Masothue = "Loi: " & Err.Description
+    Set http = Nothing
+End Function
 
+' Hàm ph? d? c?t chu?i
+Private Function TachDuLieu(ByVal sHTML As String, ByVal sBatDau As String, ByVal sKetThuc As String) As String
+    Dim lPos1 As Long, lPos2 As Long, sTemp As String
+    
+    lPos1 = InStr(1, sHTML, sBatDau, vbTextCompare)
+    If lPos1 = 0 Then Exit Function
+    lPos1 = lPos1 + Len(sBatDau)
+    
+    ' B? qua th? <td> m?
+    lPos1 = InStr(lPos1, sHTML, ">", vbTextCompare) + 1
+    lPos2 = InStr(lPos1, sHTML, sKetThuc, vbTextCompare)
+    
+    If lPos2 > lPos1 Then
+        sTemp = Mid$(sHTML, lPos1, lPos2 - lPos1)
+        ' Xóa th? html còn sót
+        sTemp = Replace(sTemp, "<span>", "")
+        sTemp = Replace(sTemp, "</span>", "")
+        sTemp = Replace(sTemp, "<a>", "")
+        sTemp = Replace(sTemp, "</a>", "")
+        sTemp = Trim$(sTemp)
+        TachDuLieu = sTemp
+    End If
+End Function
 
 
 

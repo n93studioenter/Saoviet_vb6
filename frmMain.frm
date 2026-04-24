@@ -220,7 +220,7 @@ Begin VB.Form frmMain
          EndProperty
          BeginProperty Panel4 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Style           =   6
-            TextSave        =   "21/04/26"
+            TextSave        =   "23/04/26"
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -2500,7 +2500,7 @@ Attribute gSubMenu.VB_VarUserMemId = 1073938438
 Public gCurrentMenu As Integer
 Attribute gCurrentMenu.VB_VarUserMemId = 1073938439
 
-Private Declare Sub CopyMemory Lib "Kernel32" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal length As Long)
+Private Declare Sub CopyMemory Lib "Kernel32" Alias "RtlMoveMemory" (Destination As Any, source As Any, ByVal Length As Long)
 Private Declare Function GetAdaptersInfo Lib "iphlpapi" (lpAdapterInfo As Any, lpSize As Long) As Long
 
 Public Tudongtinhgiavon As Boolean
@@ -2879,8 +2879,8 @@ Public Sub Taifilecapnhat()
         ProgressBar1.Value = i
         DoEvents
     Next i
-    Dim Result As Long
-    Result = ShellExecute(0, "open", destFile, "", destFolder, 0)
+    Dim result As Long
+    result = ShellExecute(0, "open", destFile, "", destFolder, 0)
 ErrorHandler:
     'MsgBox "L?i khi t?i file update.exe:" & vbCrLf & Err.Description, vbCritical
     ProgressBar1.Value = 100
@@ -2913,8 +2913,10 @@ End Sub
 
 Private Sub Form_Activate()
     CheckAndCreateTBCpu
+    ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD IdNhap text")
+    ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD StatusPH text")
     ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
-     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD Printername text")
+    ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD Printername text")
     Dim cmg As Long
     cmg = SelectSQL("select CMG AS f1 from  License")
     If cmg = 249991 Then
@@ -3052,15 +3054,15 @@ Private Function GetFontName(fontFace As String) As String
         GetFontName = fontFace
     End If
 End Function
-Private Function ReadTxt(filePath As String) As String
+Private Function ReadTxt(FilePath As String) As String
     Dim fileNumber As Integer
     Dim content As String
 
     On Error GoTo ErrorHandler
 
     ' Ki?m tra file t?n t?i
-    If Dir(filePath) = "" Then
-        ReadTxt = "File không t?n t?i: " & filePath
+    If Dir(FilePath) = "" Then
+        ReadTxt = "File không t?n t?i: " & FilePath
         Exit Function
     End If
 
@@ -3068,7 +3070,7 @@ Private Function ReadTxt(filePath As String) As String
     fileNumber = FreeFile
 
     ' M? file d? d?c
-    Open filePath For Input As #fileNumber
+    Open FilePath For Input As #fileNumber
 
     ' Ð?c toàn b? n?i dung
     If LOF(fileNumber) > 0 Then
@@ -3417,8 +3419,97 @@ Public Sub CheckAndCreateTBCpu()
         DBKetoan.TableDefs.Append tdf
     End If
 End Sub
+Public Sub CheckAndCreateTBInvoiceTemplate()
+    Dim tdf As DAO.TableDef
+    Dim fld As DAO.Field
+    Dim tableExists As Boolean
+    Dim tableName As String
+
+    tableName = "tbInvoiceTemplate"
+    tableExists = False
+
+
+    ' Ki?m tra t?n t?i b?ng
+    For Each tdf In DBKetoan.TableDefs
+        If tdf.Name = tableName Then
+            tableExists = True
+            Exit For
+        End If
+    Next tdf
+
+    If Not tableExists Then
+        ' T?o b?ng n?u chua t?n t?i
+        Set tdf = DBKetoan.CreateTableDef(tableName)
+
+        ' ID
+        Set fld = tdf.CreateField("ID", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+        
+         ' Code
+        Set fld = tdf.CreateField("Code", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+        
+         ' Name
+        Set fld = tdf.CreateField("Name", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+ 
+        ' Thêm b?ng vào CSDL
+        DBKetoan.TableDefs.Append tdf
+    End If
+End Sub
+Public Sub CheckAndCreateTBInvoice()
+    Dim tdf As DAO.TableDef
+    Dim fld As DAO.Field
+    Dim tableExists As Boolean
+    Dim tableName As String
+
+    tableName = "tbInvoiceInfo"
+    tableExists = False
+
+
+    ' Ki?m tra t?n t?i b?ng
+    For Each tdf In DBKetoan.TableDefs
+        If tdf.Name = tableName Then
+            tableExists = True
+            Exit For
+        End If
+    Next tdf
+
+    If Not tableExists Then
+        ' T?o b?ng n?u chua t?n t?i
+        Set tdf = DBKetoan.CreateTableDef(tableName)
+
+        ' Url
+        Set fld = tdf.CreateField("Url", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+        ' Url
+        Set fld = tdf.CreateField("Username", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+        'Password
+        ' Url
+        Set fld = tdf.CreateField("Password", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+        
+ 
+        ' Thêm b?ng vào CSDL
+        DBKetoan.TableDefs.Append tdf
+    End If
+End Sub
 Private Sub Form_Load()
     CheckAndCreateTBCpu
+    
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD tk155 text")
     ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
     frmMain.sbStatusBar.Panels(4).ToolTipText = "Log On Time: " + Format(Time, "hh:mm:ss")

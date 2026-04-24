@@ -4,10 +4,10 @@ Begin VB.Form FrmOptions
    AutoRedraw      =   -1  'True
    BackColor       =   &H00FFFFC0&
    BorderStyle     =   0  'None
-   ClientHeight    =   8175
+   ClientHeight    =   8055
    ClientLeft      =   615
    ClientTop       =   585
-   ClientWidth     =   10395
+   ClientWidth     =   13020
    ClipControls    =   0   'False
    FillColor       =   &H00FFFFC0&
    BeginProperty Font 
@@ -27,20 +27,77 @@ Begin VB.Form FrmOptions
    MinButton       =   0   'False
    PaletteMode     =   1  'UseZOrder
    Picture         =   "Frmopt.frx":57E2
-   ScaleHeight     =   8175
-   ScaleWidth      =   10395
+   ScaleHeight     =   8055
+   ScaleWidth      =   13020
    ShowInTaskbar   =   0   'False
    Tag             =   "Options"
+   Begin VB.TextBox txtIncoiePassword 
+      Height          =   375
+      Left            =   10560
+      TabIndex        =   151
+      Top             =   1680
+      Width           =   2295
+   End
+   Begin VB.TextBox txtInvoiceUsername 
+      Height          =   375
+      Left            =   10560
+      TabIndex        =   150
+      Top             =   1250
+      Width           =   2295
+   End
+   Begin VB.Frame Frame2 
+      BackColor       =   &H00FFFFC0&
+      Caption         =   "Th«ng tin Invoice Portal"
+      Height          =   2055
+      Left            =   9120
+      TabIndex        =   144
+      Top             =   240
+      Width           =   4695
+      Begin VB.TextBox txtInvoiceUrl 
+         Height          =   375
+         Left            =   1440
+         TabIndex        =   146
+         Top             =   360
+         Width           =   2295
+      End
+      Begin VB.Label Label6 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Password"
+         Height          =   375
+         Left            =   120
+         TabIndex        =   149
+         Top             =   1320
+         Width           =   1095
+      End
+      Begin VB.Label Label5 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Username"
+         Height          =   375
+         Left            =   120
+         TabIndex        =   148
+         Top             =   840
+         Width           =   975
+      End
+      Begin VB.Label Label3 
+         BackColor       =   &H00FFFFC0&
+         Caption         =   "Url"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   145
+         Top             =   360
+         Width           =   375
+      End
+   End
    Begin VB.PictureBox picFakeTitle 
       BackColor       =   &H00FFFFFF&
       BorderStyle     =   0  'None
       Height          =   255
       Left            =   0
       ScaleHeight     =   255
-      ScaleWidth      =   13575
+      ScaleWidth      =   13935
       TabIndex        =   135
       Top             =   0
-      Width           =   13575
+      Width           =   13935
       Begin VB.Label lblTitle 
          BackColor       =   &H00FFFFFF&
          Caption         =   "Th«ng sè hÖ thèng"
@@ -94,7 +151,7 @@ Begin VB.Form FrmOptions
             Strikethrough   =   0   'False
          EndProperty
          Height          =   405
-         Left            =   11400
+         Left            =   13560
          TabIndex        =   136
          Top             =   0
          Width           =   480
@@ -115,7 +172,7 @@ Begin VB.Form FrmOptions
       Index           =   1
       Left            =   0
       TabIndex        =   69
-      Top             =   4560
+      Top             =   4440
       Width           =   9070
       Begin VB.CheckBox ChkVT 
          BackColor       =   &H00FFFFC0&
@@ -1413,9 +1470,9 @@ Begin VB.Form FrmOptions
    Begin VB.CommandButton active 
       Caption         =   "Active"
       Height          =   375
-      Left            =   9120
+      Left            =   11880
       TabIndex        =   104
-      Top             =   6840
+      Top             =   7560
       Width           =   1095
    End
    Begin VB.TextBox Text 
@@ -1453,11 +1510,11 @@ Begin VB.Form FrmOptions
       EndProperty
       Height          =   285
       Index           =   27
-      Left            =   11400
+      Left            =   9240
       MaxLength       =   30
       TabIndex        =   92
       Text            =   "..."
-      Top             =   600
+      Top             =   5400
       Visible         =   0   'False
       Width           =   375
    End
@@ -1472,12 +1529,12 @@ Begin VB.Form FrmOptions
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   4815
+      Height          =   4695
       Index           =   0
       Left            =   0
       TabIndex        =   56
-      Top             =   -120
-      Width           =   9075
+      Top             =   -240
+      Width           =   9015
       Begin VB.TextBox Text 
          BeginProperty Font 
             Name            =   "VK Sans Serif"
@@ -1508,7 +1565,7 @@ Begin VB.Form FrmOptions
       End
       Begin VB.CommandButton Command1 
          Height          =   375
-         Left            =   7920
+         Left            =   8640
          TabIndex        =   134
          Top             =   4560
          Visible         =   0   'False
@@ -1607,11 +1664,11 @@ Begin VB.Form FrmOptions
          EndProperty
          Height          =   285
          Index           =   28
-         Left            =   7080
+         Left            =   8640
          MaxLength       =   30
          TabIndex        =   112
          Text            =   "..."
-         Top             =   4800
+         Top             =   4920
          Width           =   1575
       End
       Begin VB.TextBox Text 
@@ -2621,12 +2678,12 @@ Begin VB.Form FrmOptions
       EndProperty
       Height          =   375
       Index           =   1
-      Left            =   9120
+      Left            =   11880
       Picture         =   "Frmopt.frx":16ECB
       Style           =   1  'Graphical
       TabIndex        =   55
       Tag             =   "&Return"
-      Top             =   6360
+      Top             =   7080
       Width           =   1095
    End
    Begin VB.CommandButton Command 
@@ -2642,13 +2699,22 @@ Begin VB.Form FrmOptions
       EndProperty
       Height          =   375
       Index           =   0
-      Left            =   9120
+      Left            =   11880
       Picture         =   "Frmopt.frx":182ED
       Style           =   1  'Graphical
       TabIndex        =   54
       Tag             =   "&Save"
-      Top             =   5880
+      Top             =   6600
       Width           =   1095
+   End
+   Begin VB.Label Label4 
+      BackColor       =   &H00FFFFC0&
+      Caption         =   "Url"
+      Height          =   255
+      Left            =   0
+      TabIndex        =   147
+      Top             =   0
+      Width           =   375
    End
    Begin MSForms.CheckBox CheckBox1 
       Height          =   255
@@ -2774,7 +2840,7 @@ Public Function EncodeLicense6(ByVal num As Long, ByRef randomNum As Long) As St
     'Dim randomNum As Long
     Dim combined As Variant   ' <--- Dùng Variant
     Dim encrypted As Variant  ' <--- Dùng Variant
-    Dim Result As String
+    Dim result As String
 
     On Error GoTo ErrorHandler
 
@@ -2800,13 +2866,13 @@ Public Function EncodeLicense6(ByVal num As Long, ByRef randomNum As Long) As St
     encrypted = encrypted - Int(encrypted / 2176782336#) * 2176782336#
 
     ' Chuy?n sang base36 (6 ký t?)
-    Result = ""
+    result = ""
     Do While encrypted > 0
-        Result = Mid(CHARSET, (encrypted Mod 36) + 1, 1) & Result
+        result = Mid(CHARSET, (encrypted Mod 36) + 1, 1) & result
         encrypted = Int(encrypted / 36)
     Loop
 
-    EncodeLicense6 = Right(String(6, "0") & Result, 6)
+    EncodeLicense6 = Right(String(6, "0") & result, 6)
     Exit Function
 
 ErrorHandler:
@@ -2818,20 +2884,20 @@ End Function
 ' ==============================================
 Public Function DecodeLicense6(ByVal txt As String, ByRef randomNum As Long) As Long
     Dim i As Integer
-    Dim Result As Variant   ' <--- Dùng Variant
+    Dim result As Variant   ' <--- Dùng Variant
     Dim combined As Variant
 
     On Error GoTo ErrorHandler
 
     ' Gi?i mã base36
-    Result = 0
+    result = 0
     For i = 1 To Len(txt)
-        Result = Result * 36 + (InStr(CHARSET, Mid(txt, i, 1)) - 1)
+        result = result * 36 + (InStr(CHARSET, Mid(txt, i, 1)) - 1)
     Next
 
     ' Gi?i mã
-    Result = Result - 12345
-    combined = Result Xor SECRET_KEY
+    result = result - 12345
+    combined = result Xor SECRET_KEY
 
     ' Tách random và s? g?c
     randomNum = Int(combined / 2000000)
@@ -2852,7 +2918,7 @@ End Function
 Public Function EncodeLicense6Ex(ByVal num As Long, ByVal randomNum As Long) As String
     Dim combined As Currency   ' <--- Ð?i thành Currency
     Dim encrypted As Long
-    Dim Result As String
+    Dim result As String
     
     On Error GoTo ErrorHandler
     
@@ -2867,13 +2933,13 @@ Public Function EncodeLicense6Ex(ByVal num As Long, ByVal randomNum As Long) As 
     encrypted = (CLng(combined) Xor SECRET_KEY) + 12345
     encrypted = encrypted Mod 2176782336#
     
-    Result = ""
+    result = ""
     Do While encrypted > 0
-        Result = Mid(CHARSET, (encrypted Mod 36) + 1, 1) & Result
+        result = Mid(CHARSET, (encrypted Mod 36) + 1, 1) & result
         encrypted = encrypted \ 36
     Loop
     
-    EncodeLicense6Ex = Right(String(6, "0") & Result, 6)
+    EncodeLicense6Ex = Right(String(6, "0") & result, 6)
     Exit Function
     
 ErrorHandler:
@@ -2885,7 +2951,7 @@ End Function
 ' ==============================================
 Public Function EncodeLicense4(ByVal num As Long) As String
     Dim encrypted As Long
-    Dim Result As String
+    Dim result As String
     
     If num > 999999 Then
         EncodeLicense4 = "ERROR"
@@ -2894,58 +2960,58 @@ Public Function EncodeLicense4(ByVal num As Long) As String
     
     encrypted = ((num Xor SECRET_KEY) + 12345) Mod 1679616
     
-    Result = ""
+    result = ""
     Do While encrypted > 0
-        Result = Mid(CHARSET, (encrypted Mod 36) + 1, 1) & Result
+        result = Mid(CHARSET, (encrypted Mod 36) + 1, 1) & result
         encrypted = encrypted \ 36
     Loop
     
-    EncodeLicense4 = Right("0000" & Result, 4)
+    EncodeLicense4 = Right("0000" & result, 4)
 End Function
 
 Public Function DecodeLicense4(ByVal txt As String) As Long
     Dim i As Integer
-    Dim Result As Long
+    Dim result As Long
     
-    Result = 0
+    result = 0
     For i = 1 To Len(txt)
-        Result = Result * 36 + (InStr(CHARSET, Mid(txt, i, 1)) - 1)
+        result = result * 36 + (InStr(CHARSET, Mid(txt, i, 1)) - 1)
     Next
     
-    Result = Result - 12345
-    Result = Result Xor SECRET_KEY
+    result = result - 12345
+    result = result Xor SECRET_KEY
     
-    DecodeLicense4 = Result
+    DecodeLicense4 = result
 End Function
 
 Public Function EncodeLicense2(ByVal num As Long) As String
     Dim encrypted As Long
-    Dim Result As String
+    Dim result As String
     
     encrypted = (num Xor SECRET_KEY) + 12345
     
-    Result = ""
+    result = ""
     Do While encrypted > 0
-        Result = Mid(CHARSET, (encrypted Mod 36) + 1, 1) & Result
+        result = Mid(CHARSET, (encrypted Mod 36) + 1, 1) & result
         encrypted = encrypted \ 36
     Loop
     
-    EncodeLicense2 = Result
+    EncodeLicense2 = result
 End Function
 
 Public Function DecodeLicense2(ByVal txt As String) As Long
     Dim i As Integer
-    Dim Result As Long
+    Dim result As Long
     
-    Result = 0
+    result = 0
     For i = 1 To Len(txt)
-        Result = Result * 36 + (InStr(CHARSET, Mid(txt, i, 1)) - 1)
+        result = result * 36 + (InStr(CHARSET, Mid(txt, i, 1)) - 1)
     Next
     
-    Result = Result - 12345
-    Result = Result Xor SECRET_KEY
+    result = result - 12345
+    result = result Xor SECRET_KEY
     
-    DecodeLicense2 = Result
+    DecodeLicense2 = result
 End Function
 
 'Cho mac
@@ -3008,7 +3074,7 @@ Public Function Encode6(ByVal num As Long) As String
     Dim randomNum As Long
     Dim combined As Variant
     Dim encrypted As Variant
-    Dim Result As String
+    Dim result As String
     
     On Error GoTo ErrorHandler
     
@@ -3032,13 +3098,13 @@ Public Function Encode6(ByVal num As Long) As String
     encrypted = encrypted - Int(encrypted / 2176782336#) * 2176782336#
     
     ' Chuy?n sang base36 (6 ký t?)
-    Result = ""
+    result = ""
     Do While encrypted > 0
-        Result = Mid(CHARSET, (encrypted Mod 36) + 1, 1) & Result
+        result = Mid(CHARSET, (encrypted Mod 36) + 1, 1) & result
         encrypted = Int(encrypted / 36)
     Loop
     
-    Encode6 = Right(String(6, "0") & Result, 6)
+    Encode6 = Right(String(6, "0") & result, 6)
     Exit Function
     
 ErrorHandler:
@@ -3050,20 +3116,20 @@ End Function
 ' ==============================================
 Public Function Decode6(ByVal txt As String) As Long
     Dim i As Integer
-    Dim Result As Variant
+    Dim result As Variant
     Dim combined As Variant
     
     On Error GoTo ErrorHandler
     
     ' Gi?i mã base36
-    Result = 0
+    result = 0
     For i = 1 To Len(txt)
-        Result = Result * 36 + (InStr(CHARSET, Mid(txt, i, 1)) - 1)
+        result = result * 36 + (InStr(CHARSET, Mid(txt, i, 1)) - 1)
     Next
     
     ' Gi?i mã
-    Result = Result - 12345
-    combined = Result Xor SECRET_KEY2
+    result = result - 12345
+    combined = result Xor SECRET_KEY2
     
     ' L?y num (b? random)
     Decode6 = combined Mod 16777216
@@ -3077,7 +3143,7 @@ End Function
 ' Ð?NH D?NG MAC CÓ D?U ":"
 ' ==============================================
 Public Function FormatMAC(ByVal mac As String) As String
-    Dim Result As String
+    Dim result As String
     Dim i As Integer
     
     If Len(mac) <> 12 Then
@@ -3085,13 +3151,13 @@ Public Function FormatMAC(ByVal mac As String) As String
         Exit Function
     End If
     
-    Result = ""
+    result = ""
     For i = 1 To Len(mac) Step 2
-        If Result <> "" Then Result = Result & ":"
-        Result = Result & Mid(mac, i, 2)
+        If result <> "" Then result = result & ":"
+        result = result & Mid(mac, i, 2)
     Next i
     
-    FormatMAC = Result
+    FormatMAC = result
 End Function
  
 
@@ -3204,20 +3270,20 @@ End Function
 ' HÀM H? TR?: Chuy?n s? sang base36 (6 ký t?)
 ' ==============================================
 Private Function ToBase36_6(ByVal num As Long) As String
-    Dim Result As String
+    Dim result As String
     
     If num = 0 Then
         ToBase36_6 = "000000"
         Exit Function
     End If
     
-    Result = ""
+    result = ""
     Do While num > 0
-        Result = Mid(CHARSET, (num Mod 36) + 1, 1) & Result
+        result = Mid(CHARSET, (num Mod 36) + 1, 1) & result
         num = num \ 36
     Loop
     
-    ToBase36_6 = Right(String(6, "0") & Result, 6)
+    ToBase36_6 = Right(String(6, "0") & result, 6)
 End Function
 
 ' ==============================================
@@ -3316,24 +3382,24 @@ End Function
 ' MIX
 ' ==============================================
 Private Function MixString(ByVal s As String, ByVal key As Integer) As String
-    Dim Result As String, i As Integer
+    Dim result As String, i As Integer
     Dim digit As Integer, keyDigit As Integer
     
     For i = 1 To Len(s)
         digit = CInt(Mid(s, i, 1))
         keyDigit = (key \ (10 ^ ((i - 1) Mod 2))) Mod 10
         digit = (digit + keyDigit) Mod 10
-        Result = Result & digit
+        result = result & digit
     Next i
     
-    MixString = Result
+    MixString = result
 End Function
 
 ' ==============================================
 ' UNMIX
 ' ==============================================
 Private Function UnmixString(ByVal s As String, ByVal key As Integer) As String
-    Dim Result As String, i As Integer
+    Dim result As String, i As Integer
     Dim digit As Integer, keyDigit As Integer
     
     For i = 1 To Len(s)
@@ -3341,10 +3407,10 @@ Private Function UnmixString(ByVal s As String, ByVal key As Integer) As String
         keyDigit = (key \ (10 ^ ((i - 1) Mod 2))) Mod 10
         digit = (digit - keyDigit) Mod 10
         If digit < 0 Then digit = digit + 10
-        Result = Result & digit
+        result = result & digit
     Next i
     
-    UnmixString = Result
+    UnmixString = result
 End Function
 
 ' ==============================================
@@ -3395,7 +3461,7 @@ End Function
 Private Function EncodeString(ByVal s As String) As String
     Dim num As Double
     Dim i As Integer
-    Dim Result As String
+    Dim result As String
 
     num = 0
 
@@ -3409,11 +3475,11 @@ Private Function EncodeString(ByVal s As String) As String
     End If
 
     Do While num > 0
-        Result = Mid(CHARSET, (num Mod 36) + 1, 1) & Result
+        result = Mid(CHARSET, (num Mod 36) + 1, 1) & result
         num = Int(num / 36)
     Loop
 
-    EncodeString = Right(String(4, "0") & Result, 4)
+    EncodeString = Right(String(4, "0") & result, 4)
 End Function
 
 ' ==============================================
@@ -3495,30 +3561,30 @@ End Function
 ' HÀM CHUY?N BYTES -> BASE36
 ' ==============================================
 Private Function BytesToBase36(bytes() As Byte) As String
-    Dim Temp() As Long
-    Dim Result As String
+    Dim temp() As Long
+    Dim result As String
     Dim remainder As Integer
     Dim i As Integer
     
-    ReDim Temp(UBound(bytes))
+    ReDim temp(UBound(bytes))
     For i = 0 To UBound(bytes)
-        Temp(i) = bytes(i)
+        temp(i) = bytes(i)
     Next
     
-    Result = ""
+    result = ""
     Do
         remainder = 0
-        For i = UBound(Temp) To 0 Step -1
-            remainder = remainder * 256 + Temp(i)
-            Temp(i) = remainder \ BASE
+        For i = UBound(temp) To 0 Step -1
+            remainder = remainder * 256 + temp(i)
+            temp(i) = remainder \ BASE
             remainder = remainder Mod BASE
         Next
-        Result = Mid(CHARSET, remainder + 1, 1) & Result
+        result = Mid(CHARSET, remainder + 1, 1) & result
         
         Dim allZero As Boolean
         allZero = True
-        For i = 0 To UBound(Temp)
-            If Temp(i) <> 0 Then
+        For i = 0 To UBound(temp)
+            If temp(i) <> 0 Then
                 allZero = False
                 Exit For
             End If
@@ -3526,21 +3592,21 @@ Private Function BytesToBase36(bytes() As Byte) As String
         If allZero Then Exit Do
     Loop
     
-    BytesToBase36 = Result
+    BytesToBase36 = result
 End Function
 
 ' ==============================================
 ' HÀM CHUY?N BASE36 -> BYTES
 ' ==============================================
 Private Function Base36ToBytes(base36Str As String) As Byte()
-    Dim Result() As Byte
+    Dim result() As Byte
     Dim i As Integer
     Dim j As Integer
     Dim val As Integer
     Dim carry As Long
 
-    ReDim Result(0)
-    Result(0) = 0
+    ReDim result(0)
+    result(0) = 0
 
     For i = 1 To Len(base36Str)
         val = InStr(CHARSET, Mid(base36Str, i, 1)) - 1
@@ -3550,24 +3616,24 @@ Private Function Base36ToBytes(base36Str As String) As Byte()
         End If
 
         carry = val
-        For j = 0 To UBound(Result)
-            carry = carry + Result(j) * BASE
-            Result(j) = carry And &HFF
+        For j = 0 To UBound(result)
+            carry = carry + result(j) * BASE
+            result(j) = carry And &HFF
             carry = carry \ 256
         Next
 
         Do While carry > 0
-            ReDim Preserve Result(UBound(Result) + 1)
-            Result(UBound(Result)) = carry And &HFF
+            ReDim Preserve result(UBound(result) + 1)
+            result(UBound(result)) = carry And &HFF
             carry = carry \ 256
         Loop
     Next
 
-    Base36ToBytes = Result
+    Base36ToBytes = result
 End Function
 Public Sub active_Click()
     Dim key As String
-    Dim ten As String
+    Dim Ten As String
 
 
     Dim randomNum As Long
@@ -3685,8 +3751,8 @@ Public Sub active_Click()
     key = EncodeLicense(UnicodeToVni(txtTenCty.Text), randomNum)
     Debug.Print "KEY: "; key
 
-    ten = DecodeLicense(key)
-    Debug.Print "DECODE: "; ten
+    Ten = DecodeLicense(key)
+    Debug.Print "DECODE: "; Ten
 
     FrmGetStr2.Text1.Text = randomNum & "*" & encoded1 & "*" & code & "*" & license & "*" & encoded & "*" & key
     frmMain.keyhasregistry = frmMain.keyhasregistry + FrmGetStr2.Text1.Text + "_"
@@ -4264,7 +4330,20 @@ Private Sub Dongbotxt()
     Text(2).Text = UnicodeToVni(txtDiachi.Text)
 End Sub
 Public Sub Command_Click(Index As Integer)
-'Validate
+    Dim countAccount As Integer
+    countAccount = SelectSQL("select count(*) AS f1 from  tbInvoiceInfo")
+    If countAccount = 0 Then
+        ExecuteSQL5 "INSERT INTO tbInvoiceInfo (Url, Username, Password) VALUES ('" & _
+                    txtInvoiceUrl.Text & "','" & _
+                    txtInvoiceUsername.Text & "','" & _
+                    txtIncoiePassword.Text & "')"
+    Else
+        ExecuteSQL5 "UPDATE tbInvoiceInfo SET " & _
+                    "Url = '" & Replace(txtInvoiceUrl.Text, "'", "''") & "', " & _
+                    "Username = '" & Replace(txtInvoiceUsername.Text, "'", "''") & "', " & _
+                    "Password = '" & Replace(txtIncoiePassword.Text, "'", "''") & "'"
+    End If
+    'Validate
     If Option2.Value = True And Text1.Text = "0" Then
         ' MsgBox "Vui long nhap so nam"
         Dim s As String
@@ -4424,7 +4503,7 @@ Public Sub Command_Click(Index As Integer)
 
         If Combo(2).ListIndex >= 0 Then T = Combo(2).ItemData(Combo(2).ListIndex) Else T = pTien
         If CInt5(Left(Text(Index).Text, 2)) <> 0 Then Check(55).Value = 0
-          If ((((pTenCty = Text(0).Text And (pTenCn = Text(1).Text Or suatencn = 1) And (Check(19).Value = suatencn) And pMaVach = Check(9).Value And pDinhmuc = Check(13).Value And pSongNgu = (Check(14).Value = 1) And pRpt = Check(15).Value And pTygia = Check(18).Value And T = pTien And mk = 0) Or (DEMO = 1 And CLng5(Left(Text(7).Text, 2)) > 0)) And (mst = Text(7).Text Or (suatencn = 1 And Left(mst, 10) = Left(Text(7).Text, 10)))) Or Combo(3).ListIndex = 4 Or (Cdbl5(Left(Text(7).Text, 10)) = 0 And Cdbl5(Left(frmMain.LbCty(8).Caption, 10)) = 0)) And (pNoiBo = Check(55).Value) And (CInt5(Combo(0).Text) = pNamTC) Then GoTo a
+        If ((((pTenCty = Text(0).Text And (pTenCn = Text(1).Text Or suatencn = 1) And (Check(19).Value = suatencn) And pMaVach = Check(9).Value And pDinhmuc = Check(13).Value And pSongNgu = (Check(14).Value = 1) And pRpt = Check(15).Value And pTygia = Check(18).Value And T = pTien And mk = 0) Or (DEMO = 1 And CLng5(Left(Text(7).Text, 2)) > 0)) And (mst = Text(7).Text Or (suatencn = 1 And Left(mst, 10) = Left(Text(7).Text, 10)))) Or Combo(3).ListIndex = 4 Or (Cdbl5(Left(Text(7).Text, 10)) = 0 And Cdbl5(Left(frmMain.LbCty(8).Caption, 10)) = 0)) And (pNoiBo = Check(55).Value) And (CInt5(Combo(0).Text) = pNamTC) Then GoTo a
         If (Len(pMST) > 0 And Left(Text(7).Text, Len(pMST)) = pMST) Then GoTo a
         If boolean_kiemtra() = False Then GoTo a    ' kiem tra da active thi bat khung nhap ma so le
         'If FrmGetStr.GetMK(Text(7).Text) Then
@@ -4545,6 +4624,14 @@ Private Sub Text_LostFocus(Index As Integer)
 End Sub
 
 Private Sub LoadInfo()
+    Dim rsport As Recordset
+    Set rsport = DBKetoan.OpenRecordset("SELECT DISTINCTROW tbInvoiceInfo.* FROM tbInvoiceInfo", dbOpenSnapshot)
+    If Not rsport.EOF Then
+        txtInvoiceUrl.Text = rsport!URL
+        txtInvoiceUsername.Text = rsport!UserName
+        txtIncoiePassword.Text = rsport!Password
+    End If
+
     Dim rs As Recordset, i As Integer
 
     Set rs = DBKetoan.OpenRecordset("SELECT DISTINCTROW License.* FROM License", dbOpenSnapshot)
@@ -4780,7 +4867,7 @@ Public Function DecodeMST14(ByVal code As String, ByRef randomNum As Long) As St
     Dim len1 As Integer, len2 As Integer
     Dim rdn As Long
     Dim p1 As String, p2 As String
-    Dim Result As String
+    Dim result As String
 
     On Error GoTo ErrorHandler
 
@@ -4801,13 +4888,13 @@ Public Function DecodeMST14(ByVal code As String, ByRef randomNum As Long) As St
     p1 = UnmixString(p1, rdn)
     p2 = UnmixString(p2, rdn)
 
-    Result = p1 & p2
+    result = p1 & p2
 
     ' auto format MST
-    If Len(Result) = 13 Then
-        DecodeMST14 = Left(Result, 10) & "-" & Right(Result, 3)
+    If Len(result) = 13 Then
+        DecodeMST14 = Left(result, 10) & "-" & Right(result, 3)
     Else
-        DecodeMST14 = Result
+        DecodeMST14 = result
     End If
 
     Exit Function
@@ -4824,15 +4911,15 @@ Private Function FromBase36_2(ByVal code As String) As Long
     FromBase36_2 = (InStr(CHARSET, Mid(code, 1, 1)) - 1) * 36 + _
                    (InStr(CHARSET, Mid(code, 2, 1)) - 1)
 End Function
-Private Function ToBase36_N(ByVal num As Long, ByVal length As Integer) As String
-    Dim Result As String
+Private Function ToBase36_N(ByVal num As Long, ByVal Length As Integer) As String
+    Dim result As String
     
     Do While num > 0
-        Result = Mid(CHARSET, (num Mod 36) + 1, 1) & Result
+        result = Mid(CHARSET, (num Mod 36) + 1, 1) & result
         num = num \ 36
     Loop
     
-    ToBase36_N = Right(String(length, "0") & Result, length)
+    ToBase36_N = Right(String(Length, "0") & result, Length)
 End Function
 
 Private Function FromBase36_N(ByVal code As String) As String

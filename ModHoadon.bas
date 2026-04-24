@@ -30,14 +30,14 @@ Public h As tpHoaDon
 
 Public Sub GhiHoaDon(p As Integer)
     Dim sql As String
-    
+
     With h
         If Not KHDetail Then
             sql = "INSERT INTO KhachHang (MaSo,MaPhanLoai,SoHieu,Ten,DiaChi,MST) VALUES (" + CStr(.MaSo) + "," + CStr(Lng_MaxValue("MaSo", "PhanLoaiKhachHang")) + ",'" + CStr(.MaSo) + "','" + .TenKH + "','" + .DiaChiKH + "','" + .MSTKH + "')"
             ExecuteSQL5 sql
         End If
-        sql = "INSERT INTO HoaDon" + IIf(p > 0, "P", "") + " (MaSo,Loai,MaKhachHang,KyHieu,SoHD,NgayPH,MatHang,SoLuong,ThanhTien,TyLe,HD,KCT,HDBL,NK,TS, DC,HTTT,MauSo, TyGia) VALUES (" + CStr(.MaSo) + "," + CStr(.loai) + "," + CStr(IIf(KHDetail, .MaKhachHang, .MaSo)) _
-            + ",'" + .KyHieu + "','" + .sohd + "',#" + Format(.NgayPH, Mask_DB) + "#,'" + .MatHang + "'," + DoiDau(.SoLuong) + "," + DoiDau(.ThanhTien) + "," + CStr(.TyLe) + "," + CStr(.HD) + "," + CStr(.KCT) + "," + CStr(.HDBL) + "," + CStr(.NK) + "," + CStr(.ts) + "," + CStr(.DC) + ",'" + .HTTT + "','" + .MauSo + "'," + DoiDau(.tygia) + ")"
+        sql = "INSERT INTO HoaDon" + IIf(p > 0, "P", "") + " (MaSo,Loai,MaKhachHang,KyHieu,SoHD,NgayPH,MatHang,SoLuong,ThanhTien,TyLe,HD,KCT,HDBL,NK,TS, DC,HTTT,MauSo, TyGia,IdNhap) VALUES (" + CStr(.MaSo) + "," + CStr(.loai) + "," + CStr(IIf(KHDetail, .MaKhachHang, .MaSo)) _
+            + ",'" + .KyHieu + "','" + .sohd + "',#" + Format(.NgayPH, Mask_DB) + "#,'" + .MatHang + "'," + DoiDau(.SoLuong) + "," + DoiDau(.ThanhTien) + "," + CStr(.TyLe) + "," + CStr(.HD) + "," + CStr(.KCT) + "," + CStr(.HDBL) + "," + CStr(.NK) + "," + CStr(.ts) + "," + CStr(.DC) + ",'" + .HTTT + "','" + .MauSo + "'," + DoiDau(.tygia) + ",'" + FrmChungtu.bakIdNhap + "')"
         ExecuteSQL5 sql
     End With
 End Sub

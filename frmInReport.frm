@@ -467,15 +467,10 @@ Private Sub btnIn_Click()
     Dim namct As Integer
     Dim reportpth As String
     namct = SelectSQL("SELECT NamTC AS F1 from License ")
-    reportpth = App.path & "\\Tailieu\\Report" & namct
+    reportpth = App.path & "\\Tailieu\\Soketoan" & namct
     'Kiem tra folder ReportNamTC da co chua
-    If CheckAndCreateFolder(reportpth) Then
-        MsgBox "Thu m?c dã s?n sàng: " & path
-    Else
-        MsgBox "Không th? t?o thu m?c: " & path
-    End If
-
-
+    CheckAndCreateFolder (reportpth)
+    
     'Lay ra danh sach tai khoan can in
     FBcKt.CboThang(0).Text = Combo1.Text
     FBcKt.CboThang(1).Text = Combo2.Text
@@ -715,8 +710,8 @@ Private Sub Form_Load()
              "AND (DuNo_4 <> 0 OR DuCo_4 <> 0 " & _
              "OR (HeThongTK.No_1 + HeThongTK.No_2 + HeThongTK.No_3 + HeThongTK.No_4) <> 0 " & _
              "OR (HeThongTK.Co_1 + HeThongTK.Co_2 + HeThongTK.Co_3 + HeThongTK.Co_4) <> 0) " & _
-             "AND HeThongTK.Cap = 1"
-
+             "AND HeThongTK.Cap = 1 " & _
+             "ORDER BY HeThongTK.SoHieu ASC"
     Dim rs_dstk As Recordset
     Set rs_dstk = DBKetoan.OpenRecordset(strSQL, dbOpenSnapshot)
     If Not rs_dstk.EOF Then
