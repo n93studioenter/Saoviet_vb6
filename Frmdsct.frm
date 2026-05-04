@@ -1520,7 +1520,7 @@ Option Explicit
 
 Dim MaCTChon As Long
 Dim LietKe As Boolean
-Dim row As Integer
+Dim Row As Integer
 Dim ord As Integer
 Dim ngay(0 To 1) As Date
 Dim chuoidieukien_intoanbo As String
@@ -1640,7 +1640,7 @@ If OptLK(0).Value = False Then
             With GrdChungtu
                 .col = 5
                 For i = .SelStartRow To .SelEndRow
-                    .row = i
+                    .Row = i
                     ms = CLng5(.Text)
                     If ms > 0 Then
                         pPhieu = 0
@@ -1771,9 +1771,9 @@ Public Sub AnControl(frm As Form)
              "ListBox", "Grid", _
              "MSHFlexGrid", "DataGrid", "Outline", "Line", "SSTab", "MaskEdBox"
 
-            If ctl.name <> "picFakeTitle" _
-               And ctl.name <> "lblTitle" _
-               And ctl.name <> "lblClose" Then
+            If ctl.Name <> "picFakeTitle" _
+               And ctl.Name <> "lblTitle" _
+               And ctl.Name <> "lblClose" Then
 
                 If TypeName(ctl) = "Line" Then
                     ctl.y1 = ctl.y1 + TITLE_HEIGHT
@@ -1819,7 +1819,7 @@ Private Sub Form_Load()
 
     MaCTChon = 0
 
-    GrdChungtu.row = 0
+    GrdChungtu.Row = 0
     GrdChungtu_Click
     LietKe = False
     Caption = "LiÖt kª chøng tõ"
@@ -1850,8 +1850,8 @@ End Sub
 '======================================================================================
 Private Sub GrdChungtu_Click()
  'SendKeys "{Home}", True
-    row = GrdChungtu.row
-    SetGridIndex GrdChungtu, row
+    Row = GrdChungtu.Row
+    SetGridIndex GrdChungtu, Row
     With GrdChungtu
         .col = 5
         If Len(.Text) = 0 Then
@@ -2156,9 +2156,9 @@ Public Sub LietKeChungtu(shtk As String, mvt As Long, mts As Long, mcn As Long, 
 
 
     If rs_chungtu.recordCount > 0 Then
-        If row >= rs_chungtu.recordCount Then row = rs_chungtu.recordCount - 1
+        If Row >= rs_chungtu.recordCount Then Row = rs_chungtu.recordCount - 1
     Else
-        row = 0
+        Row = 0
     End If
 
     '    GrdChungtu.Rows = IIf(rs_chungtu.RecordCount > GrdChungtu.tag, IIf(rs_chungtu.RecordCount > MaxGridRow, MaxGridRow, rs_chungtu.RecordCount), GrdChungtu.tag)' chuyen thanh maxrows
@@ -2167,17 +2167,17 @@ Public Sub LietKeChungtu(shtk As String, mvt As Long, mts As Long, mcn As Long, 
     rs_chungtu.Close
     Set rs_chungtu = Nothing
     On Error Resume Next
-    GrdChungtu.row = row
+    GrdChungtu.Row = Row
     'GrdChungtu_Click
     ' them
-    SetGridIndex GrdChungtu, row + 1
+    SetGridIndex GrdChungtu, Row + 1
     With GrdChungtu
         .col = 5
         If Len(.Text) = 0 Then MaCTChon = 0 Else MaCTChon = CLng5(.Text)
         .col = 0
     End With
 
-    If Not GrdChungtu.RowIsVisible(row) Then GrdChungtu.TopRow = row - 8
+    If Not GrdChungtu.RowIsVisible(Row) Then GrdChungtu.TopRow = Row - 8
     On Error GoTo 0
     If ovr > 0 Then ErrMsg er_NhieuCT
     If so_cong <> 0 Then Hide
@@ -2357,7 +2357,7 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
 
             'FrmChungtu.Grid2.AddItem rs_chungtu!sohieu + Chr(9) + Format(rs_chungtu!NgayCT, Mask_D) + Chr(9) _
              '+ Format(rs_chungtu!NgayGS, Mask_D) + Chr(9) + rs_chungtu!dg + Chr(9) + Format(rs_chungtu!tps, Mask_0) + Chr(9) + CStr(mct) + Chr(9) + Format(rs_chungtu!tylechietkhau, Mask_0) + Chr(9) + Format(rs_chungtu!chietkhau, Mask_0), 0
-            Dim loaihd As String
+            Dim LoaiHD As String
 
 
             Dim rsport As Recordset
@@ -2365,10 +2365,10 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
                                                 "inner join ChungTu on HoaDon.MaSo = ChungTu.MaSo " & _
                                                 "where ChungTu.SoHieu = '" & rs_chungtu!sohieu & "' ", dbOpenSnapshot)
             If Not rsport.EOF Then
-                If Not IsNull(rsport!f1) Then
-                    loaihd = "Portal"
+                If Not IsNull(rsport!f1) And rsport!f1 <> "..." Then
+                    LoaiHD = "Portal"
                 Else
-                    loaihd = ""
+                    LoaiHD = ""
                 End If
             End If
             'Lay ra dong hoa don
@@ -2380,7 +2380,7 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
                                       rs_chungtu!dg & Chr(9) & _
                                       Format(rs_chungtu!tps, Mask_0) & Chr(9) & _
                                       CStr(mct) & Chr(9) & _
-                                      loaihd & _
+                                      LoaiHD & _
                                       Format(rs_chungtu!chietkhau, Mask_0), 0
             FrmChungtu.Grid2.ColWidth(3) = 3700
             '
@@ -2404,9 +2404,9 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
         so_cong = so_cong + 1
     Loop
     If rs_chungtu.recordCount > 0 Then
-        If row >= rs_chungtu.recordCount Then row = rs_chungtu.recordCount - 1
+        If Row >= rs_chungtu.recordCount Then Row = rs_chungtu.recordCount - 1
     Else
-        row = 0
+        Row = 0
     End If
 
     '    GrdChungtu.Rows = IIf(rs_chungtu.RecordCount > GrdChungtu.tag, IIf(rs_chungtu.RecordCount > MaxGridRow, MaxGridRow, rs_chungtu.RecordCount), GrdChungtu.tag)
@@ -2415,17 +2415,17 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
     rs_chungtu.Close
     Set rs_chungtu = Nothing
     On Error Resume Next
-    GrdChungtu.row = row
+    GrdChungtu.Row = Row
     'GrdChungtu_Click
 
-    SetGridIndex GrdChungtu, row + 1
+    SetGridIndex GrdChungtu, Row + 1
     With GrdChungtu
         .col = 5
         If Len(.Text) = 0 Then MaCTChon = 0 Else MaCTChon = CLng5(.Text)
         .col = 0
     End With
 
-    If Not GrdChungtu.RowIsVisible(row) Then GrdChungtu.TopRow = row - 8
+    If Not GrdChungtu.RowIsVisible(Row) Then GrdChungtu.TopRow = Row - 8
     On Error GoTo 0
     If ovr > 0 Then ErrMsg er_NhieuCT
 
@@ -2485,7 +2485,7 @@ Private Sub DSCTu(dest As Integer)
     ExecuteSQL5 "DELETE * FROM BaoCaoCP2"
     With GrdChungtu
         For i = 0 To .Rows - 1
-            .row = i
+            .Row = i
             .col = 5
             If Len(.Text) = 0 Then Exit For
             ExecuteSQL5 "INSERT INTO BaoCaoCP2 (MaSo,SoHieu) VALUES (" + CStr(.Text) + ",'" + .Text + "')"

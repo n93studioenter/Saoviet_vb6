@@ -3855,7 +3855,7 @@ Private Declare Function SetTimer Lib "user32" (ByVal hwnd As Long, ByVal nIDEve
 Private Declare Function KillTimer Lib "user32" (ByVal hwnd As Long, ByVal nIDEvent As Long) As Long
 Private Declare Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As Integer
 
-Private Declare Function WideCharToMultiByte Lib "kernel32" ( _
+Private Declare Function WideCharToMultiByte Lib "Kernel32" ( _
                                              ByVal CodePage As Long, _
                                              ByVal dwFlags As Long, _
                                              ByVal lpWideCharStr As Long, _
@@ -3960,7 +3960,7 @@ Private Const MIIM_STRING = &H40
 Private Const MIIM_FTYPE = &H100
 Private Const MFT_STRING = &H0
 
-Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
+Private Declare Sub Sleep Lib "Kernel32" (ByVal dwMilliseconds As Long)
 
 Dim isclicktt As Integer
 Const TM = "111"
@@ -4093,13 +4093,13 @@ Public Sub AutoCLickLoai()
     RFocus CboThang
     DisplayFileImportList
 End Sub
-Public Sub AddImportData(ByVal id As String, ByVal name As String, ByVal mst As String, ByVal sohd As String, ByVal khHD As String, ByVal ngay As Date, ByVal types As String, ByVal path As String, ByVal tkno As String, ByVal TkCo As String, ByVal tkThue As String, ByVal diengiai As String, ByVal TongTien As String, ByVal VAT As String, ByVal sohieutp As String, ByVal TgTCThue As String, ByVal TgTThue As String, ByVal Ishaschild As String)
+Public Sub AddImportData(ByVal id As String, ByVal Name As String, ByVal mst As String, ByVal sohd As String, ByVal khHD As String, ByVal ngay As Date, ByVal types As String, ByVal path As String, ByVal tkno As String, ByVal TkCo As String, ByVal tkThue As String, ByVal diengiai As String, ByVal TongTien As String, ByVal VAT As String, ByVal sohieutp As String, ByVal TgTCThue As String, ByVal TgTThue As String, ByVal Ishaschild As String)
     Dim fileImport As ClsFileImport
     Set fileImport = New ClsFileImport
 
     ' Gán giá tr? cho các thu?c tính
     fileImport.id = id
-    fileImport.name = name
+    fileImport.Name = Name
     fileImport.mst = mst
     fileImport.sohd = sohd
     fileImport.khHD = khHD
@@ -10649,7 +10649,7 @@ Private Sub Command3_Click()
 End Sub
 
 
-Sub GetcustomerByMST(ByVal mst As String, ByVal name As String, ByVal address As String)
+Sub GetcustomerByMST(ByVal mst As String, ByVal Name As String, ByVal Address As String)
     Dim rs_ktra As Recordset
     Dim Query As String
 
@@ -10671,10 +10671,10 @@ Sub GetcustomerByMST(ByVal mst As String, ByVal name As String, ByVal address As
         Dim getMst As String
         getMst = Right(txtVT(9).Text, 4)
         txtVT(0).Text = getMst
-        txtVT(7).Text = name
-        txtTenKH.Text = VniToUnicode(name)
-        txtVT(8).Text = address
-        txtDiaChi.Text = VniToUnicode(address)
+        txtVT(7).Text = Name
+        txtTenKH.Text = VniToUnicode(Name)
+        txtVT(8).Text = Address
+        txtDiaChi.Text = VniToUnicode(Address)
     End If
 
     ' Ðóng Recordset
@@ -10903,43 +10903,7 @@ Public Function MsgBoxU(ByVal sText As String, _
     MsgBoxU = MessageBoxW(0, StrPtr(sText), StrPtr(sCaption), uType)
 End Function
 
-Private Sub ReadMst(mst As String)
-    Dim http As Object
-    Dim json As Object
-    Dim url As String
-    Dim res As String
 
-    url = "https://api.vietqr.io/v2/business/" & mst
-
-    Set http = CreateObject("WinHttp.WinHttpRequest.5.1")
-    http.Open "GET", url, False
-    http.send
-
-    If http.Status = 200 Then
-
-        res = http.responseText
-
-        ' Parse JSON
-        Set json = JsonConverter.ParseJson(res)
-
-        ' L?y d? li?u
-        Dim code As String
-        Dim name As String
-        Dim address As String
-
-        code = json("code")
-        name = json("data")("name")
-        address = json("data")("address")
-
-        'MsgBox "Code: " & code
-        'MsgBox "Tên: " & name
-        txtTenKH.Text = name
-        'MsgBox "Ð?a ch?: " & address
-        txtDiaChi.Text = address
-    Else
-        Debug.Print " & http.Status"
-    End If
-End Sub
 Private Sub Form_Load()
 
     isclicktt = 0
@@ -11389,7 +11353,7 @@ Private Sub AnControl()
              "MSHFlexGrid", "DataGrid", "MaskEdBox"
 
             ' b? qua title gi?
-            If ctl.name <> "picFakeTitle" And ctl.name <> "lblTitle" And ctl.name <> "lblClose" Then
+            If ctl.Name <> "picFakeTitle" And ctl.Name <> "lblTitle" And ctl.Name <> "lblClose" Then
                 ctl.Top = ctl.Top + TITLE_HEIGHT
             End If
             If (ctl.ToolTipText = "SKIP") Then

@@ -700,18 +700,26 @@ Private Sub Form_Load()
 
     Dim strSQL As String
     strSQL = "SELECT DISTINCTROW HeThongTK.SoHieu, HeThongTK.Cap, HeThongTK.Ten, HeThongTK.Kieu, HeThongTK.Loai, " & _
-             "HeThongTK.DuNo_0 AS DkNo, HeThongTK.DuCo_0 AS DkCo, " & _
-             "(HeThongTK.No_1 + HeThongTK.No_2 + HeThongTK.No_3 + HeThongTK.No_4) AS PsNo, " & _
-             "(HeThongTK.Co_1 + HeThongTK.Co_2 + HeThongTK.Co_3 + HeThongTK.Co_4) AS PsCo, " & _
-             "KC_N, KC_C, HeThongTK.DuNo_4 AS CkNo, HeThongTK.DuCo_4 AS CkCo " & _
-             "FROM HeThongTK " & _
-             "WHERE ((HeThongTK.MaTC = 0 Or HeThongTK.MaTC = HeThongTK.MaSo) OR (TK_ID3 Mod 10 >= 1)) " & _
-             "And (HeThongTK.Loai > 0) AND Cap <= 1 " & _
-             "AND (DuNo_4 <> 0 OR DuCo_4 <> 0 " & _
-             "OR (HeThongTK.No_1 + HeThongTK.No_2 + HeThongTK.No_3 + HeThongTK.No_4) <> 0 " & _
-             "OR (HeThongTK.Co_1 + HeThongTK.Co_2 + HeThongTK.Co_3 + HeThongTK.Co_4) <> 0) " & _
-             "AND HeThongTK.Cap = 1 " & _
-             "ORDER BY HeThongTK.SoHieu ASC"
+         "HeThongTK.DuNo_0 AS DkNo, HeThongTK.DuCo_0 AS DkCo, " & _
+         "(HeThongTK.No_1 + HeThongTK.No_2 + HeThongTK.No_3 + HeThongTK.No_4 + " & _
+         "HeThongTK.No_5 + HeThongTK.No_6 + HeThongTK.No_7 + HeThongTK.No_8 + " & _
+         "HeThongTK.No_9 + HeThongTK.No_10 + HeThongTK.No_11 + HeThongTK.No_12) AS PsNo, " & _
+         "(HeThongTK.Co_1 + HeThongTK.Co_2 + HeThongTK.Co_3 + HeThongTK.Co_4 + " & _
+         "HeThongTK.Co_5 + HeThongTK.Co_6 + HeThongTK.Co_7 + HeThongTK.Co_8 + " & _
+         "HeThongTK.Co_9 + HeThongTK.Co_10 + HeThongTK.Co_11 + HeThongTK.Co_12) AS PsCo, " & _
+         "KC_N, KC_C, HeThongTK.DuNo_12 AS CkNo, HeThongTK.DuCo_12 AS CkCo " & _
+         "FROM HeThongTK " & _
+         "WHERE ((HeThongTK.MaTC = 0 Or HeThongTK.MaTC = HeThongTK.MaSo) OR (TK_ID3 Mod 10 >= 1)) " & _
+         "And (HeThongTK.Loai > 0) AND Cap <= 1 " & _
+         "AND (DuNo_12 <> 0 OR DuCo_12 <> 0 " & _
+         "OR (HeThongTK.No_1 + HeThongTK.No_2 + HeThongTK.No_3 + HeThongTK.No_4 + " & _
+         "HeThongTK.No_5 + HeThongTK.No_6 + HeThongTK.No_7 + HeThongTK.No_8 + " & _
+         "HeThongTK.No_9 + HeThongTK.No_10 + HeThongTK.No_11 + HeThongTK.No_12) <> 0 " & _
+         "OR (HeThongTK.Co_1 + HeThongTK.Co_2 + HeThongTK.Co_3 + HeThongTK.Co_4 + " & _
+         "HeThongTK.Co_5 + HeThongTK.Co_6 + HeThongTK.Co_7 + HeThongTK.Co_8 + " & _
+         "HeThongTK.Co_9 + HeThongTK.Co_10 + HeThongTK.Co_11 + HeThongTK.Co_12) <> 0) " & _
+         "AND HeThongTK.Cap = 1 " & _
+         "ORDER BY HeThongTK.SoHieu ASC"
     Dim rs_dstk As Recordset
     Set rs_dstk = DBKetoan.OpenRecordset(strSQL, dbOpenSnapshot)
     If Not rs_dstk.EOF Then

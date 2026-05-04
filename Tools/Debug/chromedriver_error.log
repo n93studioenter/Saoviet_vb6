@@ -1,0 +1,18 @@
+29/04/26 3:58:11 PM: OpenQA.Selenium.UnsupportedOperationException: tab crashed
+  (Session info: chrome=147.0.7727.138)
+   at OpenQA.Selenium.WebDriver.UnpackAndThrowOnError(Response errorResponse, String commandToExecute)
+   at OpenQA.Selenium.WebDriver.<ExecuteAsync>d__63.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at OpenQA.Selenium.Navigator.<GoToUrlAsync>d__7.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at OpenQA.Selenium.Navigator.<>c__DisplayClass6_0.<<GoToUrl>b__0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at OpenQA.Selenium.Navigator.GoToUrl(String url)
+   at SaovietTax.APIInvoice.TestBrowser() in D:\DA3\SourcePmTrungGiang\SaovietTax\SaovietTax\APIInvoice.cs:line 683
+

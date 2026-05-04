@@ -58,7 +58,7 @@ Begin VB.Form FThuChi
       Width           =   1455
    End
    Begin VB.CommandButton Command1 
-      BackColor       =   &H000000FF&
+      BackColor       =   &H00FFC0C0&
       Caption         =   "L­u nh¸p"
       Height          =   375
       Left            =   4080
@@ -428,9 +428,59 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+ 
+' Khai báo c?u trúc STARTUPINFO và PROCESS_INFORMATION
+Private Type STARTUPINFO
+    cb As Long
+    lpReserved As String
+    lpDesktop As String
+    lpTitle As String
+    dwX As Long
+    dwY As Long
+    dwXSize As Long
+    dwYSize As Long
+    dwXCountChars As Long
+    dwYCountChars As Long
+    dwFillAttribute As Long
+    dwFlags As Long
+    wShowWindow As Integer
+    cbReserved2 As Integer
+    lpReserved2 As Long
+    hStdInput As Long
+    hStdOutput As Long
+    hStdError As Long
+End Type
+
+Private Type PROCESS_INFORMATION
+    hProcess As Long
+    hThread As Long
+    dwProcessId As Long
+    dwThreadId As Long
+End Type
+
+' Khai báo hàm CreateProcess, CloseHandle, WaitForSingleObject
+Private Declare Function CreateProcess Lib "Kernel32" Alias "CreateProcessA" ( _
+                                       ByVal lpApplicationName As String, _
+                                       ByVal lpCommandLine As String, _
+                                       ByVal lpProcessAttributes As Long, _
+                                       ByVal lpThreadAttributes As Long, _
+                                       ByVal bInheritHandles As Long, _
+                                       ByVal dwCreationFlags As Long, _
+                                       ByVal lpEnvironment As Long, _
+                                       ByVal lpCurrentDirectory As String, _
+                                       lpStartupInfo As STARTUPINFO, _
+                                       lpProcessInformation As PROCESS_INFORMATION) As Long
+
+Private Declare Function CloseHandle Lib "Kernel32" (ByVal hObject As Long) As Long
+Private Declare Function WaitForSingleObject Lib "Kernel32" (ByVal hHandle As Long, ByVal dwMilliseconds As Long) As Long
+Private Declare Function SetCurrentDirectory Lib "Kernel32" Alias "SetCurrentDirectoryA" (ByVal lpPathName As String) As Long
+
+Private Const NORMAL_PRIORITY_CLASS = &H20&
+Private Const INFINITE = &HFFFF
+
 Dim hWndApp As Long
 Private Declare Function IsWindow Lib "user32" (ByVal hwnd As Long) As Long
-Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
+Private Declare Sub Sleep Lib "Kernel32" (ByVal dwMilliseconds As Long)
 Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" _
                                     ()
 Public FThuChiForm As Integer
@@ -438,6 +488,52 @@ Dim s(0 To 3) As String
 Dim kh As New ClsKhachHang
 Dim ngay As Date
 Dim f1 As Integer
+
+Private Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" ( _
+    ByVal hwnd As Long, _
+    ByVal lpOperation As String, _
+    ByVal lpFile As String, _
+    ByVal lpParameters As String, _
+    ByVal lpDirectory As String, _
+    ByVal nShowCmd As Long) As Long
+
+Private Const SW_NORMAL = 1
+Private Const SW_HIDE = 0
+Private typeGhichu As Integer
+
+Public Sub RunExeViaWScript(ByVal exePath As String)
+    Dim vbsPath As String
+    Dim fnum As Integer
+
+    ' T?o file VBS t?m
+    vbsPath = Environ("TEMP") & "\run_" & Format(Timer, "0") & ".vbs"
+
+    fnum = FreeFile
+    Open vbsPath For Output As #fnum
+    Print #fnum, "CreateObject(""WScript.Shell"").Run """"" & exePath & """"", 1, False"
+    Close #fnum
+
+    ' Ch?y VBS
+    Shell "wscript.exe """ & vbsPath & """", vbHide
+
+    ' Xóa file VBS sau 3 giây
+    Shell "cmd.exe /c timeout /t 3 /nobreak > nul & del """ & vbsPath & """", vbHide
+End Sub
+Public Sub RunExeIndependent(ByVal exePath As String, Optional ByVal workingDir As String = "")
+    If workingDir = "" Then
+        workingDir = Left(exePath, InStrRev(exePath, "\"))
+    End If
+    
+    ' Dùng "open" thay vì "runas" n?u không c?n admin
+    ' "open" s? t?o process hoàn toàn d?c l?p, không k? th?a môi tru?ng t? VB6
+    Dim ret As Long
+    ret = ShellExecute(0, "open", exePath, "", workingDir, SW_NORMAL)
+    
+    If ret <= 32 Then
+        MsgBox "L?i khi ch?y ?ng d?ng! Mã l?i: " & ret, vbCritical
+    End If
+End Sub
+
 Public Sub Test()
  
     Unload Me
@@ -447,32 +543,59 @@ Private Sub Timer1_Timer()
 End Sub
 
 Public Sub Command_Click()
-    If Combo1.ListIndex = -1 Then
+    If Combo1.ListIndex = -1 And Combo1.ListCount > 0 Then
         Combo1.ListIndex = 0
     End If
-    Dim id As Long
-    id = Combo1.ItemData(Combo1.ListIndex)
-    Dim FilePath As String
-    FilePath = App.path & "\\HoaDon\\invoice.txt"
-    Dim content As String
-    content = FrmChungtu.txt(0).Text & "_" & FrmChungtu.TxtVT(1).Text & "_" & FrmChungtu.MedNgay(0).Text & "_" & id
-    Dim fileNumber As Integer
-    If Not FileExists(FilePath) Then
-        'Loai_thangbd_thangkt
-        Dim iscreate As Boolean
-        iscreate = CreateVersionFile(FilePath, content)
-    Else
-        fileNumber = FreeFile
-        On Error Resume Next
-        Open FilePath For Output As #fileNumber
-        If Err.number = 0 Then
-            Print #fileNumber, content;
-            Close #fileNumber
-            'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+
+    'Cho viettel
+    If Combo1.ListCount > 0 And typeGhichu = 5 Then
+        Dim id As Long
+        id = Combo1.ItemData(Combo1.ListIndex)
+        Dim FilePath As String
+        FilePath = App.path & "\\HoaDon\\invoice.txt"
+        Dim content As String
+        content = FrmChungtu.txt(0).Text & "_" & FrmChungtu.txtVT(1).Text & "_" & FrmChungtu.MedNgay(0).Text & "_" & id
+        Dim fileNumber As Integer
+        If Not FileExists(FilePath) Then
+            'Loai_thangbd_thangkt
+            Dim iscreate As Boolean
+            iscreate = CreateVersionFile(FilePath, content)
         Else
-            MsgBox "L?i khi ghi dè file!", vbExclamation
+            fileNumber = FreeFile
+            On Error Resume Next
+            Open FilePath For Output As #fileNumber
+            If Err.number = 0 Then
+                Print #fileNumber, content;
+                Close #fileNumber
+                'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+            Else
+                MsgBox "L?i khi ghi dè file!", vbExclamation
+            End If
         End If
     End If
+
+    'Cho bkav
+    If typeGhichu = 6 Then
+        FilePath = App.path & "\\HoaDon\\invoice.txt"
+        content = FrmChungtu.txt(0).Text & "_" & FrmChungtu.txtVT(1).Text & "_" & FrmChungtu.MedNgay(0).Text
+       
+        If Not FileExists(FilePath) Then
+            'Loai_thangbd_thangkt
+            iscreate = CreateVersionFile(FilePath, content)
+        Else
+            fileNumber = FreeFile
+            On Error Resume Next
+            Open FilePath For Output As #fileNumber
+            If Err.number = 0 Then
+                Print #fileNumber, content;
+                Close #fileNumber
+                'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+            Else
+                MsgBox "L?i khi ghi dè file!", vbExclamation
+            End If
+        End If
+    End If
+
 
     Dim i As Integer
     '  ExecuteSQL5 "update chungtu set nguoimuahang = '" + T(4).Text + "'  where sohieu = '" + FrmChungtu.txt(0).Text + "'"
@@ -582,7 +705,8 @@ Private Sub GhiChutxt(ByVal content As Integer)
     Close #FileNum
 End Sub
 Private Sub Command1_Click()
-    GhiChutxt 5
+    Command_Click
+    GhiChutxt typeGhichu
     Dim exePath As String
     exePath = App.path & "\\Tools\\Debug\\SaovietTax.exe"
 
@@ -658,6 +782,117 @@ Function SuperTrim(ByVal s As String) As String
     s = Replace(s, vbLf, "")
     SuperTrim = Trim(s)  ' Xóa kho?ng tr?ng d?u/cu?i (ASCII 32)
 End Function
+Public Function RunExeClean(ByVal ExeFullPath As String, Optional ByVal workingDir As String = "", Optional ByVal WaitForExit As Boolean = False) As Boolean
+    Dim si As STARTUPINFO
+    Dim pi As PROCESS_INFORMATION
+    Dim lResult As Long
+
+    ' 1. Thi?t l?p thu m?c làm vi?c (Working Directory)
+    ' Vi?c này r?t quan tr?ng d? d?m b?o ?ng d?ng tìm dúng các file ph? tr?.
+
+    ' N?u không truy?n vào thu m?c làm vi?c, t? d?ng l?y thu m?c c?a file exe
+    If workingDir = "" Then
+        workingDir = Left(ExeFullPath, InStrRev(ExeFullPath, "\"))
+    End If
+    ' Ð?t thu m?c làm vi?c cho ti?n trình hi?n t?i (VB6) tru?c khi t?o ti?n trình con
+    Call SetCurrentDirectory(workingDir)
+
+    ' 2. C?u hình STARTUPINFO
+    si.cb = Len(si)
+    ' wShowWindow = 1 (SW_SHOWNORMAL) d? hi?n th? c?a s? bình thu?ng
+    si.wShowWindow = 1
+    si.dwFlags = &H1    ' STARTF_USESHOWWINDOW
+
+    ' 3. T?o ti?n trình m?i
+    ' Luu ý: Tham s? lpCommandLine c?n ph?i n?m trong c?p d?u ngo?c kép n?u có d?u cách trong du?ng d?n
+    lResult = CreateProcess(vbNullString, _
+                            """" & ExeFullPath & """", _
+                            0&, _
+                            0&, _
+                            1&, _
+                            NORMAL_PRIORITY_CLASS, _
+                            0&, _
+                            workingDir, _
+                            si, _
+                            pi)
+
+    If lResult = 0 Then
+        RunExeClean = False
+        Exit Function
+    End If
+
+    ' 4. (Tùy ch?n) Ch? cho ti?n trình k?t thúc
+    If WaitForExit Then
+        Call WaitForSingleObject(pi.hProcess, INFINITE)
+    End If
+
+    ' 5. D?n d?p Handle
+    Call CloseHandle(pi.hProcess)
+    Call CloseHandle(pi.hThread)
+
+    RunExeClean = True
+End Function
+Private Sub Command2_Click()
+'Lay id phat hanh
+    Dim rsports As Recordset
+
+    Set rsports = DBKetoan.OpenRecordset("select IdNhap AS f1 FROM HoaDon " & _
+                                         "inner join ChungTu on HoaDon.MaSo = ChungTu.MaSo " & _
+                                         "where ChungTu.SoHieu = '" & FrmChungtu.txt(0).Text & "' " & _
+                                         "and HoaDon.KyHieu = '" & FrmChungtu.txtVT(1).Text & "' " & _
+                                         "and ChungTu.NgayCT = #" & Format(FrmChungtu.MedNgay(0).Text, "yyyy-mm-dd") & "#", dbOpenSnapshot)
+    If Not rsports.EOF Then
+        ' L?y giá tr? IdNhap
+        Dim IdNhap As String
+        If Not IsNull(rsports!f1) Then
+
+            IdNhap = rsports!f1  ' ho?c rsport.Fields("f1").Value
+
+            'Ghi noi dung file text invoice
+            Dim FilePath As String
+            FilePath = App.path & "\\HoaDon\\invoice.txt"
+            Dim content As String
+            content = "2_" & IdNhap
+            Dim fileNumber As Integer
+            If Not FileExists(FilePath) Then
+
+                'Loai_thangbd_thangkt
+                Dim iscreate As Boolean
+                iscreate = CreateVersionFile(FilePath, content)
+            Else
+                fileNumber = FreeFile
+                On Error Resume Next
+                Open FilePath For Output As #fileNumber
+                If Err.number = 0 Then
+                    Print #fileNumber, content;
+                    Close #fileNumber
+                    'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+                Else
+                    MsgBox "L?i khi ghi dè file!", vbExclamation
+                End If
+            End If
+            GhiChutxt 5
+
+            Dim exePath As String
+            Dim cmd As String
+
+            exePath = App.path & "\Tools\Debug\SaovietTax.exe"
+
+            ' Dùng runas v?i trust level th?p hon
+            cmd = "runas /trustlevel:0x20000 """ & exePath & """"
+
+            Shell cmd, vbHide
+            ' rsports.Close
+            'Set rsports = Nothing
+        Else
+
+        End If
+
+    End If
+
+
+End Sub
+
 Private Sub Form_Activate()
     If FThuChi.FThuChiForm = 5 Then
         Unload Me
@@ -749,12 +984,12 @@ Private Sub Form_Load()
     Set rsports = DBKetoan.OpenRecordset("select IdNhap AS f1 FROM HoaDon " & _
                                          "inner join ChungTu on HoaDon.MaSo = ChungTu.MaSo " & _
                                          "where ChungTu.SoHieu = '" & FrmChungtu.txt(0).Text & "' " & _
-                                         "and HoaDon.KyHieu = '" & FrmChungtu.TxtVT(1).Text & "' " & _
+                                         "and HoaDon.KyHieu = '" & FrmChungtu.txtVT(1).Text & "' " & _
                                          "and ChungTu.NgayCT = #" & Format(FrmChungtu.MedNgay(0).Text, "yyyy-mm-dd") & "#", dbOpenSnapshot)
     If Not rsports.EOF Then
         ' L?y giá tr? IdNhap
         Dim IdNhap As String
-        If Not IsNull(rsports!f1) Then
+        If Not IsNull(rsports!f1) And rsports!f1 <> "..." Then
 
             IdNhap = rsports!f1  ' ho?c rsport.Fields("f1").Value
             Command1.Visible = True
@@ -767,7 +1002,7 @@ Private Sub Form_Load()
         End If
 
     End If
- 
+
 
     Dim countAccount As Integer
     countAccount = SelectSQL("select count(*) AS f1 from  tbInvoiceTemplate")
@@ -798,49 +1033,111 @@ Private Sub Form_Load()
             End If
         End If
 
-        GhiChutxt 5
+        Dim urlname As String
+        urlname = SelectSQL("select Url AS f1 from  tbInvoiceInfo")
+        '5 la viettel
+        Select Case urlname
+        Case "vinvoice.viettel.vn"
+            typeGhichu = 5
+            GhiChutxt 5
+        Case "van.ehoadon.vn"
+            typeGhichu = 6
+            GhiChutxt 6
+        Case Else
+            ' Các tru?ng h?p còn l?i
+            MsgBox "Url khác: " & urlname
+        End Select
+
+
         Dim exePath As String
         exePath = App.path & "\\Tools\\Debug\\SaovietTax.exe"
 
         ' Shell d? m? ?ng d?ng
         Shell exePath, vbNormalFocus
 
-        Exit Sub
         DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
 
         ' L?y handle c?a c?a s? ?ng d?ng
         hWndApp = 0  ' Kh?i t?o bi?n hWndApp
-
-        While hWndApp = 0
-            hWndApp = FindWindow(vbNullString, "frmMain")  ' Thay d?i tiêu d? c?a ?ng d?ng
-            DoEvents  ' Cho phép x? lý s? ki?n khác
-        Wend
-
-        ' Ki?m tra handle có h?p l? hay không
-        If hWndApp = 0 Then
-            MsgBox "Không tìm th?y ?ng d?ng."
-        Else
-            ' Ð?i m?t chút tru?c khi ki?m tra l?i
-            Sleep 1000
-            CheckWindow
-        End If
+        Sleep 2000
+        CheckWindow
     End If
 
     'Load danh sach cbb
-    ' Combo1.AddItem ("Tieàn maët")
     Dim rsport As Recordset
-    Set rsport = DBKetoan.OpenRecordset("SELECT DISTINCTROW tbInvoiceTemplate.* FROM tbInvoiceTemplate", dbOpenSnapshot)
+    Dim startTime As Double
+    Dim timeoutSeconds As Integer
+    Dim hasData As Boolean
 
-    If Not rsport.EOF Then
-        rsport.MoveFirst
-        Do While Not rsport.EOF
-            Combo1.AddItem rsport!code & "-" & UnicodeToVni(rsport!name)
-            Combo1.ItemData(Combo1.NewIndex) = rsport!id
-            Combo1.Text = rsport!code & "-" & UnicodeToVni(rsport!name)
-            rsport.MoveNext
+    timeoutSeconds = 10    ' Timeout sau 10 giây
+    startTime = Timer
+    hasData = False
+
+    If FThuChiForm = 0 Then
+        'Kiem tra xem co dang ky invoice nao khong
+        Dim rsinvoice As Recordset
+        Set rsinvoice = DBKetoan.OpenRecordset("SELECT * FROM tbInvoiceInfo", dbOpenSnapshot)
+        If rsinvoice.EOF Then
+            GoTo T
+        Else
+            If InStr(1, rsinvoice!url, "ehoadon", vbTextCompare) > 0 Then
+                GoTo T
+            End If
+        End If
+        ' L?p l?i query cho d?n khi có data ho?c timeout
+        Set rsport = DBKetoan.OpenRecordset("SELECT DISTINCTROW tbInvoiceTemplate.* FROM tbInvoiceTemplate", dbOpenSnapshot)
+        If Not rsport.EOF Then
+            hasData = True
+        End If
+        Do While (Timer - startTime) < timeoutSeconds
+
+            If Not rsport.EOF Then
+                hasData = True
+                Exit Do
+            End If
+
+            rsport.Close
+            Set rsport = Nothing
+
+            ' Ch? 0.5 giây tru?c khi query l?i
+            Dim waitTime As Double
+            waitTime = Timer
+            Do While Timer - waitTime < 0.5
+                DoEvents
+            Loop
         Loop
+
+        ' X? lý ComboBox
+        If hasData Then
+            ' Có data - add vào Combo nhu cu
+            rsport.MoveFirst
+            Do While Not rsport.EOF
+                Combo1.AddItem rsport!code & "-" & UnicodeToVni(rsport!Name)
+                Combo1.ItemData(Combo1.NewIndex) = rsport!id
+                ' Ch? set text cho item d?u tiên
+                'Kiem tra hoa don de lay template id
+                Dim rshd As Recordset
+                Set rshd = DBKetoan.OpenRecordset("SELECT  * FROM HoaDon where IdTemplate ='" & rsport!id & "' ", dbOpenSnapshot)
+                If Not rshd.EOF Then
+                    Combo1.Text = rsport!code & "-" & UnicodeToVni(rsport!Name)
+                Else
+                    If Combo1.ListCount = 1 Then
+                        Combo1.Text = rsport!code & "-" & UnicodeToVni(rsport!Name)
+                    End If
+                End If
+                rsport.MoveNext
+            Loop
+
+            ' Ðóng recordset
+            rsport.Close
+            Set rsport = Nothing
+        Else
+            ' Timeout - không có data
+            MsgBox "Không có d? li?u sau " & timeoutSeconds & " giây!", vbExclamation
+        End If
     End If
 
+T:
     lblTitle(11).AutoSize = True
     Me.Height = Me.Height + 350 + 10
     picFakeTitle.Width = Me.ScaleWidth

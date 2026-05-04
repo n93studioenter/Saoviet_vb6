@@ -208,19 +208,23 @@ Begin VB.Form frmMain
          BeginProperty Panel1 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Object.Width           =   8819
             MinWidth        =   8819
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel2 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Object.Width           =   12347
             MinWidth        =   12347
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel3 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel4 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Style           =   6
-            TextSave        =   "23/04/26"
+            TextSave        =   "04/05/26"
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -2500,7 +2504,7 @@ Attribute gSubMenu.VB_VarUserMemId = 1073938438
 Public gCurrentMenu As Integer
 Attribute gCurrentMenu.VB_VarUserMemId = 1073938439
 
-Private Declare Sub CopyMemory Lib "Kernel32" Alias "RtlMoveMemory" (Destination As Any, source As Any, ByVal Length As Long)
+Private Declare Sub CopyMemory Lib "Kernel32" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal length As Long)
 Private Declare Function GetAdaptersInfo Lib "iphlpapi" (lpAdapterInfo As Any, lpSize As Long) As Long
 
 Public Tudongtinhgiavon As Boolean
@@ -2879,8 +2883,8 @@ Public Sub Taifilecapnhat()
         ProgressBar1.Value = i
         DoEvents
     Next i
-    Dim result As Long
-    result = ShellExecute(0, "open", destFile, "", destFolder, 0)
+    Dim Result As Long
+    Result = ShellExecute(0, "open", destFile, "", destFolder, 0)
 ErrorHandler:
     'MsgBox "L?i khi t?i file update.exe:" & vbCrLf & Err.Description, vbCritical
     ProgressBar1.Value = 100
@@ -2914,9 +2918,11 @@ End Sub
 Private Sub Form_Activate()
     CheckAndCreateTBCpu
     ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD IdNhap text")
+     ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD IdTemplate text")
     ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD StatusPH text")
     ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD Printername text")
+     ExecuteSQL5_Themmoi ("ALTER TABLE tbInvoiceTemplate ADD KHHD text")
     Dim cmg As Long
     cmg = SelectSQL("select CMG AS f1 from  License")
     If cmg = 249991 Then

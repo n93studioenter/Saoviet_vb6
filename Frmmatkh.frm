@@ -205,7 +205,7 @@ Private Declare Function MultiByteToWideChar Lib "Kernel32" _
                                               lpMultiByteStr As Any, ByVal cchMultiByte As Long, _
                                               ByVal lpWideCharStr As Long, ByVal cchWideChar As Long) As Long
 
-Private Declare Sub CopyMemory Lib "Kernel32" Alias "RtlMoveMemory" (Destination As Any, source As Any, ByVal Length As Long)
+Private Declare Sub CopyMemory Lib "Kernel32" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal length As Long)
 Private Declare Function GetAdaptersInfo Lib "iphlpapi" (lpAdapterInfo As Any, lpSize As Long) As Long
 
 Dim Counter As Integer
@@ -1434,18 +1434,18 @@ Public Sub SetFormCaptionUnicode(frm As Form, ByVal sAnsiText As String)
 End Sub
 Public Function AnsiToUnicode(ByVal sAnsi As String) As String
     Dim bytes() As Byte
-    Dim Length As Long
+    Dim length As Long
     
     ' Convert ANSI string to bytes
     bytes = sAnsi
     
     ' Get required buffer size
-    Length = MultiByteToWideChar(0, 0, bytes(0), -1, 0, 0)
-    AnsiToUnicode = String$(Length, 0)
+    length = MultiByteToWideChar(0, 0, bytes(0), -1, 0, 0)
+    AnsiToUnicode = String$(length, 0)
     
     ' Do conversion
     MultiByteToWideChar 0, 0, bytes(0), -1, _
-                       StrPtr(AnsiToUnicode), Length
+                       StrPtr(AnsiToUnicode), length
 End Function
   Private Sub picTitle_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ReleaseCapture
