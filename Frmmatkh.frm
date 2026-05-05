@@ -1492,10 +1492,79 @@ Public Sub CheckAndCreateTBCpu()
         DBKetoan.TableDefs.Append tdf
     End If
 End Sub
+Public Sub CheckAndCreateTBGetPhieu()
+    Dim tdf As DAO.TableDef
+    Dim fld As DAO.Field
+    Dim tableExists As Boolean
+    Dim tableName As String
+
+    tableName = "tbGetphieu"
+    tableExists = False
+
+
+    ' Ki?m tra t?n t?i b?ng
+    For Each tdf In DBKetoan.TableDefs
+        If tdf.Name = tableName Then
+            tableExists = True
+            Exit For
+        End If
+    Next tdf
+
+    If Not tableExists Then
+        ' T?o b?ng n?u chua t?n t?i
+        Set tdf = DBKetoan.CreateTableDef(tableName)
+ 
+
+        Set fld = tdf.CreateField("ID", dbLong)
+        fld.Attributes = dbAutoIncrField    ' Thi?t l?p thu?c tính t? d?ng tang
+        tdf.Fields.Append fld
+        ' MaCT
+        Set fld = tdf.CreateField("MaCT", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+        'Ten NMH
+        Set fld = tdf.CreateField("TenNM", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+        'Ten Cong ty
+        Set fld = tdf.CreateField("TenCty", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+        'Dia chi
+        Set fld = tdf.CreateField("DiaChi", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+        'HTTT
+        Set fld = tdf.CreateField("HTTT", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+        'CCCD
+        Set fld = tdf.CreateField("CCCD", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+        'TyLe
+        Set fld = tdf.CreateField("TyLe", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+        ' Thêm b?ng vào CSDL
+
+        DBKetoan.TableDefs.Append tdf
+    End If
+End Sub
+
 Private Sub Form_Load()
+   
     frmMain.CheckAndCreateTBInvoiceTemplate
     frmMain.CheckAndCreateTBInvoice
     CheckAndCreateTBCpu
+     CheckAndCreateTBGetPhieu
     ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
     ExecuteSQL5_Themmoi ("ALTER TABLE Users ADD IsReister NUMBER")
     ExecuteSQL5_Themmoi ("ALTER TABLE Users  ADD MacAddress text")

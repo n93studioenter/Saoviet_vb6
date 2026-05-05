@@ -7,10 +7,10 @@ Begin VB.Form FThuChi
    BackColor       =   &H80000005&
    BorderStyle     =   0  'None
    Caption         =   "Th«ng tin vÒ phiÕu thu - chi"
-   ClientHeight    =   3195
+   ClientHeight    =   3435
    ClientLeft      =   3735
    ClientTop       =   3720
-   ClientWidth     =   7905
+   ClientWidth     =   7680
    ClipControls    =   0   'False
    ControlBox      =   0   'False
    BeginProperty Font 
@@ -27,17 +27,37 @@ Begin VB.Form FThuChi
    LinkTopic       =   "Additional Voucher Information"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3195
-   ScaleWidth      =   7905
+   ScaleHeight     =   3435
+   ScaleWidth      =   7680
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Tag             =   "0"
+   Begin VB.CheckBox Check3 
+      BackColor       =   &H00FFFFFF&
+      Caption         =   "Xem ho¸ ®¬n"
+      Height          =   195
+      Left            =   4080
+      TabIndex        =   33
+      Top             =   2160
+      Visible         =   0   'False
+      Width           =   1695
+   End
+   Begin VB.TextBox T 
+      Height          =   285
+      Index           =   5
+      Left            =   2040
+      MaxLength       =   50
+      TabIndex        =   32
+      Text            =   "..."
+      Top             =   840
+      Width           =   5415
+   End
    Begin VB.ComboBox Combo1 
       Height          =   315
       Left            =   2040
       TabIndex        =   29
       Text            =   "Combo1"
-      Top             =   2640
+      Top             =   3000
       Width           =   4095
    End
    Begin VB.Timer timerImport 
@@ -53,7 +73,7 @@ Begin VB.Form FThuChi
       Left            =   6000
       Style           =   1  'Graphical
       TabIndex        =   28
-      Top             =   2040
+      Top             =   2400
       Visible         =   0   'False
       Width           =   1455
    End
@@ -65,7 +85,7 @@ Begin VB.Form FThuChi
       MaskColor       =   &H00FFFFFF&
       Style           =   1  'Graphical
       TabIndex        =   27
-      Top             =   2040
+      Top             =   2400
       Visible         =   0   'False
       Width           =   1695
    End
@@ -100,9 +120,9 @@ Begin VB.Form FThuChi
          Width           =   480
       End
       Begin VB.Image Image1 
-         Height          =   8550
+         Height          =   8430
          Index           =   0
-         Left            =   840
+         Left            =   720
          Picture         =   "FThuChi.frx":57E2
          Stretch         =   -1  'True
          Top             =   240
@@ -132,7 +152,7 @@ Begin VB.Form FThuChi
          EndProperty
          Height          =   405
          Index           =   11
-         Left            =   480
+         Left            =   600
          TabIndex        =   25
          Top             =   0
          Width           =   4455
@@ -145,7 +165,7 @@ Begin VB.Form FThuChi
       Left            =   3840
       TabIndex        =   23
       Tag             =   "Direct Export"
-      Top             =   1440
+      Top             =   1800
       Width           =   2175
    End
    Begin VB.CheckBox checkinbangke 
@@ -155,7 +175,7 @@ Begin VB.Form FThuChi
       Left            =   6000
       TabIndex        =   22
       Tag             =   "Direct Export"
-      Top             =   1440
+      Top             =   1800
       Visible         =   0   'False
       Width           =   1335
    End
@@ -201,7 +221,7 @@ Begin VB.Form FThuChi
       Left            =   6000
       TabIndex        =   15
       Tag             =   "Direct Export"
-      Top             =   1080
+      Top             =   1440
       Width           =   1455
    End
    Begin VB.CheckBox Check1 
@@ -211,7 +231,7 @@ Begin VB.Form FThuChi
       Left            =   3840
       TabIndex        =   14
       Tag             =   "Direct Export"
-      Top             =   1080
+      Top             =   1440
       Width           =   1935
    End
    Begin VB.TextBox T 
@@ -231,7 +251,7 @@ Begin VB.Form FThuChi
       MaxLength       =   20
       TabIndex        =   4
       Text            =   "..."
-      Top             =   1200
+      Top             =   1560
       Visible         =   0   'False
       Width           =   1335
    End
@@ -241,7 +261,7 @@ Begin VB.Form FThuChi
       Picture         =   "FThuChi.frx":115BC
       Style           =   1  'Graphical
       TabIndex        =   6
-      Top             =   1680
+      Top             =   2040
       Width           =   375
    End
    Begin VB.TextBox txtshkh 
@@ -251,7 +271,7 @@ Begin VB.Form FThuChi
       MaxLength       =   20
       TabIndex        =   5
       Tag             =   "0"
-      Top             =   1680
+      Top             =   2040
       Width           =   1335
    End
    Begin VB.TextBox T 
@@ -261,7 +281,7 @@ Begin VB.Form FThuChi
       MaxLength       =   20
       TabIndex        =   2
       Text            =   "..."
-      Top             =   1200
+      Top             =   1560
       Width           =   1335
    End
    Begin VB.TextBox T 
@@ -271,7 +291,7 @@ Begin VB.Form FThuChi
       MaxLength       =   100
       TabIndex        =   1
       Text            =   "..."
-      Top             =   840
+      Top             =   1200
       Width           =   5415
    End
    Begin VB.TextBox T 
@@ -292,14 +312,14 @@ Begin VB.Form FThuChi
       Style           =   1  'Graphical
       TabIndex        =   7
       Tag             =   "&Save"
-      Top             =   2640
+      Top             =   3000
       Width           =   1095
    End
    Begin MSMask.MaskEdBox MedNgay 
       Height          =   315
       Left            =   2040
       TabIndex        =   3
-      Top             =   1200
+      Top             =   1560
       Visible         =   0   'False
       Width           =   1335
       _ExtentX        =   2355
@@ -320,13 +340,24 @@ Begin VB.Form FThuChi
       Mask            =   "99/99/99"
       PromptChar      =   "_"
    End
+   Begin VB.Label Label1 
+      BackColor       =   &H00FFFFFF&
+      Caption         =   "CCCD:"
+      Height          =   255
+      Index           =   6
+      Left            =   240
+      TabIndex        =   31
+      Tag             =   "Name of receiver,payer:"
+      Top             =   840
+      Width           =   1335
+   End
    Begin VB.Label Label2 
       BackStyle       =   0  'Transparent
       Caption         =   "MÉu ho¸ ®¬n"
       Height          =   255
       Left            =   240
       TabIndex        =   30
-      Top             =   2640
+      Top             =   3000
       Width           =   1575
    End
    Begin VB.Label Label1 
@@ -348,14 +379,14 @@ Begin VB.Form FThuChi
       Left            =   240
       TabIndex        =   17
       Tag             =   "Object code"
-      Top             =   2160
+      Top             =   2520
       Width           =   1575
    End
    Begin MSForms.ComboBox ComboBox1 
       Height          =   330
       Left            =   2040
       TabIndex        =   16
-      Top             =   2160
+      Top             =   2520
       Width           =   1695
       VariousPropertyBits=   746604571
       DisplayStyle    =   3
@@ -374,7 +405,7 @@ Begin VB.Form FThuChi
       Left            =   3840
       TabIndex        =   12
       Tag             =   "1"
-      Top             =   1680
+      Top             =   2040
       Width           =   3615
    End
    Begin VB.Label Label1 
@@ -385,7 +416,7 @@ Begin VB.Form FThuChi
       Left            =   240
       TabIndex        =   11
       Tag             =   "Object code"
-      Top             =   1680
+      Top             =   2040
       Width           =   1695
    End
    Begin VB.Label Label1 
@@ -396,7 +427,7 @@ Begin VB.Form FThuChi
       Left            =   240
       TabIndex        =   10
       Tag             =   "Number of Voucher"
-      Top             =   1200
+      Top             =   1560
       Width           =   1695
    End
    Begin VB.Label Label1 
@@ -407,7 +438,7 @@ Begin VB.Form FThuChi
       Left            =   240
       TabIndex        =   9
       Tag             =   "Address:"
-      Top             =   840
+      Top             =   1200
       Width           =   1335
    End
    Begin VB.Label Label1 
@@ -428,7 +459,8 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
- 
+
+Dim MaSoHd As Integer
 ' Khai báo c?u trúc STARTUPINFO và PROCESS_INFORMATION
 Private Type STARTUPINFO
     cb As Long
@@ -490,12 +522,12 @@ Dim ngay As Date
 Dim f1 As Integer
 
 Private Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" ( _
-    ByVal hwnd As Long, _
-    ByVal lpOperation As String, _
-    ByVal lpFile As String, _
-    ByVal lpParameters As String, _
-    ByVal lpDirectory As String, _
-    ByVal nShowCmd As Long) As Long
+                                      ByVal hwnd As Long, _
+                                      ByVal lpOperation As String, _
+                                      ByVal lpFile As String, _
+                                      ByVal lpParameters As String, _
+                                      ByVal lpDirectory As String, _
+                                      ByVal nShowCmd As Long) As Long
 
 Private Const SW_NORMAL = 1
 Private Const SW_HIDE = 0
@@ -542,7 +574,28 @@ Private Sub Timer1_Timer()
     Unload Me ' Ðóng form sau khi Timer h?t th?i gian
 End Sub
 
+Public Sub SaveGetPhieu()
+
+'Lay dc maso hoa don MaSoHd
+'Kiem tra co chua de insert or update
+    Dim checkmaso As Integer
+    Dim TyLe As String
+    TyLe = "8%"
+    checkmaso = SelectSQL("select count(*) AS f1 from tbGetphieu where MaCT = '" & MaSoHd & "'")
+    If checkmaso = 0 Then
+        'them moi
+        ExecuteSQL5 "INSERT INTO tbGetphieu (MaCT, TenNM, TenCty, DiaChi, HTTT, CCCD, TyLe) VALUES (" & MaSoHd & ",'" & T(4).Text & "','" & T(0).Text & "','" & T(1).Text & "','" & ComboBox1.Text & "','" & T(5).Text & "','" & TyLe & "')"
+    Else
+        'Cap nhat
+       ExecuteSQL5 "UPDATE tbGetphieu SET TenNM = '" & T(4).Text & "', TenCty = '" & T(0).Text & "', DiaChi = '" & T(1).Text & "', HTTT = '" & ComboBox1.Text & "', CCCD = '" & T(5).Text & "', TyLe = '" & TyLe & "' WHERE MaCT = '" & MaSoHd & "'"
+    End If
+
+End Sub
 Public Sub Command_Click()
+
+'Cap nhat thong tin getphieu
+    SaveGetPhieu
+
     If Combo1.ListIndex = -1 And Combo1.ListCount > 0 Then
         Combo1.ListIndex = 0
     End If
@@ -578,7 +631,7 @@ Public Sub Command_Click()
     If typeGhichu = 6 Then
         FilePath = App.path & "\\HoaDon\\invoice.txt"
         content = FrmChungtu.txt(0).Text & "_" & FrmChungtu.txtVT(1).Text & "_" & FrmChungtu.MedNgay(0).Text
-       
+
         If Not FileExists(FilePath) Then
             'Loai_thangbd_thangkt
             iscreate = CreateVersionFile(FilePath, content)
@@ -619,6 +672,7 @@ Public Sub Command_Click()
         Command1.Visible = True
         Command2.Visible = True
         Command2.Enabled = False
+        'Check3.Visible = True
     End If
     If FThuChiForm = 1 Then
         ' FrmChungtu.DoneSetup
@@ -852,7 +906,7 @@ Private Sub Command2_Click()
             Dim FilePath As String
             FilePath = App.path & "\\HoaDon\\invoice.txt"
             Dim content As String
-            content = "2_" & IdNhap
+            content = "PH_" & IdNhap
             Dim fileNumber As Integer
             If Not FileExists(FilePath) Then
 
@@ -979,9 +1033,10 @@ Private Sub lblTitle_MouseDown(Index As Integer, Button As Integer, Shift As Int
     picFakeTitle_MouseDown Button, Shift, X, Y
 End Sub
 Private Sub Form_Load()
+ 
     Dim rsports As Recordset
 
-    Set rsports = DBKetoan.OpenRecordset("select IdNhap AS f1 FROM HoaDon " & _
+    Set rsports = DBKetoan.OpenRecordset("select IdNhap AS f1, HoaDon.MaSo FROM HoaDon " & _
                                          "inner join ChungTu on HoaDon.MaSo = ChungTu.MaSo " & _
                                          "where ChungTu.SoHieu = '" & FrmChungtu.txt(0).Text & "' " & _
                                          "and HoaDon.KyHieu = '" & FrmChungtu.txtVT(1).Text & "' " & _
@@ -989,6 +1044,7 @@ Private Sub Form_Load()
     If Not rsports.EOF Then
         ' L?y giá tr? IdNhap
         Dim IdNhap As String
+        MaSoHd = rsports!MaSo
         If Not IsNull(rsports!f1) And rsports!f1 <> "..." Then
 
             IdNhap = rsports!f1  ' ho?c rsport.Fields("f1").Value
@@ -1009,7 +1065,7 @@ Private Sub Form_Load()
     Dim countinvoiceinfo As Integer
     countinvoiceinfo = SelectSQL("select count(*) AS f1 from  tbInvoiceInfo")
     'Neu chua co thi load danh sach
-    If countAccount = 0 And countinvoiceinfo > 0 Then
+    If countAccount = 0 Or countinvoiceinfo > 0 Then
         Dim FilePath As String
         FilePath = App.path & "\\HoaDon\\invoice.txt"
         Dim content As String
@@ -1047,20 +1103,20 @@ Private Sub Form_Load()
             ' Các tru?ng h?p còn l?i
             MsgBox "Url khác: " & urlname
         End Select
+        If countAccount = 0 Then
+            Dim exePath As String
+            exePath = App.path & "\\Tools\\Debug\\SaovietTax.exe"
 
+            ' Shell d? m? ?ng d?ng
+            Shell exePath, vbNormalFocus
 
-        Dim exePath As String
-        exePath = App.path & "\\Tools\\Debug\\SaovietTax.exe"
+            DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
 
-        ' Shell d? m? ?ng d?ng
-        Shell exePath, vbNormalFocus
-
-        DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
-
-        ' L?y handle c?a c?a s? ?ng d?ng
-        hWndApp = 0  ' Kh?i t?o bi?n hWndApp
-        Sleep 2000
-        CheckWindow
+            ' L?y handle c?a c?a s? ?ng d?ng
+            hWndApp = 0  ' Kh?i t?o bi?n hWndApp
+            Sleep 2000
+            CheckWindow
+        End If
     End If
 
     'Load danh sach cbb
@@ -1146,6 +1202,7 @@ T:
     lblTitle(11).Left = picIcon(1).Left + picIcon(1).Width + 90
     lblTitle(11).Top = (picFakeTitle.Height - picIcon(1).Height) \ 2 + 15
     lblClose.Top = 55
+    lblTitle(11).Caption = "PhiÕu thu chi"
     AnControl Me
     Dim i As Integer
 
@@ -1168,11 +1225,22 @@ End Sub
 
 Public Sub GetPhieu(s1 As String, s2 As String, s3 As String, makh As Long, Optional d As Date, Optional s4 As String)
     kh.InitKhachHangMaSo makh
-    T(0).Text = s1
-    T(1).Text = s2
-    'T(2).Text = s3
-    T(2).Text = FrmChungtu.txt(0).Text
-    T(3).Text = s4
+    'Lay danh sach get phieu
+    Dim rsports As Recordset
+    Set rsports = DBKetoan.OpenRecordset("select * from tbGetphieu where MaCT = '" & MaSoHd & "'", dbOpenSnapshot)
+    If Not rsports.EOF Then
+        T(5).Text = rsports!CCCD
+        T(0).Text = rsports!tencty
+        T(4).Text = rsports!tenNM
+        T(1).Text = rsports!DiaChi
+    Else
+        T(0).Text = s1
+        T(1).Text = s2
+        T(2).Text = s3
+        T(2).Text = FrmChungtu.txt(0).Text
+        T(3).Text = s4
+    End If
+
     txtshkh.Text = kh.sohieu
     lbkh.Caption = kh.Ten
     ngay = d
