@@ -4663,10 +4663,10 @@ Private Sub Xulyimport(ByVal item As ClsFileImport)
         Dim rs_ktra154 As Recordset
         ' M? Recordset d? l?y thông tin khách hàng
         Set rs_ktra154 = DBKetoan.OpenRecordset(Query, dbOpenSnapshot)
-        Dim hasdata As Boolean
-        hasdata = False
+        Dim hasData As Boolean
+        hasData = False
         If Not rs_ktra154.EOF Then
-            hasdata = True
+            hasData = True
             RFocus txtchungtu(2)
             txtchungtu(2).Text = rs_ktra154!sohieu
             txtChungtu_LostFocus (2)
@@ -4694,7 +4694,7 @@ Private Sub Xulyimport(ByVal item As ClsFileImport)
 
 
         End If
-        If hasdata = True Then
+        If hasData = True Then
             '1331
             txtchungtu(0).Text = 1331
             txtChungtu_LostFocus (0)
@@ -10828,7 +10828,7 @@ Private Sub Command5_Click()
 'txtVT(1)
 'MedNgay(0)
     Dim rsport As Recordset
-    Set rsport = DBKetoan.OpenRecordset("select IdNhap AS f1 FROM HoaDon " & _
+    Set rsport = DBKetoan.OpenRecordset("select IdNhap AS f1,HoaDon.MaSo FROM HoaDon " & _
                                         "inner join ChungTu on HoaDon.MaSo = ChungTu.MaSo " & _
                                         "where ChungTu.SoHieu = '" & FrmChungtu.txt(0).Text & "' " & _
                                         "and HoaDon.KyHieu = '" & FrmChungtu.txtVT(1).Text & "' " & _
@@ -10837,8 +10837,12 @@ Private Sub Command5_Click()
         ' L?y giá tr? IdNhap
         Dim IdNhap As String
         If Not IsNull(rsport!f1) Then
+            If InStr(1, rsport!f1, "-") > 0 Then
+                IdNhap = rsport!MaSo  ' ho?c rsport.Fields("f1").Value
+            Else
+                IdNhap = rsport!f1  ' ho?c rsport.Fields("f1").Value
+            End If
 
-            IdNhap = rsport!f1  ' ho?c rsport.Fields("f1").Value
             Dim url As String
             url = App.path & "\HoaDon\HdNhap\" & IdNhap & ".pdf"
             Shell "rundll32.exe url.dll,FileProtocolHandler " & url, vbNormalFocus
