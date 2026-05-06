@@ -7,7 +7,7 @@ Begin VB.Form FThuChi
    BackColor       =   &H80000005&
    BorderStyle     =   0  'None
    Caption         =   "Th«ng tin vÒ phiÕu thu - chi"
-   ClientHeight    =   3435
+   ClientHeight    =   3510
    ClientLeft      =   3735
    ClientTop       =   3720
    ClientWidth     =   7680
@@ -27,7 +27,7 @@ Begin VB.Form FThuChi
    LinkTopic       =   "Additional Voucher Information"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3435
+   ScaleHeight     =   3510
    ScaleWidth      =   7680
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
@@ -58,6 +58,7 @@ Begin VB.Form FThuChi
       TabIndex        =   29
       Text            =   "Combo1"
       Top             =   3000
+      Visible         =   0   'False
       Width           =   4095
    End
    Begin VB.Timer timerImport 
@@ -71,21 +72,22 @@ Begin VB.Form FThuChi
       Caption         =   "Ph¸t hµnh"
       Height          =   375
       Left            =   6000
+      MaskColor       =   &H00FFFFFF&
       Style           =   1  'Graphical
       TabIndex        =   28
-      Top             =   2400
+      Top             =   2480
       Visible         =   0   'False
       Width           =   1455
    End
    Begin VB.CommandButton Command1 
-      BackColor       =   &H00FFC0C0&
+      BackColor       =   &H000080FF&
       Caption         =   "L­u nh¸p"
       Height          =   375
       Left            =   4080
       MaskColor       =   &H00FFFFFF&
       Style           =   1  'Graphical
       TabIndex        =   27
-      Top             =   2400
+      Top             =   2480
       Visible         =   0   'False
       Width           =   1695
    End
@@ -358,6 +360,7 @@ Begin VB.Form FThuChi
       Left            =   240
       TabIndex        =   30
       Top             =   3000
+      Visible         =   0   'False
       Width           =   1575
    End
    Begin VB.Label Label1 
@@ -459,7 +462,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-
+Dim countinvoiceinfo As Integer
 Dim MaSoHd As Integer
 ' Khai báo c?u trúc STARTUPINFO và PROCESS_INFORMATION
 Private Type STARTUPINFO
@@ -666,7 +669,7 @@ Public Sub Command_Click()
     FrmChungtu.CheckBox3 = CheckBox3.Value
     FrmChungtu.checkinbangke.Value = checkinbangke.Value
     FrmChungtu.Checkinbangkevahoadon.Value = Checkinbangkevahoadon.Value
-    If FThuChi.FThuChiForm <> 0 Then
+    If FThuChi.FThuChiForm <> 0 Or countinvoiceinfo = 0 Then
         Unload Me
     Else
         Command1.Visible = True
@@ -759,14 +762,17 @@ Private Sub GhiChutxt(ByVal content As Integer)
     Close #FileNum
 End Sub
 Private Sub Command1_Click()
+    Screen.MousePointer = vbHourglass   ' ho?c 11
     Command_Click
     GhiChutxt typeGhichu
     Dim exePath As String
-    exePath = App.path & "\\Tools\\Debug\\SaovietTax.exe"
+    Dim cmd As String
 
-    ' Shell d? m? ?ng d?ng
-    Shell exePath, vbNormalFocus
-
+    exePath = App.path & "\Tools\Debug\SaovietTax.exe"
+    ' Dùng runas v?i trust level th?p hon
+    cmd = "runas /trustlevel:0x20000 """ & exePath & """"
+    Shell cmd, vbHide
+    Screen.MousePointer = vbDefault
     Exit Sub
     DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
 
@@ -786,6 +792,8 @@ Private Sub Command1_Click()
         Sleep 1000
         CheckWindow
     End If
+    Screen.MousePointer = vbDefault     ' ho?c 0
+
 End Sub
 Private Sub CheckWindow()
 ' Ki?m tra liên t?c xem c?a s? còn t?n t?i hay không
@@ -887,6 +895,7 @@ Public Function RunExeClean(ByVal ExeFullPath As String, Optional ByVal workingD
     RunExeClean = True
 End Function
 Private Sub Command2_Click()
+    Screen.MousePointer = vbHourglass   ' ho?c 11
 'Lay id phat hanh
     Dim rsports As Recordset
 
@@ -909,7 +918,6 @@ Private Sub Command2_Click()
             content = "PH_" & IdNhap
             Dim fileNumber As Integer
             If Not FileExists(FilePath) Then
-
                 'Loai_thangbd_thangkt
                 Dim iscreate As Boolean
                 iscreate = CreateVersionFile(FilePath, content)
@@ -925,8 +933,12 @@ Private Sub Command2_Click()
                     MsgBox "L?i khi ghi dè file!", vbExclamation
                 End If
             End If
-            GhiChutxt 5
-
+            If typeGhichu = 5 Then
+                GhiChutxt 5
+            End If
+            If typeGhichu = 6 Then
+                GhiChutxt 6
+            End If
             Dim exePath As String
             Dim cmd As String
 
@@ -943,7 +955,7 @@ Private Sub Command2_Click()
         End If
 
     End If
-
+    Screen.MousePointer = vbDefault     ' ho?c 0
 
 End Sub
 
@@ -1033,7 +1045,7 @@ Private Sub lblTitle_MouseDown(Index As Integer, Button As Integer, Shift As Int
     picFakeTitle_MouseDown Button, Shift, X, Y
 End Sub
 Private Sub Form_Load()
- 
+
     Dim rsports As Recordset
 
     Set rsports = DBKetoan.OpenRecordset("select IdNhap AS f1, HoaDon.MaSo FROM HoaDon " & _
@@ -1062,10 +1074,10 @@ Private Sub Form_Load()
 
     Dim countAccount As Integer
     countAccount = SelectSQL("select count(*) AS f1 from  tbInvoiceTemplate")
-    Dim countinvoiceinfo As Integer
+
     countinvoiceinfo = SelectSQL("select count(*) AS f1 from  tbInvoiceInfo")
     'Neu chua co thi load danh sach
-    If countAccount = 0 Or countinvoiceinfo > 0 Then
+    If countinvoiceinfo > 0 Then
         Dim FilePath As String
         FilePath = App.path & "\\HoaDon\\invoice.txt"
         Dim content As String
@@ -1103,7 +1115,7 @@ Private Sub Form_Load()
             ' Các tru?ng h?p còn l?i
             MsgBox "Url khác: " & urlname
         End Select
-        If countAccount = 0 Then
+        If countAccount = 0 And typeGhichu = 5 Then
             Dim exePath As String
             exePath = App.path & "\\Tools\\Debug\\SaovietTax.exe"
 

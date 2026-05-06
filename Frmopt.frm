@@ -31,6 +31,14 @@ Begin VB.Form FrmOptions
    ScaleWidth      =   13020
    ShowInTaskbar   =   0   'False
    Tag             =   "Options"
+   Begin VB.ComboBox Combo1 
+      Height          =   360
+      Left            =   10560
+      TabIndex        =   152
+      Text            =   "..."
+      Top             =   600
+      Width           =   2295
+   End
    Begin VB.TextBox txtIncoiePassword 
       Height          =   375
       Left            =   10560
@@ -55,10 +63,11 @@ Begin VB.Form FrmOptions
       Width           =   4695
       Begin VB.TextBox txtInvoiceUrl 
          Height          =   375
-         Left            =   1440
+         Left            =   120
          TabIndex        =   146
-         Top             =   360
-         Width           =   2295
+         Top             =   1680
+         Visible         =   0   'False
+         Width           =   735
       End
       Begin VB.Label Label6 
          BackColor       =   &H00FFFFC0&
@@ -4201,6 +4210,10 @@ TITLE_HEIGHT = 160
 End Sub
 
 Private Sub Form_Load()
+    Combo1.AddItem "vinvoice.viettel.vn"
+    Combo1.AddItem "van.ehoadon.vn"
+    Combo1.AddItem "admin.vnpt-invoice.com"
+
     lblTitle(11).AutoSize = True
     Me.Height = Me.Height + 350 + 10
     picFakeTitle.Width = Me.ScaleWidth
@@ -4243,7 +4256,7 @@ Private Sub Form_Load()
     Frame(2).Enabled = False
     If Len(Text(7).Text) >= 9 Then Chbanthuoc.Enabled = False
 
-   
+
 End Sub
 
 
@@ -4334,12 +4347,12 @@ Public Sub Command_Click(Index As Integer)
     countAccount = SelectSQL("select count(*) AS f1 from  tbInvoiceInfo")
     If countAccount = 0 Then
         ExecuteSQL5 "INSERT INTO tbInvoiceInfo (Url, Username, Password) VALUES ('" & _
-                    txtInvoiceUrl.Text & "','" & _
+                    Combo1.Text & "','" & _
                     txtInvoiceUsername.Text & "','" & _
                     txtIncoiePassword.Text & "')"
     Else
         ExecuteSQL5 "UPDATE tbInvoiceInfo SET " & _
-                    "Url = '" & Replace(txtInvoiceUrl.Text, "'", "''") & "', " & _
+                    "Url = '" & Replace(Combo1.Text, "'", "''") & "', " & _
                     "Username = '" & Replace(txtInvoiceUsername.Text, "'", "''") & "', " & _
                     "Password = '" & Replace(txtIncoiePassword.Text, "'", "''") & "'"
     End If
