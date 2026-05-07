@@ -1111,6 +1111,9 @@ Private Sub Form_Load()
         Case "van.ehoadon.vn"
             typeGhichu = 6
             GhiChutxt 6
+        Case "id-v2.tendoo.vn"
+            typeGhichu = 7
+            GhiChutxt 7
         Case Else
             ' Các tru?ng h?p còn l?i
             MsgBox "Url khác: " & urlname

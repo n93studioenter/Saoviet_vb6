@@ -10836,11 +10836,13 @@ Private Sub Command5_Click()
     If Not rsport.EOF Then
         ' L?y giá tr? IdNhap
         Dim IdNhap As String
-        If Not IsNull(rsport!f1) Then
+        If Not IsNull(rsport!f1) And rsport!f1 <> "" Then
             If InStr(1, rsport!f1, "-") > 0 Then
                 IdNhap = rsport!MaSo  ' ho?c rsport.Fields("f1").Value
             Else
-                IdNhap = rsport!f1  ' ho?c rsport.Fields("f1").Value
+                If rsport!f1 <> "" Then
+                    IdNhap = rsport!f1  ' ho?c rsport.Fields("f1").Value
+                End If
             End If
 
             Dim url As String

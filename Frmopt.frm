@@ -7,7 +7,7 @@ Begin VB.Form FrmOptions
    ClientHeight    =   8055
    ClientLeft      =   615
    ClientTop       =   585
-   ClientWidth     =   13020
+   ClientWidth     =   13155
    ClipControls    =   0   'False
    FillColor       =   &H00FFFFC0&
    BeginProperty Font 
@@ -28,7 +28,7 @@ Begin VB.Form FrmOptions
    PaletteMode     =   1  'UseZOrder
    Picture         =   "Frmopt.frx":57E2
    ScaleHeight     =   8055
-   ScaleWidth      =   13020
+   ScaleWidth      =   13155
    ShowInTaskbar   =   0   'False
    Tag             =   "Options"
    Begin VB.ComboBox Combo1 
@@ -36,7 +36,7 @@ Begin VB.Form FrmOptions
       Left            =   10560
       TabIndex        =   152
       Text            =   "..."
-      Top             =   600
+      Top             =   720
       Width           =   2295
    End
    Begin VB.TextBox txtIncoiePassword 
@@ -50,22 +50,22 @@ Begin VB.Form FrmOptions
       Height          =   375
       Left            =   10560
       TabIndex        =   150
-      Top             =   1250
+      Top             =   1200
       Width           =   2295
    End
    Begin VB.Frame Frame2 
       BackColor       =   &H00FFFFC0&
       Caption         =   "Th«ng tin Invoice Portal"
-      Height          =   2055
+      Height          =   1935
       Left            =   9120
       TabIndex        =   144
       Top             =   240
-      Width           =   4695
+      Width           =   3855
       Begin VB.TextBox txtInvoiceUrl 
          Height          =   375
-         Left            =   120
+         Left            =   360
          TabIndex        =   146
-         Top             =   1680
+         Top             =   1560
          Visible         =   0   'False
          Width           =   735
       End
@@ -4346,10 +4346,12 @@ Public Sub Command_Click(Index As Integer)
     Dim countAccount As Integer
     countAccount = SelectSQL("select count(*) AS f1 from  tbInvoiceInfo")
     If countAccount = 0 Then
-        ExecuteSQL5 "INSERT INTO tbInvoiceInfo (Url, Username, Password) VALUES ('" & _
-                    Combo1.Text & "','" & _
-                    txtInvoiceUsername.Text & "','" & _
-                    txtIncoiePassword.Text & "')"
+        If txtInvoiceUsername.Text <> "" Then
+            ExecuteSQL5 "INSERT INTO tbInvoiceInfo (Url, Username, Password) VALUES ('" & _
+                        Combo1.Text & "','" & _
+                        txtInvoiceUsername.Text & "','" & _
+                        txtIncoiePassword.Text & "')"
+        End If
     Else
         ExecuteSQL5 "UPDATE tbInvoiceInfo SET " & _
                     "Url = '" & Replace(Combo1.Text, "'", "''") & "', " & _
@@ -4641,6 +4643,7 @@ Private Sub LoadInfo()
     Set rsport = DBKetoan.OpenRecordset("SELECT DISTINCTROW tbInvoiceInfo.* FROM tbInvoiceInfo", dbOpenSnapshot)
     If Not rsport.EOF Then
         txtInvoiceUrl.Text = rsport!url
+        Combo1.Text = rsport!url
         txtInvoiceUsername.Text = rsport!UserName
         txtIncoiePassword.Text = rsport!Password
     End If

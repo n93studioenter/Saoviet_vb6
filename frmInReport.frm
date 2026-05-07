@@ -27,6 +27,7 @@ Begin VB.Form frmInReport
       Left            =   1800
       TabIndex        =   16
       Top             =   600
+      Value           =   -1  'True
       Width           =   1335
    End
    Begin VB.OptionButton Option2 
@@ -45,7 +46,6 @@ Begin VB.Form frmInReport
       Left            =   3360
       TabIndex        =   14
       Top             =   600
-      Value           =   -1  'True
       Width           =   975
    End
    Begin VB.ComboBox Combo4 
