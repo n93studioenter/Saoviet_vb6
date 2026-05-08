@@ -10853,16 +10853,16 @@ Private Sub Command5_Click()
             Set rsport = Nothing
             Exit Sub
         Else
-            Me.MousePointer = 11
-            DoEvents
-            GhiChutxt 3
-            frmBrowser.types = "0"
-            frmBrowser.Show vbModal
-            Me.MousePointer = vbDefault
+
         End If
 
     End If
-
+    Me.MousePointer = 11
+    DoEvents
+    GhiChutxt 3
+    frmBrowser.types = "0"
+    frmBrowser.Show vbModal
+    Me.MousePointer = vbDefault
     ' Ðóng recordset sau khi dùng
 
 End Sub

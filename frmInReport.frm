@@ -441,17 +441,17 @@ Function SuperTrim(ByVal s As String) As String
     s = Replace(s, vbLf, "")
     SuperTrim = Trim(s)  ' Xóa kho?ng tr?ng d?u/cu?i (ASCII 32)
 End Function
-Function CheckAndCreateFolder(ByVal FolderPath As String) As Boolean
+Function CheckAndCreateFolder(ByVal folderPath As String) As Boolean
     On Error GoTo ErrorHandler
     
     ' Ki?m tra n?u thu m?c chua t?n t?i
-    If Dir(FolderPath, vbDirectory) = "" Then
-        MkDir FolderPath
+    If Dir(folderPath, vbDirectory) = "" Then
+        MkDir folderPath
         CheckAndCreateFolder = True
-        Debug.Print "Ðã t?o thu m?c: " & FolderPath
+        Debug.Print "Ðã t?o thu m?c: " & folderPath
     Else
         CheckAndCreateFolder = True
-        Debug.Print "Thu m?c dã t?n t?i: " & FolderPath
+        Debug.Print "Thu m?c dã t?n t?i: " & folderPath
     End If
     
     Exit Function
@@ -470,7 +470,7 @@ Private Sub btnIn_Click()
     reportpth = App.path & "\\Tailieu\\Soketoan" & namct
     'Kiem tra folder ReportNamTC da co chua
     CheckAndCreateFolder (reportpth)
-    
+
     'Lay ra danh sach tai khoan can in
     FBcKt.CboThang(0).Text = Combo1.Text
     FBcKt.CboThang(1).Text = Combo2.Text
@@ -520,6 +520,7 @@ Private Sub btnIn_Click()
             frmMain.typeprint = 2
             FBcKt.OptBC(100).Value = True
             FBcKt.Command_Click 0
+
             With frmMain.Rpt
                 .PrinterDriver = "winspool"
                 .printername = tenmayin
@@ -552,6 +553,7 @@ Private Sub btnIn_Click()
     If chkSoCT.Value = 1 Then
         For Each itm In ListView1.ListItems
             If itm.CHECKED Then
+
                 'Debug.Print itm.Text   ' ?? tài kho?n dã ch?n
                 frmMain.typeprint = 2
                 FBcKt.Setinso (itm.Text)
@@ -560,6 +562,9 @@ Private Sub btnIn_Click()
                     .printername = tenmayin
                     .PrinterPort = Port  ' ?? port c?a b?n
                     .Destination = preview
+                    ' Thêm 2 dòng này d? in 2 m?t
+                    '.PrinterDuplex = 2   ' 1=Simplex, 2=Horizontal, 3=Vertical
+                    '.PrinterCopies = 1
                     .Action = 1
                 End With
             End If

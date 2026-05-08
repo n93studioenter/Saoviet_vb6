@@ -2365,72 +2365,72 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
                                                 "inner join ChungTu on HoaDon.MaSo = ChungTu.MaSo " & _
                                                 "where ChungTu.SoHieu = '" & rs_chungtu!sohieu & "' ", dbOpenSnapshot)
             If Not rsport.EOF Then
-                If Not IsNull(rsport!f1) And rsport!f1 <> "" And rsport!f1 <> "..." Then
+                If Not IsNull(rsport!f1) And rsport!f1 <> "..." And rsport!f1 <> "" Then
                     LoaiHD = "Portal"
+                Else
+                    LoaiHD = ""
                 End If
-                LoaiHD = ""
             End If
+            'Lay ra dong hoa don
+
+            FrmChungtu.Grid2.AddItem _
+                    rs_chungtu!sohieu & Chr(9) & _
+                                      Format(rs_chungtu!NgayCT, Mask_D) & Chr(9) & _
+                                      Format(rs_chungtu!NgayGS, Mask_D) & Chr(9) & _
+                                      rs_chungtu!dg & Chr(9) & _
+                                      Format(rs_chungtu!tps, Mask_0) & Chr(9) & _
+                                      CStr(mct) & Chr(9) & _
+                                      LoaiHD & _
+                                      Format(rs_chungtu!chietkhau, Mask_0), 0
+            FrmChungtu.Grid2.ColWidth(3) = 3700
+            '
+            '            End If
+        Else
+            ovr = 1
         End If
-        'Lay ra dong hoa don
+        rs_chungtu.MoveNext
+    Loop
+    FrmChungtu.Label(28).Caption = "Sè chøng tõ ph©n hÖ ®ang dïng: " + str(rs_chungtu.recordCount)
 
-        FrmChungtu.Grid2.AddItem _
-                rs_chungtu!sohieu & Chr(9) & _
-                                  Format(rs_chungtu!NgayCT, Mask_D) & Chr(9) & _
-                                  Format(rs_chungtu!NgayGS, Mask_D) & Chr(9) & _
-                                  rs_chungtu!dg & Chr(9) & _
-                                  Format(rs_chungtu!tps, Mask_0) & Chr(9) & _
-                                  CStr(mct) & Chr(9) & _
-                                  LoaiHD & _
-                                  Format(rs_chungtu!chietkhau, Mask_0), 0
-        FrmChungtu.Grid2.ColWidth(3) = 3700
+    Dim kk
+    kk = 0
+    Do While so_cong < 15
+        '            FrmChungtu.Grid2.AddItem "" + Chr(9) + "" + Chr(9) _
+                     '                + "" + Chr(9) + "" + Chr(9) + "" + Chr(9) + "" ', 0
         '
-        '            End If
+        FrmChungtu.Grid2.AddItem " " + Chr(9) + "" + Chr(9) _
+                               + "" + Chr(9) + "" + Chr(9) + "" + Chr(9) + ""
+
+        so_cong = so_cong + 1
+    Loop
+    If rs_chungtu.recordCount > 0 Then
+        If Row >= rs_chungtu.recordCount Then Row = rs_chungtu.recordCount - 1
     Else
-        ovr = 1
+        Row = 0
     End If
-    rs_chungtu.MoveNext
-Loop
-FrmChungtu.Label(28).Caption = "Sè chøng tõ ph©n hÖ ®ang dïng: " + str(rs_chungtu.recordCount)
 
-Dim kk
-kk = 0
-Do While so_cong < 15
-    '            FrmChungtu.Grid2.AddItem "" + Chr(9) + "" + Chr(9) _
-                 '                + "" + Chr(9) + "" + Chr(9) + "" + Chr(9) + "" ', 0
-    '
-    FrmChungtu.Grid2.AddItem " " + Chr(9) + "" + Chr(9) _
-                           + "" + Chr(9) + "" + Chr(9) + "" + Chr(9) + ""
+    '    GrdChungtu.Rows = IIf(rs_chungtu.RecordCount > GrdChungtu.tag, IIf(rs_chungtu.RecordCount > MaxGridRow, MaxGridRow, rs_chungtu.RecordCount), GrdChungtu.tag)
+    LbSoCT.Caption = CStr(rs_chungtu.recordCount)
+    GrdChungtu.col = 0
+    rs_chungtu.Close
+    Set rs_chungtu = Nothing
+    On Error Resume Next
+    GrdChungtu.Row = Row
+    'GrdChungtu_Click
 
-    so_cong = so_cong + 1
-Loop
-If rs_chungtu.recordCount > 0 Then
-    If Row >= rs_chungtu.recordCount Then Row = rs_chungtu.recordCount - 1
-Else
-    Row = 0
-End If
+    SetGridIndex GrdChungtu, Row + 1
+    With GrdChungtu
+        .col = 5
+        If Len(.Text) = 0 Then MaCTChon = 0 Else MaCTChon = CLng5(.Text)
+        .col = 0
+    End With
 
-'    GrdChungtu.Rows = IIf(rs_chungtu.RecordCount > GrdChungtu.tag, IIf(rs_chungtu.RecordCount > MaxGridRow, MaxGridRow, rs_chungtu.RecordCount), GrdChungtu.tag)
-LbSoCT.Caption = CStr(rs_chungtu.recordCount)
-GrdChungtu.col = 0
-rs_chungtu.Close
-Set rs_chungtu = Nothing
-On Error Resume Next
-GrdChungtu.Row = Row
-'GrdChungtu_Click
-
-SetGridIndex GrdChungtu, Row + 1
-With GrdChungtu
-    .col = 5
-    If Len(.Text) = 0 Then MaCTChon = 0 Else MaCTChon = CLng5(.Text)
-    .col = 0
-End With
-
-If Not GrdChungtu.RowIsVisible(Row) Then GrdChungtu.TopRow = Row - 8
-On Error GoTo 0
-If ovr > 0 Then ErrMsg er_NhieuCT
+    If Not GrdChungtu.RowIsVisible(Row) Then GrdChungtu.TopRow = Row - 8
+    On Error GoTo 0
+    If ovr > 0 Then ErrMsg er_NhieuCT
 
 KT:
-Me.MousePointer = 0
+    Me.MousePointer = 0
 End Sub
 
 '======================================================================================
