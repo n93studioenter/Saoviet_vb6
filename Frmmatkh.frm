@@ -200,12 +200,12 @@ Private Const HTCAPTION = 2
 
 Private Declare Function SetWindowTextW Lib "user32" _
                                         (ByVal hwnd As Long, ByVal lpString As Long) As Long
-Private Declare Function MultiByteToWideChar Lib "Kernel32" _
+Private Declare Function MultiByteToWideChar Lib "kernel32" _
                                              (ByVal CodePage As Long, ByVal dwFlags As Long, _
                                               lpMultiByteStr As Any, ByVal cchMultiByte As Long, _
                                               ByVal lpWideCharStr As Long, ByVal cchWideChar As Long) As Long
 
-Private Declare Sub CopyMemory Lib "Kernel32" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal length As Long)
+Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal length As Long)
 Private Declare Function GetAdaptersInfo Lib "iphlpapi" (lpAdapterInfo As Any, lpSize As Long) As Long
 
 Dim Counter As Integer
@@ -1492,6 +1492,40 @@ Public Sub CheckAndCreateTBCpu()
         DBKetoan.TableDefs.Append tdf
     End If
 End Sub
+Public Sub CheckAndCreateTBResponse()
+    Dim tdf As DAO.TableDef
+    Dim fld As DAO.Field
+    Dim tableExists As Boolean
+    Dim tableName As String
+
+    tableName = "tbResponse"
+    tableExists = False
+
+
+    ' Ki?m tra t?n t?i b?ng
+    For Each tdf In DBKetoan.TableDefs
+        If tdf.Name = tableName Then
+            tableExists = True
+            Exit For
+        End If
+    Next tdf
+
+    If Not tableExists Then
+        ' T?o b?ng n?u chua t?n t?i
+        Set tdf = DBKetoan.CreateTableDef(tableName)
+
+        ' Username
+        Set fld = tdf.CreateField("Status", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+
+        ' Thêm b?ng vào CSDL
+        DBKetoan.TableDefs.Append tdf
+        ExecuteSQL5 ("INSERT INTO tbResponse(Status) VALUES(0)")
+    End If
+
+End Sub
 Public Sub CheckAndCreateTBGetPhieu()
     Dim tdf As DAO.TableDef
     Dim fld As DAO.Field
@@ -1560,11 +1594,11 @@ Public Sub CheckAndCreateTBGetPhieu()
 End Sub
 
 Private Sub Form_Load()
-   
+    CheckAndCreateTBResponse
     frmMain.CheckAndCreateTBInvoiceTemplate
     frmMain.CheckAndCreateTBInvoice
     CheckAndCreateTBCpu
-     CheckAndCreateTBGetPhieu
+    CheckAndCreateTBGetPhieu
     ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
     ExecuteSQL5_Themmoi ("ALTER TABLE Users ADD IsReister NUMBER")
     ExecuteSQL5_Themmoi ("ALTER TABLE Users  ADD MacAddress text")

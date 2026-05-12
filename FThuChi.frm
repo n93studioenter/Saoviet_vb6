@@ -462,8 +462,9 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+Dim IdNhap As String
 Dim countinvoiceinfo As Integer
-Dim MaSoHd As Integer
+Dim MaSoHd As Long
 ' Khai báo c?u trúc STARTUPINFO và PROCESS_INFORMATION
 Private Type STARTUPINFO
     cb As Long
@@ -673,8 +674,10 @@ Public Sub Command_Click()
         Unload Me
     Else
         Command1.Visible = True
-        Command2.Visible = True
-        Command2.Enabled = False
+        If IdNhap <> "" Then
+            Command2.Visible = True
+            Command2.Enabled = False
+        End If
         'Check3.Visible = True
     End If
     If FThuChiForm = 1 Then
@@ -729,7 +732,7 @@ ErrorHandler:
     On Error Resume Next
     Close #fileNumber
 End Function
-Private Sub GhiChutxt(ByVal content As Integer)
+Public Sub GhiChutxt(ByVal content As Integer)
     Dim FilePath As String
     FilePath = App.path & "\\Hoadon\\status.txt"
 
@@ -795,7 +798,7 @@ Private Sub Command1_Click()
     Screen.MousePointer = vbDefault     ' ho?c 0
 
 End Sub
-Private Sub CheckWindow()
+Public Sub CheckWindow()
 ' Ki?m tra liên t?c xem c?a s? còn t?n t?i hay không
     Do
         If IsWindow(hWndApp) = 0 Then
@@ -1055,7 +1058,7 @@ Private Sub Form_Load()
                                          "and ChungTu.NgayCT = #" & Format(FrmChungtu.MedNgay(0).Text, "yyyy-mm-dd") & "#", dbOpenSnapshot)
     If Not rsports.EOF Then
         ' L?y giá tr? IdNhap
-        Dim IdNhap As String
+        
         MaSoHd = rsports!MaSo
         If Not IsNull(rsports!f1) And rsports!f1 <> "..." Then
 
@@ -1074,7 +1077,20 @@ Private Sub Form_Load()
 
     Dim countAccount As Integer
     countAccount = SelectSQL("select count(*) AS f1 from  tbInvoiceTemplate")
-
+    If countAccount > 0 Then
+        Combo1.Visible = True
+        Label2.Visible = True
+        Dim rstemplate As Recordset
+        Set rstemplate = DBKetoan.OpenRecordset("SELECT DISTINCTROW tbInvoiceTemplate.* FROM tbInvoiceTemplate", dbOpenSnapshot)
+        If Not rstemplate.EOF Then
+            Combo1.Text = rstemplate!code & "-" & UnicodeToVni(rstemplate!Name)
+        Else
+            If Combo1.ListCount = 1 Then
+                Combo1.Text = rstemplate!code & "-" & UnicodeToVni(rstemplate!Name)
+            End If
+        End If
+        rstemplate.MoveNext
+    End If
     countinvoiceinfo = SelectSQL("select count(*) AS f1 from  tbInvoiceInfo")
     'Neu chua co thi load danh sach
     If countinvoiceinfo > 0 Then
@@ -1136,12 +1152,12 @@ Private Sub Form_Load()
 
     'Load danh sach cbb
     Dim rsport As Recordset
-    Dim startTime As Double
-    Dim timeoutSeconds As Integer
+    Dim StartTime As Double
+    Dim TimeoutSeconds As Integer
     Dim hasData As Boolean
 
-    timeoutSeconds = 10    ' Timeout sau 10 giây
-    startTime = Timer
+    TimeoutSeconds = 10    ' Timeout sau 10 giây
+    StartTime = Timer
     hasData = False
 
     If FThuChiForm = 0 Then
@@ -1160,7 +1176,7 @@ Private Sub Form_Load()
         If Not rsport.EOF Then
             hasData = True
         End If
-        Do While (Timer - startTime) < timeoutSeconds
+        Do While (Timer - StartTime) < TimeoutSeconds
 
             If Not rsport.EOF Then
                 hasData = True
@@ -1204,7 +1220,7 @@ Private Sub Form_Load()
             Set rsport = Nothing
         Else
             ' Timeout - không có data
-            MsgBox "Không có d? li?u sau " & timeoutSeconds & " giây!", vbExclamation
+            MsgBox "Không có d? li?u sau " & TimeoutSeconds & " giây!", vbExclamation
         End If
     End If
 

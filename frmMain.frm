@@ -175,13 +175,13 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
       Height          =   495
-      Left            =   0
+      Left            =   3600
       ScaleHeight     =   435
-      ScaleWidth      =   13515
+      ScaleWidth      =   10155
       TabIndex        =   72
       Top             =   0
       Visible         =   0   'False
-      Width           =   13575
+      Width           =   10215
       Begin VB.Label lblMenu 
          Caption         =   "Label4"
          Height          =   255
@@ -223,7 +223,7 @@ Begin VB.Form frmMain
          EndProperty
          BeginProperty Panel4 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Style           =   6
-            TextSave        =   "08/05/26"
+            TextSave        =   "11/05/26"
             Key             =   ""
             Object.Tag             =   ""
          EndProperty
@@ -667,6 +667,144 @@ Begin VB.Form frmMain
       _Version        =   348160
       WindowState     =   2
       PrintFileLinesPerPage=   60
+   End
+   Begin VB.Label lbCty 
+      BackColor       =   &H00FFC0C0&
+      BackStyle       =   0  'Transparent
+      Caption         =   "LbCty 5"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0000FFFF&
+      Height          =   255
+      Index           =   17
+      Left            =   5160
+      TabIndex        =   86
+      Tag             =   "1"
+      Top             =   6600
+      Visible         =   0   'False
+      Width           =   7575
+   End
+   Begin VB.Label Label3 
+      BackColor       =   &H00FFC0C0&
+      BackStyle       =   0  'Transparent
+      Caption         =   "Password :"
+      BeginProperty Font 
+         Name            =   "VK Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00C00000&
+      Height          =   330
+      Index           =   20
+      Left            =   3840
+      TabIndex        =   85
+      Tag             =   "Address"
+      Top             =   6600
+      Visible         =   0   'False
+      Width           =   2535
+   End
+   Begin VB.Label lbCty 
+      BackColor       =   &H00FFC0C0&
+      BackStyle       =   0  'Transparent
+      Caption         =   "LbCty 5"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0000FFFF&
+      Height          =   255
+      Index           =   16
+      Left            =   5160
+      TabIndex        =   84
+      Tag             =   "1"
+      Top             =   6240
+      Visible         =   0   'False
+      Width           =   7575
+   End
+   Begin VB.Label Label3 
+      BackColor       =   &H00FFC0C0&
+      BackStyle       =   0  'Transparent
+      Caption         =   "Username :"
+      BeginProperty Font 
+         Name            =   "VK Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00C00000&
+      Height          =   330
+      Index           =   19
+      Left            =   3840
+      TabIndex        =   83
+      Tag             =   "Address"
+      Top             =   6240
+      Visible         =   0   'False
+      Width           =   2535
+   End
+   Begin VB.Label lbCty 
+      BackColor       =   &H00FFC0C0&
+      BackStyle       =   0  'Transparent
+      Caption         =   "LbCty 5"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   -1  'True
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H0000FFFF&
+      Height          =   255
+      Index           =   15
+      Left            =   6360
+      TabIndex        =   82
+      Tag             =   "1"
+      Top             =   5880
+      Visible         =   0   'False
+      Width           =   7575
+   End
+   Begin VB.Label Label3 
+      BackColor       =   &H00FFC0C0&
+      BackStyle       =   0  'Transparent
+      Caption         =   "Nhµ cung c p HDDT :"
+      BeginProperty Font 
+         Name            =   "VK Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00C00000&
+      Height          =   330
+      Index           =   18
+      Left            =   3840
+      TabIndex        =   81
+      Tag             =   "Address"
+      Top             =   5880
+      Visible         =   0   'False
+      Width           =   2535
    End
    Begin VB.Label Label5 
       BackStyle       =   0  'Transparent
@@ -2916,13 +3054,26 @@ End Sub
 
 
 Private Sub Form_Activate()
+    Dim counttkinvoice As Long
+    counttkinvoice = SelectSQL("select count(*) AS f1 from  tbInvoiceInfo")
+    If counttkinvoice = 1 Then
+        Label3(18).Visible = True
+        LbCty(15).Visible = True
+        Label3(19).Visible = True
+        Label3(20).Visible = True
+        LbCty(16).Visible = True
+        LbCty(17).Visible = True
+        LbCty(15).Caption = SelectSQL("select Url AS f1 from  tbInvoiceInfo")
+        LbCty(16).Caption = SelectSQL("select Username AS f1 from  tbInvoiceInfo")
+        LbCty(17).Caption = SelectSQL("select Password AS f1 from  tbInvoiceInfo")
+    End If
     CheckAndCreateTBCpu
     ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD IdNhap text")
-     ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD IdTemplate text")
+    ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD IdTemplate text")
     ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD StatusPH text")
     ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD Printername text")
-     ExecuteSQL5_Themmoi ("ALTER TABLE tbInvoiceTemplate ADD KHHD text")
+    ExecuteSQL5_Themmoi ("ALTER TABLE tbInvoiceTemplate ADD KHHD text")
     Dim cmg As Long
     cmg = SelectSQL("select CMG AS f1 from  License")
     If cmg = 249991 Then
@@ -3773,7 +3924,12 @@ Private Sub Image2_Click()
     Taifilecapnhat
     Label4.Visible = False
 End Sub
- 
+
+Private Sub lbCty_Click(Index As Integer)
+    Clipboard.Clear
+    Clipboard.SetText LbCty(Index).Caption
+End Sub
+
 Public Sub mnCn_Click(Index As Integer)
     If Index = 12 Then
         Dim sMsg As String

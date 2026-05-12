@@ -2716,6 +2716,17 @@ Begin VB.Form FrmOptions
       Top             =   6600
       Width           =   1095
    End
+   Begin VB.Label Label7 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Label7"
+      ForeColor       =   &H000000C0&
+      Height          =   255
+      Left            =   9240
+      TabIndex        =   153
+      Top             =   2400
+      Visible         =   0   'False
+      Width           =   3735
+   End
    Begin VB.Label Label4 
       BackColor       =   &H00FFFFC0&
       Caption         =   "Url"
@@ -2770,11 +2781,13 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+Private Declare Sub Sleep Lib "Kernel32" (ByVal dwMilliseconds As Long)
+
 Private Const SECRET_KEY_MST As Long = &H7B4D8E2F
 Private isNewActive As Boolean
 Const LICENSE_LEN As Integer = 12
 Const BASE As Integer = 36
-
+Dim hWndApp As Long
 Const MAX_BASE36_VALUE As Variant = 36 ^ 12   ' ~ 4.7e18 (d? l?n cho 64 bit)
 
 Private Const RANDOM_MIN As Long = 10
@@ -3979,12 +3992,12 @@ Private Sub Combo_Click(Index As Integer)
 End Sub
 
 Private Sub Command1_Click()
-    Dim FolderPath As String
+    Dim folderPath As String
 
-    FolderPath = BrowseForFolder("Ch?n thu m?c luu file")
+    folderPath = BrowseForFolder("Ch?n thu m?c luu file")
 
-    If FolderPath <> "" Then
-        Text3.Text = FolderPath
+    If folderPath <> "" Then
+        Text3.Text = folderPath
     End If
 End Sub
 Private Function ReadTxt(FilePath As String) As String
@@ -4208,8 +4221,96 @@ TITLE_HEIGHT = 160
         End Select
     Next
 End Sub
+Public Sub CheckAndCreateTBInvoice()
+    Dim tdf As DAO.TableDef
+    Dim fld As DAO.Field
+    Dim tableExists As Boolean
+    Dim tableName As String
 
+    tableName = "tbInvoiceInfo"
+    tableExists = False
+
+
+    ' Ki?m tra t?n t?i b?ng
+    For Each tdf In DBKetoan.TableDefs
+        If tdf.Name = tableName Then
+            tableExists = True
+            Exit For
+        End If
+    Next tdf
+
+    If Not tableExists Then
+        ' T?o b?ng n?u chua t?n t?i
+        Set tdf = DBKetoan.CreateTableDef(tableName)
+
+        ' Url
+        Set fld = tdf.CreateField("Url", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+        ' Url
+        Set fld = tdf.CreateField("Username", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+        'Password
+        ' Url
+        Set fld = tdf.CreateField("Password", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+        
+ 
+        ' Thêm b?ng vào CSDL
+        DBKetoan.TableDefs.Append tdf
+    End If
+End Sub
+Public Sub CheckAndCreateTBInvoiceTemplate()
+    Dim tdf As DAO.TableDef
+    Dim fld As DAO.Field
+    Dim tableExists As Boolean
+    Dim tableName As String
+
+    tableName = "tbInvoiceTemplate"
+    tableExists = False
+
+
+    ' Ki?m tra t?n t?i b?ng
+    For Each tdf In DBKetoan.TableDefs
+        If tdf.Name = tableName Then
+            tableExists = True
+            Exit For
+        End If
+    Next tdf
+
+    If Not tableExists Then
+        ' T?o b?ng n?u chua t?n t?i
+        Set tdf = DBKetoan.CreateTableDef(tableName)
+
+        ' ID
+        Set fld = tdf.CreateField("ID", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+        
+         ' Code
+        Set fld = tdf.CreateField("Code", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+        
+         ' Name
+        Set fld = tdf.CreateField("Name", dbText, 255)
+        fld.Required = False
+        fld.AllowZeroLength = True
+        tdf.Fields.Append fld
+ 
+        ' Thêm b?ng vào CSDL
+        DBKetoan.TableDefs.Append tdf
+    End If
+End Sub
 Private Sub Form_Load()
+    CheckAndCreateTBInvoice
     Combo1.AddItem "vinvoice.viettel.vn"
     Combo1.AddItem "van.ehoadon.vn"
     Combo1.AddItem "admin.vnpt-invoice.com"
@@ -4340,28 +4441,117 @@ ErrorHandler:
 End Function
 Private Sub Dongbotxt()
     Text(0).Text = UnicodeToVni(txtTenCty.Text)
-    Text(2).Text = UnicodeToVni(txtDiaChi.Text)
+    Text(2).Text = UnicodeToVni(txtDiachi.Text)
 End Sub
+Public Function WaitForStatus(ByVal TimeoutSeconds As Integer) As Boolean
+    Dim getstatus As Integer
+    Dim StartTime As Single
+
+    StartTime = Timer
+    getstatus = 0
+
+    While getstatus <> 1 And (Timer - StartTime) <= TimeoutSeconds
+        getstatus = CInt(SelectSQL("SELECT Status as f1 FROM tbResponse"))
+        Sleep 500
+        DoEvents
+    Wend
+
+    ' Tr? v? True n?u thành công (Status = 1)
+    WaitForStatus = (getstatus = 1)
+End Function
 Public Sub Command_Click(Index As Integer)
-    Dim countAccount As Integer
-    countAccount = SelectSQL("select count(*) AS f1 from  tbInvoiceInfo")
-    If countAccount = 0 Then
-        If txtInvoiceUsername.Text <> "" Then
-            ExecuteSQL5 "INSERT INTO tbInvoiceInfo (Url, Username, Password) VALUES ('" & _
-                        Combo1.Text & "','" & _
-                        txtInvoiceUsername.Text & "','" & _
-                        txtIncoiePassword.Text & "')"
+    If Index = 0 Then
+
+        Dim countAccount As Integer
+        Dim hastk As Boolean
+
+        countAccount = SelectSQL("select count(*) AS f1 from  tbInvoiceInfo")
+        If countAccount = 0 Then
+            If txtInvoiceUsername.Text <> "" Then
+                ExecuteSQL5 "INSERT INTO tbInvoiceInfo (Url, Username, Password) VALUES ('" & _
+                            Combo1.Text & "','" & _
+                            txtInvoiceUsername.Text & "','" & _
+                            txtIncoiePassword.Text & "')"
+                hastk = True
+            End If
+        Else
+            ExecuteSQL5 "UPDATE tbInvoiceInfo SET " & _
+                        "Url = '" & Replace(Combo1.Text, "'", "''") & "', " & _
+                        "Username = '" & Replace(txtInvoiceUsername.Text, "'", "''") & "', " & _
+                        "Password = '" & Replace(txtIncoiePassword.Text, "'", "''") & "'"
+            hastk = True
         End If
-    Else
-        ExecuteSQL5 "UPDATE tbInvoiceInfo SET " & _
-                    "Url = '" & Replace(Combo1.Text, "'", "''") & "', " & _
-                    "Username = '" & Replace(txtInvoiceUsername.Text, "'", "''") & "', " & _
-                    "Password = '" & Replace(txtIncoiePassword.Text, "'", "''") & "'"
+
+        'Kiem tra template da co chua
+        Dim countTemplate As Integer
+        countTemplate = SelectSQL("select count(*) AS f1 from  tbInvoiceTemplate")
+        'Tien hanh dang nhap he thong de lay template
+        If hastk = True And countTemplate = 0 And Combo1.Text = "vinvoice.viettel.vn" Then
+            Screen.MousePointer = vbHourglass
+            Label7.Visible = True
+            Label7.Caption = "Waiting....."
+            'Cap nhat cho tbreposne ve 0 trc
+            ExecuteSQL5 ("UPDATE tbResponse SET Status = 0")
+            Dim FilePath As String
+            FilePath = App.path & "\\HoaDon\\invoice.txt"
+            Dim contents As String
+            contents = "1"
+            Dim fileNumbers As Integer
+            If Not FileExists(FilePath) Then
+
+                'Loai_thangbd_thangkt
+                Dim iscreate As Boolean
+                iscreate = CreateVersionFile(FilePath, contents)
+            Else
+                fileNumbers = FreeFile
+                On Error Resume Next
+                Open FilePath For Output As #fileNumbers
+                If Err.number = 0 Then
+                    Print #fileNumbers, contents;
+                    Close #fileNumbers
+                    'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+                Else
+                    MsgBox "L?i khi ghi dè file!", vbExclamation
+                End If
+            End If
+            Select Case Combo1.Text
+            Case "vinvoice.viettel.vn"
+                FThuChi.GhiChutxt 5
+            Case "van.ehoadon.vn"
+                FThuChi.GhiChutxt 6
+            Case "id-v2.tendoo.vn"
+                FThuChi.GhiChutxt 7
+            Case Else
+                ' Các tru?ng h?p còn l?i
+            End Select
+            Dim exePath As String
+            exePath = App.path & "\\Tools\\Debug\\SaovietTax.exe"
+
+            ' Shell d? m? ?ng d?ng
+            Shell exePath, vbNormalFocus
+
+            DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
+
+            ' L?y handle c?a c?a s? ?ng d?ng
+            hWndApp = 0  ' Kh?i t?o bi?n hWndApp
+            Sleep 100
+            FThuChi.CheckWindow
+
+            If WaitForStatus(15) Then
+                Dim s As String
+                s = ChrW(272) & ChrW(227) & ChrW(32) & ChrW(273) & ChrW(7891) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(98) & ChrW(7897) & ChrW(32) & ChrW(100) & ChrW(7919) & ChrW(32) & ChrW(108) & ChrW(105) & ChrW(7879) & ChrW(117)
+                MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
+
+                Screen.MousePointer = vbDefault
+            Else
+                MsgBox "Timeout! Không nh?n du?c Status = 1 sau 10 giây"
+                Screen.MousePointer = vbDefault
+            End If
+        End If
     End If
     'Validate
     If Option2.Value = True And Text1.Text = "0" Then
         ' MsgBox "Vui long nhap so nam"
-        Dim s As String
         s = ChrW(86) & ChrW(117) & ChrW(105) & ChrW(32) & ChrW(108) & ChrW(242) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(99) & ChrW(104) & ChrW(7885) & ChrW(110) & ChrW(32) & ChrW(115) & ChrW(7889) & ChrW(32) & ChrW(110) & ChrW(259) & ChrW(109) & ChrW(32) & ChrW(115) & ChrW(7917) & ChrW(32) & ChrW(100) & ChrW(7909) & ChrW(110) & ChrW(103)
         MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
 
@@ -4716,7 +4906,7 @@ Private Sub LoadInfo()
     txtTenCty.Text = VniToUnicode(pTenCty)
     Text(1).Text = pTenCn
     Text(2).Text = rs!DiaChi
-    txtDiaChi.Text = VniToUnicode(rs!DiaChi)
+    txtDiachi.Text = VniToUnicode(rs!DiaChi)
     Text(3).Text = rs!Tel
     Text(4).Text = rs!Fax
     Text(5).Text = rs!TaiKhoanVN
