@@ -200,12 +200,12 @@ Private Const HTCAPTION = 2
 
 Private Declare Function SetWindowTextW Lib "user32" _
                                         (ByVal hwnd As Long, ByVal lpString As Long) As Long
-Private Declare Function MultiByteToWideChar Lib "kernel32" _
+Private Declare Function MultiByteToWideChar Lib "Kernel32" _
                                              (ByVal CodePage As Long, ByVal dwFlags As Long, _
                                               lpMultiByteStr As Any, ByVal cchMultiByte As Long, _
                                               ByVal lpWideCharStr As Long, ByVal cchWideChar As Long) As Long
 
-Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal length As Long)
+Private Declare Sub CopyMemory Lib "Kernel32" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal length As Long)
 Private Declare Function GetAdaptersInfo Lib "iphlpapi" (lpAdapterInfo As Any, lpSize As Long) As Long
 
 Dim Counter As Integer
@@ -1599,9 +1599,19 @@ Private Sub Form_Load()
     frmMain.CheckAndCreateTBInvoice
     CheckAndCreateTBCpu
     CheckAndCreateTBGetPhieu
+    
+    
+    ExecuteSQL5_Themmoi ("ALTER TABLE KhachHang ADD contact_id text")
+    'Them moi tendo vattu
+    ExecuteSQL5_Themmoi ("ALTER TABLE Vattu ADD TendoName text")
+    ExecuteSQL5_Themmoi ("ALTER TABLE Vattu ADD TendoSku text")
+    ExecuteSQL5_Themmoi ("ALTER TABLE Vattu ADD TendoUom text")
+    ExecuteSQL5_Themmoi ("ALTER TABLE Vattu ADD TendoId text")
+
     ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
     ExecuteSQL5_Themmoi ("ALTER TABLE Users ADD IsReister NUMBER")
     ExecuteSQL5_Themmoi ("ALTER TABLE Users  ADD MacAddress text")
+    
     Counter = -1
     Int_RecsetToCbo "SELECT MaSo As F2, TenNSD As F1 FROM Users ORDER BY TenNSD", CboUser
     SetFont Me

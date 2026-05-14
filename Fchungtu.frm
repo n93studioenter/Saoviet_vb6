@@ -7668,11 +7668,18 @@ Public Sub CmdChitiet_chon()
         'MsgBox "§· xuÊt qu¸ l­îng tån!", vbCritical, App.ProductName
         'Exit Sub
         If isimport = False Then
-            If MsgBox("§· xuÊt qu¸ l­îng tån! TiÕp tôc ?", vbYesNo + vbCritical, App.ProductName) <> vbYes Then
+            Dim s As String
+            s = ChrW(208) & ChrW(227) & ChrW(32) & ChrW(120) & ChrW(117) & ChrW(7845) & ChrW(116) & ChrW(32) & ChrW(113) & ChrW(117) & ChrW(225) & ChrW(32) & ChrW(108) & ChrW(432) & ChrW(7907) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(116) & ChrW(7891) & ChrW(110) & ChrW(33) & ChrW(32) & ChrW(84) & ChrW(105) & ChrW(7871) & ChrW(112) & ChrW(32) & ChrW(116) & ChrW(7909) & ChrW(99) & ChrW(32) & ChrW(63)
+            Dim xn As String
+            xn = ChrW(88) & ChrW(225) & ChrW(99) & ChrW(32) & ChrW(110) & ChrW(104) & ChrW(7853) & ChrW(110)
+            If MessageBoxW(Me.hwnd, StrPtr(s), StrPtr(xn), vbYesNo + vbExclamation) = vbNo Then
                 RFocus txtchungtu(3)
-                hasError = True
+                If FThuChi.FThuChiForm <> 0 Then
+                    hasError = True
+                End If
                 Exit Sub
             End If
+
         End If
 
     End If
@@ -7759,7 +7766,6 @@ Public Sub CmdChitiet_chon()
 
     If no <> 0 And co <> 0 Then
         'MsgBox "ChØ ghi ph¸t sinh nî hoÆc cã !", vbExclamation, App.ProductName
-        Dim s As String
         s = ChrW(67) & ChrW(104) & ChrW(7881) & ChrW(32) & ChrW(103) & ChrW(104) & ChrW(105) & ChrW(32) & ChrW(112) & ChrW(104) & ChrW(225) & ChrW(116) & ChrW(32) & ChrW(115) & ChrW(105) & ChrW(110) & ChrW(104) & ChrW(32) & ChrW(110) & ChrW(7907) & ChrW(32) & ChrW(104) & ChrW(111) & ChrW(7863) & ChrW(99) & ChrW(32) & ChrW(99) & ChrW(243)
         MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
         RFocus txtchungtu(5)
@@ -7777,7 +7783,7 @@ Public Sub CmdChitiet_chon()
                 ' Exit Sub
                 'End If
                 s = ChrW(67) & ChrW(104) & ChrW(105) & ChrW(32) & ChrW(118) & ChrW(432) & ChrW(7907) & ChrW(116) & ChrW(32) & ChrW(115) & ChrW(7889) & ChrW(32) & ChrW(100) & ChrW(432) & ChrW(33) & ChrW(32) & ChrW(84) & ChrW(105) & ChrW(7871) & ChrW(112) & ChrW(32) & ChrW(116) & ChrW(7909) & ChrW(99) & ChrW(32) & ChrW(63)
-                Dim xn As String
+
                 xn = ChrW(88) & ChrW(225) & ChrW(99) & ChrW(32) & ChrW(110) & ChrW(104) & ChrW(7853) & ChrW(110)
                 If MessageBoxW(Me.hwnd, StrPtr(s), StrPtr(xn), vbYesNo + vbExclamation) = vbNo Then
                     RFocus txtchungtu(6)

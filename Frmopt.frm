@@ -4314,7 +4314,8 @@ Private Sub Form_Load()
     Combo1.AddItem "vinvoice.viettel.vn"
     Combo1.AddItem "van.ehoadon.vn"
     Combo1.AddItem "admin.vnpt-invoice.com"
-
+    Combo1.AddItem "seller-v2.tendoo.vn"
+    
     lblTitle(11).AutoSize = True
     Me.Height = Me.Height + 350 + 10
     picFakeTitle.Width = Me.ScaleWidth
@@ -4441,7 +4442,7 @@ ErrorHandler:
 End Function
 Private Sub Dongbotxt()
     Text(0).Text = UnicodeToVni(txtTenCty.Text)
-    Text(2).Text = UnicodeToVni(txtDiachi.Text)
+    Text(2).Text = UnicodeToVni(txtDiaChi.Text)
 End Sub
 Public Function WaitForStatus(ByVal TimeoutSeconds As Integer) As Boolean
     Dim getstatus As Integer
@@ -4906,7 +4907,7 @@ Private Sub LoadInfo()
     txtTenCty.Text = VniToUnicode(pTenCty)
     Text(1).Text = pTenCn
     Text(2).Text = rs!DiaChi
-    txtDiachi.Text = VniToUnicode(rs!DiaChi)
+    txtDiaChi.Text = VniToUnicode(rs!DiaChi)
     Text(3).Text = rs!Tel
     Text(4).Text = rs!Fax
     Text(5).Text = rs!TaiKhoanVN

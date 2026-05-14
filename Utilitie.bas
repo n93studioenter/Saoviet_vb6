@@ -2469,7 +2469,7 @@ Public Sub InBaoCaoRPT(Optional nn As Integer = 0)
     On Error GoTo LoiIn
     frmMain.Rpt.WindowShowPrintSetupBtn = True
     
-   ' frmMain.Rpt.Action = 1
+   frmMain.Rpt.Action = 1
     On Error GoTo 0
     Exit Sub
 LoiIn:

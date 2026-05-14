@@ -632,7 +632,7 @@ Public Sub Command_Click()
     End If
 
     'Cho bkav
-    If typeGhichu = 6 Then
+    If typeGhichu = 6 Or typeGhichu = 8 Then
         FilePath = App.path & "\\HoaDon\\invoice.txt"
         content = FrmChungtu.txt(0).Text & "_" & FrmChungtu.txtVT(1).Text & "_" & FrmChungtu.MedNgay(0).Text
 
@@ -1058,9 +1058,9 @@ Private Sub Form_Load()
                                          "and ChungTu.NgayCT = #" & Format(FrmChungtu.MedNgay(0).Text, "yyyy-mm-dd") & "#", dbOpenSnapshot)
     If Not rsports.EOF Then
         ' L?y giá tr? IdNhap
-        
+
         MaSoHd = rsports!MaSo
-        If Not IsNull(rsports!f1) And rsports!f1 <> "..." Then
+        If Not IsNull(rsports!f1) And rsports!f1 <> "..." And rsports!f1 <> "" Then
 
             IdNhap = rsports!f1  ' ho?c rsport.Fields("f1").Value
             Command1.Visible = True
@@ -1130,6 +1130,9 @@ Private Sub Form_Load()
         Case "id-v2.tendoo.vn"
             typeGhichu = 7
             GhiChutxt 7
+        Case "seller-v2.tendoo.vn"
+            typeGhichu = 8
+            GhiChutxt 8
         Case Else
             ' Các tru?ng h?p còn l?i
             MsgBox "Url khác: " & urlname
@@ -1182,7 +1185,7 @@ Private Sub Form_Load()
                 hasData = True
                 Exit Do
             End If
-
+            MsgBox rsport!id
             rsport.Close
             Set rsport = Nothing
 
