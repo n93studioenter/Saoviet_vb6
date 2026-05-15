@@ -1607,6 +1607,7 @@ Private Sub Form_Load()
     ExecuteSQL5_Themmoi ("ALTER TABLE Vattu ADD TendoSku text")
     ExecuteSQL5_Themmoi ("ALTER TABLE Vattu ADD TendoUom text")
     ExecuteSQL5_Themmoi ("ALTER TABLE Vattu ADD TendoId text")
+     ExecuteSQL5_Themmoi ("ALTER TABLE Vattu ADD TendoPrice NUMBER")
 
     ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
     ExecuteSQL5_Themmoi ("ALTER TABLE Users ADD IsReister NUMBER")

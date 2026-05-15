@@ -1163,7 +1163,7 @@ Private Sub Form_Load()
     StartTime = Timer
     hasData = False
 
-    If FThuChiForm = 0 Then
+    If FThuChiForm = 0 And typeGhichu = 5 Then
         'Kiem tra xem co dang ky invoice nao khong
         Dim rsinvoice As Recordset
         Set rsinvoice = DBKetoan.OpenRecordset("SELECT * FROM tbInvoiceInfo", dbOpenSnapshot)

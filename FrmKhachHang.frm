@@ -801,78 +801,81 @@ Private Sub CboLoai_Click()
 End Sub
 
 
-Public Sub Command_Click(index As Integer)
+Public Sub Command_Click(Index As Integer)
     Dim vt As New ClsKhachHang, i As Integer
-    
-    If (User_Right = 2) And (index < 3) Then
+
+    If (User_Right = 2) And (Index < 3) Then
         HienThongBao "Kh«ng cã quyÒn truy cËp!", 1
         GoTo XongVT
     End If
-    
+
     Me.MousePointer = 11
-    If index < 3 Then
+    If Index < 3 Then
         If CboLoai.ListIndex < 0 Then
-                ErrMsg er_PhanLoai
-                GoTo XongVT
+            ErrMsg er_PhanLoai
+            GoTo XongVT
         End If
     End If
-    
-    Select Case index
-        Case 0:
-            txtVT(0).Text = SoHieuVTMoi(CboLoai.ItemData(CboLoai.ListIndex), 2)
-            For i = 1 To 9
-                txtVT(i).Text = "..."
-            Next
-            CboNT.ListIndex = 0
-            RFocus txtVT(0)
-            ThemMoi = 1
+
+    Select Case Index
+    Case 0:
+        txtVT(0).Text = SoHieuVTMoi(CboLoai.ItemData(CboLoai.ListIndex), 2)
+        For i = 1 To 9
+            txtVT(i).Text = "..."
+        Next
+        txtName.Text = ""
+        txtDiaChi.Text = ""
+        
+        CboNT.ListIndex = 0
+        RFocus txtVT(0)
+        ThemMoi = 1
+    Case 1:
+        Select Case ThemMoi
         Case 1:
-            Select Case ThemMoi
-                Case 1:
-                    If Not KiemTraSoLieu Then GoTo XongVT
-                    If okh.GhiKhachHang = 0 Then
-                        LstVt.AddItem okh.sohieu + Chr(9) + okh.Ten
-                        LstVt.ItemData(LstVt.NewIndex) = okh.MaSo
-                        LstVt.ListIndex = LstVt.NewIndex
-                    Else
-                        ErrMsg er_SoHieu
-                        vt.InitKhachHangSohieu txtVT(0).Text
-                        If vt.MaPhanLoai = CboLoai.ItemData(CboLoai.ListIndex) Then
-                            SetListIndex LstVt, vt.MaSo
-                        End If
-                    End If
-                    ThemMoi = 0
-                Case 0:
-                    If LstVt.ListIndex < 0 Then GoTo XongVT
-                    If Not KiemTraSoLieu Then GoTo XongVT
-                    
-                    If okh.SuaKH = 0 Then
-                        If doiloai = 1 Then
-                            CboLoai_Click
-                            doiloai = 0
-                        Else
-                            LstVt.List(LstVt.ListIndex) = okh.sohieu + Chr(9) + okh.Ten
-                        End If
-                    Else
-                        vt.InitKhachHangSohieu txtVT(0).Text
-                        ErrMsg er_SoHieu
-                        If vt.MaPhanLoai = CboLoai.ItemData(CboLoai.ListIndex) Then SetListIndex LstVt, vt.MaSo
-                    End If
-                    ThemMoi = 0
-            End Select
-            RFocus LstVt
-        Case 2:
-            i = LstVt.ListIndex
-            If i < 0 Then GoTo XongVT
-            If okh.XoaKH = 0 Then
-                LstVt.RemoveItem i
-                If LstVt.ListCount > 0 Then LstVt.ListIndex = i - 1
+            If Not KiemTraSoLieu Then GoTo XongVT
+            If okh.GhiKhachHang = 0 Then
+                LstVt.AddItem okh.sohieu + Chr(9) + okh.Ten
+                LstVt.ItemData(LstVt.NewIndex) = okh.MaSo
+                LstVt.ListIndex = LstVt.NewIndex
             Else
-                ErrMsg er_CoPS1
+                ErrMsg er_SoHieu
+                vt.InitKhachHangSohieu txtVT(0).Text
+                If vt.MaPhanLoai = CboLoai.ItemData(CboLoai.ListIndex) Then
+                    SetListIndex LstVt, vt.MaSo
+                End If
             End If
-            RFocus LstVt
-        Case 3:
-            Hide
+            ThemMoi = 0
+        Case 0:
+            If LstVt.ListIndex < 0 Then GoTo XongVT
+            If Not KiemTraSoLieu Then GoTo XongVT
+
+            If okh.SuaKH = 0 Then
+                If doiloai = 1 Then
+                    CboLoai_Click
+                    doiloai = 0
+                Else
+                    LstVt.List(LstVt.ListIndex) = okh.sohieu + Chr(9) + okh.Ten
+                End If
+            Else
+                vt.InitKhachHangSohieu txtVT(0).Text
+                ErrMsg er_SoHieu
+                If vt.MaPhanLoai = CboLoai.ItemData(CboLoai.ListIndex) Then SetListIndex LstVt, vt.MaSo
+            End If
+            ThemMoi = 0
+        End Select
+        RFocus LstVt
+    Case 2:
+        i = LstVt.ListIndex
+        If i < 0 Then GoTo XongVT
+        If okh.XoaKH = 0 Then
+            LstVt.RemoveItem i
+            If LstVt.ListCount > 0 Then LstVt.ListIndex = i - 1
+        Else
+            ErrMsg er_CoPS1
+        End If
+        RFocus LstVt
+    Case 3:
+        Hide
     End Select
 XongVT:
     Set vt = Nothing
@@ -961,7 +964,7 @@ Private Sub picFakeTitle_MouseDown(Button As Integer, Shift As Integer, X As Sin
     ReleaseCapture
     SendMessage Me.hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0
 End Sub
-Private Sub lblTitle_MouseDown(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lblTitle_MouseDown(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     picFakeTitle_MouseDown Button, Shift, X, Y
 End Sub
 Private Sub lblClose_Click()
@@ -1210,25 +1213,25 @@ Private Sub txtF_GotFocus()
     MaDaTim = 0
 End Sub
 
-Private Sub txtVT_GotFocus(index As Integer)
-    AutoSelect txtVT(index)
+Private Sub Txtvt_GotFocus(Index As Integer)
+    AutoSelect txtVT(Index)
 End Sub
 
-Private Sub TxtVT_KeyPress(index As Integer, KeyAscii As Integer)
-    Select Case index
+Private Sub TxtVT_KeyPress(Index As Integer, KeyAscii As Integer)
+    Select Case Index
         Case 0: If KeyAscii = 32 Or KeyAscii = 35 Or KeyAscii = 39 Or KeyAscii = 42 Then KeyAscii = 0
-        Case 10, 11, 12: KeyProcess txtVT(index), KeyAscii
+        Case 10, 11, 12: KeyProcess txtVT(Index), KeyAscii
     End Select
 End Sub
 
-Private Sub TxtVT_LostFocus(index As Integer)
-    Select Case index
+Private Sub TxtVT_LostFocus(Index As Integer)
+    Select Case Index
         Case 0:
             txtVT(0).Text = UCase(txtVT(0).Text)
         Case 1, 2, 3, 4, 5, 6, 7, 8, 9:
-            If Len(txtVT(index).Text) = 0 Then txtVT(index).Text = "..."
+            If Len(txtVT(Index).Text) = 0 Then txtVT(Index).Text = "..."
         Case 10, 11, 12:
-            txtVT(index).Text = Format(txtVT(index).Text, Mask_2)
+            txtVT(Index).Text = Format(txtVT(Index).Text, Mask_2)
     End Select
 End Sub
 
