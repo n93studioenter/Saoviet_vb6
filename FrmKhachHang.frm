@@ -825,7 +825,7 @@ Public Sub Command_Click(Index As Integer)
         Next
         txtName.Text = ""
         txtDiaChi.Text = ""
-        
+
         CboNT.ListIndex = 0
         RFocus txtVT(0)
         ThemMoi = 1
@@ -837,6 +837,34 @@ Public Sub Command_Click(Index As Integer)
                 LstVt.AddItem okh.sohieu + Chr(9) + okh.Ten
                 LstVt.ItemData(LstVt.NewIndex) = okh.MaSo
                 LstVt.ListIndex = LstVt.NewIndex
+                'Thuc hien dong bo
+
+                'Kiem tra xem co phai la tendo hay khong
+                Dim urlname As String
+                urlname = SelectSQL("select Url AS f1 from  tbInvoiceInfo")
+                If urlname = "seller-v2.tendoo.vn" Then
+                    GhiChutxt 8
+                    'Ghi file invoice KH_
+                    Dim FilePath As String
+                    FilePath = App.path & "\\HoaDon\\invoice.txt"
+                    Dim content As String
+                    ' L?y ID c?a khách hàng v?a import
+                    Dim NewKhachHangID As String
+                    NewKhachHangID = SelectSQL("select @@IDENTITY AS f1")
+                    content = "KH_" & NewKhachHangID
+                    Dim fileNumber As Integer
+                    fileNumber = FreeFile
+                    On Error Resume Next
+                    Open FilePath For Output As #fileNumber
+                    If Err.number = 0 Then
+                        Print #fileNumber, content;
+                        Close #fileNumber
+                        'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+                    Else
+                        MsgBox "L?i khi ghi dè file!", vbExclamation
+                    End If
+                End If
+
             Else
                 ErrMsg er_SoHieu
                 vt.InitKhachHangSohieu txtVT(0).Text

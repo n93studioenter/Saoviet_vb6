@@ -111,10 +111,43 @@ Public SL_XXXX As Double
 Dim sBar As String, i0 As Integer, i1 As Integer
 Attribute i0.VB_VarUserMemId = 1073741826
 Attribute i1.VB_VarUserMemId = 1073741826
+Public Sub GhiChutxt(ByVal content As Integer)
+    Dim FilePath As String
+    FilePath = App.path & "\\Hoadon\\status.txt"
+
+    Dim FileNum As Integer
+    FileNum = FreeFile  ' L?y s? file tr?ng
+
+    Dim lineText As String
+    Dim allText As String
+
+    ' M? file d? d?c
+    Open FilePath For Input As #FileNum
+
+    ' Ð?c t?ng dòng d?n h?t file
+    Do Until EOF(FileNum)
+        Line Input #FileNum, lineText
+        allText = allText & lineText & vbCrLf  ' N?i dòng và xu?ng dòng
+    Loop
+
+    ' Ðóng file
+    Close #FileNum
+
+    ' M? file d? ghi dè n?i dung
+    FileNum = FreeFile    ' L?y l?i s? file tr?ng
+
+    ' M? file d? ghi
+    Open FilePath For Output As #FileNum
+    Print #FileNum, content  ' Ghi n?i dung m?i (tham s? integer) vào file
+
+    ' Ðóng file
+    Close #FileNum
+End Sub
+
 Public Function IsValidMST_Format(ByVal mst As String) As Boolean
     Dim s As String
     s = Replace(Trim(mst), "-", "")
-    
+
     ' Ch? ch?p nh?n 10 ho?c 13 s?
     If (Len(s) = 10 Or Len(s) = 13 Or Len(s) = 12) And IsNumeric(s) Then
         IsValidMST_Format = True
@@ -491,7 +524,7 @@ Public Function PrintBarCode(vt As ClsVattu, sl As Integer) As Double
     
     SetRptInfo
     frmMain.Rpt.ReportFileName = "BARCODE.RPT"
-    frmMain.Rpt.PrinterName = "DATAMAX DMX I-4208"
+    frmMain.Rpt.printername = "DATAMAX DMX I-4208"
     frmMain.Rpt.Destination = crptToWindow
     InBaoCaoRPT
     

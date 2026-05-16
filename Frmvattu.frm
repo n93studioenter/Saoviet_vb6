@@ -2192,121 +2192,155 @@ End Sub
 
 Public Sub Command_Click(Index As Integer)
     Dim vt1 As New ClsVattu, i As Integer, dv As String, qd As Double, gb As Double
-    
+
     If (User_Right = 2) And (Index < 3) Then
         HienThongBao "Kh«ng cã quyÒn truy cËp!", 1
         GoTo XongVT
     End If
-    
+
     Me.MousePointer = 11
     If Index < 3 Then
         If CboLoai.ListIndex < 0 Then
-                ErrMsg er_PhanLoai
-                GoTo XongVT
+            ErrMsg er_PhanLoai
+            GoTo XongVT
         End If
     End If
-    
+
     Select Case Index
-        Case 0:
-            txtVT(0).Text = SoHieuVTMoi(CboLoai.ItemData(CboLoai.ListIndex))
-            txtVT(1).Text = ""
-            txtVT(13).Text = ""
-            txtTen.Text = ""
-            txtDVT.Text = ""
-            txtGhiChu.Text = ""
-            txtTon(0).Text = "0"
-            txtTon(1).Text = "0"
-            ClearGrid GrdNT(2), GrdNT(2).tag
-            
-            Chk.Value = 0
-            ClearGrid GrdNT(3), GrdNT(3).tag
-            
-            RFocus txtVT(0)
-            ThemMoi = 1
+    Case 0:
+        txtVT(0).Text = SoHieuVTMoi(CboLoai.ItemData(CboLoai.ListIndex))
+        txtVT(1).Text = ""
+        txtVT(13).Text = ""
+        txtTen.Text = ""
+        txtDVT.Text = ""
+        txtGhiChu.Text = ""
+        txtTon(0).Text = "0"
+        txtTon(1).Text = "0"
+        ClearGrid GrdNT(2), GrdNT(2).tag
+
+        Chk.Value = 0
+        ClearGrid GrdNT(3), GrdNT(3).tag
+
+        RFocus txtVT(0)
+        ThemMoi = 1
+    Case 1:
+        Select Case ThemMoi
         Case 1:
-            Select Case ThemMoi
-                Case 1:
-                    If Not KiemTraSoLieu Then GoTo XongVT
-                    If vattu.GhiVattu = 0 Then
-                        If Chk.Value = 1 Then
-                            With GrdNT(3)
-                                For i = 0 To .Rows - 1
-                                    .Row = i
-                                    .col = 0
-                                    dv = .Text
-                                    If Len(dv) = 0 Then Exit For
-                                    .col = 1
-                                    qd = Cdbl5(.Text)
-                                    .col = 2
-                                    gb = Cdbl5(.Text)
-                                    ExecuteSQL5 "INSERT INTO DVTVattu (MaSo,MaVattu,DonVi,TyleQD,GiaBan) VALUES (" + CStr(Lng_MaxValue("MaSo", "DVTVattu") + 1) + "," + CStr(vattu.MaSo) + ",'" + dv + "'," + DoiDau(qd) + "," + DoiDau(gb) + ")"
-                                Next
-                            End With
-                        End If
-                        
-                        LstVt.AddItem vattu.sohieu + Chr(9) + vattu.TenVattu
-                        LstVt.ItemData(LstVt.NewIndex) = vattu.MaSo
-                        LstVt.ListIndex = LstVt.NewIndex
+            If Not KiemTraSoLieu Then GoTo XongVT
+            If vattu.GhiVattu = 0 Then
+                If Chk.Value = 1 Then
+                    With GrdNT(3)
+                        For i = 0 To .Rows - 1
+                            .Row = i
+                            .col = 0
+                            dv = .Text
+                            If Len(dv) = 0 Then Exit For
+                            .col = 1
+                            qd = Cdbl5(.Text)
+                            .col = 2
+                            gb = Cdbl5(.Text)
+                            ExecuteSQL5 "INSERT INTO DVTVattu (MaSo,MaVattu,DonVi,TyleQD,GiaBan) VALUES (" + CStr(Lng_MaxValue("MaSo", "DVTVattu") + 1) + "," + CStr(vattu.MaSo) + ",'" + dv + "'," + DoiDau(qd) + "," + DoiDau(gb) + ")"
+                        Next
+                    End With
+                End If
+
+                LstVt.AddItem vattu.sohieu + Chr(9) + vattu.TenVattu
+                LstVt.ItemData(LstVt.NewIndex) = vattu.MaSo
+                LstVt.ListIndex = LstVt.NewIndex
+
+                'Kiem tra xem co phai la tendo hay khong
+                Dim urlname As String
+                urlname = SelectSQL("select Url AS f1 from  tbInvoiceInfo")
+                If urlname = "seller-v2.tendoo.vn" Then
+                    GhiChutxt 8
+                    'Ghi file invoice KH_
+                    Dim FilePath As String
+                    FilePath = App.path & "\\HoaDon\\invoice.txt"
+                    Dim content As String
+                    ' L?y ID c?a khách hàng v?a import
+                    Dim NewKhachHangID As String
+                    NewKhachHangID = SelectSQL("select @@IDENTITY AS f1")
+                    content = "SP_" & NewKhachHangID
+                    Dim fileNumber As Integer
+                    fileNumber = FreeFile
+                    On Error Resume Next
+                    Open FilePath For Output As #fileNumber
+                    If Err.number = 0 Then
+                        Print #fileNumber, content;
+                        Close #fileNumber
+                        'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
                     Else
-                        ErrMsg er_PhanLoai
-                        vt1.InitVattuSohieu txtVT(0).Text
-                        If vt1.MaPhanLoai = CboLoai.ItemData(CboLoai.ListIndex) Then
-                            SetListIndex LstVt, vt1.MaSo
-                        End If
+                        MsgBox "L?i khi ghi dè file!", vbExclamation
                     End If
-                    ThemMoi = 0
-                Case 0:
-                    If LstVt.ListIndex < 0 Then GoTo XongVT
-                    If Not KiemTraSoLieu Then GoTo XongVT
-'                    vt.InitVattuMaSo vattu.MaSo
-                    
-                    If vattu.SuaVT = 0 Then
-                        If doiloai = 1 Then
-                            CboLoai_Click
-                            doiloai = 0
-                        Else
-                            LstVt.List(LstVt.ListIndex) = vattu.sohieu + Chr(9) + vattu.TenVattu
-                        End If
-                    Else
-                        vt1.InitVattuSohieu txtVT(0).Text
-                        ErrMsg er_SoHieu
-                        If vt1.MaPhanLoai = CboLoai.ItemData(CboLoai.ListIndex) Then SetListIndex LstVt, vt1.MaSo
-                    End If
-                    ThemMoi = 0
-            End Select
-            RFocus LstVt
-        Case 2:
-            i = LstVt.ListIndex
-            If i < 0 Then GoTo XongVT
-            If vattu.XoaVT = 0 Then
-                LstVt.RemoveItem i
-                If LstVt.ListCount > 0 Then LstVt.ListIndex = i - 1
+
+                    'sau do goi exe
+                    Dim exePath As String
+                    Dim cmd As String
+
+                    exePath = App.path & "\Tools\Debug\SaovietTax.exe"
+                    cmd = "runas /trustlevel:0x20000 """ & exePath & """"
+                    Shell cmd, vbHide
+                End If
             Else
-                ErrMsg er_CoPS
+                ErrMsg er_PhanLoai
+                vt1.InitVattuSohieu txtVT(0).Text
+                If vt1.MaPhanLoai = CboLoai.ItemData(CboLoai.ListIndex) Then
+                    SetListIndex LstVt, vt1.MaSo
+                End If
             End If
-            RFocus LstVt
-        Case 3:
+            ThemMoi = 0
+        Case 0:
+            If LstVt.ListIndex < 0 Then GoTo XongVT
+            If Not KiemTraSoLieu Then GoTo XongVT
+            '                    vt.InitVattuMaSo vattu.MaSo
+
+            If vattu.SuaVT = 0 Then
+                If doiloai = 1 Then
+                    CboLoai_Click
+                    doiloai = 0
+                Else
+                    LstVt.List(LstVt.ListIndex) = vattu.sohieu + Chr(9) + vattu.TenVattu
+                End If
+            Else
+                vt1.InitVattuSohieu txtVT(0).Text
+                ErrMsg er_SoHieu
+                If vt1.MaPhanLoai = CboLoai.ItemData(CboLoai.ListIndex) Then SetListIndex LstVt, vt1.MaSo
+            End If
+            ThemMoi = 0
+        End Select
+        RFocus LstVt
+    Case 2:
+        i = LstVt.ListIndex
+        If i < 0 Then GoTo XongVT
+        If vattu.XoaVT = 0 Then
+            LstVt.RemoveItem i
+            If LstVt.ListCount > 0 Then LstVt.ListIndex = i - 1
+        Else
+            ErrMsg er_CoPS
+        End If
+        RFocus LstVt
+    Case 3:
         LO_XXXX = ""
-            Hide
-          Case 5:
-          GrdNT(4).col = 2
-          LO_XXXX = GrdNT(4).Text
-                GrdNT(4).col = 1
-    SL_XXXX = GrdNT(4).Text
-            Hide
-        Case 4:
-            ChucNang = 1 - ChucNang
-            Panel(0).Visible = (ChucNang = 0)
-            For i = 0 To 2
-                Command(i).Enabled = (ChucNang = 0)
-            Next
-            If LstVt.ListIndex >= 0 Then
-                LstVt_Click
-            Else
-                vattu.InitVattuMaSo 0
-                ClearGrid GrdNT(0), GrdNT(0).tag
-                ClearGrid GrdNT(1), GrdNT(1).tag
-            End If
+        Hide
+    Case 5:
+        GrdNT(4).col = 2
+        LO_XXXX = GrdNT(4).Text
+        GrdNT(4).col = 1
+        SL_XXXX = GrdNT(4).Text
+        Hide
+    Case 4:
+        ChucNang = 1 - ChucNang
+        Panel(0).Visible = (ChucNang = 0)
+        For i = 0 To 2
+            Command(i).Enabled = (ChucNang = 0)
+        Next
+        If LstVt.ListIndex >= 0 Then
+            LstVt_Click
+        Else
+            vattu.InitVattuMaSo 0
+            ClearGrid GrdNT(0), GrdNT(0).tag
+            ClearGrid GrdNT(1), GrdNT(1).tag
+        End If
     End Select
 XongVT:
     Set vt1 = Nothing
