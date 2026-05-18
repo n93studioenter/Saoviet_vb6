@@ -611,7 +611,7 @@ Public Sub Command_Click()
         Dim FilePath As String
         FilePath = App.path & "\\HoaDon\\invoice.txt"
         Dim content As String
-        content = FrmChungtu.txt(0).Text & "_" & FrmChungtu.txtVT(1).Text & "_" & FrmChungtu.MedNgay(0).Text & "_" & id
+        content = FrmChungtu.txt(0).Text & "_" & FrmChungtu.TxtVT(1).Text & "_" & FrmChungtu.MedNgay(0).Text & "_" & id
         Dim fileNumber As Integer
         If Not FileExists(FilePath) Then
             'Loai_thangbd_thangkt
@@ -634,7 +634,7 @@ Public Sub Command_Click()
     'Cho bkav
     If typeGhichu = 6 Or typeGhichu = 8 Then
         FilePath = App.path & "\\HoaDon\\invoice.txt"
-        content = FrmChungtu.txt(0).Text & "_" & FrmChungtu.txtVT(1).Text & "_" & FrmChungtu.MedNgay(0).Text
+        content = FrmChungtu.txt(0).Text & "_" & FrmChungtu.TxtVT(1).Text & "_" & FrmChungtu.MedNgay(0).Text
 
         If Not FileExists(FilePath) Then
             'Loai_thangbd_thangkt
@@ -905,7 +905,7 @@ Private Sub Command2_Click()
     Set rsports = DBKetoan.OpenRecordset("select IdNhap AS f1 FROM HoaDon " & _
                                          "inner join ChungTu on HoaDon.MaSo = ChungTu.MaSo " & _
                                          "where ChungTu.SoHieu = '" & FrmChungtu.txt(0).Text & "' " & _
-                                         "and HoaDon.KyHieu = '" & FrmChungtu.txtVT(1).Text & "' " & _
+                                         "and HoaDon.KyHieu = '" & FrmChungtu.TxtVT(1).Text & "' " & _
                                          "and ChungTu.NgayCT = #" & Format(FrmChungtu.MedNgay(0).Text, "yyyy-mm-dd") & "#", dbOpenSnapshot)
     If Not rsports.EOF Then
         ' L?y giá tr? IdNhap
@@ -1054,7 +1054,7 @@ Private Sub Form_Load()
     Set rsports = DBKetoan.OpenRecordset("select IdNhap AS f1, HoaDon.MaSo FROM HoaDon " & _
                                          "inner join ChungTu on HoaDon.MaSo = ChungTu.MaSo " & _
                                          "where ChungTu.SoHieu = '" & FrmChungtu.txt(0).Text & "' " & _
-                                         "and HoaDon.KyHieu = '" & FrmChungtu.txtVT(1).Text & "' " & _
+                                         "and HoaDon.KyHieu = '" & FrmChungtu.TxtVT(1).Text & "' " & _
                                          "and ChungTu.NgayCT = #" & Format(FrmChungtu.MedNgay(0).Text, "yyyy-mm-dd") & "#", dbOpenSnapshot)
     If Not rsports.EOF Then
         ' L?y giá tr? IdNhap

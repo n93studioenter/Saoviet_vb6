@@ -135,6 +135,7 @@ Form=frmLicenseUser.frm
 Form=frmInReport.frm
 Form=frmLoading.frm
 ResFile32="custom.RES"
+Form=frmMeaasge.frm
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile="SAS.HLP"

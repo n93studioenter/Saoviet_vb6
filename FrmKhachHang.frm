@@ -863,6 +863,14 @@ Public Sub Command_Click(Index As Integer)
                     Else
                         MsgBox "L?i khi ghi dè file!", vbExclamation
                     End If
+
+                    'sau do goi exe
+                    Dim exePath As String
+                    Dim cmd As String
+
+                    exePath = App.path & "\Tools\Debug\SaovietTax.exe"
+                    cmd = "runas /trustlevel:0x20000 """ & exePath & """"
+                    Shell cmd, vbHide
                 End If
 
             Else

@@ -4442,7 +4442,7 @@ ErrorHandler:
 End Function
 Private Sub Dongbotxt()
     Text(0).Text = UnicodeToVni(txtTenCty.Text)
-    Text(2).Text = UnicodeToVni(txtDiaChi.Text)
+    Text(2).Text = UnicodeToVni(txtDiachi.Text)
 End Sub
 Public Function WaitForStatus(ByVal TimeoutSeconds As Integer) As Boolean
     Dim getstatus As Integer
@@ -4907,7 +4907,7 @@ Private Sub LoadInfo()
     txtTenCty.Text = VniToUnicode(pTenCty)
     Text(1).Text = pTenCn
     Text(2).Text = rs!DiaChi
-    txtDiaChi.Text = VniToUnicode(rs!DiaChi)
+    txtDiachi.Text = VniToUnicode(rs!DiaChi)
     Text(3).Text = rs!Tel
     Text(4).Text = rs!Fax
     Text(5).Text = rs!TaiKhoanVN

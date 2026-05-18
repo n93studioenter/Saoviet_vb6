@@ -2368,7 +2368,22 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
                 If Not IsNull(rsport!f1) And rsport!f1 <> "..." And rsport!f1 <> "" Then
                     LoaiHD = "Portal"
                 Else
-                    LoaiHD = ""
+                    Dim rs_ktra As Recordset
+                    Dim Query As String
+                    Query = "SELECT IdNhap AS f1 FROM HoaDon " & _
+                            "INNER JOIN ChungTu ON HoaDon.MaSo = ChungTu.MaSo " & _
+                            "WHERE ChungTu.SoHieu = '" & rs_chungtu!sohieu & "'"
+
+                    Set rs_ktra = DBKetoan.OpenRecordset(Query, dbOpenSnapshot)
+                    If Not rs_ktra.EOF Then
+                    End If
+                    'Kiem tra co phai la tedo ko
+                    If Not IsNull(rsport!TendoHDid) Then
+                        LoaiHD = rsport!TendoHDState
+                    Else
+                        LoaiHD = ""
+                    End If
+
                 End If
             End If
             'Lay ra dong hoa don

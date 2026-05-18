@@ -173,10 +173,27 @@ End Function
 Public Function GhiVattu() As Integer
     Dim sql As String
         
-    sql = "INSERT INTO Vattu (MaSo, MaPhanLoai,SoHieu,TenVattu,DonVi,TonMin,TonMax,GiaHT,Dvt2,DonVi2,TyLeQD,GhiChu,VAT,GiaBan1,GiaBan2,GiaBan3,CK,ThueNK) VALUES (" _
-        + CStr(Lng_MaxValue("MaSo", "Vattu") + 1) + "," + CStr(MaPhanLoai) + ",'" + sohieu + "','" + TenVattu + "','" + DonVi + "'," + DoiDau(TonMin) + "," + DoiDau(TonMax) _
-        + "," + DoiDau(RoundMoney(GiaHT)) + "," + CStr(Dvt2) + ",'" + DonVi2 + "'," + DoiDau(CDbl(TyLeQD)) + ",'" + GhiChu + "'," + CStr(VAT) + "," _
-        + DoiDau(GiaBan1) + "," + DoiDau(GiaBan2) + "," + DoiDau(GiaBan3) + "," + DoiDau(CK) + "," + DoiDau(ThueNK) + ")"
+   sql = "INSERT INTO Vattu (MaSo, MaPhanLoai,SoHieu,TenVattu,DonVi,TonMin,TonMax,GiaHT,Dvt2,DonVi2,TyLeQD,GhiChu,VAT,GiaBan1,GiaBan2,GiaBan3,CK,ThueNK,TendokhoInventory) VALUES (" _
+        & CStr(Lng_MaxValue("MaSo", "Vattu") + 1) _
+        & "," & CStr(MaPhanLoai) _
+        & ",'" & sohieu & "'" _
+        & ",'" & TenVattu & "'" _
+        & ",'" & DonVi & "'" _
+        & "," & DoiDau(TonMin) _
+        & "," & DoiDau(TonMax) _
+        & "," & DoiDau(RoundMoney(GiaHT)) _
+        & "," & CStr(Dvt2) _
+        & ",'" & DonVi2 & "'" _
+        & "," & DoiDau(CDbl(TyLeQD)) _
+        & ",'" & GhiChu & "'" _
+        & "," & CStr(VAT) _
+        & "," & DoiDau(GiaBan1) _
+        & "," & DoiDau(GiaBan2) _
+        & "," & DoiDau(GiaBan3) _
+        & "," & DoiDau(CK) _
+        & "," & DoiDau(ThueNK) _
+        & "," & IIf(FrmVattu.chkTonKho.Value = 1, 1, 0) _
+        & ")"
     If ExecuteSQL5(sql) <> 0 Then
         GhiVattu = -1
     Else
