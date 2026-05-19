@@ -1599,7 +1599,11 @@ Private Sub Form_Load()
     frmMain.CheckAndCreateTBInvoice
     CheckAndCreateTBCpu
     CheckAndCreateTBGetPhieu
+
     
+    'Hoa don tendo
+     ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD TendoHDid text")
+      ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD TendoHDState text")
     
     ExecuteSQL5_Themmoi ("ALTER TABLE KhachHang ADD contact_id text")
     'Them moi tendo vattu
@@ -1607,12 +1611,15 @@ Private Sub Form_Load()
     ExecuteSQL5_Themmoi ("ALTER TABLE Vattu ADD TendoSku text")
     ExecuteSQL5_Themmoi ("ALTER TABLE Vattu ADD TendoUom text")
     ExecuteSQL5_Themmoi ("ALTER TABLE Vattu ADD TendoId text")
-     ExecuteSQL5_Themmoi ("ALTER TABLE Vattu ADD TendoPrice NUMBER")
+    ExecuteSQL5_Themmoi ("ALTER TABLE Vattu ADD TendoPrice NUMBER")
+    ExecuteSQL5_Themmoi ("ALTER TABLE Vattu ADD TendokhoInventory NUMBER")
+    ExecuteSQL5_Themmoi ("ALTER TABLE Vattu ADD TendoQuality NUMBER")
+    ExecuteSQL5_Themmoi ("ALTER TABLE Vattu ADD TendoSkuId text")
 
     ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
     ExecuteSQL5_Themmoi ("ALTER TABLE Users ADD IsReister NUMBER")
     ExecuteSQL5_Themmoi ("ALTER TABLE Users  ADD MacAddress text")
-    
+
     Counter = -1
     Int_RecsetToCbo "SELECT MaSo As F2, TenNSD As F1 FROM Users ORDER BY TenNSD", CboUser
     SetFont Me

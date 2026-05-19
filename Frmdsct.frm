@@ -2370,19 +2370,19 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
                 Else
                     Dim rs_ktra As Recordset
                     Dim Query As String
-                    Query = "SELECT IdNhap AS f1 FROM HoaDon " & _
+                    Query = "SELECT * FROM HoaDon " & _
                             "INNER JOIN ChungTu ON HoaDon.MaSo = ChungTu.MaSo " & _
                             "WHERE ChungTu.SoHieu = '" & rs_chungtu!sohieu & "'"
 
                     Set rs_ktra = DBKetoan.OpenRecordset(Query, dbOpenSnapshot)
                     If Not rs_ktra.EOF Then
+                        If Not IsNull(rs_ktra!TendoHDid) Then
+                            LoaiHD = rs_ktra!TendoHDState
+                        Else
+                            LoaiHD = ""
+                        End If
                     End If
                     'Kiem tra co phai la tedo ko
-                    If Not IsNull(rsport!TendoHDid) Then
-                        LoaiHD = rsport!TendoHDState
-                    Else
-                        LoaiHD = ""
-                    End If
 
                 End If
             End If

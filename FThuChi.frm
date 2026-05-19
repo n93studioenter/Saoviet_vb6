@@ -465,6 +465,9 @@ Option Explicit
 Dim IdNhap As String
 Dim countinvoiceinfo As Integer
 Dim MaSoHd As Long
+Dim tendotrangthai As Integer
+Dim tendoidhoadon As String
+Dim tendosotien As Double
 ' Khai báo c?u trúc STARTUPINFO và PROCESS_INFORMATION
 Private Type STARTUPINFO
     cb As Long
@@ -611,7 +614,7 @@ Public Sub Command_Click()
         Dim FilePath As String
         FilePath = App.path & "\\HoaDon\\invoice.txt"
         Dim content As String
-        content = FrmChungtu.txt(0).Text & "_" & FrmChungtu.TxtVT(1).Text & "_" & FrmChungtu.MedNgay(0).Text & "_" & id
+        content = FrmChungtu.txt(0).Text & "_" & FrmChungtu.txtVT(1).Text & "_" & FrmChungtu.MedNgay(0).Text & "_" & id
         Dim fileNumber As Integer
         If Not FileExists(FilePath) Then
             'Loai_thangbd_thangkt
@@ -634,7 +637,7 @@ Public Sub Command_Click()
     'Cho bkav
     If typeGhichu = 6 Or typeGhichu = 8 Then
         FilePath = App.path & "\\HoaDon\\invoice.txt"
-        content = FrmChungtu.txt(0).Text & "_" & FrmChungtu.TxtVT(1).Text & "_" & FrmChungtu.MedNgay(0).Text
+        content = FrmChungtu.txt(0).Text & "_" & FrmChungtu.txtVT(1).Text & "_" & FrmChungtu.MedNgay(0).Text
 
         If Not FileExists(FilePath) Then
             'Loai_thangbd_thangkt
@@ -673,6 +676,8 @@ Public Sub Command_Click()
     If FThuChi.FThuChiForm <> 0 Or countinvoiceinfo = 0 Then
         Unload Me
     Else
+        'Chi gianh cho viet tel, bkav
+        
         Command1.Visible = True
         If IdNhap <> "" Then
             Command2.Visible = True
@@ -765,6 +770,31 @@ Public Sub GhiChutxt(ByVal content As Integer)
     Close #FileNum
 End Sub
 Private Sub Command1_Click()
+    If tendotrangthai = True Then
+        GhiChutxt typeGhichu
+        Dim FilePath As String
+        FilePath = App.path & "\\HoaDon\\invoice.txt"
+        Dim content As String
+        content = "TT_" & tendoidhoadon & "_" & tendosotien
+        Dim fileNumber As Integer
+        If Not FileExists(FilePath) Then
+            'Loai_thangbd_thangkt
+            Dim iscreate As Boolean
+            iscreate = CreateVersionFile(FilePath, content)
+        Else
+            fileNumber = FreeFile
+            On Error Resume Next
+            Open FilePath For Output As #fileNumber
+            If Err.number = 0 Then
+                Print #fileNumber, content;
+                Close #fileNumber
+                'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+            Else
+                MsgBox "L?i khi ghi dè file!", vbExclamation
+            End If
+        End If
+        Exit Sub
+    End If
     Screen.MousePointer = vbHourglass   ' ho?c 11
     Command_Click
     GhiChutxt typeGhichu
@@ -905,7 +935,7 @@ Private Sub Command2_Click()
     Set rsports = DBKetoan.OpenRecordset("select IdNhap AS f1 FROM HoaDon " & _
                                          "inner join ChungTu on HoaDon.MaSo = ChungTu.MaSo " & _
                                          "where ChungTu.SoHieu = '" & FrmChungtu.txt(0).Text & "' " & _
-                                         "and HoaDon.KyHieu = '" & FrmChungtu.TxtVT(1).Text & "' " & _
+                                         "and HoaDon.KyHieu = '" & FrmChungtu.txtVT(1).Text & "' " & _
                                          "and ChungTu.NgayCT = #" & Format(FrmChungtu.MedNgay(0).Text, "yyyy-mm-dd") & "#", dbOpenSnapshot)
     If Not rsports.EOF Then
         ' L?y giá tr? IdNhap
@@ -1048,18 +1078,27 @@ Private Sub lblTitle_MouseDown(Index As Integer, Button As Integer, Shift As Int
     picFakeTitle_MouseDown Button, Shift, X, Y
 End Sub
 Private Sub Form_Load()
-
+    Dim urlname As String
+    urlname = SelectSQL("select Url AS f1 from  tbInvoiceInfo")
+    If urlname = "seller-v2.tendoo.vn" Then
+        Command1.Caption = "CËp nhËt tr¹ng th¸i"
+    End If
     Dim rsports As Recordset
-
-    Set rsports = DBKetoan.OpenRecordset("select IdNhap AS f1, HoaDon.MaSo FROM HoaDon " & _
+    Set rsports = DBKetoan.OpenRecordset("select IdNhap AS f1, HoaDon.MaSo,HoaDon.TendoHDid,HoaDon.ThanhTien FROM HoaDon " & _
                                          "inner join ChungTu on HoaDon.MaSo = ChungTu.MaSo " & _
                                          "where ChungTu.SoHieu = '" & FrmChungtu.txt(0).Text & "' " & _
-                                         "and HoaDon.KyHieu = '" & FrmChungtu.TxtVT(1).Text & "' " & _
+                                         "and HoaDon.KyHieu = '" & FrmChungtu.txtVT(1).Text & "' " & _
                                          "and ChungTu.NgayCT = #" & Format(FrmChungtu.MedNgay(0).Text, "yyyy-mm-dd") & "#", dbOpenSnapshot)
     If Not rsports.EOF Then
         ' L?y giá tr? IdNhap
 
         MaSoHd = rsports!MaSo
+        If Not IsNull(rsports!TendoHDid) Then
+            Command1.Visible = True
+            tendotrangthai = True
+            tendoidhoadon = rsports!TendoHDid
+            tendosotien = rsports!ThanhTien
+        End If
         If Not IsNull(rsports!f1) And rsports!f1 <> "..." And rsports!f1 <> "" Then
 
             IdNhap = rsports!f1  ' ho?c rsport.Fields("f1").Value
@@ -1069,7 +1108,6 @@ Private Sub Form_Load()
             rsports.Close
             Set rsports = Nothing
         Else
-
         End If
 
     End If
@@ -1117,7 +1155,6 @@ Private Sub Form_Load()
             End If
         End If
 
-        Dim urlname As String
         urlname = SelectSQL("select Url AS f1 from  tbInvoiceInfo")
         '5 la viettel
         Select Case urlname

@@ -2210,6 +2210,7 @@ Private Sub Chk_Click()
 End Sub
 
 Public Sub Command_Click(Index As Integer)
+     
     Dim vt1 As New ClsVattu, i As Integer, dv As String, qd As Double, gb As Double
 
     If (User_Right = 2) And (Index < 3) Then
