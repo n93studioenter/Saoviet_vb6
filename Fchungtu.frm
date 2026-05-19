@@ -2355,7 +2355,7 @@ Begin VB.Form FrmChungtu
    Begin VB.CommandButton CmdPhieu 
       BackColor       =   &H00E0E0E0&
       Caption         =   "&1 Phi’u TC"
-      Height          =   375
+      Height          =   255
       Index           =   0
       Left            =   10680
       TabIndex        =   53
@@ -10842,7 +10842,7 @@ Private Sub Command5_Click()
     If Not rsport.EOF Then
         ' L?y gi· tr? IdNhap
         Dim IdNhap As String
-        If Not IsNull(rsport!f1) And rsport!f1 <> "" Then
+        If Not IsNull(rsport!f1) And rsport!f1 <> "" And rsport!f1 <> "..." Then
             If InStr(1, rsport!f1, "-") > 0 Then
                 IdNhap = rsport!MaSo  ' ho?c rsport.Fields("f1").Value
             Else
