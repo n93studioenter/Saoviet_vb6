@@ -7,7 +7,7 @@ Begin VB.Form FThuChi
    BackColor       =   &H80000005&
    BorderStyle     =   0  'None
    Caption         =   "Th«ng tin vÒ phiÕu thu - chi"
-   ClientHeight    =   3510
+   ClientHeight    =   3540
    ClientLeft      =   3735
    ClientTop       =   3720
    ClientWidth     =   7680
@@ -27,7 +27,7 @@ Begin VB.Form FThuChi
    LinkTopic       =   "Additional Voucher Information"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3510
+   ScaleHeight     =   3540
    ScaleWidth      =   7680
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
@@ -599,8 +599,14 @@ Public Sub SaveGetPhieu()
 
 End Sub
 Public Sub Command_Click()
-
-'Cap nhat thong tin getphieu
+    Dim urlname As String
+    urlname = SelectSQL("select Url AS f1 from  tbInvoiceInfo")
+    If urlname = "seller-v2.tendoo.vn" Then
+        If tendoidhoadon = "" Then
+            Command1.Caption = "T¹o ®¬n hµng"
+        End If
+    End If
+    'Cap nhat thong tin getphieu
     SaveGetPhieu
 
     If Combo1.ListIndex = -1 And Combo1.ListCount > 0 Then
@@ -677,7 +683,7 @@ Public Sub Command_Click()
         Unload Me
     Else
         'Chi gianh cho viet tel, bkav
-        
+
         Command1.Visible = True
         If IdNhap <> "" Then
             Command2.Visible = True
@@ -1081,7 +1087,7 @@ Private Sub Form_Load()
     Dim urlname As String
     urlname = SelectSQL("select Url AS f1 from  tbInvoiceInfo")
     If urlname = "seller-v2.tendoo.vn" Then
-        Command1.Caption = "CËp nhËt tr¹ng th¸i"
+
     End If
     Dim rsports As Recordset
     Set rsports = DBKetoan.OpenRecordset("select IdNhap AS f1, HoaDon.MaSo,HoaDon.TendoHDid,HoaDon.ThanhTien FROM HoaDon " & _
@@ -1094,6 +1100,7 @@ Private Sub Form_Load()
 
         MaSoHd = rsports!MaSo
         If Not IsNull(rsports!TendoHDid) Then
+            Command1.Caption = "CËp nhËt tr¹ng th¸i"
             Command1.Visible = True
             tendotrangthai = True
             tendoidhoadon = rsports!TendoHDid

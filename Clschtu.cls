@@ -60,10 +60,20 @@ Public sotienchietkhau As String ' ap dung cho phieu nhap (giam gia)
 ' Thñ tôc khëi t¹o
 '======================================================================================
 Public Sub InitChungtu(ma As Long, loai As Integer, sh As String, thang As Integer, ngay1 As Date, ngay2 As Date, _
-            nguon As Long, kho As Long, dg As String, MaTkNo As Long, MaTkCo As Long, ps As Double, ps2n As Double, _
-            ps2c As Double, mvt As Long, gc As String, DTCT As Long, MauSo1 As String, LoaiHD1 As String, Solo1 As String, handung1 As String)
+                       nguon As Long, kho As Long, dg As String, MaTkNo As Long, MaTkCo As Long, ps As Double, ps2n As Double, _
+                       ps2c As Double, mvt As Long, gc As String, DTCT As Long, MauSo1 As String, LoaiHD1 As String, Solo1 As String, handung1 As String)
     Dim rs_ct As Recordset
-    
+    Dim date1 As Date
+    Dim date2 As Date
+
+    ' Chuy?n string thành Date
+    If FrmChungtu.bakNgayimp2 <> "" Then
+        date1 = CDate(ngay1)
+        date2 = CDate(FrmChungtu.bakNgayimp2)
+        If date1 <> date2 Then
+            MsgBox "Ngay khong trung voi ngay hoa don"
+        End If
+    End If
     If ma > 0 Then
         Set rs_ct = DBKetoan.OpenRecordset("SELECT * FROM Chungtu WHERE MaSo=" + CStr(ma), dbOpenSnapshot)
         If rs_ct.recordCount = 0 Then
@@ -109,19 +119,19 @@ Public Sub InitChungtu(ma As Long, loai As Integer, sh As String, thang As Integ
         solo = IIf(IsNull(rs_ct!solo), "", rs_ct!solo)
         handung = IIf(IsNull(rs_ct!handung), "", rs_ct!handung)
         If pGiaUSD > 0 Then PSUSD = rs_ct!PSUSD
-        
+
         If rs_ct!MauSoHD <> Null Then
-        MauSo = rs_ct!MauSoHD
+            MauSo = rs_ct!MauSoHD
         Else
-        MauSo = ""
+            MauSo = ""
         End If
         If rs_ct!LoaiHoaDon <> Null Then
-        LoaiHD = rs_ct!LoaiHoaDon
+            LoaiHD = rs_ct!LoaiHoaDon
         Else
-        LoaiHD = ""
+            LoaiHD = ""
         End If
-        
-        
+
+
         rs_ct.Close
     Else
 iC:

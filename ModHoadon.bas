@@ -32,6 +32,16 @@ Public Sub GhiHoaDon(p As Integer)
     Dim sql As String
 
     With h
+        If FThuChi.FThuChiForm <> 0 Then
+            Dim date1 As Date
+            Dim date2 As Date
+            date1 = CDate(.NgayPH)
+            date2 = CDate(FrmChungtu.bakNgayimp2)
+            If date1 <> date2 Then
+                MsgBox "Ngay khong giong voi hoa don"
+            End If
+        End If
+
         If Not KHDetail Then
             sql = "INSERT INTO KhachHang (MaSo,MaPhanLoai,SoHieu,Ten,DiaChi,MST) VALUES (" + CStr(.MaSo) + "," + CStr(Lng_MaxValue("MaSo", "PhanLoaiKhachHang")) + ",'" + CStr(.MaSo) + "','" + .TenKH + "','" + .DiaChiKH + "','" + .MSTKH + "')"
             ExecuteSQL5 sql

@@ -3873,7 +3873,8 @@ Dim dshdloi As String
 Dim oldKeypress As String
 Dim isimportnk As Boolean
 Dim tk154 As String
-Dim bakNgayimp As String
+Public bakNgayimp As String
+Public bakNgayimp2 As String
 Dim bakThangTinhGiavon As Integer
 Dim nknl As Integer
 Dim bakParentId As Integer
@@ -14932,6 +14933,11 @@ Private Function KiemTraChungtu() As Boolean
             Exit Function
         End If
     End If
+    If FThuChi.FThuChiForm <> 0 Then
+                If Not rs_import Is Nothing Then
+                    bakNgayimp2 = rs_import!NLap
+                End If
+            End If
     If loaict = 3 And nhieunoco Then
         MsgBox "Kh«ng nhËp chøng tõ kÕt chuyÓn nhiÒu nî, nhiÒu cã !", vbInformation, App.ProductName
         RFocus txtchungtu(0)
