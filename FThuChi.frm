@@ -32,6 +32,17 @@ Begin VB.Form FThuChi
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Tag             =   "0"
+   Begin VB.CheckBox chkPhathanh 
+      BackColor       =   &H00FFFFFF&
+      Caption         =   "Ph¸t hµnh"
+      Height          =   255
+      Left            =   6000
+      MaskColor       =   &H00FFFFFF&
+      TabIndex        =   34
+      Top             =   2160
+      Visible         =   0   'False
+      Width           =   1575
+   End
    Begin VB.CheckBox Check3 
       BackColor       =   &H00FFFFFF&
       Caption         =   "Xem ho¸ ®¬n"
@@ -468,6 +479,7 @@ Dim MaSoHd As Long
 Dim tendotrangthai As Integer
 Dim tendoidhoadon As String
 Dim tendosotien As Double
+
 ' Khai báo c?u trúc STARTUPINFO và PROCESS_INFORMATION
 Private Type STARTUPINFO
     cb As Long
@@ -604,6 +616,8 @@ Public Sub Command_Click()
     If urlname = "seller-v2.tendoo.vn" Then
         If tendoidhoadon = "" Then
             Command1.Caption = "T¹o ®¬n hµng"
+            chkPhathanh.Visible = True
+            FrmChungtu.isInvoice = True
         End If
     End If
     'Cap nhat thong tin getphieu

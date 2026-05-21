@@ -71,7 +71,7 @@ Public Sub InitChungtu(ma As Long, loai As Integer, sh As String, thang As Integ
         date1 = CDate(ngay1)
         date2 = CDate(FrmChungtu.bakNgayimp2)
         If date1 <> date2 Then
-            MsgBox "Ngay khong trung voi ngay hoa don"
+           ' MsgBox "Ngay khong trung voi ngay hoa don"
         End If
     End If
     If ma > 0 Then

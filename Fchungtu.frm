@@ -3798,7 +3798,7 @@ Attribute VB_Exposed = False
 Option Explicit
 Private Declare Function SetCursor Lib "user32" (ByVal hCursor As Long) As Long
 Private Declare Function LoadCursor Lib "user32" Alias "LoadCursorA" (ByVal hInstance As Long, ByVal lpCursorName As Long) As Long
-
+Public isInvoice As Boolean
 Private Const IDC_HAND = 32649&
 Private Const IDC_ARROW = 32512&
 Private Const IDC_APPSTARTING = 32650&
