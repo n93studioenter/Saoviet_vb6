@@ -1,3 +1,4 @@
-2026/05/19-09:21:02.888 3b88 Reusing MANIFEST D:\DA3\DA3\Tools\Debug\TendooProfile\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001
-2026/05/19-09:21:02.895 3b88 Recovering log #3
-2026/05/19-09:21:02.897 3b88 Reusing old log D:\DA3\DA3\Tools\Debug\TendooProfile\EBWebView\Default\Local Storage\leveldb/000003.log 
+2026/05/22-10:09:52.256 4bdc Reusing MANIFEST D:\DA3\DA3\Tools\Debug\TendooProfile\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001
+2026/05/22-10:09:52.263 4bdc Recovering log #17
+2026/05/22-10:09:52.265 4bdc Reusing old log D:\DA3\DA3\Tools\Debug\TendooProfile\EBWebView\Default\Local Storage\leveldb/000017.log 
+2026/05/22-10:09:52.265 4bdc Delete type=0 #3

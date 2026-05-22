@@ -3803,7 +3803,7 @@ Private Const IDC_HAND = 32649&
 Private Const IDC_ARROW = 32512&
 Private Const IDC_APPSTARTING = 32650&
 Private Const IDC_Drag = 32646&
-
+Private autongay As Boolean
 Private Const MIM_STYLE As Long = &H10
 Private Const MIM_APPLYTOSUBMENUS As Long = &H80000000
 Const vbHand = 99
@@ -4020,18 +4020,18 @@ Dim SetLoaiEnable As Boolean
 Dim shct As String
 Dim xddu As Boolean
 Dim TenTC As String, DiachiTC As String, ctgoc As String, TenNX As String, DiaChiNX As String, TenBH As String, DiaChiBH As String, MSTBH As String, unc1 As String, unc2 As String, unc3 As String, MaKHBH As Long, HanTT As Date
-Attribute DiachiTC.VB_VarUserMemId = 1073938541
-Attribute ctgoc.VB_VarUserMemId = 1073938541
-Attribute TenNX.VB_VarUserMemId = 1073938541
-Attribute DiaChiNX.VB_VarUserMemId = 1073938541
-Attribute TenBH.VB_VarUserMemId = 1073938541
-Attribute DiaChiBH.VB_VarUserMemId = 1073938541
-Attribute MSTBH.VB_VarUserMemId = 1073938541
-Attribute unc1.VB_VarUserMemId = 1073938541
-Attribute unc2.VB_VarUserMemId = 1073938541
-Attribute unc3.VB_VarUserMemId = 1073938541
-Attribute MaKHBH.VB_VarUserMemId = 1073938541
-Attribute HanTT.VB_VarUserMemId = 1073938541
+Attribute DiachiTC.VB_VarUserMemId = 1073938544
+Attribute ctgoc.VB_VarUserMemId = 1073938544
+Attribute TenNX.VB_VarUserMemId = 1073938544
+Attribute DiaChiNX.VB_VarUserMemId = 1073938544
+Attribute TenBH.VB_VarUserMemId = 1073938544
+Attribute DiaChiBH.VB_VarUserMemId = 1073938544
+Attribute MSTBH.VB_VarUserMemId = 1073938544
+Attribute unc1.VB_VarUserMemId = 1073938544
+Attribute unc2.VB_VarUserMemId = 1073938544
+Attribute unc3.VB_VarUserMemId = 1073938544
+Attribute MaKHBH.VB_VarUserMemId = 1073938544
+Attribute HanTT.VB_VarUserMemId = 1073938544
 Dim HD() As tpHoaDon, hdcount As Integer
 Attribute HD.VB_VarUserMemId = 1073938518
 Attribute hdcount.VB_VarUserMemId = 1073938518
@@ -7463,12 +7463,11 @@ Private Sub CboThang_LostFocus()
 
         End If
     End If
-    If MaSoCT = 0 Then
+    If MaSoCT = 0 And autongay = True Then
         MedNgay(0).Text = ngay
         MedNgay(1).Text = ngay
+        autongay = False
     End If
-
-
 End Sub
 
 Private Sub CboVV_Click(Index As Integer)
@@ -9783,12 +9782,11 @@ Public Sub Command_Click(Index As Integer)
 
         End If
     End If
-
-
-
-
     If Index = 0 Then
+        autongay = True
         txtNoidung.Text = ""
+        MaSoCT = 0
+        CboThang_LostFocus
     End If
 
     If hasError = True Then
@@ -9835,8 +9833,6 @@ Public Sub Command_Click(Index As Integer)
         End If
     End If
 
-
-
     Dim chungtu As New ClsChungtu, mtk As Long, mvt As Long, mtk2 As Long, sops As Double, psnt As Double, psnt2 As Double, mtc As Long, mtc2 As Long
     Dim MaCT As Long, GhiChu As String, loai As Integer, mhdx As Integer, MaTP As Long, j As Integer, sh As String, bg As Boolean
     Dim rs_chungtu As Recordset, i As Integer, mn As Long, mk As Long, sql As String, X As New ClsTaikhoan, ctdx As Long, m As Long
@@ -9851,8 +9847,6 @@ Public Sub Command_Click(Index As Integer)
     ExecuteSQL5 "UPDATE KhachHang SET ten = '" + txtVT(7).Text + "',diachi = '" + txtVT(8).Text + "' where sohieu = '" + txtVT(0).Text + "'"
 
     ' sua lai thong tin khach hang
-
-
     Me.MousePointer = 11
 
     Dim tong_tien_
@@ -10475,7 +10469,9 @@ Public Sub Command_Click(Index As Integer)
         frmMain.Rpt.Formulas(5) = "NgayCT='" + Format(ngay(0), Mask_DR) + "'"
         frmMain.Rpt.Formulas(6) = "NgayGS='" + Format(ngay(1), Mask_DR) + "'"
         frmMain.Rpt.Formulas(7) = "DienGiai='" + txt(1).Text + "'"
-        InBaoCaoRPT
+        If isInvoice = False Then
+            InBaoCaoRPT
+        End If
     End Select
 XongCT:
     'Me.Caption = "NhËp chøng tõ kÕ to¸n" + " - " + CStr(pNamTC)
@@ -10499,7 +10495,7 @@ End Sub
 ' HiÓn thÞ cöa sæ danh s¸ch chøng tõ vµ hiÓn thÞ chøng tõ ®­îc chän
 '====================================================================================================
 Public Sub CmdDanhsach_Click(Index As Integer)
-    Command_Click (0)
+    'Command_Click (0)
     Label(26).Caption = ""
     cho_hien_thongbao = True
 
@@ -14366,6 +14362,7 @@ Public Function HienPhieuTrenManHinh(p As Integer) As Integer
     ngay(1) = rs_chungtu!NgayGS
     MedNgay(0).Text = Format(ngay(0), Mask_D)
     MedNgay(1).Text = Format(ngay(1), Mask_D)
+    Debug.Print MedNgay(0).Text
     txt(0).Text = rs_chungtu!sohieu
     txt(1).Text = rs_chungtu!diengiai
     frmSCCT.thangbd = rs_chungtu!ThangCT

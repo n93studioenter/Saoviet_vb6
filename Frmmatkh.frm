@@ -1603,6 +1603,7 @@ Private Sub Form_Load()
     
     'Hoa don tendo
      ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD TendoHDid text")
+      ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD has_e_invoice number")
       ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD TendoHDState text")
     
     ExecuteSQL5_Themmoi ("ALTER TABLE KhachHang ADD contact_id text")

@@ -35,6 +35,16 @@ Begin VB.Form FThuChi
    Begin VB.CheckBox chkPhathanh 
       BackColor       =   &H00FFFFFF&
       Caption         =   "Ph¸t hµnh"
+      BeginProperty Font 
+         Name            =   "VK Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00008000&
       Height          =   255
       Left            =   6000
       MaskColor       =   &H00FFFFFF&
@@ -790,12 +800,14 @@ Public Sub GhiChutxt(ByVal content As Integer)
     Close #FileNum
 End Sub
 Private Sub Command1_Click()
+
     If tendotrangthai = True Then
         GhiChutxt typeGhichu
         Dim FilePath As String
         FilePath = App.path & "\\HoaDon\\invoice.txt"
         Dim content As String
         content = "TT_" & tendoidhoadon & "_" & tendosotien
+
         Dim fileNumber As Integer
         If Not FileExists(FilePath) Then
             'Loai_thangbd_thangkt
@@ -809,6 +821,14 @@ Private Sub Command1_Click()
                 Print #fileNumber, content;
                 Close #fileNumber
                 'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+                DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
+                Dim exePath2 As String
+                Dim cmd2 As String
+
+                exePath2 = App.path & "\Tools\Debug\SaovietTax.exe"
+                ' Dùng runas v?i trust level th?p hon
+                cmd2 = "runas /trustlevel:0x20000 """ & exePath2 & """"
+                Shell cmd2, vbHide
             Else
                 MsgBox "L?i khi ghi dè file!", vbExclamation
             End If
@@ -1101,7 +1121,7 @@ Private Sub Form_Load()
     Dim urlname As String
     urlname = SelectSQL("select Url AS f1 from  tbInvoiceInfo")
     If urlname = "seller-v2.tendoo.vn" Then
-
+         
     End If
     Dim rsports As Recordset
     Set rsports = DBKetoan.OpenRecordset("select IdNhap AS f1, HoaDon.MaSo,HoaDon.TendoHDid,HoaDon.ThanhTien FROM HoaDon " & _

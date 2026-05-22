@@ -1,3 +1,4 @@
-2026/05/19-09:21:03.763 3258 Reusing MANIFEST D:\DA3\DA3\Tools\Debug\TendooProfile\EBWebView\Default\IndexedDB\https_seller-v2.tendoo.vn_0.indexeddb.leveldb/MANIFEST-000001
-2026/05/19-09:21:03.763 3258 Recovering log #3
-2026/05/19-09:21:03.773 3258 Reusing old log D:\DA3\DA3\Tools\Debug\TendooProfile\EBWebView\Default\IndexedDB\https_seller-v2.tendoo.vn_0.indexeddb.leveldb/000003.log 
+2026/05/22-10:09:53.062 4824 Reusing MANIFEST D:\DA3\DA3\Tools\Debug\TendooProfile\EBWebView\Default\IndexedDB\https_seller-v2.tendoo.vn_0.indexeddb.leveldb/MANIFEST-000001
+2026/05/22-10:09:53.063 4824 Recovering log #46
+2026/05/22-10:09:53.072 4824 Reusing old log D:\DA3\DA3\Tools\Debug\TendooProfile\EBWebView\Default\IndexedDB\https_seller-v2.tendoo.vn_0.indexeddb.leveldb/000046.log 
+2026/05/22-10:09:53.072 4824 Delete type=0 #3
