@@ -111,6 +111,47 @@ Public SL_XXXX As Double
 Dim sBar As String, i0 As Integer, i1 As Integer
 Attribute i0.VB_VarUserMemId = 1073741826
 Attribute i1.VB_VarUserMemId = 1073741826
+Public Function FileExists(FilePath As String) As Boolean
+    On Error GoTo ErrorHandler
+
+    If Dir(FilePath) <> "" Then
+        FileExists = True
+    Else
+        FileExists = False
+    End If
+
+    Exit Function
+
+ErrorHandler:
+    FileExists = False
+End Function
+Public Function CreateVersionFile(FilePath As String, content As String) As Boolean
+    Dim fileNumber As Integer
+
+    On Error GoTo ErrorHandler
+
+    ' L?y file number
+    fileNumber = FreeFile
+
+    ' T?o file m?i (Output mode s? t?o file n?u chua có)
+    Open FilePath For Output As #fileNumber
+
+    ' Ghi n?i dung
+    Print #fileNumber, content
+
+    ' Ðóng file
+    Close #fileNumber
+
+    ' Ki?m tra file dã du?c t?o
+    CreateVersionFile = FileExists(FilePath)
+
+    Exit Function
+
+ErrorHandler:
+    CreateVersionFile = False
+    On Error Resume Next
+    Close #fileNumber
+End Function
 Public Sub GhiChutxt(ByVal content As Integer)
     Dim FilePath As String
     FilePath = App.path & "\\Hoadon\\status.txt"

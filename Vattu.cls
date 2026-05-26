@@ -14,6 +14,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 ' Kieu vat tu
+Public TendoId As String
 Public MaSo As Long             ' Ma vat tu
 Public MaPhanLoai As Long       ' ma phan loai
 Public sohieu As String         ' So hieu vat tu
@@ -101,6 +102,15 @@ Public Sub InitVattuMaSo(mvt As Long)
                                             & " FROM Vattu" _
                                             & " WHERE Vattu.MaSo=" + CStr(mvt), dbOpenSnapshot)
         If rs_vattu.recordCount = 0 Then GoTo iv
+        If rs_vattu!TendoId <> Null Then
+            TendoId = rs_vattu!TendoId
+            If TendoId <> "..." And TendoId <> "" Then
+                FrmVattu.Label1.Caption = TendoId
+                FrmVattu.Label1.Visible = True
+            Else
+                FrmVattu.Label1.Visible = False
+            End If
+        End If
         MaSo = rs_vattu!MaSo
         MaPhanLoai = rs_vattu!MaPhanLoai
         sohieu = rs_vattu!sohieu

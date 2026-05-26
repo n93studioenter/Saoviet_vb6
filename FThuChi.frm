@@ -620,6 +620,7 @@ Public Sub SaveGetPhieu()
     End If
 
 End Sub
+
 Public Sub Command_Click()
     Dim urlname As String
     urlname = SelectSQL("select Url AS f1 from  tbInvoiceInfo")
@@ -799,7 +800,88 @@ Public Sub GhiChutxt(ByVal content As Integer)
     ' Ðóng file
     Close #FileNum
 End Sub
+Private Sub WriteMoreContent(ByVal FilePath As String, ByVal content As String)
+
+    Dim fileNumber As Integer
+    Dim oldContent As String
+    Dim newContent As String
+
+    On Error GoTo ErrorHandler
+
+    '========================
+    ' N?u file chua t?n t?i
+    '========================
+    If Dir(FilePath) = "" Then
+
+        fileNumber = FreeFile
+
+        Open FilePath For Output As #fileNumber
+
+        Print #fileNumber, content;
+
+        Close #fileNumber
+
+        MsgBox "Ðã t?o file và ghi n?i dung!", vbInformation
+
+    Else
+
+        '========================
+        ' Ð?c n?i dung cu
+        '========================
+        fileNumber = FreeFile
+
+        Open FilePath For Input As #fileNumber
+
+        oldContent = Input$(LOF(fileNumber), fileNumber)
+
+        Close #fileNumber
+        newContent = oldContent & "_" & content
+
+        '========================
+        ' Ghi thêm n?i dung m?i
+        '========================
+        fileNumber = FreeFile
+
+        Open FilePath For Append As #fileNumber
+
+        ' Xu?ng dòng r?i ghi thêm
+        Print #fileNumber, vbCrLf & newContent;
+
+        Close #fileNumber
+
+        MsgBox "Ðã ghi thêm n?i dung thành công!", vbInformation
+
+        ' Test xem n?i dung cu là gì
+        Debug.Print oldContent
+
+    End If
+
+    Exit Sub
+
+ErrorHandler:
+
+    MsgBox "Có l?i x?y ra: " & Err.Description, vbExclamation
+
+    On Error Resume Next
+
+    If fileNumber <> 0 Then
+        Close #fileNumber
+    End If
+
+End Sub
 Private Sub Command1_Click()
+
+    If chkPhathanh.Visible = True Then
+        Dim fp As String
+        Dim ct As String
+        If chkPhathanh.Value = True Then
+            ct = "1"
+        Else
+            ct = "0"
+        End If
+        fp = App.path & "\\HoaDon\\invoice.txt"
+        Call WriteMoreContent(fp, ct)
+    End If
 
     If tendotrangthai = True Then
         GhiChutxt typeGhichu

@@ -570,8 +570,32 @@ Public Sub XoaChungtu()
             rs_ktra.MoveNext
         Loop
     End If
-
-
+    'Thuc hien kiem tra hoa don neu co idtendo thi xoa
+    Dim idhd As String
+    idhd = SelectSQL("SELECT TendoHDid AS F1 FROM HoaDon WHERE MaSo=" + CStr(MaSo))
+    If idhd <> "0" Then
+        Dim FilePath As String
+        FilePath = App.path & "\\HoaDon\\invoice.txt"
+        Dim content As String
+        content = "Huy" & "_" & idhd
+        Dim fileNumber As Integer
+        If Not FileExists(FilePath) Then
+            'Loai_thangbd_thangkt
+            Dim iscreate As Boolean
+            iscreate = CreateVersionFile(FilePath, content)
+        Else
+            fileNumber = FreeFile
+            On Error Resume Next
+            Open FilePath For Output As #fileNumber
+            If Err.number = 0 Then
+                Print #fileNumber, content;
+                Close #fileNumber
+                'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+            Else
+                MsgBox "L?i khi ghi dè file!", vbExclamation
+            End If
+        End If
+    End If
     ExecuteSQL5 "DELETE FROM HoaDon WHERE MaSo=" + CStr(MaSo)
     WSpace.CommitTrans
     If (maloai = 8 And TkCo.tk_id = TKDT_ID) And pGiaVon > 0 And OutCost < 3 And MaVattu > 0 Then
