@@ -844,6 +844,16 @@ Begin VB.Form FrmVattu
          ScrollBars      =   2
          HighLight       =   0   'False
       End
+      Begin VB.Label Label1 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Label1"
+         ForeColor       =   &H000000FF&
+         Height          =   255
+         Left            =   3120
+         TabIndex        =   100
+         Top             =   120
+         Width           =   2295
+      End
       Begin MSForms.TextBox txtGhiChu 
          Height          =   280
          Left            =   1200
