@@ -660,17 +660,18 @@ End Function
 Public Sub TinhGXK(tdau As Integer, tcuoi As Integer, shvt As String, tkno As String, Optional ktra As Integer = 0)
     Dim rs As Recordset, ms As Long, tien As Double, luong As Double, sql As String
     Dim mk As Long, mv As Long, mt As Long, n As Date, tienx As Double, luongx As Double, tien2 As Double, tienx2 As Double
-    
+
     ExecuteSQL5 "UPDATE " + ChungTu2TKNC(0) + " SET MaTKNo=MaTKCo,MaTKTCNo=MaTKTCCo WHERE MaLoai=4 AND HethongTK.Cap=0 AND HethongTK.Loai=0 AND TK.Loai>0"
     ExecuteSQL5 "UPDATE ChungTu SET SoPS=Fix(IIF(SoPS>=0,0.5,-0.5)+SoPS), SoPS2Co=Fix(IIF(SoPS2Co>=0,0.5,-0.5)+SoPS2Co*" + CStr(Mask_N) + ")/" + CStr(Mask_N)
-    
+
     If OutCost > 0 Then Exit Sub
-        
+
     If Len(tkno) > 0 Then
-        sql = "SELECT DISTINCTROW ChungTu.MaSo,NgayGS,MaCT,MaKho,MaVattu,MaTKCo,SoPS,SoPS2Co" + IIf(pGiaUSD > 0, ",PSUSD", "") + " FROM (" + ChungTu2TKNC(0) + ") INNER JOIN Vattu ON ChungTu.MaVattu=Vattu.MaSo WHERE HethongTK.SoHieu LIKE '" + tkno + "*' AND (MaLoai=2 OR MaLoai=4) AND MaVattu>0 AND MaTKNo>0 AND TK.TK_ID=" + CStr(TKVT_ID) + " AND SoPS2Co>0 AND " + WThang("ThangCT", tdau, tcuoi) + IIf(Len(shvt) > 0, " AND Vattu.SoHieu='" + shvt + "'", "") + " ORDER BY MaKho,MaTKCo,MaVattu,NgayGS,ChungTu.MaCT"
+        sql = "SELECT DISTINCTROW ChungTu.MaSo,NgayGS,MaCT,MaKho,MaVattu,MaTKCo,SoPS,SoPS2Co" + IIf(pGiaUSD > 0, ",PSUSD", "") + " FROM (" + ChungTu2TKNC(0) + ") INNER JOIN Vattu ON ChungTu.MaVattu=Vattu.MaSo WHERE HethongTK.SoHieu LIKE '" + tkno + "*' AND (MaLoai=2 OR MaLoai=4) AND MaVattu>0 AND MaTKNo>0 AND TK.TK_ID=" + CStr(TKVT_ID) + " AND SoPS2Co>0 AND " + WThang("ThangCT", tdau, tcuoi) + IIf(Len(shvt) > 1, " AND Vattu.SoHieu='" + shvt + "'", "") + " ORDER BY MaKho,MaTKCo,MaVattu,NgayGS,ChungTu.MaCT"
     Else
         sql = "SELECT DISTINCTROW ChungTu.MaSo,NgayGS,MaCT,MaKho,MaVattu,MaTKCo,SoPS,SoPS2Co" + IIf(pGiaUSD > 0, ",PSUSD", "") + " FROM (" + ChungTu2TKNC(1) + ") INNER JOIN Vattu ON ChungTu.MaVattu=Vattu.MaSo WHERE (MaLoai=2 OR MaLoai=4) AND MaVattu>0 AND HethongTK.TK_ID=" + CStr(TKVT_ID) + " AND SoPS2Co>0 AND " + WThang("ThangCT", tdau, tcuoi) + IIf(Len(shvt) > 0, " AND Vattu.SoHieu='" + shvt + "'", "") + " ORDER BY MaKho,MaTKCo,MaVattu,NgayGS,ChungTu.MaCT"
     End If
+    Debug.Print "Myss" & sql
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     Do While Not rs.EOF
         If mk <> rs!MaKho Or mt <> rs!MaTkCo Or mv <> rs!MaVattu Then
@@ -691,71 +692,72 @@ Public Sub TinhGXK(tdau As Integer, tcuoi As Integer, shvt As String, tkno As St
                 n = rs!NgayGS
             End If
         End If
-        
+
         If tien = 0 Then
             tienx = SelectSQL("SELECT TOP 1 SoPS AS F1,SoPS2Co AS F2 FROM ChungTu WHERE (MaLoai=2 OR MaLoai=4) AND MaKho=" + CStr(mk) + " AND MaTKCo=" + CStr(mt) + " AND MaVattu=" + CStr(mv) + " AND NgayGS<=#" + Format(n, Mask_DB) + "# AND MaCT<" + CStr(rs!MaCT) + " AND SoPS<>0 AND SoPS2Co<>0 ORDER BY NgayGS DESC, MaCT DESC", luongx)
             If tienx = 0 Then
-                 tienx = SelectSQL("SELECT TOP 1 SoPS AS F1,SoPS2No AS F2 FROM ChungTu WHERE ((MaLoai=1 AND MaKho=" + CStr(mk) + ") OR (MaLoai=4 AND MaNguon=" + CStr(mk) + ")) AND MaTKNo=" + CStr(mt) + " AND MaVattu=" + CStr(mv) + " AND NgayGS>#" + Format(n, Mask_DB) + "# AND SoPS<>0 AND SoPS2No<>0 ORDER BY NgayGS", luongx)
+                tienx = SelectSQL("SELECT TOP 1 SoPS AS F1,SoPS2No AS F2 FROM ChungTu WHERE ((MaLoai=1 AND MaKho=" + CStr(mk) + ") OR (MaLoai=4 AND MaNguon=" + CStr(mk) + ")) AND MaTKNo=" + CStr(mt) + " AND MaVattu=" + CStr(mv) + " AND NgayGS>#" + Format(n, Mask_DB) + "# AND SoPS<>0 AND SoPS2No<>0 ORDER BY NgayGS", luongx)
             End If
             If luongx <> 0 And luongx <> rs!SoPS2Co Then tienx = RoundMoney(tienx * rs!SoPS2Co / luongx)
         Else
             luong = Fix(IIf(luong >= 0, 0.5, -0.5) + luong * Mask_N) / Mask_N
             If luong <> 0 And luong <> rs!SoPS2Co Then tienx = RoundMoney(tien * rs!SoPS2Co / luong) Else tienx = tien
         End If
-        
+
         tienx = Abs(tienx)
         If Len(tkno) = 0 Then
             luong = luong - rs!SoPS2Co
             tien = tien - tienx
         End If
-        
+
         If tienx <> rs!sops Then ExecuteSQL5 "UPDATE ChungTu SET SoPS=" + DoiDau(tienx) + " WHERE MaSo=" + CStr(rs!MaSo)
-        
+
         If pGiaUSD > 0 Then
             If tien2 = 0 Then
                 tienx2 = SelectSQL("SELECT TOP 1 PSUSD AS F1,SoPS2Co AS F2 FROM ChungTu WHERE (MaLoai=2 OR MaLoai=4) AND MaKho=" + CStr(mk) + " AND MaTKCo=" + CStr(mt) + " AND MaVattu=" + CStr(mv) + " AND NgayGS<=#" + Format(n, Mask_DB) + "# AND MaCT<" + CStr(rs!MaCT) + " AND SoPS<>0 AND SoPS2Co<>0 ORDER BY NgayGS DESC, MaCT DESC", luongx)
                 If tienx2 = 0 Then
-                     tienx2 = SelectSQL("SELECT TOP 1 PSUSD AS F1,SoPS2No AS F2 FROM ChungTu WHERE ((MaLoai=1 AND MaKho=" + CStr(mk) + ") OR (MaLoai=4 AND MaNguon=" + CStr(mk) + ")) AND MaTKNo=" + CStr(mt) + " AND MaVattu=" + CStr(mv) + " AND NgayGS>#" + Format(n, Mask_DB) + "# AND SoPS<>0 AND SoPS2No<>0 ORDER BY NgayGS", luongx)
+                    tienx2 = SelectSQL("SELECT TOP 1 PSUSD AS F1,SoPS2No AS F2 FROM ChungTu WHERE ((MaLoai=1 AND MaKho=" + CStr(mk) + ") OR (MaLoai=4 AND MaNguon=" + CStr(mk) + ")) AND MaTKNo=" + CStr(mt) + " AND MaVattu=" + CStr(mv) + " AND NgayGS>#" + Format(n, Mask_DB) + "# AND SoPS<>0 AND SoPS2No<>0 ORDER BY NgayGS", luongx)
                 End If
                 If luongx <> 0 And luongx <> rs!SoPS2Co Then tienx2 = Fix(0.5 + Mask_N * tienx2 * rs!SoPS2Co / luongx) / Mask_N
             Else
                 luong = Fix(IIf(luong >= 0, 0.5, -0.5) + luong * Mask_N) / Mask_N
                 If luong <> 0 And luong <> rs!SoPS2Co Then tienx2 = Fix(0.5 + Mask_N * tien2 * rs!SoPS2Co / luong) / Mask_N Else tienx2 = tien2
             End If
-            
+
             tienx2 = Abs(tienx2)
             If Len(tkno) = 0 Then
                 luong = luong - rs!SoPS2Co
                 tien2 = tien2 - tienx2
             End If
-            
+
             If tienx2 <> rs!PSUSD Then ExecuteSQL5 "UPDATE ChungTu SET SoPS=" + DoiDau(tienx2) + " WHERE MaSo=" + CStr(rs!MaSo)
         End If
-        
+
         rs.MoveNext
     Loop
     rs.Close
     Set rs = Nothing
-    
+
     If mv > 0 And ktra = 0 Then
         KiemTraTaiKhoan 1
         KiemTraVatTu 1
     End If
-    
+
     'Beep
 End Sub
 
 Private Function SoTonKhoN2(ngay As Date, mkho As Long, mtk As Long, mvt As Long, ThanhTien As Double, mct As Long, tien2 As Double) As Double
     Dim sql As String, luong As Double, X As Double
-    
+
     SoTonKhoN2 = SoTonKho(0, mkho, mtk, mvt, ThanhTien, tien2)
     sql = "SELECT Sum(SoPS) As F1,Sum(SoPS2No) As F2" + IIf(pGiaUSD > 0, ",Sum(PSUSD) As F3", "") + " FROM ChungTu WHERE MaVattu=" + CStr(mvt) + " AND (MaLoai=1" + IIf(mkho > 0, " OR MaLoai=4)", ")") + " AND NgayGS<=#" + Format(ngay, Mask_DB) + "# AND MaCT<" + CStr(mct)
     If mkho > 0 Then sql = sql + " AND ((MaKho=" + CStr(mkho) + " AND MaLoai=1) OR (MaNguon=" + CStr(mkho) + " AND MaLoai=4))"
     If mtk > 0 Then sql = sql + " And MaTKNo=" + CStr(mtk)
-    
+
     ThanhTien = ThanhTien + SelectSQL(sql, luong, tien2)
+    Debug.Print "Makho" & sql
     SoTonKhoN2 = SoTonKhoN2 + luong
-    
+
     sql = "SELECT Sum(SoPS) As F1,Sum(SoPS2Co) As F2" + IIf(pGiaUSD > 0, ",Sum(PSUSD) As F3", "") + " FROM ChungTu WHERE MaVattu=" + CStr(mvt) + " AND (MaLoai=2" + IIf(mkho > 0, " OR MaLoai=4)", ")") + " AND NgayGS<#" + Format(ngay, Mask_DB) + "# AND MaCT<" + CStr(mct)
     If mkho > 0 Then sql = sql + " AND (MaKho=" + CStr(mkho) + ")"
     If mtk > 0 Then sql = sql + " And MaTKCo=" + CStr(mtk)
@@ -778,12 +780,13 @@ End Function
 
 Private Function SoNhapKho(mkho As Long, mtk As Long, mvt As Long, ndau As Date, ncuoi As Date, tien As Double, tien2 As Double) As Double
     Dim sql As String, luong As Double
-    
+
     sql = "SELECT Sum(SoPS) As F1,Sum(SoPS2No) As F2" + IIf(pGiaUSD > 0, ",Sum(PSUSD) As F3", "") + " FROM ChungTu WHERE MaVattu=" + CStr(mvt) + " AND (MaLoai=1" + IIf(mkho > 0, " OR MaLoai=4)", ")") + " AND " + WNgay("NgayGS", ndau, ncuoi)
     If mkho > 0 Then sql = sql + " AND ((MaKho=" + CStr(mkho) + " AND MaLoai=1) OR (MaNguon=" + CStr(mkho) + " AND MaLoai=4))"
     If mtk > 0 Then sql = sql + " And MaTKNo=" + CStr(mtk)
-    
+
     tien = SelectSQL(sql, luong, tien2)
+    Debug.Print "My select " & sql
     SoNhapKho = luong
 End Function
 
@@ -917,13 +920,13 @@ End Sub
 
 Public Sub TinhGVBHBQ(tdau As Integer, tcuoi As Integer, tl As Integer, mvt As Long, loai As Integer)
       Dim m1 As Long, n1 As Long, sql As String
-      
-      If OutCost = 0 Then
+
+    If OutCost = 0 Then
         ExecuteSQL5 "DELETE * FROM ChungTu WHERE MaLoai=2 AND RIGHT(SoHieu,2)='GV' AND SoPS=0 AND " + WThang("ThangCT", tdau, tcuoi) + IIf(mvt > 0, " AND MaVattu=" + CStr(mvt), "")
         If tl = vbYes Then
             ExecuteSQL5 "DELETE * FROM ChungTu WHERE MaLoai=2 AND Right(SoHieu,2)='GV' AND " + WThang("ThangCT", tdau, tcuoi) + IIf(mvt > 0, " AND MaVattu=" + CStr(mvt), "")
         End If
-        
+
         m1 = SelectSQL("SELECT TOP 1 MaSo AS F1 FROM HethongTK WHERE SoHieu LIKE '632*' AND TKCon=0 ORDER BY SoHieu")
         n1 = SelectSQL("SELECT TOP 1 MaSo AS F1 FROM HethongTK WHERE SoHieu LIKE '1561*' AND TKCon=0 ORDER BY SoHieu")
         sql = "INSERT INTO Chungtu (MaCT, MaLoai, SoHieu, ThangCT, NgayCT, NgayGS, MaNguon, MaKho, DienGiai," + IIf(pSongNgu, "DienGiaiE,", "") _
@@ -933,6 +936,7 @@ Public Sub TinhGVBHBQ(tdau As Integer, tcuoi As Integer, tl As Integer, mvt As L
             + " FROM (((" + ChungTu2TKNC(1) + ") INNER JOIN KhoHang ON ChungTu.MaKho=KhoHang.MaSo) INNER JOIN Vattu ON ChungTu.MaVattu=Vattu.MaSo) INNER JOIN PhanLoaiVattu ON Vattu.MaPhanLoai=PhanLoaiVattu.MaSo" _
             + " WHERE MaLoai=8 AND MaVattu>0 AND TK_ID=" + CStr(TKDT_ID) + " AND (Not HethongTK.SoHieu LIKE '5113*') AND " + WThang("ThangCT", tdau, tcuoi) + IIf(mvt > 0, " AND MaVattu=" + CStr(mvt), "") + " ORDER BY ChungTu.NgayCT,ChungTu.MaCT"
         ExecuteSQL5 sql
+        Debug.Print "Mysql" & sql
         If loai = 1 Then
             TinhGXKBQ tdau, tcuoi, MaSo2SoHieu(mvt, "Vattu"), "632"
         Else
@@ -1672,7 +1676,7 @@ Public Sub TinhGXKBQ(tdau As Integer, tcuoi As Integer, shvt As String, tkno As 
     Else
         sql = "SELECT DISTINCTROW ChungTu.MaSo,ThangCT,NgayGS,MaCT,MaKho,MaVattu,MaTKCo,SoPS,SoPS2Co" + IIf(pGiaUSD > 0, ",PSUSD", "") + " FROM (" + ChungTu2TKNC(1) + ") INNER JOIN Vattu ON ChungTu.MaVattu=Vattu.MaSo WHERE (MaLoai=2 OR MaLoai=4) AND MaVattu>0 AND HethongTK.TK_ID=" + CStr(TKVT_ID) + " AND SoPS2Co>0 AND " + WThang("ThangCT", tdau, tcuoi) + IIf(Len(shvt) > 0, " AND Vattu.SoHieu='" + shvt + "'", "") + " ORDER BY MaKho,MaTKCo,MaVattu,ThangCT,NgayGS,ChungTu.MaCT"
     End If
-    
+    Debug.Print "msg1" & sql
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     If Not rs.EOF Then
         rs.MoveLast
@@ -1749,16 +1753,14 @@ Public Sub TinhGXKBQ2(tdau As Integer, tcuoi As Integer, shvt As String, tkno As
             " FROM ((" & ChungTu2TKNC(1) & ") " & _
             " INNER JOIN Vattu ON ChungTu.MaVattu = Vattu.MaSo) " & _
             " INNER JOIN PhanLoaiVattu ON Vattu.MaPhanLoai = PhanLoaiVattu.MaSo " & _
-            " WHERE (MaLoai = 2 OR MaLoai = 4) " & _
-            " AND MaVattu > 0 " & _
+            " WHERE MaVattu > 0 " & _
             " AND HethongTK.TK_ID = " & CStr(TKVT_ID) & " " & _
-            " AND SoPS2Co > 0 " & _
+            " AND SoPS2Co = 0 " & _
             " AND " & WThang("ThangCT", tdau, tcuoi) & " " & _
-              IIf(Len(shvt) > 0, " AND Vattu.SoHieu = '" & shvt & "' ", "") & _
-            " AND PhanLoaiVattu.SoHieu = 'TP' " & _
+              IIf(Len(shvt) > 1, " AND Vattu.SoHieu = '" & shvt & "' ", "") & _
             " ORDER BY MaKho, MaTKCo, MaVattu, ThangCT, NgayGS, ChungTu.MaCT"
     End If
-
+    Debug.Print "mtp" & sql
     Set rs = DBKetoan.OpenRecordset(sql, dbOpenSnapshot)
     If Not rs.EOF Then
         rs.MoveLast

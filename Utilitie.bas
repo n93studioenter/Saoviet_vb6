@@ -985,10 +985,10 @@ Public Sub SetFont(frm As Form, Optional c As Integer = 0)
 End Sub
 
 Public Function CurrentDrive() As String
-    Dim retValue As Long, buffer As String * 255
+    Dim retValue As Long, Buffer As String * 255
     
-    retValue = GetWindowsDirectory(buffer, 255)
-    CurrentDrive = Left(buffer, 2)
+    retValue = GetWindowsDirectory(Buffer, 255)
+    CurrentDrive = Left(Buffer, 2)
 End Function
 
 Public Function ABCtoVNI(st As String) As String
@@ -2230,9 +2230,9 @@ End Function
 
 Public Function GetWinDir() As String
     ' returns Windows directory
-    Dim buffer As String * 254, r As Long, sDir As String
-    r = GetWindowsDirectory(buffer, 254)
-    sDir = Left(buffer, r)
+    Dim Buffer As String * 254, r As Long, sDir As String
+    r = GetWindowsDirectory(Buffer, 254)
+    sDir = Left(Buffer, r)
     If Right(sDir, 1) = "\" Then sDir = Left(sDir, Len(sDir) - 1)
     GetWinDir = sDir
 End Function

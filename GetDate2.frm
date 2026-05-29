@@ -192,7 +192,7 @@ Private Sub lblClose_Click()
 End Sub
 Private Sub picFakeTitle_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ReleaseCapture
-    SendMessage Me.hWnd, WM_NCLBUTTONDOWN, HTCAPTION, 0
+    SendMessage Me.hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0
 End Sub
 Private Sub lblTitle_MouseDown(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     picFakeTitle_MouseDown Button, Shift, X, Y
@@ -219,6 +219,7 @@ End Sub
 Private Sub MedNgay_GotFocus(Index As Integer)
     AutoSelect MedNgay(Index)
 End Sub
+
 
 Public Sub MedNgay_KeyPress(Index As Integer, KeyAscii As Integer)
     If KeyAscii = 13 Then

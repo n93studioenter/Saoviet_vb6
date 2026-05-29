@@ -1203,7 +1203,7 @@ Private Sub Form_Load()
     Dim urlname As String
     urlname = SelectSQL("select Url AS f1 from  tbInvoiceInfo")
     If urlname = "seller-v2.tendoo.vn" Then
-         
+
     End If
     Dim rsports As Recordset
     Set rsports = DBKetoan.OpenRecordset("select IdNhap AS f1, HoaDon.MaSo,HoaDon.TendoHDid,HoaDon.ThanhTien FROM HoaDon " & _
@@ -1215,7 +1215,7 @@ Private Sub Form_Load()
         ' L?y giá tr? IdNhap
 
         MaSoHd = rsports!MaSo
-        If Not IsNull(rsports!TendoHDid) Then
+        If Not IsNull(rsports!TendoHDid) And rsports!TendoHDid <> "..." Then
             Command1.Caption = "CËp nhËt tr¹ng th¸i"
             Command1.Visible = True
             tendotrangthai = True

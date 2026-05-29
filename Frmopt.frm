@@ -4311,6 +4311,7 @@ Public Sub CheckAndCreateTBInvoiceTemplate()
 End Sub
 Private Sub Form_Load()
     CheckAndCreateTBInvoice
+    Combo1.AddItem "..."
     Combo1.AddItem "vinvoice.viettel.vn"
     Combo1.AddItem "van.ehoadon.vn"
     Combo1.AddItem "admin.vnpt-invoice.com"
@@ -4442,7 +4443,7 @@ ErrorHandler:
 End Function
 Private Sub Dongbotxt()
     Text(0).Text = UnicodeToVni(txtTenCty.Text)
-    Text(2).Text = UnicodeToVni(txtDiachi.Text)
+    Text(2).Text = UnicodeToVni(txtDiaChi.Text)
 End Sub
 Public Function WaitForStatus(ByVal TimeoutSeconds As Integer) As Boolean
     Dim getstatus As Integer
@@ -4468,6 +4469,20 @@ Public Sub Command_Click(Index As Integer)
 
         countAccount = SelectSQL("select count(*) AS f1 from  tbInvoiceInfo")
         If countAccount = 0 Then
+            If Combo1.Text <> "..." Then
+                If txtInvoiceUsername.Text = "" Then
+                    Dim s As String
+                    s = ChrW(86) & ChrW(117) & ChrW(105) & ChrW(32) & ChrW(108) & ChrW(242) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(110) & ChrW(104) & ChrW(7853) & ChrW(112) & ChrW(32) & ChrW(117) & ChrW(115) & ChrW(101) & ChrW(114) & ChrW(110) & ChrW(97) & ChrW(109) & ChrW(101)
+                    MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
+                    Exit Sub
+                End If
+                If txtIncoiePassword.Text = "" Then
+                    s = ChrW(86) & ChrW(117) & ChrW(105) & ChrW(32) & ChrW(108) & ChrW(242) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(110) & ChrW(104) & ChrW(7853) & ChrW(112) & ChrW(32) & ChrW(112) & ChrW(97) & ChrW(115) & ChrW(115) & ChrW(119) & ChrW(111) & ChrW(114) & ChrW(100)
+                    MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
+
+                    Exit Sub
+                End If
+            End If
             If txtInvoiceUsername.Text <> "" Then
                 ExecuteSQL5 "INSERT INTO tbInvoiceInfo (Url, Username, Password) VALUES ('" & _
                             Combo1.Text & "','" & _
@@ -4539,7 +4554,6 @@ Public Sub Command_Click(Index As Integer)
             FThuChi.CheckWindow
 
             If WaitForStatus(15) Then
-                Dim s As String
                 s = ChrW(272) & ChrW(227) & ChrW(32) & ChrW(273) & ChrW(7891) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(98) & ChrW(7897) & ChrW(32) & ChrW(100) & ChrW(7919) & ChrW(32) & ChrW(108) & ChrW(105) & ChrW(7879) & ChrW(117)
                 MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
 
@@ -4907,7 +4921,7 @@ Private Sub LoadInfo()
     txtTenCty.Text = VniToUnicode(pTenCty)
     Text(1).Text = pTenCn
     Text(2).Text = rs!DiaChi
-    txtDiachi.Text = VniToUnicode(rs!DiaChi)
+    txtDiaChi.Text = VniToUnicode(rs!DiaChi)
     Text(3).Text = rs!Tel
     Text(4).Text = rs!Fax
     Text(5).Text = rs!TaiKhoanVN
