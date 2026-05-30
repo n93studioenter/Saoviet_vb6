@@ -3866,6 +3866,7 @@ Private Declare Function WideCharToMultiByte Lib "Kernel32" ( _
                                              ByVal lpUsedDefaultChar As Long) As Long
 
 Private Const CP_UTF8 As Long = 65001
+Public hdmoi As Boolean
 Dim typePS As Integer
 Private hPopup As Long
 Public bodemafter As Integer
@@ -4020,18 +4021,18 @@ Dim SetLoaiEnable As Boolean
 Dim shct As String
 Dim xddu As Boolean
 Dim TenTC As String, DiachiTC As String, ctgoc As String, TenNX As String, DiaChiNX As String, TenBH As String, DiaChiBH As String, MSTBH As String, unc1 As String, unc2 As String, unc3 As String, MaKHBH As Long, HanTT As Date
-Attribute DiachiTC.VB_VarUserMemId = 1073938544
-Attribute ctgoc.VB_VarUserMemId = 1073938544
-Attribute TenNX.VB_VarUserMemId = 1073938544
-Attribute DiaChiNX.VB_VarUserMemId = 1073938544
-Attribute TenBH.VB_VarUserMemId = 1073938544
-Attribute DiaChiBH.VB_VarUserMemId = 1073938544
-Attribute MSTBH.VB_VarUserMemId = 1073938544
-Attribute unc1.VB_VarUserMemId = 1073938544
-Attribute unc2.VB_VarUserMemId = 1073938544
-Attribute unc3.VB_VarUserMemId = 1073938544
-Attribute MaKHBH.VB_VarUserMemId = 1073938544
-Attribute HanTT.VB_VarUserMemId = 1073938544
+Attribute DiachiTC.VB_VarUserMemId = 1073938545
+Attribute ctgoc.VB_VarUserMemId = 1073938545
+Attribute TenNX.VB_VarUserMemId = 1073938545
+Attribute DiaChiNX.VB_VarUserMemId = 1073938545
+Attribute TenBH.VB_VarUserMemId = 1073938545
+Attribute DiaChiBH.VB_VarUserMemId = 1073938545
+Attribute MSTBH.VB_VarUserMemId = 1073938545
+Attribute unc1.VB_VarUserMemId = 1073938545
+Attribute unc2.VB_VarUserMemId = 1073938545
+Attribute unc3.VB_VarUserMemId = 1073938545
+Attribute MaKHBH.VB_VarUserMemId = 1073938545
+Attribute HanTT.VB_VarUserMemId = 1073938545
 Dim HD() As tpHoaDon, hdcount As Integer
 Attribute HD.VB_VarUserMemId = 1073938518
 Attribute hdcount.VB_VarUserMemId = 1073938518
@@ -5914,7 +5915,7 @@ ErrorHandler:
     MsgBox "L?i khi luu file: " & Err.Description, vbExclamation
 End Sub
 Private Function StringToUTF8(str As String) As Byte()
-    Dim buffer() As Byte
+    Dim Buffer() As Byte
     Dim bufferSize As Long
     Dim Result As Long
 
@@ -5922,13 +5923,13 @@ Private Function StringToUTF8(str As String) As Byte()
     bufferSize = WideCharToMultiByte(CP_UTF8, 0, StrPtr(str), Len(str), 0, 0, 0, 0)
 
     If bufferSize > 0 Then
-        ReDim buffer(bufferSize - 1)
+        ReDim Buffer(bufferSize - 1)
 
         ' Chuy?n d?i sang UTF-8
-        Result = WideCharToMultiByte(CP_UTF8, 0, StrPtr(str), Len(str), VarPtr(buffer(0)), bufferSize, 0, 0)
+        Result = WideCharToMultiByte(CP_UTF8, 0, StrPtr(str), Len(str), VarPtr(Buffer(0)), bufferSize, 0, 0)
 
         If Result > 0 Then
-            StringToUTF8 = buffer
+            StringToUTF8 = Buffer
         End If
     End If
 End Function
@@ -7419,7 +7420,7 @@ Private Sub CboThang_DblClick()
     Label(26).Caption = ""
 End Sub
 
-Private Sub CboThang_DragDrop(Source As Control, X As Single, Y As Single)
+Private Sub CboThang_DragDrop(source As Control, X As Single, Y As Single)
     Label(26).Caption = ""
 End Sub
 
@@ -9313,7 +9314,7 @@ Sub In_hoa_don1(sotien As String, i As Integer, k As Integer, xxx As String, sod
             frmMain.Rpt.Formulas(505) = "Lien='" + "Lieân 3: Noäi boä" + "'"
             Dim urlname As String
             urlname = SelectSQL("select Url AS f1 from  tbInvoiceInfo")
-            If urlname <> "seller-v2.tendoo.vn" Then
+            If urlname <> "seller-v2.tendoo.vn" And urlname <> "vinvoice.viettel.vn" Then
                 InBaoCaoRPT pNN
             End If
 
@@ -9321,14 +9322,14 @@ Sub In_hoa_don1(sotien As String, i As Integer, k As Integer, xxx As String, sod
         If CheckBox2.Value = 1 Then
             frmMain.Rpt.Formulas(505) = "Lien='" + "Lieân 2: Giao cho ngöôøi mua  " + "'"
             urlname = SelectSQL("select Url AS f1 from  tbInvoiceInfo")
-            If urlname <> "seller-v2.tendoo.vn" Then
+            If urlname <> "seller-v2.tendoo.vn" And urlname <> "vinvoice.viettel.vn" Then
                 InBaoCaoRPT pNN
             End If
         End If
         If CheckBox1.Value = 1 Then
             frmMain.Rpt.Formulas(505) = "Lien='" + "Lieân 1: Löu " + "'"
             urlname = SelectSQL("select Url AS f1 from  tbInvoiceInfo")
-            If urlname <> "seller-v2.tendoo.vn" Then
+            If urlname <> "seller-v2.tendoo.vn" And urlname <> "vinvoice.viettel.vn" Then
                 InBaoCaoRPT pNN
             End If
         End If
@@ -9797,6 +9798,7 @@ Public Sub Command_Click(Index As Integer)
         autongay = True
         txtNoidung.Text = ""
         MaSoCT = 0
+        hdmoi = True
         CboThang_LostFocus
     End If
 
@@ -11864,7 +11866,7 @@ Private Sub CheckTkThue(MaSo As Long)
 End Sub
 Private Sub Grid2_Click()
     isclicktt = 1
- 
+    hdmoi = False
     Dim clickedRow As Integer
 
     Dim MaCTChon
@@ -12179,6 +12181,7 @@ Public Sub OptLoai_Click(Index As Integer)
     txtchungtu(0).SelStart = 0
     txtchungtu(0).SelLength = Len(txtchungtu(0).Text)
     If Index = 8 Then
+        hdmoi = True
         Dim sql
         sql = "SELECT kyhieu as F1 from hoadon where maso in (select max(maso) from hoadon where maso in (select maso from chungtu where maloai = 8))"
         Dim rs_chungtu As Recordset
@@ -16129,7 +16132,7 @@ Private Sub LayXuatKho(ml As Integer)
     Dim BytesNeeded As Long
     Dim Buffers As Long
     Dim i As Long, st As String, j As Integer, shtk As String, st2 As String, luong As Double, tien As Double, ms As Long, mtk As Long, mv As Long, sl As Double, T As Double
-    Dim buffer(32) As Byte
+    Dim Buffer(32) As Byte
 
     If Len(Dir(pCurDir + "DOWNLOAD.EXE")) = 0 Then Exit Sub
     ChDir Left(pCurDir, Len(pCurDir) - 1)
@@ -16155,11 +16158,11 @@ Private Sub LayXuatKho(ml As Integer)
 
     Buffers = BytesNeeded \ 32
     For i = 0 To Buffers - 1
-        Get #FileNum, , buffer
+        Get #FileNum, , Buffer
         If i = 0 Then
             st = ""
             For j = 0 To 9
-                st = st + Chr(buffer(j))
+                st = st + Chr(Buffer(j))
             Next
             If IsDate(st) Then
                 ngay(0) = CVDate(st)
@@ -16171,9 +16174,9 @@ Private Sub LayXuatKho(ml As Integer)
 
         st = ""
         j = 10
-        Do While buffer(j) <> 32 And j < 32
+        Do While Buffer(j) <> 32 And j < 32
             'If Buffer(j) <> 42 Or pBCode <> 39 Then st = st + Chr(Buffer(j))
-            If buffer(j) <> 42 Then st = st + Chr(buffer(j))
+            If Buffer(j) <> 42 Then st = st + Chr(Buffer(j))
             j = j + 1
         Loop
         'If pBCode <> 39 Then
@@ -16182,8 +16185,8 @@ Private Sub LayXuatKho(ml As Integer)
 
         st2 = ""
         j = 26
-        Do While buffer(j) <> 32 And j < 32
-            st2 = st2 + Chr(buffer(j))
+        Do While Buffer(j) <> 32 And j < 32
+            st2 = st2 + Chr(Buffer(j))
             j = j + 1
         Loop
         luong = Cdbl5(st2)

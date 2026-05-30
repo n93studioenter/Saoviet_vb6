@@ -220,7 +220,7 @@ Begin VB.Form frmMain
          EndProperty
          BeginProperty Panel4 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Style           =   6
-            TextSave        =   "28/05/26"
+            TextSave        =   "29/05/26"
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -2638,7 +2638,7 @@ Attribute gSubMenu.VB_VarUserMemId = 1073938438
 Public gCurrentMenu As Integer
 Attribute gCurrentMenu.VB_VarUserMemId = 1073938439
 
-Private Declare Sub CopyMemory Lib "Kernel32" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal length As Long)
+Private Declare Sub CopyMemory Lib "Kernel32" Alias "RtlMoveMemory" (Destination As Any, source As Any, ByVal length As Long)
 Private Declare Function GetAdaptersInfo Lib "iphlpapi" (lpAdapterInfo As Any, lpSize As Long) As Long
 
 Public Tudongtinhgiavon As Boolean
@@ -4572,6 +4572,7 @@ End Sub
 Private Sub mnviet_Click()
 
 End Sub
+
 
 Public Sub mnVT_Click(Index As Integer)
 

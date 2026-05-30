@@ -704,7 +704,7 @@ Public Sub Command_Click()
     FrmChungtu.CheckBox3 = CheckBox3.Value
     FrmChungtu.checkinbangke.Value = checkinbangke.Value
     FrmChungtu.Checkinbangkevahoadon.Value = Checkinbangkevahoadon.Value
-    If FThuChi.FThuChiForm <> 0 Or countinvoiceinfo = 0 Then
+    If FThuChi.FThuChiForm <> 0 Or countinvoiceinfo = 0 Or FrmChungtu.hdmoi = True Then
         Unload Me
     Else
         'Chi gianh cho viet tel, bkav

@@ -918,6 +918,7 @@ KT:
     Set ct = Nothing
 End Sub
 
+
 Public Sub TinhGVBHBQ(tdau As Integer, tcuoi As Integer, tl As Integer, mvt As Long, loai As Integer)
       Dim m1 As Long, n1 As Long, sql As String
 

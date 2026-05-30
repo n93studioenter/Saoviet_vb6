@@ -572,7 +572,7 @@ Public Sub XoaChungtu()
     End If
     'Thuc hien kiem tra hoa don neu co idtendo thi xoa
     Dim idhd As String
-    idhd = SelectSQL("SELECT TendoHDid AS F1 FROM HoaDon WHERE MaSo=" + CStr(MaSo))
+    idhd = SelectSQL("SELECT IdNhap AS F1 FROM HoaDon WHERE MaSo=" + CStr(MaSo))
     If idhd <> "0" Then
         Dim FilePath As String
         FilePath = App.path & "\\HoaDon\\invoice.txt"

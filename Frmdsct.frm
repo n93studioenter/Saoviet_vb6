@@ -2366,7 +2366,7 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
                                                 "where ChungTu.SoHieu = '" & rs_chungtu!sohieu & "' ", dbOpenSnapshot)
             If Not rsport.EOF Then
                 If Not IsNull(rsport!f1) And rsport!f1 <> "..." And rsport!f1 <> "" Then
-                    LoaiHD = "Portal"
+                    LoaiHD = "Nhap"
                 Else
                     Dim rs_ktra As Recordset
                     Dim Query As String
