@@ -4445,22 +4445,7 @@ Private Sub Dongbotxt()
     Text(0).Text = UnicodeToVni(txtTenCty.Text)
     Text(2).Text = UnicodeToVni(txtDiaChi.Text)
 End Sub
-Public Function WaitForStatus(ByVal TimeoutSeconds As Integer) As Boolean
-    Dim getstatus As Integer
-    Dim StartTime As Single
 
-    StartTime = Timer
-    getstatus = 0
-
-    While getstatus <> 1 And (Timer - StartTime) <= TimeoutSeconds
-        getstatus = CInt(SelectSQL("SELECT Status as f1 FROM tbResponse"))
-        Sleep 500
-        DoEvents
-    Wend
-
-    ' Tr? v? True n?u thành công (Status = 1)
-    WaitForStatus = (getstatus = 1)
-End Function
 Public Sub Command_Click(Index As Integer)
     If Index = 0 Then
 

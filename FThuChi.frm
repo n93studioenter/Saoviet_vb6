@@ -57,7 +57,7 @@ Begin VB.Form FThuChi
       BackColor       =   &H00FFFFFF&
       Caption         =   "Xem ho¸ ®¬n"
       Height          =   195
-      Left            =   4080
+      Left            =   3840
       TabIndex        =   33
       Top             =   2160
       Visible         =   0   'False
@@ -90,23 +90,23 @@ Begin VB.Form FThuChi
    End
    Begin VB.CommandButton Command2 
       BackColor       =   &H0000FF00&
-      Caption         =   "Ph¸t hµnh"
+      Caption         =   "Ph¸t hµnh ho¸ ®¬n"
       Height          =   375
-      Left            =   6000
+      Left            =   5760
       MaskColor       =   &H00FFFFFF&
       Style           =   1  'Graphical
       TabIndex        =   28
       Top             =   2480
       Visible         =   0   'False
-      Width           =   1455
+      Width           =   1695
    End
    Begin VB.CommandButton Command1 
-      BackColor       =   &H000080FF&
-      Caption         =   "L­u nh¸p"
+      BackColor       =   &H000000FF&
+      Caption         =   "Ho¸ ®¬n nh¸p"
       Height          =   375
-      Left            =   4080
+      Left            =   3840
       MaskColor       =   &H00FFFFFF&
-      Style           =   1  'Graphical
+      Picture         =   "FThuChi.frx":57E2
       TabIndex        =   27
       Top             =   2480
       Visible         =   0   'False
@@ -146,7 +146,7 @@ Begin VB.Form FThuChi
          Height          =   8430
          Index           =   0
          Left            =   720
-         Picture         =   "FThuChi.frx":57E2
+         Picture         =   "FThuChi.frx":6C44
          Stretch         =   -1  'True
          Top             =   240
          Width           =   7890
@@ -156,7 +156,7 @@ Begin VB.Form FThuChi
          Height          =   255
          Index           =   1
          Left            =   120
-         Picture         =   "FThuChi.frx":112FF
+         Picture         =   "FThuChi.frx":12761
          Stretch         =   -1  'True
          Top             =   0
          Width           =   255
@@ -281,7 +281,7 @@ Begin VB.Form FThuChi
    Begin VB.CommandButton cmdkh 
       Height          =   375
       Left            =   3360
-      Picture         =   "FThuChi.frx":115BC
+      Picture         =   "FThuChi.frx":12A1E
       Style           =   1  'Graphical
       TabIndex        =   6
       Top             =   2040
@@ -331,7 +331,7 @@ Begin VB.Form FThuChi
       BackColor       =   &H80000013&
       Height          =   375
       Left            =   6360
-      Picture         =   "FThuChi.frx":11A36
+      Picture         =   "FThuChi.frx":12E98
       Style           =   1  'Graphical
       TabIndex        =   7
       Tag             =   "&Save"
@@ -712,7 +712,7 @@ Public Sub Command_Click()
         Command1.Visible = True
         If IdNhap <> "" Then
             Command2.Visible = True
-            Command2.Enabled = False
+            'Command2.Enabled = False
         End If
         'Check3.Visible = True
     End If
@@ -911,6 +911,15 @@ Private Sub Command1_Click()
                 ' Dùng runas v?i trust level th?p hon
                 cmd2 = "runas /trustlevel:0x20000 """ & exePath2 & """"
                 Shell cmd2, vbHide
+
+                ExecuteSQL5 ("UPDATE tbResponse SET Status = 0")
+                If WaitForStatus(15) Then
+
+                    Screen.MousePointer = vbDefault
+                Else
+                    MsgBox "Timeout! Không nh?n du?c Status = 1 sau 10 giây"
+                    Screen.MousePointer = vbDefault
+                End If
             Else
                 MsgBox "L?i khi ghi dè file!", vbExclamation
             End If
@@ -927,7 +936,16 @@ Private Sub Command1_Click()
     ' Dùng runas v?i trust level th?p hon
     cmd = "runas /trustlevel:0x20000 """ & exePath & """"
     Shell cmd, vbHide
-    Screen.MousePointer = vbDefault
+    ExecuteSQL5 ("UPDATE tbResponse SET Status = 0")
+    If WaitForStatus(15) Then
+        Command2.Visible = True
+        Command2.Enabled = True
+        Screen.MousePointer = vbDefault
+    Else
+        MsgBox "Timeout! Không nh?n du?c Status = 1 sau 10 giây"
+        Screen.MousePointer = vbDefault
+    End If
+
     Exit Sub
     DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
 

@@ -2327,6 +2327,7 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
     'lay dieu kien de loc du lieu
 
     chuoidieukien_intoanbo = sql
+    Debug.Print sql
     Dim so_cong As Integer
     so_cong = 0
     sql = " select TOP 500 a.* from (select  tong.* from (" + sql + ") tong) a order by a.NgayGS desc,val(a.sohieu) desc"
@@ -2361,12 +2362,16 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
 
 
             Dim rsport As Recordset
-            Set rsport = DBKetoan.OpenRecordset("select IdNhap AS f1 FROM HoaDon " & _
+            Set rsport = DBKetoan.OpenRecordset("select IdNhap,StatusPH FROM HoaDon " & _
                                                 "inner join ChungTu on HoaDon.MaSo = ChungTu.MaSo " & _
                                                 "where ChungTu.SoHieu = '" & rs_chungtu!sohieu & "' ", dbOpenSnapshot)
             If Not rsport.EOF Then
-                If Not IsNull(rsport!f1) And rsport!f1 <> "..." And rsport!f1 <> "" Then
-                    LoaiHD = "Nhap"
+                If Not IsNull(rsport!IdNhap) And rsport!IdNhap <> "..." And rsport!IdNhap <> "" Then
+                    If rsport!StatusPH = "1" Then
+                        LoaiHD = "PH"
+                    Else
+                        LoaiHD = "HD"
+                    End If
                 Else
                     Dim rs_ktra As Recordset
                     Dim Query As String

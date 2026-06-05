@@ -8,7 +8,7 @@ Attribute VB_Name = "AllCodes"
 'The Barcode() Function will print one character of sBar at a time in a loop
 'To add more Barcode types, just continue to build functions that make the appropriate sBar String
 Option Explicit
-
+Private Declare Sub Sleep Lib "Kernel32" (ByVal dwMilliseconds As Long)
 Private Type IP_ADAPTER_INFO
     Next As Long
     ComboIndex As Long
@@ -111,6 +111,22 @@ Public SL_XXXX As Double
 Dim sBar As String, i0 As Integer, i1 As Integer
 Attribute i0.VB_VarUserMemId = 1073741826
 Attribute i1.VB_VarUserMemId = 1073741826
+Public Function WaitForStatus(ByVal TimeoutSeconds As Integer) As Boolean
+    Dim getstatus As Integer
+    Dim StartTime As Single
+
+    StartTime = Timer
+    getstatus = 0
+
+    While getstatus <> 1 And (Timer - StartTime) <= TimeoutSeconds
+        getstatus = CInt(SelectSQL("SELECT Status as f1 FROM tbResponse"))
+        Sleep 100
+        DoEvents
+    Wend
+
+    ' Tr? v? True n?u thành công (Status = 1)
+    WaitForStatus = (getstatus = 1)
+End Function
 Public Function FileExists(FilePath As String) As Boolean
     On Error GoTo ErrorHandler
 

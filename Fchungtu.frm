@@ -4073,6 +4073,7 @@ Attribute hien_bang_tinh.VB_VarUserMemId = 1073938537
 
 Public tongtientruoc As Double
 Attribute tongtientruoc.VB_VarUserMemId = 1073938538
+Public typehanhdong As Integer
 
 Function Getmonthbynl() As Integer
     Getmonthbynl = bakThangNK
@@ -5915,7 +5916,7 @@ ErrorHandler:
     MsgBox "L?i khi luu file: " & Err.Description, vbExclamation
 End Sub
 Private Function StringToUTF8(str As String) As Byte()
-    Dim Buffer() As Byte
+    Dim buffer() As Byte
     Dim bufferSize As Long
     Dim Result As Long
 
@@ -5923,13 +5924,13 @@ Private Function StringToUTF8(str As String) As Byte()
     bufferSize = WideCharToMultiByte(CP_UTF8, 0, StrPtr(str), Len(str), 0, 0, 0, 0)
 
     If bufferSize > 0 Then
-        ReDim Buffer(bufferSize - 1)
+        ReDim buffer(bufferSize - 1)
 
         ' Chuy?n d?i sang UTF-8
-        Result = WideCharToMultiByte(CP_UTF8, 0, StrPtr(str), Len(str), VarPtr(Buffer(0)), bufferSize, 0, 0)
+        Result = WideCharToMultiByte(CP_UTF8, 0, StrPtr(str), Len(str), VarPtr(buffer(0)), bufferSize, 0, 0)
 
         If Result > 0 Then
-            StringToUTF8 = Buffer
+            StringToUTF8 = buffer
         End If
     End If
 End Function
@@ -7420,7 +7421,7 @@ Private Sub CboThang_DblClick()
     Label(26).Caption = ""
 End Sub
 
-Private Sub CboThang_DragDrop(source As Control, X As Single, Y As Single)
+Private Sub CboThang_DragDrop(Source As Control, X As Single, Y As Single)
     Label(26).Caption = ""
 End Sub
 
@@ -8761,7 +8762,42 @@ Private Sub cmdkh_Click(Index As Integer)
     Me.MousePointer = 0
     RFocus txtshkh(Index)
 End Sub
+Public Sub LoadStatushd()
+    Dim urlname As String
+    urlname = SelectSQL("select Url AS f1 from  tbInvoiceInfo")
+    If urlname = "vinvoice.viettel.vn" Then
+        Dim FilePath As String
+        FilePath = App.path & "\\HoaDon\\invoice.txt"
+        Dim content As String
+        content = "KT"
+        Dim fileNumber As Integer
+        If Not FileExists(FilePath) Then
+            'Loai_thangbd_thangkt
+            Dim iscreate As Boolean
+            iscreate = CreateVersionFile(FilePath, content)
+        Else
+            fileNumber = FreeFile
+            On Error Resume Next
+            Open FilePath For Output As #fileNumber
+            If Err.number = 0 Then
+                Print #fileNumber, content;
+                Close #fileNumber
+                'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+                DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
+                Dim exePath2 As String
+                Dim cmd2 As String
 
+                exePath2 = App.path & "\Tools\Debug\SaovietTax.exe"
+                cmd2 = "runas /trustlevel:0x20000 """ & exePath2 & """"
+                Shell cmd2, vbHide
+
+            Else
+                MsgBox "L?i khi ghi dè file!", vbExclamation
+            End If
+        End If
+    End If
+
+End Sub
 Public Sub CmdPhieu_Click(Index As Integer)
     ngay(0) = CVDate(MedNgay(0).Text)
     ngay(1) = CVDate(MedNgay(1).Text)
@@ -9772,7 +9808,8 @@ Public Sub TuDongNhapKho()
 End Sub
 Public Sub Command_Click(Index As Integer)
 
-'bak nhapid
+    typehanhdong = Index
+    'bak nhapid
     If Index = 1 Then
         Dim rsport As Recordset
         Set rsport = DBKetoan.OpenRecordset("select IdNhap AS f1 FROM HoaDon " & _
@@ -10616,22 +10653,23 @@ Private Sub danh_sach_chung_tu()
 End Sub
 
 Private Sub Command3_Click()
-' FBcKt.txtShTk(0).Text = txtShTk(0).Text
-' FBcKt.txtShVT(0).Text = txtShVT(0).Text
-' FBcKt.OptBC(0).Value = OptBC(0).Value
-' FBcKt.OptBC(100).Value = OptBC(100).Value
-' FBcKt.OptBC(12).Value = OptBC(12).Value
-' FBcKt.CboThang(0).Text = CboThang1(1).Text
-' FBcKt.CboThang(1).Text = CboThang1(2).Text
-' FBcKt.OptBC(36).Value = OptBC(36).Value
-' FBcKt.OptTG(0).Value = True
-' FBcKt.txtshkh(0).Text = txtshkh(0).Text
-' FBcKt.txtshkh_LostFocus (0)
-' 'FBcKt.txtShTk(0).tag = txtShTk(0).tag
-' FBcKt.txtShTk_LostFocus (0)
-' FBcKt.txtShVT_LostFocus (0)
-' 'FBcKt.txtShVT(0).tag = 1
-' FBcKt.Command_Click (0)
+    MsgBox txtShVT(0).tag
+    ' FBcKt.txtShTk(0).Text = txtShTk(0).Text
+    ' FBcKt.txtShVT(0).Text = txtShVT(0).Text
+    ' FBcKt.OptBC(0).Value = OptBC(0).Value
+    ' FBcKt.OptBC(100).Value = OptBC(100).Value
+    ' FBcKt.OptBC(12).Value = OptBC(12).Value
+    ' FBcKt.CboThang(0).Text = CboThang1(1).Text
+    ' FBcKt.CboThang(1).Text = CboThang1(2).Text
+    ' FBcKt.OptBC(36).Value = OptBC(36).Value
+    ' FBcKt.OptTG(0).Value = True
+    ' FBcKt.txtshkh(0).Text = txtshkh(0).Text
+    ' FBcKt.txtshkh_LostFocus (0)
+    ' 'FBcKt.txtShTk(0).tag = txtShTk(0).tag
+    ' FBcKt.txtShTk_LostFocus (0)
+    ' FBcKt.txtShVT_LostFocus (0)
+    ' 'FBcKt.txtShVT(0).tag = 1
+    ' FBcKt.Command_Click (0)
     FBcTC.Form_Load
     DoEvents
     FBcKt.txtShTk(0).Text = txtShTk(0).Text
@@ -10650,6 +10688,8 @@ Private Sub Command3_Click()
     'FBcKt.txtShTk(0).tag = txtShTk(0).tag
     FBcKt.txtShTk_LostFocus (0)
     FBcKt.txtShVT_LostFocus (0)
+
+    MsgBox txtShVT(0).tag
     'FBcKt.txtShVT(0).tag = 1
     If OptVAT(5).Value = True Or OptVAT(3).Value = True Or OptVAT(4).Value = True Then
         FBcTC.OptVAT(5).Value = OptVAT(5).Value
@@ -10661,6 +10701,8 @@ Private Sub Command3_Click()
 
         FBcTC.Command_Click (0)
     Else
+
+        MsgBox txtShVT(0).tag
         FBcKt.Command_Click (0)
     End If
 
@@ -12134,6 +12176,9 @@ End Sub
 
 
 Public Sub OptLoai_Click(Index As Integer)
+    If Index = 8 Then
+        LoadStatushd
+    End If
     If Index = 4 Then
         Command10(1).Visible = True
         Command10(0).Visible = False
@@ -16132,7 +16177,7 @@ Private Sub LayXuatKho(ml As Integer)
     Dim BytesNeeded As Long
     Dim Buffers As Long
     Dim i As Long, st As String, j As Integer, shtk As String, st2 As String, luong As Double, tien As Double, ms As Long, mtk As Long, mv As Long, sl As Double, T As Double
-    Dim Buffer(32) As Byte
+    Dim buffer(32) As Byte
 
     If Len(Dir(pCurDir + "DOWNLOAD.EXE")) = 0 Then Exit Sub
     ChDir Left(pCurDir, Len(pCurDir) - 1)
@@ -16158,11 +16203,11 @@ Private Sub LayXuatKho(ml As Integer)
 
     Buffers = BytesNeeded \ 32
     For i = 0 To Buffers - 1
-        Get #FileNum, , Buffer
+        Get #FileNum, , buffer
         If i = 0 Then
             st = ""
             For j = 0 To 9
-                st = st + Chr(Buffer(j))
+                st = st + Chr(buffer(j))
             Next
             If IsDate(st) Then
                 ngay(0) = CVDate(st)
@@ -16174,9 +16219,9 @@ Private Sub LayXuatKho(ml As Integer)
 
         st = ""
         j = 10
-        Do While Buffer(j) <> 32 And j < 32
+        Do While buffer(j) <> 32 And j < 32
             'If Buffer(j) <> 42 Or pBCode <> 39 Then st = st + Chr(Buffer(j))
-            If Buffer(j) <> 42 Then st = st + Chr(Buffer(j))
+            If buffer(j) <> 42 Then st = st + Chr(buffer(j))
             j = j + 1
         Loop
         'If pBCode <> 39 Then
@@ -16185,8 +16230,8 @@ Private Sub LayXuatKho(ml As Integer)
 
         st2 = ""
         j = 26
-        Do While Buffer(j) <> 32 And j < 32
-            st2 = st2 + Chr(Buffer(j))
+        Do While buffer(j) <> 32 And j < 32
+            st2 = st2 + Chr(buffer(j))
             j = j + 1
         Loop
         luong = Cdbl5(st2)

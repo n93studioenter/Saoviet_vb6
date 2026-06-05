@@ -572,8 +572,8 @@ Public Sub XoaChungtu()
     End If
     'Thuc hien kiem tra hoa don neu co idtendo thi xoa
     Dim idhd As String
-    idhd = SelectSQL("SELECT IdNhap AS F1 FROM HoaDon WHERE MaSo=" + CStr(MaSo))
-    If idhd <> "0" Then
+    idhd = SelectSQL("SELECT IdNhap AS F1 FROM HoaDon WHERE MaSo=" & CStr(MaSo) & " AND StatusPH='0'")
+    If idhd <> "0" And FrmChungtu.typehanhdong = 2 Then
         Dim FilePath As String
         FilePath = App.path & "\\HoaDon\\invoice.txt"
         Dim content As String
@@ -594,6 +594,13 @@ Public Sub XoaChungtu()
             Else
                 MsgBox "L?i khi ghi dè file!", vbExclamation
             End If
+            Dim exePath2 As String
+            Dim cmd2 As String
+
+            exePath2 = App.path & "\Tools\Debug\SaovietTax.exe"
+            ' Dùng runas v?i trust level th?p hon
+            cmd2 = "runas /trustlevel:0x20000 """ & exePath2 & """"
+            Shell cmd2, vbHide
         End If
     End If
     ExecuteSQL5 "DELETE FROM HoaDon WHERE MaSo=" + CStr(MaSo)

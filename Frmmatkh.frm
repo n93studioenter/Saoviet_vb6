@@ -805,6 +805,38 @@ SaiMK:
     rs_mk.Close
     Set rs_mk = Nothing
 End Function
+Public Sub GhiChutxt(ByVal content As Integer)
+    Dim FilePath As String
+    FilePath = App.path & "\\Hoadon\\status.txt"
+
+    Dim FileNum As Integer
+    FileNum = FreeFile  ' L?y s? file tr?ng
+
+    Dim lineText As String
+    Dim allText As String
+
+    ' M? file d? d?c
+    Open FilePath For Input As #FileNum
+
+    ' Ð?c t?ng dòng d?n h?t file
+    Do Until EOF(FileNum)
+        Line Input #FileNum, lineText
+        allText = allText & lineText & vbCrLf  ' N?i dòng và xu?ng dòng
+    Loop
+
+    ' Ðóng file
+    Close #FileNum
+
+    ' M? file d? ghi dè n?i dung
+    FileNum = FreeFile    ' L?y l?i s? file tr?ng
+
+    ' M? file d? ghi
+    Open FilePath For Output As #FileNum
+    Print #FileNum, content  ' Ghi n?i dung m?i (tham s? integer) vào file
+
+    ' Ðóng file
+    Close #FileNum
+End Sub
 Private Sub Command_Click(Index As Integer)
     If Index = 1 Then
         Unload Me
