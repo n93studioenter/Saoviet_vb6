@@ -762,6 +762,15 @@ Begin VB.Form FrmTaikhoan
       _ExtentY        =   1296
       _StockProps     =   77
       BackColor       =   16777215
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "VK Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Rows            =   10
       Cols            =   5
       FixedRows       =   0
@@ -781,6 +790,15 @@ Begin VB.Form FrmTaikhoan
       _ExtentY        =   1296
       _StockProps     =   77
       BackColor       =   16777215
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "VK Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Rows            =   10
       Cols            =   4
       FixedRows       =   0
@@ -1201,7 +1219,7 @@ End Sub
 ' Thªm, Ghi, Xãa tµi kho¶n
 '======================================================================================
 Private Sub Command_Click(Index As Integer)
-    Dim i As Integer, cap As Integer, Length As Integer, j As Integer
+    Dim i As Integer, cap As Integer, length As Integer, j As Integer
     Dim capnhatsodu As Boolean, taikhoan As New ClsTaikhoan
     Dim rs_tk As Recordset, tail As String
     
@@ -1239,16 +1257,16 @@ Private Sub Command_Click(Index As Integer)
                 Set rs_tk = DBKetoan.OpenRecordset("SELECT Top 1 HeThongTK.SoHieu FROM HethongTK" _
                     & " WHERE TkCha0=" + CStr(TkNhap.MaSo) + " AND MaNT<=0 ORDER BY SoHieu DESC", dbOpenSnapshot)
                 If rs_tk.recordCount > 0 Then
-                    Length = Len(rs_tk!sohieu)
+                    length = Len(rs_tk!sohieu)
                     On Error Resume Next
-                    tail = CStr(CInt5(Right(rs_tk!sohieu, Length - Len(TkNhap.sohieu))) + 1)
+                    tail = CStr(CInt5(Right(rs_tk!sohieu, length - Len(TkNhap.sohieu))) + 1)
                     On Error GoTo 0
                 Else
-                    Length = Len(TkNhap.sohieu) + 2
+                    length = Len(TkNhap.sohieu) + 2
                 End If
                 rs_tk.Close
                 Set rs_tk = Nothing
-                Do While Len(TkNhap.sohieu + tail) < Length
+                Do While Len(TkNhap.sohieu + tail) < length
                     tail = "0" + tail
                 Loop
                 txt(0).Text = TkNhap.sohieu + tail
@@ -1300,8 +1318,8 @@ Private Sub Command_Click(Index As Integer)
                         If OtlTk.HasSubItems(i) Then
                              i = i + 1
                              cap = OtlTk.indent(i)
-                             Length = Len(TkNhap.sohieu)
-                             Do While (OtlTk.indent(i) >= cap Or TkNhap.cap = 1) And (TkNhap.sohieu > Left(OtlTk.List(i), Length) And (i < OtlTk.ListCount - 1))
+                             length = Len(TkNhap.sohieu)
+                             Do While (OtlTk.indent(i) >= cap Or TkNhap.cap = 1) And (TkNhap.sohieu > Left(OtlTk.List(i), length) And (i < OtlTk.ListCount - 1))
                                  i = i + 1
                              Loop
                              If i = OtlTk.ListCount - 1 And (TkNhap.cap = OtlTk.indent(i) Or TkNhap.cap = 1) Then i = i + 1
@@ -1425,12 +1443,11 @@ End Sub
 Private Sub lblClose_Click()
     Unload Me
 End Sub
-Private Sub txtName_Change()
-    txt(1).Text = UnicodeToVni(txtName.Text)
-End Sub
-Private Sub txtDienGiai_Change()
+
+Private Sub txtDienGiai_KeyUp(KeyCode As MSForms.ReturnInteger, Shift As Integer)
     txt(3).Text = UnicodeToVni(txtDiengiai.Text)
 End Sub
+
 Private Sub Form_Load()
 
     lblTitle(11).AutoSize = True
@@ -1895,7 +1912,7 @@ End Function
 ' Thu tuc dua ra man hinh cua so chon tµi kho¶n
 '====================================================================================================
 Public Function ChonTk(sh As String) As String
-    Dim i As Integer, j As Integer, pos As Integer, shtk As String, Length As Integer
+    Dim i As Integer, j As Integer, pos As Integer, shtk As String, length As Integer
     Dim loai As Long, count As Integer
     Dim item(1 To max_level) As Long
     
@@ -1908,13 +1925,13 @@ Public Function ChonTk(sh As String) As String
             i = 0
             j = OtlTk.ListCount - 1
             pos = 0
-            Length = Len(sh)
+            length = Len(sh)
             Do While i < j - 1
                 pos = (i + j) / 2
-                shtk = Left(OtlTk.List(pos), Length)
+                shtk = Left(OtlTk.List(pos), length)
                 If sh = shtk Then
                     i = pos - 1
-                    Do While (sh = Left(OtlTk.List(i), Length)) And (i > 0)
+                    Do While (sh = Left(OtlTk.List(i), length)) And (i > 0)
                         i = i - 1
                     Loop
                     pos = i + 1
@@ -1930,9 +1947,9 @@ Public Function ChonTk(sh As String) As String
                 count = 0
                 i = pos
                 Do Until OtlTk.IsItemVisible(i)
-                    Length = OtlTk.indent(i)
+                    length = OtlTk.indent(i)
                     j = i - 1
-                    Do While OtlTk.indent(j) >= Length
+                    Do While OtlTk.indent(j) >= length
                         j = j - 1
                     Loop
                     count = count + 1
@@ -1971,3 +1988,6 @@ End Sub
 
 
 
+Private Sub txtName_KeyUp(KeyCode As MSForms.ReturnInteger, Shift As Integer)
+    txt(1).Text = UnicodeToVni(txtName.Text)
+End Sub

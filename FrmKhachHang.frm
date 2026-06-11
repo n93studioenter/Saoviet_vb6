@@ -819,15 +819,15 @@ Public Sub Command_Click(Index As Integer)
 
     Select Case Index
     Case 0:
-        txtVT(0).Text = SoHieuVTMoi(CboLoai.ItemData(CboLoai.ListIndex), 2)
+        TxtVT(0).Text = SoHieuVTMoi(CboLoai.ItemData(CboLoai.ListIndex), 2)
         For i = 1 To 9
-            txtVT(i).Text = "..."
+            TxtVT(i).Text = "..."
         Next
         txtName.Text = ""
         txtDiaChi.Text = ""
 
         CboNT.ListIndex = 0
-        RFocus txtVT(0)
+        RFocus TxtVT(0)
         ThemMoi = 1
     Case 1:
         Select Case ThemMoi
@@ -875,7 +875,7 @@ Public Sub Command_Click(Index As Integer)
 
             Else
                 ErrMsg er_SoHieu
-                vt.InitKhachHangSohieu txtVT(0).Text
+                vt.InitKhachHangSohieu TxtVT(0).Text
                 If vt.MaPhanLoai = CboLoai.ItemData(CboLoai.ListIndex) Then
                     SetListIndex LstVt, vt.MaSo
                 End If
@@ -893,7 +893,7 @@ Public Sub Command_Click(Index As Integer)
                     LstVt.List(LstVt.ListIndex) = okh.sohieu + Chr(9) + okh.Ten
                 End If
             Else
-                vt.InitKhachHangSohieu txtVT(0).Text
+                vt.InitKhachHangSohieu TxtVT(0).Text
                 ErrMsg er_SoHieu
                 If vt.MaPhanLoai = CboLoai.ItemData(CboLoai.ListIndex) Then SetListIndex LstVt, vt.MaSo
             End If
@@ -965,7 +965,7 @@ Private Sub Form_Activate()
     If xT = 1 Then
         If xSH <> "" Then SetListIndex CboLoai, LayMaPhanLoai(xSH, "KhachHang")
         Command_Click 0
-        txtVT(0).Text = xSH
+        TxtVT(0).Text = xSH
     End If
 End Sub
 
@@ -1006,6 +1006,11 @@ End Sub
 Private Sub lblClose_Click()
     Unload Me
 End Sub
+
+Private Sub txtDiaChi_KeyUp(KeyCode As MSForms.ReturnInteger, Shift As Integer)
+ TxtVT(2).Text = UnicodeToVni(txtDiaChi.Text)
+End Sub
+
 Private Sub txtName_GotFocus()
     With txtName
         .SelStart = 0
@@ -1019,20 +1024,19 @@ Private Sub txtDiaChi_GotFocus()
     End With
 End Sub
 
-Private Sub txtName_Change()
-    txtVT(1).Text = UnicodeToVni(txtName.Text)
-End Sub
-Private Sub txtDiaChi_Change()
-    txtVT(2).Text = UnicodeToVni(txtDiaChi.Text)
-End Sub
 Private Sub txtGhichu_Change()
-    txtVT(9).Text = UnicodeToVni(txtGhiChu.Text)
+    TxtVT(9).Text = UnicodeToVni(txtGhiChu.Text)
 End Sub
 Private Sub txtDaiDien_Change()
-    txtVT(7).Text = UnicodeToVni(txtDaiDien.Text)
+    TxtVT(7).Text = UnicodeToVni(txtDaiDien.Text)
 End Sub
+
+Private Sub txtName_KeyUp(KeyCode As MSForms.ReturnInteger, Shift As Integer)
+  TxtVT(1).Text = UnicodeToVni(txtName.Text)
+End Sub
+
 Private Sub txtTK_Change()
-    txtVT(8).Text = UnicodeToVni(txtTK.Text)
+    TxtVT(8).Text = UnicodeToVni(txtTK.Text)
 End Sub
 
 '======================================================================================
@@ -1084,23 +1088,23 @@ End Sub
 Private Sub ShowChitiet(otk As ClsKhachHang)
     Dim n As Double, c As Double, nt As Double
     
-    txtVT(0).Text = okh.sohieu
-    txtVT(1).Text = okh.Ten
+    TxtVT(0).Text = okh.sohieu
+    TxtVT(1).Text = okh.Ten
     txtName.Text = VniToUnicode(okh.Ten)
     
-    txtVT(2).Text = okh.DiaChi
+    TxtVT(2).Text = okh.DiaChi
     txtDiaChi.Text = VniToUnicode(okh.DiaChi)
-    txtVT(3).Text = okh.mst
-    txtVT(4).Text = okh.Tel
-    txtVT(5).Text = okh.Fax
-    txtVT(6).Text = okh.email
-    txtVT(7).Text = okh.DaiDien
+    TxtVT(3).Text = okh.mst
+    TxtVT(4).Text = okh.Tel
+    TxtVT(5).Text = okh.Fax
+    TxtVT(6).Text = okh.email
+    TxtVT(7).Text = okh.DaiDien
     txtDaiDien.Text = VniToUnicode(okh.DaiDien)
-    txtVT(8).Text = okh.taikhoan
+    TxtVT(8).Text = okh.taikhoan
     txtTK.Text = VniToUnicode(okh.taikhoan)
-    txtVT(9).Text = okh.GhiChu
+    TxtVT(9).Text = okh.GhiChu
     txtGhiChu.Text = VniToUnicode(okh.GhiChu)
-    txtVT(10).Text = Format(okh.DuMax, Mask_0)
+    TxtVT(10).Text = Format(okh.DuMax, Mask_0)
     SetListIndex CboNT, okh.MaNT
     okh.SoDuKH ThangCuoiNamTC, n, c, nt
     If n - c >= 0 Then
@@ -1186,17 +1190,17 @@ Public Function KiemTraSoLieu() As Boolean
 With okh
     If ThemMoi = 1 Then .MaSo = 0
     .MaPhanLoai = CboLoai.ItemData(CboLoai.ListIndex)
-    .sohieu = txtVT(0).Text
-    .Ten = txtVT(1).Text
-    .DiaChi = txtVT(2).Text
-    .mst = txtVT(3).Text
-    .Tel = txtVT(4).Text
-    .Fax = txtVT(5).Text
-    .email = txtVT(6).Text
-    .DaiDien = txtVT(7).Text
-    .taikhoan = txtVT(8).Text
-    .GhiChu = txtVT(9).Text
-    .DuMax = Cdbl5(txtVT(10).Text)
+    .sohieu = TxtVT(0).Text
+    .Ten = TxtVT(1).Text
+    .DiaChi = TxtVT(2).Text
+    .mst = TxtVT(3).Text
+    .Tel = TxtVT(4).Text
+    .Fax = TxtVT(5).Text
+    .email = TxtVT(6).Text
+    .DaiDien = TxtVT(7).Text
+    .taikhoan = TxtVT(8).Text
+    .GhiChu = TxtVT(9).Text
+    .DuMax = Cdbl5(TxtVT(10).Text)
     .MaNT = CboNT.ItemData(CboNT.ListIndex)
     If .mst <> "..." And SelectSQL("SELECT MaSo AS F1 FROM KhachHang WHERE MST='" + .mst + "' AND MaSo<>" + CStr(.MaSo)) > 0 Then
        ' If MsgBox("M∑ sË thu’ Æ∑ c„, cho ph–p nhÀp?", vbYesNo + vbCritical, App.ProductName) = vbNo Then Exit Function
@@ -1250,24 +1254,24 @@ Private Sub txtF_GotFocus()
 End Sub
 
 Private Sub Txtvt_GotFocus(Index As Integer)
-    AutoSelect txtVT(Index)
+    AutoSelect TxtVT(Index)
 End Sub
 
 Private Sub TxtVT_KeyPress(Index As Integer, KeyAscii As Integer)
     Select Case Index
         Case 0: If KeyAscii = 32 Or KeyAscii = 35 Or KeyAscii = 39 Or KeyAscii = 42 Then KeyAscii = 0
-        Case 10, 11, 12: KeyProcess txtVT(Index), KeyAscii
+        Case 10, 11, 12: KeyProcess TxtVT(Index), KeyAscii
     End Select
 End Sub
 
 Private Sub TxtVT_LostFocus(Index As Integer)
     Select Case Index
         Case 0:
-            txtVT(0).Text = UCase(txtVT(0).Text)
+            TxtVT(0).Text = UCase(TxtVT(0).Text)
         Case 1, 2, 3, 4, 5, 6, 7, 8, 9:
-            If Len(txtVT(Index).Text) = 0 Then txtVT(Index).Text = "..."
+            If Len(TxtVT(Index).Text) = 0 Then TxtVT(Index).Text = "..."
         Case 10, 11, 12:
-            txtVT(Index).Text = Format(txtVT(Index).Text, Mask_2)
+            TxtVT(Index).Text = Format(TxtVT(Index).Text, Mask_2)
     End Select
 End Sub
 

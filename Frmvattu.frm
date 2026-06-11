@@ -2498,16 +2498,9 @@ End Sub
 ' Khoi tao form
 '======================================================================================
 
-Private Sub txtTen_Change()
-    TxtVT(1).Text = UnicodeToVni(txtTen.Text)
-End Sub
 Private Sub txtDVT_Change()
     TxtVT(2).Text = UnicodeToVni(txtDVT.Text)
 End Sub
-Private Sub txtGhichu_Change()
-    TxtVT(6).Text = UnicodeToVni(txtGhiChu.Text)
-End Sub
-
 Private Sub Form_Load()
     Dim countinvoiceinfo As Integer
     countinvoiceinfo = SelectSQL("select count(*) AS f1 from  tbInvoiceInfo")
@@ -2909,6 +2902,11 @@ Private Sub SSCmdF_Click()
     End If
     Me.MousePointer = 0
 End Sub
+
+Private Sub txtGhiChu_KeyUp(KeyCode As MSForms.ReturnInteger, Shift As Integer)
+ TxtVT(6).Text = UnicodeToVni(txtGhiChu.Text)
+End Sub
+
 Private Sub txtSearch_Change()
     txtF.Text = UnicodeToVni(txtSearch.Text)
 End Sub
@@ -2940,8 +2938,12 @@ txtsoluong.SelLength = Len(txthandung.Text)
 End Sub
 
 Private Sub txtsoluong_LostFocus()
-txtsoluong.SelStart = 0
-txtsoluong.SelLength = Len(txthandung.Text)
+    txtsoluong.SelStart = 0
+    txtsoluong.SelLength = Len(txthandung.Text)
+End Sub
+
+Private Sub txtTen_KeyUp(KeyCode As MSForms.ReturnInteger, Shift As Integer)
+TxtVT(1).Text = UnicodeToVni(txtTen.Text)
 End Sub
 
 Private Sub TxtVT_Change(Index As Integer)

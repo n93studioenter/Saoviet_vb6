@@ -11615,12 +11615,14 @@ Private Sub tmAfterClick_Timer()
 
 End Sub
 
-Private Sub txtNoidung_Change()
+'Private Sub txtNoidung_Change()
+' txt(1).Text = UnicodeToVni(txtNoidung.Text)
+'End Sub
+Private Sub txtNoidung_KeyUp(KeyCode As MSForms.ReturnInteger, Shift As Integer)
     txt(1).Text = UnicodeToVni(txtNoidung.Text)
 End Sub
-
-
  
+
 
 'Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
 'If Button = 2 Then PopupMenu mnPU
@@ -15929,6 +15931,8 @@ Private Function CoPSTK(shtk As String, Optional loaips As Integer = 0, Optional
     End With
 
 End Function
+
+
 
 Private Sub txtsh_GotFocus(Index As Integer)
     AutoSelect txtsh(Index)

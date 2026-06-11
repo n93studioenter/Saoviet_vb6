@@ -695,7 +695,7 @@ Private Sub cboThang_Click()
         tcuoi = IIf(pThangDauKy > 1, pThangDauKy - 1, 12)
     End If
     
-    txtVT(4).Text = Format(dk, Mask_0)
+    TxtVT(4).Text = Format(dk, Mask_0)
     nvl = tp.SoCPNVL(thang, tcuoi) + tp.SoCPNVLPB(thang, tcuoi)
     LbCP(0).Caption = Format(nvl, Mask_0)
     nC = tp.SoCPNC(thang, tcuoi) + tp.SoCPNCPB(thang, tcuoi)
@@ -734,23 +734,23 @@ Private Sub Command_Click(Index As Integer)
     
     Select Case Index
         Case 0:
-            txtVT(0).Text = SoHieuVTMoi(CboLoai.ItemData(CboLoai.ListIndex), 1)
-            txtVT(1).Text = ""
+            TxtVT(0).Text = SoHieuVTMoi(CboLoai.ItemData(CboLoai.ListIndex), 1)
+            TxtVT(1).Text = ""
             
-            RFocus txtVT(0)
+            RFocus TxtVT(0)
             ThemMoi = 1
         Case 1:
             Select Case ThemMoi
                 Case 1:
                     If Not KiemTraSoLieu Then GoTo XongVT
                     If tp.GhiTP = 0 Then
-                        tp.GhiDK Cdbl5(txtVT(4).Text)
+                        tp.GhiDK Cdbl5(TxtVT(4).Text)
                         LstVt.AddItem tp.sohieu + Chr(9) + tp.TenVattu
                         LstVt.ItemData(LstVt.NewIndex) = tp.MaSo
                         LstVt.ListIndex = LstVt.NewIndex
                     Else
                         ErrMsg er_SoHieu
-                        vt.InitTPSohieu txtVT(0).Text
+                        vt.InitTPSohieu TxtVT(0).Text
                         If vt.MaPhanLoai = CboLoai.ItemData(CboLoai.ListIndex) Then
                             SetListIndex LstVt, vt.MaSo
                         End If
@@ -761,7 +761,7 @@ Private Sub Command_Click(Index As Integer)
                     If Not KiemTraSoLieu Then GoTo XongVT
                     
                     If tp.SuaTP = 0 Then
-                        tp.GhiDK Cdbl5(txtVT(4).Text)
+                        tp.GhiDK Cdbl5(TxtVT(4).Text)
                         If doiloai = 1 Then
                             CboLoai_Click
                             doiloai = 0
@@ -769,7 +769,7 @@ Private Sub Command_Click(Index As Integer)
                             LstVt.List(LstVt.ListIndex) = tp.sohieu + Chr(9) + tp.TenVattu
                         End If
                     Else
-                        vt.InitTPSohieu txtVT(0).Text
+                        vt.InitTPSohieu TxtVT(0).Text
                         ErrMsg er_SoHieu
                         If vt.MaPhanLoai = CboLoai.ItemData(CboLoai.ListIndex) Then SetListIndex LstVt, vt.MaSo
                     End If
@@ -831,21 +831,19 @@ Private Sub lblClose_Click()
 End Sub
 Private Sub picFakeTitle_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ReleaseCapture
-    SendMessage Me.hWnd, WM_NCLBUTTONDOWN, HTCAPTION, 0
+    SendMessage Me.hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0
 End Sub
 Private Sub lblTitle_MouseDown(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     picFakeTitle_MouseDown Button, Shift, X, Y
 End Sub
-Private Sub txtName_Change()
-    txtVT(1).Text = UnicodeToVni(txtName.Text)
-End Sub
-Private Sub txtDonVi_Change()
-    txtVT(2).Text = UnicodeToVni(txtDonVi.Text)
-End Sub
-Private Sub txtGhichu_Change()
-    txtVT(3).Text = UnicodeToVni(txtGhiChu.Text)
+
+Private Sub txtGhiChu_KeyUp(KeyCode As MSForms.ReturnInteger, Shift As Integer)
+TxtVT(3).Text = UnicodeToVni(txtGhiChu.Text)
 End Sub
 
+Private Sub txtDonVi_Change()
+    TxtVT(2).Text = UnicodeToVni(txtDonVi.Text)
+End Sub
 Private Sub Form_Load()
     lblTitle(11).AutoSize = True
     Me.Height = Me.Height + 350 + 10
@@ -891,12 +889,12 @@ End Sub
 '======================================================================================
 Private Sub ShowChitiet(tp As Cls154)
 
-    txtVT(0).Text = tp.sohieu
-    txtVT(1).Text = tp.TenVattu
+    TxtVT(0).Text = tp.sohieu
+    TxtVT(1).Text = tp.TenVattu
     txtName.Text = VniToUnicode(tp.TenVattu)
-    txtVT(2).Text = tp.DonVi
+    TxtVT(2).Text = tp.DonVi
     txtDonVi.Text = VniToUnicode(tp.DonVi)
-    txtVT(3).Text = tp.GhiChu
+    TxtVT(3).Text = tp.GhiChu
     txtGhiChu.Text = VniToUnicode(tp.GhiChu)
     TK.InitTaikhoanMaSo tp.MaTK
     txtShTk(0).Text = TK.sohieu
@@ -911,7 +909,7 @@ End Sub
 '======================================================================================
 Public Function ChonTP(sh As String) As String
     Dim mpl As Long, shtk As String
-    Dim j As Integer, i As Integer, pos As Integer, Length As Integer
+    Dim j As Integer, i As Integer, pos As Integer, length As Integer
     
     If Len(sh) > 0 Then
         shtk = "SELECT DISTINCTROW TOP 1 MaPhanLoai AS F1 FROM TP154 WHERE SoHieu LIKE '" + sh + "*' ORDER BY SoHieu"
@@ -922,13 +920,13 @@ Public Function ChonTP(sh As String) As String
          i = 0
          j = LstVt.ListCount - 1
          pos = 0
-         Length = Len(sh)
+         length = Len(sh)
          Do While i <= j - 1
                 pos = Fix(0.5 + (i + j) / 2)
-                shtk = Left(LstVt.List(pos), Length)
+                shtk = Left(LstVt.List(pos), length)
                 If sh = shtk Then
                     i = pos - 1
-                    Do While (sh = Left(LstVt.List(i), Length)) And (i > 0)
+                    Do While (sh = Left(LstVt.List(i), length)) And (i > 0)
                         i = i - 1
                     Loop
                     pos = i + 1
@@ -972,21 +970,21 @@ End Sub
 Private Function KiemTraSoLieu() As Boolean
     KiemTraSoLieu = False
     
-    If Len(txtVT(0).Text) = 0 Then
+    If Len(TxtVT(0).Text) = 0 Then
         ErrMsg er_SoHieu
-        RFocus txtVT(0)
+        RFocus TxtVT(0)
         Exit Function
     End If
     
-    If Len(txtVT(1).Text) = 0 Then
+    If Len(TxtVT(1).Text) = 0 Then
         ErrMsg er_Ten
-        RFocus txtVT(1)
+        RFocus TxtVT(1)
         Exit Function
     End If
     
-    If Len(txtVT(2).Text) = 0 Then
+    If Len(TxtVT(2).Text) = 0 Then
         MsgBox "ThiÕu ®¬n vÞ tÝnh!", vbExclamation, App.ProductName
-        RFocus txtVT(2)
+        RFocus TxtVT(2)
         Exit Function
     End If
     
@@ -997,10 +995,10 @@ Private Function KiemTraSoLieu() As Boolean
 With tp
     If ThemMoi = 1 Then .MaSo = 0
     .MaPhanLoai = CboLoai.ItemData(CboLoai.ListIndex)
-    .sohieu = txtVT(0).Text
-    .TenVattu = txtVT(1).Text
-    .DonVi = txtVT(2).Text
-    .GhiChu = IIf(Len(txtVT(3).Text) > 0, txtVT(3).Text, "...")
+    .sohieu = TxtVT(0).Text
+    .TenVattu = TxtVT(1).Text
+    .DonVi = TxtVT(2).Text
+    .GhiChu = IIf(Len(TxtVT(3).Text) > 0, TxtVT(3).Text, "...")
     .MaTK = TK.MaSo
 End With
     KiemTraSoLieu = True
@@ -1031,6 +1029,10 @@ Private Sub txtF_GotFocus()
     MaDaTim = 0
 End Sub
 
+Private Sub txtName_KeyUp(KeyCode As MSForms.ReturnInteger, Shift As Integer)
+TxtVT(1).Text = UnicodeToVni(txtName.Text)
+End Sub
+
 Private Sub txtShTk_GotFocus(Index As Integer)
     AutoSelect txtShTk(Index)
 End Sub
@@ -1046,23 +1048,23 @@ Private Sub txtShTk_LostFocus(Index As Integer)
 End Sub
 
 Private Sub Txtvt_GotFocus(Index As Integer)
-    AutoSelect txtVT(Index)
+    AutoSelect TxtVT(Index)
 End Sub
 
 Private Sub TxtVT_KeyPress(Index As Integer, KeyAscii As Integer)
     Select Case Index
         Case 0: If KeyAscii = 32 Or KeyAscii = 35 Or KeyAscii = 39 Or KeyAscii = 42 Then KeyAscii = 0
-        Case 4: KeyProcess txtVT(Index), KeyAscii
+        Case 4: KeyProcess TxtVT(Index), KeyAscii
     End Select
 End Sub
 
 Private Sub TxtVT_LostFocus(Index As Integer)
     Select Case Index
         Case 0:
-            txtVT(Index).Text = UCase(txtVT(Index).Text)
+            TxtVT(Index).Text = UCase(TxtVT(Index).Text)
         Case 1, 2, 3:
-            If Len(txtVT(Index).Text) = 0 Then txtVT(Index).Text = "..."
+            If Len(TxtVT(Index).Text) = 0 Then TxtVT(Index).Text = "..."
         Case 4:
-            txtVT(Index).Text = Format(txtVT(Index).Text, Mask_0)
+            TxtVT(Index).Text = Format(TxtVT(Index).Text, Mask_0)
     End Select
 End Sub
