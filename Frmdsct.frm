@@ -2184,76 +2184,332 @@ Public Sub LietKeChungtu(shtk As String, mvt As Long, mts As Long, mcn As Long, 
 KT:
     Me.MousePointer = 0
 End Sub
-
-
 Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long, shd As String)
+    Dim sql As String, sql_main As String, loaict As String, i As Integer, mct As Long, uID As Long, mct1 As Long, mloai As Integer
+    Dim rs_chungtu As Recordset, st As Double, ovr As Integer, sh As String
+    Dim dictLoaiHD As Object  ' Dùng Dictionary d? cache LoaiHD
+
+    Me.MousePointer = 11
+
+    st = Cdbl5(txtShTk(5).Text)
+    sh = IIf(ChkLoai(7).Value = 1 Or pPhieu > 0, "P", "")
+
+    ' ========== 1. T?O B?NG T?M MIENTRU (N?U C?N) ==========
+    ' LUU Ý: N?u b?ng MienTru dã du?c t?o t? tru?c, hãy B? QUA dòng này
+    Dim sql_mientru As String
+    sql_mientru = "SELECT MaCT,Sum(IIF(MaTKCo>0,SoPS,0)) AS TPS,sum(TLCK+val(iif(isnull(phantramchietkhau),0,phantramchietkhau))) as tylechietkhau,sum(CK+val(iif(isnull(sotienchietkhau),0,sotienchietkhau))) as chietkhau FROM ChungTu" + sh + " WHERE "
+    If OptLK(0).Value Then
+        sql_mientru = sql_mientru + WThang("ThangCT", CboThang(0).ItemData(CboThang(0).ListIndex), CboThang(1).ItemData(CboThang(1).ListIndex)) + IIf(pProcessMode = 1, " AND XuLy<2", "") + " GROUP BY MaCT"
+    Else
+        sql_mientru = sql_mientru + WNgay("NgayGS", ngay(0), ngay(1)) + IIf(pProcessMode = 1, " AND XuLy<2", "") + " GROUP BY MaCT"
+    End If
+    SetSQL "MienTru", sql_mientru
+
+    ' ========== 2. XÂY D?NG SQL CHÍNH - LO?I B? DISTINCTROW ==========
+    sql = "SELECT " & vbCrLf & _
+        "    ChungTu" & sh & ".MaCT, " & vbCrLf & _
+        "    ChungTu" & sh & ".SoHieu, " & vbCrLf & _
+        "    ChungTu" & sh & ".NgayCT, " & vbCrLf & _
+        "    ChungTu" & sh & ".NgayGS, " & vbCrLf & _
+        "    ChungTu" & sh & ".DienGiai" & IIf(pNN = 1, "E", "") & " AS DG, " & vbCrLf & _
+        "    MienTru.TPS, " & vbCrLf & _
+        "    MienTru.tylechietkhau, " & vbCrLf & _
+        "    MienTru.chietkhau, " & vbCrLf & _
+        "    ChungTu" & sh & ".User_ID, " & vbCrLf & _
+        "    ChungTu" & sh & ".MaLoai " & vbCrLf & _
+          "FROM (ChungTu" & sh & " INNER JOIN MienTru ON ChungTu" & sh & ".MaCT = MienTru.MaCT) "
+
+    ' JOIN có di?u ki?n
+    Dim hasHoaDonJoin As Boolean
+    hasHoaDonJoin = False
+    If Len(shd) > 0 Or mvt > 0 Then
+        sql = sql & "LEFT JOIN HoaDon" & sh & " ON ChungTu" & sh & ".MaSo = HoaDon" & sh & ".MaSo "
+        hasHoaDonJoin = True
+    End If
+
+    If mts > 0 Then
+        sql = sql & "LEFT JOIN CTTaiSan ON ChungTu" & sh & ".MaCT = CTTaiSan.MaCTKT "
+    End If
+
+    If Len(shtk) > 0 Then
+        sql = sql & "LEFT JOIN HeThongTK ON ChungTu" & sh & ".MaTKNo = HeThongTK.MaSo "
+        sql = sql & "LEFT JOIN HeThongTK AS HeThongTK_1 ON ChungTu" & sh & ".MaTKCo = HeThongTK_1.MaSo "
+    End If
+
+    ' WHERE
+    sql = sql & "WHERE (TRUE) "
+
+    If Len(shd) > 0 Then
+        sql = sql & "AND (HoaDon" & sh & ".SoHD LIKE '" & shd & "*' OR ChungTu" & sh & ".SoHieu LIKE '" & shd & "*') "
+    End If
+
+    If mvt > 0 Then
+        sql = sql & "AND (ChungTu" & sh & ".MaLoai = 1 OR ChungTu" & sh & ".MaLoai = 2 OR ChungTu" & sh & ".MaLoai = 8) AND (MaVattu = " & CStr(mvt) & ") "
+    End If
+
+    If mts > 0 Then
+        sql = sql & "AND (CTTaiSan.MaTS = " & CStr(mts) & ") "
+    End If
+
+    If mcn > 0 Then
+        sql = sql & "AND (MaKH = " & CStr(mcn) & " OR MaKhachHang = " & CStr(mcn) & " OR MaKHC = " & CStr(mcn) & ") "
+    End If
+
+    If Len(shtk) > 0 Then
+        sql = sql & "AND (HeThongTK.SoHieu LIKE '" & shtk & "*' OR HeThongTK_1.SoHieu LIKE '" & shtk & "*') "
+        If st <> 0 Then sql = sql & "AND SoPS = " & DoiDau(st) & " "
+        If ChkTaikhoan(7).Value = 1 Then
+            sql = sql & "AND ((HeThongTK.TK_ID = " & CStr(TKCNPT_ID) & " OR HeThongTK_1.TK_ID = " & CStr(TKCNKH_ID) & ") AND CT_ID = 0) "
+        End If
+    End If
+
+    If ChkTaikhoan(4).Value = 1 And CboN(2).ListIndex >= 0 Then
+        sql = sql & "AND ChungTu" & sh & ".CTGS = " & CStr(CboN(2).ItemData(CboN(2).ListIndex)) & " "
+    End If
+
+    If ChkTaikhoan(8).Value = 1 And txtShTk(6).tag > 0 Then
+        sql = sql & "AND ChungTu" & sh & ".MaTP = " & CStr(txtShTk(6).tag) & " "
+    End If
+
+    If ChkTaikhoan(6).Value = 1 Then
+        sql = sql & "AND ChungTu" & sh & ".User_ID = " & CStr(CboN(3).ItemData(CboN(3).ListIndex)) & " "
+    End If
+
+    ' Lo?i ch?ng t?
+    loaict = ""
+    For i = 0 To 12
+        If i <= 4 Or i > 6 Then
+            If ChkLoai(i).Value = 1 Then
+                loaict = loaict & "ChungTu" & sh & ".MaLoai = " & CStr(i) & " OR "
+            End If
+        End If
+    Next
+
+    If Len(loaict) = 0 Then GoTo KT
+    sql = sql & "AND (" & Left(loaict, Len(loaict) - 4) & ") "
+
+    If (ChkLoai(1).Value = 1 Or ChkLoai(2).Value = 1 Or ChkLoai(8).Value = 1) And CboN(0).ListIndex > 0 Then
+        sql = sql & "AND ChungTu" & sh & ".MaKho = " & CStr(CboN(0).ItemData(CboN(0).ListIndex)) & " "
+    End If
+
+    If (ChkLoai(1).Value = 1 Or ChkLoai(2).Value = 1 Or ChkLoai(8).Value = 1) And CboN(1).ListIndex > 0 Then
+        sql = sql & "AND ChungTu" & sh & ".MaNguon = " & CStr(CboN(1).ItemData(CboN(1).ListIndex)) & " "
+    End If
+
+    If pProcessMode = 1 Then
+        sql = sql & "AND XuLy < 2 "
+    End If
+
+    If OptLK(0).Value Then
+        sql = sql & "AND " & WThang("ThangCT", CboThang(0).ItemData(CboThang(0).ListIndex), CboThang(1).ItemData(CboThang(1).ListIndex)) & " "
+    Else
+        sql = sql & "AND " & WNgay("NgayGS", ngay(0), ngay(1)) & " "
+    End If
+
+    ' GROUP BY
+    sql = sql & "GROUP BY " & vbCrLf & _
+        "    ChungTu" & sh & ".MaCT, " & vbCrLf & _
+        "    ChungTu" & sh & ".SoHieu, " & vbCrLf & _
+        "    ChungTu" & sh & ".NgayCT, " & vbCrLf & _
+        "    ChungTu" & sh & ".NgayGS, " & vbCrLf & _
+        "    ChungTu" & sh & ".DienGiai" & IIf(pNN = 1, "E", "") & ", " & vbCrLf & _
+        "    MienTru.TPS, " & vbCrLf & _
+        "    MienTru.tylechietkhau, " & vbCrLf & _
+        "    MienTru.chietkhau, " & vbCrLf & _
+        "    ChungTu" & sh & ".User_ID, " & vbCrLf & _
+        "    ChungTu" & sh & ".MaLoai "
+
+    ' ORDER BY
+    Select Case ord
+    Case 0:
+        sql = sql & "ORDER BY NgayGS DESC, Val(ChungTu" & sh & ".SoHieu) DESC "
+    Case 1, 2:
+        sql = sql & "ORDER BY NgayCT DESC, Val(ChungTu" & sh & ".SoHieu) DESC "
+    End Select
+
+    ' TOP 500 và d?o th? t?
+    chuoidieukien_intoanbo = sql
+    sql_main = "SELECT TOP 50 * FROM (" & sql & ") AS tong ORDER BY NgayGS DESC, Val(SoHieu) DESC"
+    sql_main = "SELECT * FROM (" & sql_main & ") AS a ORDER BY NgayGS ASC, Val(SoHieu) ASC"
+
+    Debug.Print "=== FINAL SQL ==="
+    Debug.Print sql_main
+
+    ' ========== 3. CLEAR GRID ==========
+    ClearGrid GrdChungtu, GrdChungtu.tag
+    ClearGrid FrmChungtu.Grid2, FrmChungtu.Grid2.tag
+
+    Dim so As Long
+    so = GrdChungtu.Rows - 1
+    If so > 0 Then
+        Do Until so = 1
+            GrdChungtu.RemoveItem (so)
+            so = so - 1
+        Loop
+    End If
+
+    ' ========== 4. TH?C THI QUERY CHÍNH ==========
+    Dim so_cong As Integer
+    so_cong = 0
+
+    Set rs_chungtu = DBKetoan.OpenRecordset(sql_main, dbOpenSnapshot)
+
+    ' ========== 5. T?O DICTIONARY Ð? CACHE LoaiHD (GI?M M? RECORDSET) ==========
+    Set dictLoaiHD = CreateObject("Scripting.Dictionary")
+
+    ' N?u c?n l?y LoaiHD, ch?y 1 l?n duy nh?t d? l?y t?t c?
+    If hasHoaDonJoin Or True Then
+        Dim rs_hoadon As Recordset
+        Dim sql_hoadon As String
+        sql_hoadon = "SELECT ChungTu.SoHieu, HoaDon.IdNhap, HoaDon.StatusPH, HoaDon.TendoHDid, HoaDon.TendoHDState " & _
+                     "FROM HoaDon INNER JOIN ChungTu ON HoaDon.MaSo = ChungTu.MaSo " & _
+                     "WHERE ChungTu.SoHieu IN (SELECT DISTINCT SoHieu FROM (" & sql_main & "))"
+
+        On Error Resume Next
+        Set rs_hoadon = DBKetoan.OpenRecordset(sql_hoadon, dbOpenSnapshot)
+        On Error GoTo 0
+
+        If Not rs_hoadon Is Nothing Then
+            If Not rs_hoadon.EOF Then
+                Do While Not rs_hoadon.EOF
+                    Dim sohieu_key As String
+                    Dim loai_value As String
+                    If IsNull(rs_hoadon!sohieu) Then
+                        sohieu_key = ""
+                    Else
+                        sohieu_key = rs_hoadon!sohieu
+                    End If
+                    loai_value = ""
+
+                    If Not IsNull(rs_hoadon!IdNhap) And rs_hoadon!IdNhap <> "..." And rs_hoadon!IdNhap <> "" Then
+                        If rs_hoadon!StatusPH = "1" Then
+                            loai_value = "PH"
+                        Else
+                            loai_value = "HD"
+                        End If
+                    Else
+                        If Not IsNull(rs_hoadon!TendoHDid) Then
+                            If IsNull(rs_hoadon!TendoHDState) Then
+                                loai_value = ""
+                            Else
+                                loai_value = rs_hoadon!TendoHDState
+                            End If
+                        End If
+                    End If
+
+                    If Not dictLoaiHD.Exists(sohieu_key) Then
+                        dictLoaiHD.Add sohieu_key, loai_value
+                    End If
+                    rs_hoadon.MoveNext
+                Loop
+            End If
+            rs_hoadon.Close
+            Set rs_hoadon = Nothing
+        End If
+    End If
+
+    ' ========== 6. VÒNG L?P Ð? D? LI?U (KHÔNG M? RECORDSET TRONG LOOP) ==========
+    Do While Not rs_chungtu.EOF
+        If mct <> rs_chungtu!MaCT Then
+            mct = rs_chungtu!MaCT
+            uID = rs_chungtu!User_ID
+            mloai = rs_chungtu!maloai
+        Else
+            If uID <> rs_chungtu!User_ID Or mloai <> rs_chungtu!maloai Then
+                mct1 = Lng_MaxValue("MaCT", "ChungTu" & sh) + 1
+                ExecuteSQL5 "UPDATE ChungTu" & sh & " SET MaCT=" & CStr(mct1) & " WHERE MaCT=" & CStr(mct) & " AND User_ID=" & CStr(rs_chungtu!User_ID)
+                mct = mct1
+                uID = rs_chungtu!User_ID
+                mloai = rs_chungtu!maloai
+            End If
+        End If
+
+        If GrdChungtu.Rows < MaxGridRow Then
+            so_cong = so_cong + 1
+
+            ' L?y LoaiHD t? Dictionary (cache) - KHÔNG M? RECORDSET
+            Dim sohieu_ct As String
+            Dim LoaiHD As String
+            If IsNull(rs_chungtu!sohieu) Then
+                sohieu_ct = ""
+            Else
+                sohieu_ct = rs_chungtu!sohieu
+            End If
+            If dictLoaiHD.Exists(sohieu_ct) Then
+                LoaiHD = dictLoaiHD(sohieu_ct)
+            Else
+                LoaiHD = ""
+            End If
+
+            ' Ð? vào GrdChungtu
+            GrdChungtu.AddItem rs_chungtu!sohieu & Chr(9) & Format(rs_chungtu!NgayCT, Mask_D) & Chr(9) _
+                             & Format(rs_chungtu!NgayGS, Mask_D) & Chr(9) & rs_chungtu!dg & Chr(9) & Format(rs_chungtu!tps, Mask_0) & Chr(9) & CStr(mct), 0
+
+            ' Ð? vào FrmChungtu.Grid2
+            FrmChungtu.Grid2.AddItem _
+                    rs_chungtu!sohieu & Chr(9) & _
+                                      Format(rs_chungtu!NgayCT, Mask_D) & Chr(9) & _
+                                      Format(rs_chungtu!NgayGS, Mask_D) & Chr(9) & _
+                                      rs_chungtu!dg & Chr(9) & _
+                                      Format(rs_chungtu!tps, Mask_0) & Chr(9) & _
+                                      CStr(mct) & Chr(9) & _
+                                      LoaiHD & Chr(9) & _
+                                      Format(rs_chungtu!chietkhau, Mask_0), 0
+
+            FrmChungtu.Grid2.ColWidth(3) = 3700
+        Else
+            ovr = 1
+        End If
+        rs_chungtu.MoveNext
+    Loop
+
+    ' ========== 7. C?P NH?T UI ==========
+    FrmChungtu.Label(28).Caption = "S? ch?ng t? phân h? dang dùng: " & str(rs_chungtu.recordCount)
+
+    Dim kk As Integer
+    kk = 0
+    Do While so_cong < 15
+        FrmChungtu.Grid2.AddItem " " & Chr(9) & "" & Chr(9) & "" & Chr(9) & "" & Chr(9) & "" & Chr(9) & "" & Chr(9) & "" & Chr(9) & ""
+        so_cong = so_cong + 1
+    Loop
+
+    If rs_chungtu.recordCount > 0 Then
+        If Row >= rs_chungtu.recordCount Then Row = rs_chungtu.recordCount - 1
+    Else
+        Row = 0
+    End If
+
+    LbSoCT.Caption = CStr(rs_chungtu.recordCount)
+    GrdChungtu.col = 0
+    rs_chungtu.Close
+    Set rs_chungtu = Nothing
+    Set dictLoaiHD = Nothing
+
+    On Error Resume Next
+    GrdChungtu.Row = Row
+    SetGridIndex GrdChungtu, Row + 1
+
+    With GrdChungtu
+        .col = 5
+        If Len(.Text) = 0 Then MaCTChon = 0 Else MaCTChon = CLng5(.Text)
+        .col = 0
+    End With
+
+    If Not GrdChungtu.RowIsVisible(Row) Then GrdChungtu.TopRow = Row - 8
+    On Error GoTo 0
+
+    If ovr > 0 Then ErrMsg er_NhieuCT
+
+KT:
+    Me.MousePointer = 0
+End Sub
+
+Public Sub LietKeChungtu_11(shtk As String, mvt As Long, mts As Long, mcn As Long, shd As String)
     Dim sql As String, loaict As String, i As Integer, mct As Long, uID As Long, mct1 As Long, mloai As Integer
     Dim rs_chungtu As Recordset, st As Double, ovr As Integer, sh As String
 
     Me.MousePointer = 11
-    '    st = Cdbl5(txtShTk(5).Text)
-    '    sh = IIf(ChkLoai(7).Value = 1 Or pPhieu > 0, "P", "")
-    '   ' sql = "SELECT MaCT,Sum(IIF(MaTKCo>0,SoPS,0)) AS TPS FROM ChungTu" + sh + " WHERE "
-    '    sql = "SELECT MaCT,Sum(IIF(MaTKCo>0,SoPS,0)) AS TPS,sum(TLCK+val(iif(isnull(phantramchietkhau),0,phantramchietkhau))) as tylechietkhau,sum(CK+val(iif(isnull(sotienchietkhau) ,0,sotienchietkhau))) as chietkhau FROM ChungTu" + sh + " WHERE "
-    '
-    '    If OptLK(0).Value Then
-    '        'sql = sql + WThang("ThangCT", CboThang(0).ItemData(CboThang(0).ListIndex), CboThang(1).ItemData(CboThang(1).ListIndex)) + IIf(pProcessMode = 1, " AND XuLy<2", "") + " GROUP BY MaCT"
-    '        sql = sql + WThang("ThangCT", CboThang(0).ItemData(CboThang(0).ListIndex), CboThang(1).ItemData(CboThang(1).ListIndex)) + IIf(pProcessMode = 1, " AND XuLy<2", "") + " GROUP BY MaCT"
-    '    Else
-    '        sql = sql + WNgay("NgayGS", ngay(0), ngay(1)) + IIf(pProcessMode = 1, " AND XuLy<2", "") + " GROUP BY MaCT"
-    '       ' sql = sql + IIf(pProcessMode = 1, " AND XuLy<2", "") + " GROUP BY MaCT"
-    '    End If
-    '    SetSQL "MienTru", sql
-    '
-    '    sql = "SELECT DISTINCTROW  ChungTu" + sh + ".MaCT, ChungTu" + sh + ".SoHieu, NgayCT, NgayGS, ChungTu" + sh + ".DienGiai" + IIf(pNN = 1, "E", "") + " AS DG,TPS,tylechietkhau,chietkhau,User_ID,ChungTu" + sh + ".MaLoai FROM ((((ChungTu" + sh + " INNER JOIN MienTru ON ChungTu" + sh + ".MaCT=MienTru.MaCT) LEFT JOIN HoaDon" + sh + " ON ChungTu" + sh + ".MaSo=HoaDon" + sh + ".MaSo) LEFT JOIN CTTaiSan ON ChungTu" + sh + ".MaCT = CTTaiSan.MaCTKT) LEFT JOIN HeThongTK ON ChungTu" + sh + ".MaTKNo = HeThongTK.MaSo) LEFT JOIN HeThongTK AS HeThongTK_1 ON ChungTu" + sh + ".MaTKCo = HeThongTK_1.MaSo WHERE (TRUE)"
-    '
-    '    If Len(shd) > 0 Then sql = sql + " AND (HoaDon" + sh + ".SoHD LIKE '" + shd + "*' OR ChungTu" + sh + ".SoHieu LIKE '" + shd + "*')"
-    '    If mvt > 0 Then sql = sql + " AND (ChungTu" + sh + ".MaLoai = 1 OR ChungTu" + sh + ".MaLoai = 2 OR ChungTu" + sh + ".MaLoai = 8) AND (MaVattu = " + CStr(mvt) + ")"
-    '    If mts > 0 Then sql = sql + " AND (CTTaiSan.MaTS = " + CStr(mts) + ")"
-    '    If mcn > 0 Then sql = sql + " AND (MaKH = " + CStr(mcn) + " OR MaKhachHang = " + CStr(mcn) + " OR MaKHC=" + CStr(mcn) + ")"
-    '    If Len(shtk) > 0 Then
-    '        sql = sql + " AND (HethongTK.SoHieu LIKE '" + shtk + "*' OR HethongTK_1.SoHieu LIKE '" + shtk + "*')" + IIf(st <> 0, " AND SoPS=" + DoiDau(st), "")
-    '        If ChkTaikhoan(7).Value = 1 Then sql = sql + " AND ((HethongTK.TK_ID=" + CStr(TKCNPT_ID) + " OR HethongTK_1.TK_ID=" + CStr(TKCNKH_ID) + ") AND CT_ID=0)"
-    '    End If
-    '
-    '    If ChkTaikhoan(4).Value = 1 And CboN(2).ListIndex >= 0 Then
-    '        sql = sql + " AND ChungTu" + sh + ".CTGS=" + CStr(CboN(2).ItemData(CboN(2).ListIndex))
-    '    End If
-    '    If ChkTaikhoan(8).Value = 1 And txtShTk(6).tag > 0 Then
-    '        sql = sql + " AND ChungTu" + sh + ".MaTP=" + CStr(txtShTk(6).tag)
-    '    End If
-    '    If ChkTaikhoan(6).Value = 1 Then sql = sql + " AND (ChungTu" + sh + ".User_ID=" + CStr(CboN(3).ItemData(CboN(3).ListIndex)) + ")"
-    '
-    '    loaict = ""
-    '    For i = 0 To 12
-    '        'If i < 4 Or i > 6 Then
-    '        'loai = 4 loai ct moi them
-    '        If i <= 4 Or i > 6 Then
-    '            If ChkLoai(i).Value = 1 Then loaict = loaict + "ChungTu" + sh + ".MaLoai = " + CStr(i) + " OR "
-    '        End If
-    '    Next
-    '
-    '    If Len(loaict) = 0 Then GoTo KT
-    '    If Len(loaict) > 0 Then sql = sql + " AND (" + Left(loaict, Len(loaict) - 4) + ")"
-    '
-    '    If (ChkLoai(1).Value = 1 Or ChkLoai(2).Value = 1 Or ChkLoai(8).Value = 1) And CboN(0).ListIndex > 0 Then sql = sql + " AND (ChungTu" + sh + ".MaKho=" + CStr(CboN(0).ItemData(CboN(0).ListIndex)) + ")"
-    '    If (ChkLoai(1).Value = 1 Or ChkLoai(2).Value = 1 Or ChkLoai(8).Value = 1) And CboN(1).ListIndex > 0 Then sql = sql + " AND (ChungTu" + sh + ".MaNguon=" + CStr(CboN(1).ItemData(CboN(1).ListIndex)) + ")"
-    '
-    '    If pProcessMode = 1 Then sql = sql + " AND XuLy<2 "
-    '
-    '    sql = sql + " GROUP BY ChungTu" + sh + ".MaCT,User_ID,ChungTu" + sh + ".MaLoai,ChungTu" + sh + ".SoHieu, ChungTu" + sh + ".NgayCT, ChungTu" + sh + ".NgayGS, ChungTu" + sh + ".DienGiai" + IIf(pNN = 1, "E", "") + ",TPS,TPS,tylechietkhau,chietkhau "
-
-
-    '    Select Case ord
-    '        Case 0:
-    '            sql = sql + "ORDER BY NgayGS desc , ChungTu" + sh + ".SoHieu desc "
-    '        Case 1:
-    '            sql = sql + "ORDER BY NgayGS desc, ChungTu" + sh + ".SoHieu desc "
-    '        Case 2:
-    '            sql = sql + "ORDER BY NgayGS desc,ChungTu" + sh + ".SoHieu desc"
-    '    End Select
-
-    '
+     
     st = Cdbl5(txtShTk(5).Text)
     sh = IIf(ChkLoai(7).Value = 1 Or pPhieu > 0, "P", "")
     ' sql = "SELECT MaCT,Sum(IIF(MaTKCo>0,SoPS,0)) AS TPS FROM ChungTu" + sh + " WHERE "
