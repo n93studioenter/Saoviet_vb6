@@ -849,9 +849,9 @@ Begin VB.Form FrmVattu
          Caption         =   "Label1"
          ForeColor       =   &H000000FF&
          Height          =   255
-         Left            =   3120
+         Left            =   1080
          TabIndex        =   100
-         Top             =   120
+         Top             =   0
          Width           =   2295
       End
       Begin MSForms.TextBox txtGhiChu 
@@ -2452,6 +2452,8 @@ Private Sub Command3_Click()
     rs_KH.Close
     Set rs_KH = Nothing
 End Sub
+
+ 
 
  
 
