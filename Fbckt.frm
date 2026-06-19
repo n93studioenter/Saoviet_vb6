@@ -3206,8 +3206,7 @@ End Sub
 
 '====================================================================================================
 Public Sub Command_Click(Index As Integer)
-
-    MsgBox txtShVT(0).tag
+ 
     If OptTG(0).Value = False Then
         If IsDate(MedNgay(1).Text) And IsDate(MedNgay(2).Text) Then
             If CDate(MedNgay(2).Text) < CDate(MedNgay(1).Text) Then

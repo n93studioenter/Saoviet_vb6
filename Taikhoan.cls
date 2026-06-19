@@ -283,6 +283,7 @@ Public Function TkCoPS(tdau As Integer, tcuoi As Integer) As Boolean
     If tcuoi > 0 Then sqlw = " AND " + WThang("ThangCT", tdau, tcuoi)
     sql1 = "SELECT DISTINCTROW Count(ChungTu.MaSo) AS F1 FROM " + ChungTu2TKNC(-1) + " WHERE HethongTK.SoHieu LIKE '" + sohieu + "*'" + sqlw
     sql2 = "SELECT DISTINCTROW Count(ChungTu.MaSo) AS F1 FROM " + ChungTu2TKNC(1) + " WHERE HethongTK.SoHieu LIKE '" + sohieu + "*'" + sqlw
+     Debug.Print sql1 & "   " & sql2
     TkCoPS = (SelectSQL(sql1) > 0 Or SelectSQL(sql2) > 0)
 End Function
 '======================================================================================

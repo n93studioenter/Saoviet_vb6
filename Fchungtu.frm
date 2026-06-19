@@ -10653,7 +10653,6 @@ Private Sub danh_sach_chung_tu()
 End Sub
 
 Private Sub Command3_Click()
-    MsgBox txtShVT(0).tag
     ' FBcKt.txtShTk(0).Text = txtShTk(0).Text
     ' FBcKt.txtShVT(0).Text = txtShVT(0).Text
     ' FBcKt.OptBC(0).Value = OptBC(0).Value
@@ -10688,8 +10687,7 @@ Private Sub Command3_Click()
     'FBcKt.txtShTk(0).tag = txtShTk(0).tag
     FBcKt.txtShTk_LostFocus (0)
     FBcKt.txtShVT_LostFocus (0)
-
-    MsgBox txtShVT(0).tag
+ 
     'FBcKt.txtShVT(0).tag = 1
     If OptVAT(5).Value = True Or OptVAT(3).Value = True Or OptVAT(4).Value = True Then
         FBcTC.OptVAT(5).Value = OptVAT(5).Value
@@ -10702,7 +10700,7 @@ Private Sub Command3_Click()
         FBcTC.Command_Click (0)
     Else
 
-        MsgBox txtShVT(0).tag
+        
         FBcKt.Command_Click (0)
     End If
 
