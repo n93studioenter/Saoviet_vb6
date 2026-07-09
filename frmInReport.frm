@@ -553,6 +553,8 @@ Private Sub btnIn_Click()
     If chkSoCT.Value = 1 Then
         For Each itm In ListView1.ListItems
             If itm.CHECKED Then
+                ' B? qua l?i và ti?p t?c
+                On Error Resume Next
 
                 'Debug.Print itm.Text   ' ?? tài kho?n dã ch?n
                 frmMain.typeprint = 2
@@ -562,11 +564,19 @@ Private Sub btnIn_Click()
                     .printername = tenmayin
                     .PrinterPort = Port  ' ?? port c?a b?n
                     .Destination = preview
-                    ' Thêm 2 dòng này d? in 2 m?t
-                    '.PrinterDuplex = 2   ' 1=Simplex, 2=Horizontal, 3=Vertical
+                    '.PrinterDuplex = 2
                     '.PrinterCopies = 1
                     .Action = 1
                 End With
+
+                ' Ki?m tra n?u có l?i
+                If Err.number <> 0 Then
+                    Debug.Print "L?i ? tài kho?n " & itm.Text & ": " & Err.Description
+                    Err.Clear    ' Xóa l?i d? ti?p t?c
+                End If
+
+                ' Ð?t l?i x? lý l?i bình thu?ng
+                On Error GoTo 0
             End If
         Next
     End If

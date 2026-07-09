@@ -36,9 +36,11 @@ Public Sub GhiHoaDon(p As Integer)
             Dim date1 As Date
             Dim date2 As Date
             date1 = CDate(.NgayPH)
-            date2 = CDate(FrmChungtu.bakNgayimp2)
-            If date1 <> date2 Then
-                MsgBox "Ngay khong giong voi hoa don"
+            If FrmChungtu.bakNgayimp2 <> "" Then
+                date2 = CDate(FrmChungtu.bakNgayimp2)
+                If date1 <> date2 Then
+                    MsgBox "Ngay khong giong voi hoa don"
+                End If
             End If
         End If
 

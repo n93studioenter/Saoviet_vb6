@@ -208,23 +208,19 @@ Begin VB.Form frmMain
          BeginProperty Panel1 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Object.Width           =   8819
             MinWidth        =   8819
-            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel2 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Object.Width           =   12347
             MinWidth        =   12347
-            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel3 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
-            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel4 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Style           =   6
-            TextSave        =   "19/06/26"
-            Key             =   ""
+            TextSave        =   "05/07/26"
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -3345,22 +3341,7 @@ Public Function U(ParamArray Codes() As Variant) As String
 End Function
 Private Sub LoadMenuform()
 
-    Dim originPaths As String
-    originPaths = App.path
-    Dim serverpath As String
-    serverpath = originPaths & "\Hoadon\serverpath.txt"
-
-
-    Dim uncPath As String
-    uncPath = ReadTxt(serverpath)
-    Dim txtPath As String
-    txtPath = uncPath & "\" & "Tools\version.txt"
-    Dim content As String
-    content = ReadTxt(txtPath)
-    Dim originPath As String
-    originPath = App.path & "\Hoadon\version.txt"
-    content = ReadTxt(originPath)
-    mnVersion.Caption = "Version " & content
+    
     Dim hMenu As Long
     Dim hSub As Long
     Dim hSub2 As Long
@@ -3701,7 +3682,7 @@ Private Sub Form_Load()
     End If
     
     LoadMenuform
-    Kiemtraphienbanht
+    'Kiemtraphienbanht
     'Taifilecapnhat
     
     
@@ -3819,13 +3800,14 @@ Private Sub Form_Load()
 
 End Sub
 Public Function ExecuteSQL_them_query(Ten As String, sql As String, Optional msg As Boolean = True) As Integer
-      On Error GoTo ErrLock
-     DBKetoan.CreateQueryDef Ten, sql
-      On Error GoTo 0
-      ExecuteSQL_them_query = 0
-      Exit Function
+    On Error GoTo ErrLock
+    DBKetoan.CreateQueryDef Ten, sql
+    Debug.Print sql
+    On Error GoTo 0
+    ExecuteSQL_them_query = 0
+    Exit Function
 ErrLock:
-'MsgBox Err.Description
+    'MsgBox Err.Description
 End Function
 Public Function ExecuteSQL_them_bang(Ten As String, Optional msg As Boolean = True) As Integer
       On Error GoTo ErrLock

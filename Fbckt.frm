@@ -5122,7 +5122,7 @@ Private Sub InCdt(saukc As Boolean, tdau As Integer, tcuoi As Integer, cap As In
     
     For i = CThangDB(tdau) To CThangDB(tcuoi)
         st = CStr(i)
-        sqln = sqln + " + HethongTk.No_" + st
+5        sqln = sqln + " + HethongTk.No_" + st
         sqlc = sqlc + " + HethongTk.Co_" + st
     Next
     st = CStr(CThangDB(tcuoi))

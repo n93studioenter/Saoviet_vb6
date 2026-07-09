@@ -433,7 +433,7 @@ End Function
 '======================================================================================
 Public Function SelectSQL(sql As String, Optional SoPhu As Variant = 0, Optional SoPhu2 As Variant = 0, Optional SoPhu3 As Variant = 0, Optional SoPhu4 As Variant = 0) As Variant
     Dim rs As Recordset
-    Debug.Print "rp  -   " & sql
+    'Debug.Print "rp  -   " & sql
 
     'On Error Resume Next
     SoPhu = 0
@@ -1849,11 +1849,23 @@ End Function
 
 Public Sub LayThongtinCT(MaCT As Long, loai As Integer, Ten As String, DiaChi As String, Optional ctgoc As String, Optional makh As Long, Optional p As Integer = 0)
     Dim rs As Recordset
-    
+
     Set rs = DBKetoan.OpenRecordset("SELECT DISTINCTROW * FROM ChungTuLQ" + IIf(p > 0, "P", "") + " WHERE MaCT=" + CStr(MaCT) + " AND Loai=" + CStr(loai), dbOpenSnapshot)
     If rs.recordCount > 0 Then
+        Dim rskh As Recordset
+        ' Ki?m tra rs!makh có Null không
+        If Not IsNull(rs!makh) Then
+            Set rskh = DBKetoan.OpenRecordset("SELECT * FROM KhachHang WHERE MaSo = " & rs!makh)
+        Else
+            ' X? lý khi Null
+            Set rskh = Nothing
+        End If
         Ten = rs!hoten
-        DiaChi = rs!DiaChi
+       If rskh.recordCount > 0 Then
+            DiaChi = rskh!DiaChi
+        Else
+            DiaChi = rs!DiaChi
+        End If
         ctgoc = rs!SoCTGoc
         makh = rs!makh
     Else

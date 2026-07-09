@@ -761,7 +761,7 @@ Begin VB.Form FrmVattu
          Height          =   285
          Index           =   1
          Left            =   2880
-         MaxLength       =   50
+         MaxLength       =   255
          TabIndex        =   6
          Top             =   4200
          Visible         =   0   'False
@@ -2212,11 +2212,11 @@ End Sub
 
 Private Sub Chk_Click()
     GrdNT(3).Enabled = Chk.Value > 0
-    TxtVT(4).Enabled = Chk.Value > 0
-    TxtVT(5).Enabled = Chk.Value > 0
-    TxtVT(11).Enabled = Chk.Value > 0
+    txtVT(4).Enabled = Chk.Value > 0
+    txtVT(5).Enabled = Chk.Value > 0
+    txtVT(11).Enabled = Chk.Value > 0
     CmdChitiet(2).Enabled = Chk.Value > 0
-    If ThemMoi = 1 And Chk.Value > 0 Then RFocus TxtVT(4)
+    If ThemMoi = 1 And Chk.Value > 0 Then RFocus txtVT(4)
 End Sub
 
 Public Sub Command_Click(Index As Integer)
@@ -2238,9 +2238,9 @@ Public Sub Command_Click(Index As Integer)
 
     Select Case Index
     Case 0:
-        TxtVT(0).Text = SoHieuVTMoi(CboLoai.ItemData(CboLoai.ListIndex))
-        TxtVT(1).Text = ""
-        TxtVT(13).Text = ""
+        txtVT(0).Text = SoHieuVTMoi(CboLoai.ItemData(CboLoai.ListIndex))
+        txtVT(1).Text = ""
+        txtVT(13).Text = ""
         txtTen.Text = ""
         txtDVT.Text = ""
         txtGhiChu.Text = ""
@@ -2251,7 +2251,7 @@ Public Sub Command_Click(Index As Integer)
         Chk.Value = 0
         ClearGrid GrdNT(3), GrdNT(3).tag
 
-        RFocus TxtVT(0)
+        RFocus txtVT(0)
         ThemMoi = 1
     Case 1:
         Select Case ThemMoi
@@ -2313,7 +2313,7 @@ Public Sub Command_Click(Index As Integer)
                 End If
             Else
                 ErrMsg er_PhanLoai
-                vt1.InitVattuSohieu TxtVT(0).Text
+                vt1.InitVattuSohieu txtVT(0).Text
                 If vt1.MaPhanLoai = CboLoai.ItemData(CboLoai.ListIndex) Then
                     SetListIndex LstVt, vt1.MaSo
                 End If
@@ -2332,7 +2332,7 @@ Public Sub Command_Click(Index As Integer)
                     LstVt.List(LstVt.ListIndex) = vattu.sohieu + Chr(9) + vattu.TenVattu
                 End If
             Else
-                vt1.InitVattuSohieu TxtVT(0).Text
+                vt1.InitVattuSohieu txtVT(0).Text
                 ErrMsg er_SoHieu
                 If vt1.MaPhanLoai = CboLoai.ItemData(CboLoai.ListIndex) Then SetListIndex LstVt, vt1.MaSo
             End If
@@ -2468,7 +2468,7 @@ Public Sub Form_Activate()
     If xT = 1 Then
         If xSH <> "" Then SetListIndex CboLoai, LayMaPhanLoai(xSH, "Vattu")
         Command_Click 0
-        TxtVT(0).Text = xSH
+        txtVT(0).Text = xSH
     End If
 End Sub
 '======================================================================================
@@ -2501,7 +2501,7 @@ End Sub
 '======================================================================================
 
 Private Sub txtDVT_Change()
-    TxtVT(2).Text = UnicodeToVni(txtDVT.Text)
+    txtVT(2).Text = UnicodeToVni(txtDVT.Text)
 End Sub
 Private Sub Form_Load()
     Dim countinvoiceinfo As Integer
@@ -2557,7 +2557,7 @@ Private Sub Form_Load()
 
 
     Pic.Visible = (pBarCode > 0)
-    TxtVT(3).Enabled = pGiaHT > 0
+    txtVT(3).Enabled = pGiaHT > 0
     ThemMoi = 0
     doiloai = 0
     'Caption = Caption + " - " + CStr(pNamTC)
@@ -2570,11 +2570,11 @@ Private Sub Form_Load()
     If pDinhmuc = 0 Then CboThang.ListIndex = 0
 
     Label(31).Visible = pChietKhau > 0
-    TxtVT(12).Visible = pChietKhau > 0
+    txtVT(12).Visible = pChietKhau > 0
 
     'Lines(7).Visible = (pNhapKhau > 0)
     Label(32).Visible = (pNhapKhau > 0)
-    TxtVT(13).Visible = (pNhapKhau > 0)
+    txtVT(13).Visible = (pNhapKhau > 0)
 
     FCenter Me
 
@@ -2616,24 +2616,24 @@ End Sub
 Private Sub ShowChitiet(vattu As ClsVattu)
     Dim rs As Recordset, dgia As Double, st As String
 
-    TxtVT(0).Text = vattu.sohieu
-    TxtVT(1).Text = vattu.TenVattu
-    TxtVT(2).Text = vattu.DonVi
-    txtTen.Text = VniToUnicode(TxtVT(1).Text)
-    txtDVT.Text = VniToUnicode(TxtVT(2).Text)
+    txtVT(0).Text = vattu.sohieu
+    txtVT(1).Text = vattu.TenVattu
+    txtVT(2).Text = vattu.DonVi
+    txtTen.Text = VniToUnicode(txtVT(1).Text)
+    txtDVT.Text = VniToUnicode(txtVT(2).Text)
 
-    TxtVT(3).Text = Format(vattu.GiaHT, Mask_0)
+    txtVT(3).Text = Format(vattu.GiaHT, Mask_0)
     'Chk.Value = vattu.Dvt2
     'txtVT(4).Text = vattu.DonVi2
     'txtVT(5).Text = Format(vattu.TyleQD, Mask_2)
-    TxtVT(6).Text = vattu.GhiChu
-    txtGhiChu.Text = VniToUnicode(TxtVT(6).Text)
-    TxtVT(7).Text = CStr(vattu.VAT)
-    TxtVT(8).Text = Format(vattu.GiaBan1, Mask_2)
-    TxtVT(9).Text = Format(vattu.GiaBan2, Mask_2)
-    TxtVT(10).Text = Format(vattu.GiaBan3, Mask_2)
-    TxtVT(12).Text = Format(vattu.CK, Mask_2)
-    TxtVT(13).Text = Format(vattu.ThueNK, Mask_2)
+    txtVT(6).Text = vattu.GhiChu
+    txtGhiChu.Text = VniToUnicode(txtVT(6).Text)
+    txtVT(7).Text = CStr(vattu.VAT)
+    txtVT(8).Text = Format(vattu.GiaBan1, Mask_2)
+    txtVT(9).Text = Format(vattu.GiaBan2, Mask_2)
+    txtVT(10).Text = Format(vattu.GiaBan3, Mask_2)
+    txtVT(12).Text = Format(vattu.CK, Mask_2)
+    txtVT(13).Text = Format(vattu.ThueNK, Mask_2)
 
     txtTon(0).Text = Format(vattu.TonMin, Mask_2)
     txtTon(1).Text = Format(vattu.TonMax, Mask_2)
@@ -2749,47 +2749,47 @@ End Sub
 Private Function KiemTraSoLieu() As Boolean
     KiemTraSoLieu = False
 
-    If Len(TxtVT(0).Text) = 0 Then
+    If Len(txtVT(0).Text) = 0 Then
         ErrMsg er_SoHieu
-        RFocus TxtVT(0)
+        RFocus txtVT(0)
         Exit Function
     End If
 
-    If Len(TxtVT(1).Text) = 0 Then
+    If Len(txtVT(1).Text) = 0 Then
         ErrMsg er_Ten
-        RFocus TxtVT(1)
+        RFocus txtVT(1)
         Exit Function
     End If
 
-    If Len(TxtVT(2).Text) = 0 Then
+    If Len(txtVT(2).Text) = 0 Then
         'MsgBox "ThiÕu ®¬n vÞ tÝnh vËt t­!", vbExclamation, App.ProductName
         Dim s As String
         s = ChrW(84) & ChrW(104) & ChrW(105) & ChrW(7871) & ChrW(117) & ChrW(32) & ChrW(273) & ChrW(417) & ChrW(110) & ChrW(32) & ChrW(118) & ChrW(7883) & ChrW(32) & ChrW(116) & ChrW(237) & ChrW(110) & ChrW(104) & ChrW(32) & ChrW(118) & ChrW(7853) & ChrW(116) & ChrW(32) & ChrW(116) & ChrW(432) & ChrW(33)
         MessageBoxW Me.hwnd, StrPtr(s), StrPtr("Thông báo"), vbOKOnly
 
-        RFocus TxtVT(2)
+        RFocus txtVT(2)
         Exit Function
     End If
 
     With vattu
         If ThemMoi = 1 Then .MaSo = 0
         .MaPhanLoai = CboLoai.ItemData(CboLoai.ListIndex)
-        .sohieu = TxtVT(0).Text
-        .TenVattu = TxtVT(1).Text
-        .DonVi = TxtVT(2).Text
-        .GiaHT = Cdbl5(TxtVT(3).Text)
+        .sohieu = txtVT(0).Text
+        .TenVattu = txtVT(1).Text
+        .DonVi = txtVT(2).Text
+        .GiaHT = Cdbl5(txtVT(3).Text)
         .TonMin = Cdbl5(txtTon(0).Text)
         .TonMax = Cdbl5(txtTon(1).Text)
-        .TyLeQD = Cdbl5(TxtVT(5).Text)
-        .VAT = CInt5(TxtVT(7).Text)
-        .GiaBan1 = Cdbl5(TxtVT(8).Text)
-        .GiaBan2 = Cdbl5(TxtVT(9).Text)
-        .GiaBan3 = Cdbl5(TxtVT(10).Text)
-        .CK = Cdbl5(TxtVT(12).Text)
+        .TyLeQD = Cdbl5(txtVT(5).Text)
+        .VAT = CInt5(txtVT(7).Text)
+        .GiaBan1 = Cdbl5(txtVT(8).Text)
+        .GiaBan2 = Cdbl5(txtVT(9).Text)
+        .GiaBan3 = Cdbl5(txtVT(10).Text)
+        .CK = Cdbl5(txtVT(12).Text)
         .Dvt2 = Chk.Value
-        .DonVi2 = IIf(Len(TxtVT(4).Text) > 0, TxtVT(4).Text, "...")
-        .GhiChu = IIf(Len(TxtVT(6).Text) > 0, TxtVT(6).Text, "...")
-        If pNhapKhau > 0 Then .ThueNK = Cdbl5(TxtVT(13).Text)
+        .DonVi2 = IIf(Len(txtVT(4).Text) > 0, txtVT(4).Text, "...")
+        .GhiChu = IIf(Len(txtVT(6).Text) > 0, txtVT(6).Text, "...")
+        If pNhapKhau > 0 Then .ThueNK = Cdbl5(txtVT(13).Text)
     End With
     KiemTraSoLieu = True
 End Function
@@ -2906,7 +2906,7 @@ Private Sub SSCmdF_Click()
 End Sub
 
 Private Sub txtGhiChu_KeyUp(KeyCode As MSForms.ReturnInteger, Shift As Integer)
- TxtVT(6).Text = UnicodeToVni(txtGhiChu.Text)
+ txtVT(6).Text = UnicodeToVni(txtGhiChu.Text)
 End Sub
 
 Private Sub txtSearch_Change()
@@ -2945,18 +2945,18 @@ Private Sub txtsoluong_LostFocus()
 End Sub
 
 Private Sub txtTen_KeyUp(KeyCode As MSForms.ReturnInteger, Shift As Integer)
-TxtVT(1).Text = UnicodeToVni(txtTen.Text)
+txtVT(1).Text = UnicodeToVni(txtTen.Text)
 End Sub
 
 Private Sub TxtVT_Change(Index As Integer)
     If Index = 0 And pBarCode = 1 Then
         Pic.Cls
-        BarCode TxtVT(0).Text, Pic, 8, 400, 0, 0
+        BarCode txtVT(0).Text, Pic, 8, 400, 0, 0
     End If
 End Sub
 
 Private Sub Txtvt_GotFocus(Index As Integer)
-    AutoSelect TxtVT(Index)
+    AutoSelect txtVT(Index)
 End Sub
 
 Private Sub txtTon_GotFocus(Index As Integer)
@@ -2984,18 +2984,18 @@ Private Sub TxtVT_KeyPress(Index As Integer, KeyAscii As Integer)
             'Else
            If KeyAscii = 32 Or KeyAscii = 39 Or KeyAscii = 42 Then KeyAscii = 0
             'End If
-        Case 3, 5, 7, 8, 9, 10, 13: KeyProcess TxtVT(Index), KeyAscii
+        Case 3, 5, 7, 8, 9, 10, 13: KeyProcess txtVT(Index), KeyAscii
     End Select
 End Sub
 
 Private Sub TxtVT_LostFocus(Index As Integer)
     Select Case Index
         Case 0:
-            TxtVT(0).Text = UCase(TxtVT(0).Text)
+            txtVT(0).Text = UCase(txtVT(0).Text)
         Case 3:
-            TxtVT(3).Text = Format(TxtVT(3).Text, Mask_0)
+            txtVT(3).Text = Format(txtVT(3).Text, Mask_0)
         Case 5, 7, 8, 9, 10, 13:
-            TxtVT(Index).Text = Format(TxtVT(Index).Text, Mask_2)
+            txtVT(Index).Text = Format(txtVT(Index).Text, Mask_2)
     End Select
 End Sub
 
@@ -3052,15 +3052,15 @@ KT:
 KT1:
             RFocus txtNhap(4)
         Case 2:
-            luong = Cdbl5(TxtVT(5).Text)
+            luong = Cdbl5(txtVT(5).Text)
             If vattu.MaSo = 0 Or luong = 0 Then Exit Sub
-            gia = Cdbl5(TxtVT(11).Text)
+            gia = Cdbl5(txtVT(11).Text)
             With GrdNT(3)
                 For i = 0 To .Rows - 1
                     .Row = i
                     .col = 0
                     If Len(.Text) = 0 Then Exit For
-                    If .Text = TxtVT(4).Text Then
+                    If .Text = txtVT(4).Text Then
                         If ThemMoi = 0 Then
                             .col = 3
                             ExecuteSQL5 "UPDATE DVTVattu SET TyleQD=" + DoiDau(luong) + ",GiaBan=" + DoiDau(gia) + " WHERE MaSo=" + .Text
@@ -3073,18 +3073,18 @@ KT1:
                     End If
                 Next
                 If ThemMoi = 0 Then
-                    ExecuteSQL5 "INSERT INTO DVTVattu (MaSo,MaVattu,DonVi,TyleQD,GiaBan) VALUES (" + CStr(Lng_MaxValue("MaSo", "DVTVattu") + 1) + "," + CStr(vattu.MaSo) + ",'" + TxtVT(4).Text + "'," + DoiDau(luong) + "," + DoiDau(gia) + ")"
-                    GrdNT(3).AddItem TxtVT(4).Text + Chr(9) + Format(luong, Mask_2) + Chr(9) + Format(gia, Mask_2) + Chr(9) + CStr(Lng_MaxValue("MaSo", "DVTVattu")), 0
+                    ExecuteSQL5 "INSERT INTO DVTVattu (MaSo,MaVattu,DonVi,TyleQD,GiaBan) VALUES (" + CStr(Lng_MaxValue("MaSo", "DVTVattu") + 1) + "," + CStr(vattu.MaSo) + ",'" + txtVT(4).Text + "'," + DoiDau(luong) + "," + DoiDau(gia) + ")"
+                    GrdNT(3).AddItem txtVT(4).Text + Chr(9) + Format(luong, Mask_2) + Chr(9) + Format(gia, Mask_2) + Chr(9) + CStr(Lng_MaxValue("MaSo", "DVTVattu")), 0
                     vattu.KTraDVT2
                 Else
-                    GrdNT(3).AddItem TxtVT(4).Text + Chr(9) + Format(luong, Mask_2) + Chr(9) + Format(gia, Mask_2), 0
+                    GrdNT(3).AddItem txtVT(4).Text + Chr(9) + Format(luong, Mask_2) + Chr(9) + Format(gia, Mask_2), 0
                 End If
             End With
 KT2:
-            TxtVT(4).Text = ""
-            TxtVT(5).Text = ""
-            TxtVT(11).Text = ""
-            RFocus TxtVT(4)
+            txtVT(4).Text = ""
+            txtVT(5).Text = ""
+            txtVT(11).Text = ""
+            RFocus txtVT(4)
     End Select
 End Sub
 
@@ -3134,11 +3134,11 @@ Private Sub GrdNT_DblClick(Index As Integer)
                 .col = 0
                 If Len(.Text) = 0 Then Exit Sub
                 If ThemMoi = 0 Then
-                    TxtVT(4).Text = .Text
+                    txtVT(4).Text = .Text
                     .col = 1
-                    TxtVT(5).Text = .Text
+                    txtVT(5).Text = .Text
                     .col = 2
-                    TxtVT(11).Text = .Text
+                    txtVT(11).Text = .Text
                     .col = 3
                     If vattu.XoaDVT(CLng5(.Text)) Then
 xoa:
@@ -3148,7 +3148,7 @@ xoa:
                 Else
                     GoTo xoa
                 End If
-                RFocus TxtVT(4)
+                RFocus txtVT(4)
             End With
     Case 4:
      With GrdNT(4)

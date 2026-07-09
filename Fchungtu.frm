@@ -54,23 +54,14 @@ Begin VB.Form FrmChungtu
    Begin VB.CommandButton Command14 
       BackColor       =   &H00FFFFFF&
       Caption         =   "Nh©n b¶n CT"
-      BeginProperty Font 
-         Name            =   "VK Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   375
-      Left            =   10320
+      Left            =   11400
       MaskColor       =   &H00FFFFFF&
       Picture         =   "Fchungtu.frx":68AC
       TabIndex        =   195
       Top             =   4680
       Visible         =   0   'False
-      Width           =   1335
+      Width           =   1095
    End
    Begin VB.PictureBox picFakeTitle 
       BackColor       =   &H00FFFFFF&
@@ -440,7 +431,7 @@ Begin VB.Form FrmChungtu
    Begin VB.CommandButton Command5 
       Caption         =   " Ho¸ ®¬n"
       Height          =   375
-      Left            =   12360
+      Left            =   12600
       TabIndex        =   173
       Top             =   4680
       Width           =   975
@@ -2355,14 +2346,14 @@ Begin VB.Form FrmChungtu
    Begin VB.CommandButton CmdPhieu 
       BackColor       =   &H00E0E0E0&
       Caption         =   "&1 PhiÕu TC"
-      Height          =   255
+      Height          =   375
       Index           =   0
-      Left            =   10680
+      Left            =   10080
       TabIndex        =   53
       Tag             =   "0"
       Top             =   4680
       Visible         =   0   'False
-      Width           =   975
+      Width           =   1095
    End
    Begin VB.OptionButton OptLoai 
       BackColor       =   &H0080FF80&
@@ -2864,6 +2855,15 @@ Begin VB.Form FrmChungtu
       FixedRows       =   0
       FixedCols       =   0
    End
+   Begin VB.Label Label6 
+      BackColor       =   &H00E0E0E0&
+      Caption         =   "0"
+      Height          =   240
+      Left            =   8640
+      TabIndex        =   199
+      Top             =   8325
+      Width           =   615
+   End
    Begin VB.Label lblTongCT 
       BackColor       =   &H00E0E0E0&
       Caption         =   "Tæng sè chøng tõ trong phÇn mÒm"
@@ -3118,13 +3118,13 @@ Begin VB.Form FrmChungtu
    Begin VB.Label Label 
       BackColor       =   &H00E0E0E0&
       Caption         =   "Sè chøng tõ ph©n hÖ ®ang dïng:"
-      Height          =   255
+      Height          =   240
       Index           =   28
       Left            =   6240
       TabIndex        =   160
       Tag             =   "Month"
-      Top             =   8300
-      Width           =   2895
+      Top             =   8310
+      Width           =   2415
    End
    Begin VB.Label Label 
       BackColor       =   &H00E0E0E0&
@@ -3134,7 +3134,7 @@ Begin VB.Form FrmChungtu
       Left            =   9600
       TabIndex        =   159
       Tag             =   "Month"
-      Top             =   8300
+      Top             =   8330
       Width           =   1095
    End
    Begin MSForms.Label Label2 
@@ -6455,13 +6455,13 @@ Private Sub Xuly51Child()
 
 
         'Xu ly vat
-        If rs_import!VAT <> 0 Then
+        If rs_import!VAT <> 0 Or rs_import!TgTCThue1 <> 0 Then
             txtChungtu_LostFocus (0)
             txtchungtu(2).Text = rs_import!VAT
             txtChungtu_LostFocus (2)
             txtchungtu(5).Text = "0"
             RFocus txtchungtu(6)
-            If rs_import!TVat = 0 Then
+            If rs_import!TVat = 0 And rs_import!TgTCThue1 = 0 Then
                 txtchungtu(6).Text = rs_import!TgTThue
                 bakTongtien = rs_import!TgTCThue
             Else
@@ -14502,6 +14502,9 @@ Public Function HienPhieuTrenManHinh(p As Integer) As Integer
 
     LayThongtinCT rs_chungtu!MaCT, 0, TenTC, DiachiTC, ctgoc, MaKHBH, p
     LayThongtinCT rs_chungtu!MaCT, 1, TenNX, DiaChiNX, , , p
+    If DiachiTC <> "..." Then
+        DiaChiNX = DiachiTC
+    End If
     LayThongtinCT rs_chungtu!MaCT, 2, TenBH, DiaChiBH, sh, , p
     LayThongtinCT rs_chungtu!MaCT, 3, unc1, unc2, unc3, , p
     If IsDate(sh) Then HanTT = IIf(Year(CVDate(sh)) >= pNamTC - 1, CVDate(sh), CVDate("01/01/1900")) Else HanTT = CVDate("01/01/1900")
