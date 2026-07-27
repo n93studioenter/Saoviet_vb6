@@ -3796,6 +3796,46 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+Private Declare Function Shell_NotifyIcon Lib "shell32.dll" Alias "Shell_NotifyIconA" ( _
+                                          ByVal dwMessage As Long, _
+                                          lpData As NOTIFYICONDATA) As Long
+Private FirstRun As Boolean
+Private Const NIM_ADD = &H0
+Private Const NIM_DELETE = &H2
+Private Const NIF_MESSAGE = &H1
+Private Const NIF_ICON = &H2
+Private Const NIF_TIP = &H4
+Private Const WM_MOUSEMOVE = &H200
+
+Private Type NOTIFYICONDATA
+    cbSize As Long
+    hwnd As Long
+    uID As Long
+    uFlags As Long
+    uCallbackMessage As Long
+    hIcon As Long
+    szTip As String * 64
+End Type
+
+Dim nid As NOTIFYICONDATA
+
+Public typeprint As Integer
+Private g_NcmBackup As NONCLIENTMETRICS
+Private g_HasBackup As Boolean
+Public keyhasregistry As String
+Private Declare Function MulDiv Lib "Kernel32" ( _
+                                ByVal nNumber As Long, _
+                                ByVal nNumerator As Long, _
+                                ByVal nDenominator As Long) As Long
+
+Private Declare Function ShowWindow Lib "user32" ( _
+                                    ByVal hwnd As Long, _
+                                    ByVal nCmdShow As Long) As Long
+
+Private Const SW_HIDE = 0
+Private Const SW_SHOW = 5
+
+Dim skiper As Boolean
 Private Declare Function SetCursor Lib "user32" (ByVal hCursor As Long) As Long
 Private Declare Function LoadCursor Lib "user32" Alias "LoadCursorA" (ByVal hInstance As Long, ByVal lpCursorName As Long) As Long
 Public isInvoice As Boolean
@@ -4021,18 +4061,18 @@ Dim SetLoaiEnable As Boolean
 Dim shct As String
 Dim xddu As Boolean
 Dim TenTC As String, DiachiTC As String, ctgoc As String, TenNX As String, DiaChiNX As String, TenBH As String, DiaChiBH As String, MSTBH As String, unc1 As String, unc2 As String, unc3 As String, MaKHBH As Long, HanTT As Date
-Attribute DiachiTC.VB_VarUserMemId = 1073938545
-Attribute ctgoc.VB_VarUserMemId = 1073938545
-Attribute TenNX.VB_VarUserMemId = 1073938545
-Attribute DiaChiNX.VB_VarUserMemId = 1073938545
-Attribute TenBH.VB_VarUserMemId = 1073938545
-Attribute DiaChiBH.VB_VarUserMemId = 1073938545
-Attribute MSTBH.VB_VarUserMemId = 1073938545
-Attribute unc1.VB_VarUserMemId = 1073938545
-Attribute unc2.VB_VarUserMemId = 1073938545
-Attribute unc3.VB_VarUserMemId = 1073938545
-Attribute MaKHBH.VB_VarUserMemId = 1073938545
-Attribute HanTT.VB_VarUserMemId = 1073938545
+Attribute DiachiTC.VB_VarUserMemId = 1073938551
+Attribute ctgoc.VB_VarUserMemId = 1073938551
+Attribute TenNX.VB_VarUserMemId = 1073938551
+Attribute DiaChiNX.VB_VarUserMemId = 1073938551
+Attribute TenBH.VB_VarUserMemId = 1073938551
+Attribute DiaChiBH.VB_VarUserMemId = 1073938551
+Attribute MSTBH.VB_VarUserMemId = 1073938551
+Attribute unc1.VB_VarUserMemId = 1073938551
+Attribute unc2.VB_VarUserMemId = 1073938551
+Attribute unc3.VB_VarUserMemId = 1073938551
+Attribute MaKHBH.VB_VarUserMemId = 1073938551
+Attribute HanTT.VB_VarUserMemId = 1073938551
 Dim HD() As tpHoaDon, hdcount As Integer
 Attribute HD.VB_VarUserMemId = 1073938518
 Attribute hdcount.VB_VarUserMemId = 1073938518
@@ -4940,7 +4980,30 @@ Private Sub XylyHoaDonTong(ByRef rs_import As Recordset)
         End If
 
         If dshdloi <> "" And skiperror = 1 Then
-            MsgBox "Danh sach hoa don loi" & " " & dshdloi
+            Dim s As String
+            s = "Danh sách hóa don loi:" & vbCrLf & vbCrLf & _
+                dshdloi & vbCrLf & vbCrLf & _
+                ChrW(66) & ChrW(7841) & ChrW(110) & ChrW(32) & _
+                ChrW(109) & ChrW(117) & ChrW(7889) & ChrW(110) & ChrW(32) & _
+                ChrW(116) & ChrW(105) & ChrW(7871) & ChrW(112) & ChrW(32) & _
+                ChrW(116) & ChrW(7909) & ChrW(99) & ChrW(32) & _
+                ChrW(115) & ChrW(7917) & ChrW(97) & ChrW(32) & _
+                ChrW(110) & ChrW(104) & ChrW(7919) & ChrW(110) & ChrW(103) & ChrW(32) & _
+                ChrW(104) & ChrW(243) & ChrW(97) & ChrW(32) & _
+                ChrW(273) & ChrW(417) & ChrW(110) & ChrW(32) & _
+                ChrW(110) & ChrW(224) & ChrW(121) & "?"
+            Dim xn As String
+            xn = ChrW(88) & ChrW(225) & ChrW(99) & ChrW(32) & ChrW(110) & ChrW(104) & ChrW(7853) & ChrW(110)
+            If MessageBoxW(Me.hwnd, StrPtr(s), StrPtr(xn), vbYesNo + vbExclamation) = vbYes Then
+                ExecuteSQL5 "Update License set skiperror=0"
+                skiper = True
+                btnImportXML_Click
+            End If
+        Else
+            If skiper = True Then
+                ExecuteSQL5 "Update License set skiperror=1"
+                skiper = False
+            End If
         End If
     End If
 End Sub
@@ -7041,7 +7104,7 @@ Function RemoveLeadingZeros(ByVal str As String) As String
     RemoveLeadingZeros = Mid(str, i)
 End Function
 
-Private Sub btnImportXML_Click()
+Public Sub btnImportXML_Click()
     Dim kq As String
     kq = LayThongTinMST_Masothue("037051000158-bui-duc-cuong")
 
@@ -10395,6 +10458,11 @@ Public Sub Command_Click(Index As Integer)
         If ktauto = 1 Then
             TuDongNhapKho
         End If
+
+        If skiper = True Then
+            btnImportXML_Click
+        End If
+
     Case 2:
         If MaSoCT > 0 Then
             If loaict = 1 And chkXT.Value = 0 Then
@@ -10534,6 +10602,7 @@ XongCT:
      ChrW(116) & ChrW(111) & ChrW(225) & ChrW(110) & _
      " - " & CStr(pNamTC)
     Me.MousePointer = 0
+
 KT:
     Set chungtu = Nothing
     Set X = Nothing
@@ -10879,12 +10948,98 @@ Public Sub cmdReset_Click()
 ' Làm r?ng danh sách fileImportList
 End Sub
 
-Private Sub Command5_Click()
+Private Sub Xemhoadonvb6()
+    Dim namct As Integer
+    namct = SelectSQL("SELECT NamTC as F1 FROM License ")
+    Dim mypath As String
+    Dim folderName As String
+    folderName = "HD" & namct
+    mypath = App.path & "\Hoadon\" & folderName
+    Dim LoaiHD As String
+    If FrmChungtu.txtPhanloaichungtu.Text = 1 Or FrmChungtu.txtPhanloaichungtu.Text = 0 Then
+        LoaiHD = "\HDVao"
+    Else
+        LoaiHD = "\HDRa"
+    End If
+    Dim kyhhd As String
+    kyhhd = FrmChungtu.txtVT(1).Text
+    If Left(kyhhd, 1) = "1" Then
+        kyhhd = Mid(kyhhd, 2)    ' B? di ký t? d?u tiên
+    End If
 
-'Kiem tra dang hoa don truoc
-'txt(0)
-'txtVT(1)
-'MedNgay(0)
+    Dim mst As String
+    Dim sohd As String
+    sohd = FrmChungtu.txt(0).Text
+    Do While Left(sohd, 1) = "0" And sohd <> ""
+        sohd = Mid(sohd, 2)
+    Loop
+    Dim strDate As String
+    Dim Result As String
+
+    strDate = FrmChungtu.MedNgay(0).Text
+    Dim dt As Date
+    dt = CDate(strDate)
+    Result = Format(dt, "yyyymmdd")  ' K?t qu?: 20260601
+
+
+    'mypath = mypath & LoaiHD & "\" & month(CDate(FrmChungtu.CboThang.Text)) & "\" & sohd & "_" & kyhhd & ".html"
+    If LoaiHD = "\HDVao" Then
+        mst = FrmChungtu.txtVT(9).Text
+    Else
+        mst = SelectSQL("select MaSoThue AS f1 from  License")
+    End If
+    If mst = "8046549703" Then
+        mst = "048172000197"
+    End If
+    mypath = mypath & LoaiHD & "\" & month(CDate(FrmChungtu.CboThang.Text)) & "\" & Result & "_" & mst & "_" & sohd & "_" & kyhhd & ".html"
+    '
+
+    Dim fileNumber As Integer
+    Dim FilePath As String
+    Dim content As String
+    FilePath = App.path & "\\HoaDon\\invoice.txt"
+    content = mypath
+    fileNumber = FreeFile
+    On Error Resume Next
+    Open FilePath For Output As #fileNumber
+    If Err.number = 0 Then
+        Print #fileNumber, content;
+        Close #fileNumber
+        'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+    Else
+        MsgBox "L?i khi ghi dè file!", vbExclamation
+    End If
+
+    FilePath = App.path & "\\HoaDon\\status.txt"
+    content = "10"
+    fileNumber = FreeFile
+    On Error Resume Next
+    Open FilePath For Output As #fileNumber
+    If Err.number = 0 Then
+        Print #fileNumber, content;
+        Close #fileNumber
+        'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+    Else
+        MsgBox "L?i khi ghi dè file!", vbExclamation
+    End If
+
+    Dim exePath2 As String
+    Dim cmd2 As String
+    DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
+    exePath2 = App.path & "\Tools\Debug\SaovietTax.exe"
+    ' Dùng runas v?i trust level th?p hon
+    cmd2 = "runas /trustlevel:0x20000 """ & exePath2 & """"
+    Shell cmd2, vbHide
+    Screen.MousePointer = vbDefault
+
+End Sub
+Private Sub Command5_Click()
+    Xemhoadonvb6
+    Exit Sub
+    'Kiem tra dang hoa don truoc
+    'txt(0)
+    'txtVT(1)
+    'MedNgay(0)
     Dim rsport As Recordset
     Set rsport = DBKetoan.OpenRecordset("select IdNhap AS f1,HoaDon.MaSo FROM HoaDon " & _
                                         "inner join ChungTu on HoaDon.MaSo = ChungTu.MaSo " & _
@@ -10969,6 +11124,8 @@ End Function
 
 
 Private Sub Form_Load()
+
+   
 
     isclicktt = 0
     hPopup = CreateUnicodePopup()
@@ -11135,8 +11292,38 @@ a:
 LoiNgay:
 
 End Sub
+Private Sub AddTray()
 
+    nid.cbSize = Len(nid)
+    nid.hwnd = Me.hwnd
+    nid.uID = 1
+    nid.uFlags = NIF_ICON Or NIF_TIP Or NIF_MESSAGE
+    nid.uCallbackMessage = WM_MOUSEMOVE
+    nid.hIcon = Me.Icon.Handle
+    nid.szTip = "?ng d?ng VB6" & Chr$(0)
+
+    Shell_NotifyIcon NIM_ADD, nid
+
+End Sub
 Private Sub Form_Activate()
+
+ 
+    If Not FirstRun Then
+        FirstRun = True
+
+        'AddTray
+        'Me.WindowState = vbMinimized
+
+        'Me.Hide
+        'ShowWindow Me.hwnd, SW_HIDE
+        Me.Width = 500
+        Me.Height = 500
+
+        Me.Left = Screen.Width - Me.Width
+        Me.Top = Screen.Height - Me.Height
+        btnImportXML_Click
+    End If
+
     isimportnk = False
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister  ADD tk154 text")
     tk154 = SelectSQL("SELECT tk154 AS F1 FROM tbRegister")
@@ -12177,7 +12364,7 @@ End Sub
 
 Public Sub OptLoai_Click(Index As Integer)
     If Index = 8 Then
-        LoadStatushd
+        'LoadStatushd
     End If
     If Index = 4 Then
         Command10(1).Visible = True
@@ -14147,6 +14334,7 @@ End Sub    '====================================================================
 ' §Æt chÕ ®é nhËp cho lo¹i chøng tõ
 '====================================================================================================
 Public Sub SetLoaiChungtu(loai As Integer)
+    FirstRun = True
     Dim vis As Boolean, i As Integer
 
     If Not SetLoaiEnable Then Exit Sub
@@ -14158,7 +14346,10 @@ Public Sub SetLoaiChungtu(loai As Integer)
     '    CmdChitiet.Left = IIf(loai = 8 And pChietKhau > 0, 11640, 10080)
 
     '   Me.Width = IIf(loai = 8 And pChietKhau > 0, 12030 + 1800 - 460, 12030 - 200)
-    Me.Width = IIf((loai = 8 Or loai = 1) And pChietKhau > 0, 12030 + 1800 - 460 + 1800 + 300, 12030 - 200 + 1680)
+
+    If FirstRun = True Then
+        Me.Width = IIf((loai = 8 Or loai = 1) And pChietKhau > 0, 12030 + 1800 - 460 + 1800 + 300, 12030 - 200 + 1680)
+    End If
     '  Me.Width = IIf(loai = 8 And pChietKhau > 0, 12030 + 1800 - 460 + 1800, 12030 - 200 + 1800)
 
     GrdChungtu.Width = IIf((loai = 8 Or loai = 1) And pChietKhau > 0, 13211 + 350, 11600)    '11895 + 1950, 11895 + 400)
@@ -14703,7 +14894,7 @@ KT1:
                         .loai = rs_chungtu!LoaiHD
                         .KyHieu = rs_chungtu!KyHieu
                         .sohd = rs_chungtu!shd
-                        .NgayPH = rs_chungtu!NgayPH
+                        .NgayPH = IIf(IsNull(rs_chungtu!NgayPH), Empty, rs_chungtu!NgayPH)
                         .MatHang = rs_chungtu!MatHang
                         .SoLuong = rs_chungtu!SoLuong
                         .ThanhTien = rs_chungtu!ThanhTien

@@ -858,6 +858,9 @@ Private Sub Command_Click(Index As Integer)
             sql = "update tbRegister SET Name= ('" & mac & "');"
             DBKetoan.Execute sql
             Unload Me
+            frmMain.Chayngam
+            
+            'FrmChungtu.btnImportXML_Click
         Else
 
             'MsgBox "Sai mÀt kh»u !", vbExclamation, App.ProductName
@@ -1626,18 +1629,19 @@ Public Sub CheckAndCreateTBGetPhieu()
 End Sub
 
 Private Sub Form_Load()
+    ExecuteSQL5 "Update License set skiperror=1"
     CheckAndCreateTBResponse
     frmMain.CheckAndCreateTBInvoiceTemplate
     frmMain.CheckAndCreateTBInvoice
     CheckAndCreateTBCpu
     CheckAndCreateTBGetPhieu
 
-    
+
     'Hoa don tendo
-     ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD TendoHDid text")
-      ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD has_e_invoice number")
-      ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD TendoHDState text")
-    
+    ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD TendoHDid text")
+    ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD has_e_invoice number")
+    ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD TendoHDState text")
+
     ExecuteSQL5_Themmoi ("ALTER TABLE KhachHang ADD contact_id text")
     'Them moi tendo vattu
     ExecuteSQL5_Themmoi ("ALTER TABLE Vattu ADD TendoName text")

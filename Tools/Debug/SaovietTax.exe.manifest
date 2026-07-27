@@ -2862,14 +2862,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SaovietTax.exe" size="8307200">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SaovietTax.exe" size="8452608">
       <assemblyIdentity name="SaovietTax" version="1.0.0.0" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>JD5U/92djEeQUnkQClSn4L4QZmszycAisGC1uOaJrSk=</dsig:DigestValue>
+        <dsig:DigestValue>zFoyICt9E/CQBrWClFfHlsctJTcxOrlwz3/qGmRA+uU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -7589,13 +7589,13 @@
       <dsig:DigestValue>x5rjk5aMXzx5cfZWjRDrx/Nkwy/bi4MJrWCJl2BZvY0=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Hoadon\invoice.txt" size="28">
+  <file name="Hoadon\invoice.txt" size="70">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>tKQGRsjAM1RiNvIwxca8J1d1R2EOI5Gu2VWwKymCxeA=</dsig:DigestValue>
+      <dsig:DigestValue>vlkqDTTIu/hhZhYWnD3DU5LZQx0GqSsuKYDHdjwD/EM=</dsig:DigestValue>
     </hash>
   </file>
   <file name="LdaNative.dll" size="164136">
@@ -7632,6 +7632,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>mNbYf7t7KFpVK6RGn++06JpjHl+olvEm5NxLzeS2amM=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\favicon.ico" size="1150">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>SRXiiYnCm1oO7LUx/+X2ZO88+bXRH2N6ZumAB7u34dY=</dsig:DigestValue>
     </hash>
   </file>
   <file name="runtimes\linux\native\selenium-manager" size="5386048">
