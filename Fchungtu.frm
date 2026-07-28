@@ -3859,7 +3859,7 @@ Private Declare Function ModifyMenu Lib "user32" Alias "ModifyMenuW" ( _
 
 Private Const MF_BYPOSITION = &H400&
 Private Const MF_STRING = &H0&
-
+Private mode As Integer
 ' Ví d? set cho item v? trí 0 trong popup
 
 Private Type UniMenuItem
@@ -4969,7 +4969,9 @@ Private Sub XylyHoaDonTong(ByRef rs_import As Recordset)
                ChrW(99) & ChrW(225) & ChrW(99) & " " & _
                ChrW(104) & ChrW(111) & ChrW(225) & " " & _
                ChrW(273) & ChrW(417) & ChrW(110)
-        MessageBoxW Me.hwnd, StrPtr(sMsg), StrPtr("Thông báo"), vbInformation
+        If mode = 0 Then
+            MessageBoxW Me.hwnd, StrPtr(sMsg), StrPtr("Thông báo"), vbInformation
+        End If
         Label(29).Visible = False
         lblThongbao.Visible = False
         btnReset_Click
@@ -4979,7 +4981,7 @@ Private Sub XylyHoaDonTong(ByRef rs_import As Recordset)
             TinhGXKBQ bakThangTinhGiavon, bakThangTinhGiavon, "", ""
         End If
 
-        If dshdloi <> "" And skiperror = 1 Then
+        If dshdloi <> "" And skiperror = 1 And mode = 0 Then
             Dim s As String
             s = "Danh sách hóa don loi:" & vbCrLf & vbCrLf & _
                 dshdloi & vbCrLf & vbCrLf & _
@@ -5004,6 +5006,10 @@ Private Sub XylyHoaDonTong(ByRef rs_import As Recordset)
                 ExecuteSQL5 "Update License set skiperror=1"
                 skiper = False
             End If
+        End If
+        If mode <> 0 Then
+            ExecuteSQL5 "Update tbRegister set IsRunning=0"
+            End
         End If
     End If
 End Sub
@@ -7158,15 +7164,20 @@ Public Sub btnImportXML_Click()
         XylyHoaDonTong rs_import
     Else
         ' MsgBox "Kh«ng cßn ho¸ ®¬n ®Ó import"
-        Dim sMsg As String
-        sMsg = _
-        ChrW(75) & ChrW(104) & ChrW(244) & ChrW(110) & ChrW(103) & " " & _
-               ChrW(99) & ChrW(242) & ChrW(110) & " " & _
-               ChrW(104) & ChrW(111) & ChrW(225) & " " & _
-               ChrW(273) & ChrW(417) & ChrW(110) & " " & _
-               ChrW(273) & ChrW(7875) & " import"
-        MessageBoxW Me.hwnd, StrPtr(sMsg), StrPtr("Thông báo"), vbInformation
-        lblThongbao.Visible = False
+        If mode = 0 Then
+            Dim sMsg As String
+            sMsg = _
+            ChrW(75) & ChrW(104) & ChrW(244) & ChrW(110) & ChrW(103) & " " & _
+                   ChrW(99) & ChrW(242) & ChrW(110) & " " & _
+                   ChrW(104) & ChrW(111) & ChrW(225) & " " & _
+                   ChrW(273) & ChrW(417) & ChrW(110) & " " & _
+                   ChrW(273) & ChrW(7875) & " import"
+            MessageBoxW Me.hwnd, StrPtr(sMsg), StrPtr("Thông báo"), vbInformation
+            lblThongbao.Visible = False
+        End If
+        If mode <> 0 Then
+            End
+        End If
     End If
 End Sub
 Private Sub OpenXMl()
@@ -11124,9 +11135,8 @@ End Function
 
 
 Private Sub Form_Load()
-
-   
-
+ 
+    mode = SelectSQL("select IsRunning AS f1 from  tbRegister")
     isclicktt = 0
     hPopup = CreateUnicodePopup()
     lblTitle(11).AutoSize = True
@@ -11307,7 +11317,11 @@ Private Sub AddTray()
 End Sub
 Private Sub Form_Activate()
 
- 
+    If mode = 1 Then
+        FirstRun = False
+    Else
+        FirstRun = True
+    End If
     If Not FirstRun Then
         FirstRun = True
 
@@ -11316,8 +11330,9 @@ Private Sub Form_Activate()
 
         'Me.Hide
         'ShowWindow Me.hwnd, SW_HIDE
-        Me.Width = 500
-        Me.Height = 500
+
+        Me.Width = 50
+        Me.Height = 50
 
         Me.Left = Screen.Width - Me.Width
         Me.Top = Screen.Height - Me.Height
@@ -14334,7 +14349,7 @@ End Sub    '====================================================================
 ' §Æt chÕ ®é nhËp cho lo¹i chøng tõ
 '====================================================================================================
 Public Sub SetLoaiChungtu(loai As Integer)
-    FirstRun = True
+  
     Dim vis As Boolean, i As Integer
 
     If Not SetLoaiEnable Then Exit Sub
@@ -14347,7 +14362,7 @@ Public Sub SetLoaiChungtu(loai As Integer)
 
     '   Me.Width = IIf(loai = 8 And pChietKhau > 0, 12030 + 1800 - 460, 12030 - 200)
 
-    If FirstRun = True Then
+    If mode = 0 Then
         Me.Width = IIf((loai = 8 Or loai = 1) And pChietKhau > 0, 12030 + 1800 - 460 + 1800 + 300, 12030 - 200 + 1680)
     End If
     '  Me.Width = IIf(loai = 8 And pChietKhau > 0, 12030 + 1800 - 460 + 1800, 12030 - 200 + 1800)

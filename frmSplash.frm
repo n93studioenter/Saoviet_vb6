@@ -198,8 +198,7 @@ Option Explicit
 
 
 Public Sub StartSAS()
-
-
+ 
 'SaveSetting "MyApp", "Settings", "FirstRun", "True"
     pDataPath = GetSetting(IniPath, "Environment", "Path", pCurDir + "DATA\KETOAN.MDB")
     ' §Æt c¸c format
@@ -228,10 +227,7 @@ Public Sub StartSAS()
 
     Set WSpace = DBEngine.CreateWorkspace(CStr(Time), "Admin", "", dbUseJet)
     Workspaces.Append WSpace
-
-
-
-
+ 
     Do While OpenDB(pDataPath) <> 0
         dlgCommonDialog.Flags = &H4&
         dlgCommonDialog.fileName = "*.MDB"

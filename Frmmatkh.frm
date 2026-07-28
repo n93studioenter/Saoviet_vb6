@@ -188,7 +188,7 @@ Private Declare Function TrackMouseEvent Lib "user32" _
                                          (lpEventTrack As TrackMouseEvent) As Long
 
 Private Const TME_LEAVE = &H2
-
+Private mode As Integer
 Private Declare Sub ReleaseCapture Lib "user32" ()
 Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" _
                                      (ByVal hwnd As Long, ByVal wMsg As Long, _
@@ -858,8 +858,10 @@ Private Sub Command_Click(Index As Integer)
             sql = "update tbRegister SET Name= ('" & mac & "');"
             DBKetoan.Execute sql
             Unload Me
-            frmMain.Chayngam
-            
+            If mode <> 0 Then
+                frmMain.Chayngam
+            End If
+
             'FrmChungtu.btnImportXML_Click
         Else
 
@@ -1209,6 +1211,7 @@ Private Sub Form_Activate()
     ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
     ExecuteSQL5_Themmoi ("ALTER TABLE Users ADD IsReister NUMBER")
     ExecuteSQL5_Themmoi ("ALTER TABLE Users  ADD MacAddress text")
+ 
     AddDataLCTT
     Left = frmMain.ScaleWidth * 30 / 100
     Top = frmMain.ScaleHeight * 40 / 100
@@ -1629,6 +1632,15 @@ Public Sub CheckAndCreateTBGetPhieu()
 End Sub
 
 Private Sub Form_Load()
+'Lay ra mod cua data dang chay
+       ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD IsRunning Number")
+    ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD VbCoche Number")
+    ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD VbCoche2 Number")
+    mode = SelectSQL("select IsRunning AS f1 from  tbRegister")
+    If mode <> 0 Then
+    
+    End If
+
     ExecuteSQL5 "Update License set skiperror=1"
     CheckAndCreateTBResponse
     frmMain.CheckAndCreateTBInvoiceTemplate
@@ -1689,6 +1701,9 @@ Private Sub Form_Load()
     If rs_checkus.EOF And cmg <> 249991 Then
         Command(0).Enabled = False
         frmLicenseUser.Show vbModal
+    End If
+    If mode <> 0 Then
+        Command_Click 0
     End If
 End Sub
 Private Sub BuildTitle()
