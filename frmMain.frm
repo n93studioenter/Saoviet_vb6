@@ -220,7 +220,7 @@ Begin VB.Form frmMain
          EndProperty
          BeginProperty Panel4 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Style           =   6
-            TextSave        =   "27/07/26"
+            TextSave        =   "28/07/26"
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -3087,15 +3087,15 @@ Public Sub Chayngam()
 
     If Not FirstRun Then
          ''FirstRun = True
-         'AddTray
-         'Me.Hide
+          AddTray
+          Me.Hide
          Command_Click 0
     End If
 End Sub
 
 
 Private Sub Form_Activate()
-   
+
     Dim counttkinvoice As Long
     counttkinvoice = SelectSQL("select count(*) AS f1 from  tbInvoiceInfo")
     If counttkinvoice = 1 Then

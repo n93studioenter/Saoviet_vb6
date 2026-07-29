@@ -7176,6 +7176,7 @@ Public Sub btnImportXML_Click()
             lblThongbao.Visible = False
         End If
         If mode <> 0 Then
+            ExecuteSQL5 "UPDATE tbRegister SET IsRunning = 0"
             End
         End If
     End If
@@ -10019,7 +10020,7 @@ Public Sub Command_Click(Index As Integer)
             GoTo XongCT
         End If
         If Not KiemTraChungtu Then
-            If FThuChi.FThuChiForm = 0 Then
+            If FThuChi.FThuChiForm = 0 And mode = 0 Then
                 'MsgBox "Cã tµi kho¶n chi tiÕt"
                 Dim ss As String
                 ss = ChrW(67) & ChrW(243) & ChrW(32) & ChrW(116) & ChrW(224) & ChrW(105) & ChrW(32) & ChrW(107) & ChrW(104) & ChrW(111) & ChrW(7843) & ChrW(110) & ChrW(32) & ChrW(99) & ChrW(104) & ChrW(105) & ChrW(32) & ChrW(116) & ChrW(105) & ChrW(7871) & ChrW(116)
@@ -10477,7 +10478,7 @@ Public Sub Command_Click(Index As Integer)
     Case 2:
         If MaSoCT > 0 Then
             If loaict = 1 And chkXT.Value = 0 Then
-                If FThuChi.FThuChiForm = 0 Then
+                If FThuChi.FThuChiForm = 0 And mode = 0 Then
                     If Not XoaCTOK(MaSoCT) Then
                         'MsgBox "V©t t­ nhËp ®· xuÊt hÕt, kh«ng xo¸ chøng tõ!", vbCritical, App.ProductName
                         Dim s As String

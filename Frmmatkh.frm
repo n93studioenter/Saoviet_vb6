@@ -1633,12 +1633,12 @@ End Sub
 
 Private Sub Form_Load()
 'Lay ra mod cua data dang chay
-       ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD IsRunning Number")
+    ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD IsRunning Number")
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD VbCoche Number")
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD VbCoche2 Number")
     mode = SelectSQL("select IsRunning AS f1 from  tbRegister")
     If mode <> 0 Then
-    
+         
     End If
 
     ExecuteSQL5 "Update License set skiperror=1"

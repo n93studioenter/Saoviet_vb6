@@ -198,7 +198,7 @@ Option Explicit
 
 
 Public Sub StartSAS()
- 
+
 'SaveSetting "MyApp", "Settings", "FirstRun", "True"
     pDataPath = GetSetting(IniPath, "Environment", "Path", pCurDir + "DATA\KETOAN.MDB")
     ' §Æt c¸c format
@@ -227,7 +227,7 @@ Public Sub StartSAS()
 
     Set WSpace = DBEngine.CreateWorkspace(CStr(Time), "Admin", "", dbUseJet)
     Workspaces.Append WSpace
- 
+
     Do While OpenDB(pDataPath) <> 0
         dlgCommonDialog.Flags = &H4&
         dlgCommonDialog.fileName = "*.MDB"
@@ -253,11 +253,13 @@ QuitSAS:
 End Sub
 
 Private Sub Form_Load()
-    Me.Height = 5280
-    Me.Width = 8250
+    Me.Height = 0
+    Me.Width = 0
+    ' Me.Height = 5280
+    'Me.Width = 8250
     dlgCommonDialog.InitDir = pCurDir + "DATA"
     If DEMO = 1 Then LbAbout(4).Caption = "Training Version"
-    
+
 End Sub
 
 Private Sub Label2_Click()
