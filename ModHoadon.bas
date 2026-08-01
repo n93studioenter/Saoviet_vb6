@@ -29,8 +29,13 @@ End Type
 Public h As tpHoaDon
 
 Public Sub GhiHoaDon(p As Integer)
+    Dim idnhap As String
     Dim sql As String
-
+    If FrmChungtu.mode = 1 Then
+        idnhap = "1"
+    Else
+        idnhap = "0"
+    End If
     With h
         If FThuChi.FThuChiForm <> 0 Then
             Dim date1 As Date
@@ -49,7 +54,7 @@ Public Sub GhiHoaDon(p As Integer)
             ExecuteSQL5 sql
         End If
         sql = "INSERT INTO HoaDon" + IIf(p > 0, "P", "") + " (MaSo,Loai,MaKhachHang,KyHieu,SoHD,NgayPH,MatHang,SoLuong,ThanhTien,TyLe,HD,KCT,HDBL,NK,TS, DC,HTTT,MauSo, TyGia,IdNhap) VALUES (" + CStr(.MaSo) + "," + CStr(.loai) + "," + CStr(IIf(KHDetail, .MaKhachHang, .MaSo)) _
-            + ",'" + .KyHieu + "','" + .sohd + "',#" + Format(.NgayPH, Mask_DB) + "#,'" + .MatHang + "'," + DoiDau(.SoLuong) + "," + DoiDau(.ThanhTien) + "," + CStr(.TyLe) + "," + CStr(.HD) + "," + CStr(.KCT) + "," + CStr(.HDBL) + "," + CStr(.NK) + "," + CStr(.ts) + "," + CStr(.DC) + ",'" + .HTTT + "','" + .MauSo + "'," + DoiDau(.tygia) + ",'" + FrmChungtu.bakIdNhap + "')"
+            + ",'" + .KyHieu + "','" + .sohd + "',#" + Format(.NgayPH, Mask_DB) + "#,'" + .MatHang + "'," + DoiDau(.SoLuong) + "," + DoiDau(.ThanhTien) + "," + CStr(.TyLe) + "," + CStr(.HD) + "," + CStr(.KCT) + "," + CStr(.HDBL) + "," + CStr(.NK) + "," + CStr(.ts) + "," + CStr(.DC) + ",'" + .HTTT + "','" + .MauSo + "'," + DoiDau(.tygia) + ",'" + idnhap + "')"
         ExecuteSQL5 sql
     End With
 End Sub

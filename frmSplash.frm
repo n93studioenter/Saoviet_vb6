@@ -149,9 +149,9 @@ Begin VB.Form frmSplash
    End
    Begin VB.Image Image1 
       Height          =   15015
-      Left            =   -9600
+      Left            =   -9480
       Picture         =   "frmSplash.frx":58B4
-      Top             =   -2000
+      Top             =   -1920
       Width           =   34920
    End
    Begin VB.Line Line1 
@@ -194,7 +194,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 Option Explicit
-
+ 
 
 
 Public Sub StartSAS()
@@ -253,6 +253,14 @@ QuitSAS:
 End Sub
 
 Private Sub Form_Load()
+    Dim sCmdLine As String
+    sCmdLine = Command$    ' L?y toàn b? tham s?
+
+    If InStr(1, sCmdLine, "/AutoMode", vbTextCompare) > 0 Then
+        modStatic = 2
+    Else
+        modStatic = 1
+    End If
     Me.Height = 0
     Me.Width = 0
     ' Me.Height = 5280

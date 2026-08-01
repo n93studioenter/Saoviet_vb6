@@ -1,5 +1,6 @@
 Attribute VB_Name = "ModSAS"
 Option Explicit
+Public modStatic As Integer
 Public Declare Function MessageBoxW Lib "user32" ( _
                                     ByVal hwnd As Long, _
                                     ByVal lpText As Long, _
@@ -134,10 +135,11 @@ Public opotion_1 As String
 Public pFunction As Integer
 Public pCT_ID As Long
 Dim n1 As Date, n2 As Date
-Attribute n2.VB_VarUserMemId = 1073741899
+Attribute n2.VB_VarUserMemId = 1073741900
 Public ban_quyen As Integer
 Attribute ban_quyen.VB_VarUserMemId = 1073741901
 Sub Main()
+
     opotion_1 = "1000"
     ban_quyen = 0
     If Not CheckMinRez(800, 600) Then
@@ -950,7 +952,7 @@ Public Sub XoaPSThang(thang As Integer)
     Set rs_ktra = DBKetoan.OpenRecordset(Query, dbOpenSnapshot)
     While Not rs_ktra.EOF
 
-        Query = "SELECT * FROM HoaDon WHERE SoHD = '" & rs_ktra!SHDon & "' AND KyHieu = '" & rs_ktra!KHHDon & "';"
+        Query = "SELECT * FROM HoaDon WHERE SoHD = '" & rs_ktra!shdon & "' AND KyHieu = '" & rs_ktra!KHHDon & "';"
         Set rs_ktra2 = DBKetoan.OpenRecordset(Query, dbOpenSnapshot)
         If Not rs_ktra2.EOF Then
             id = month(rs_ktra2!NgayPH)

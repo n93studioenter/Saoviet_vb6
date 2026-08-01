@@ -176,7 +176,7 @@ Option Explicit
 
 
 
-
+Public staticmod As Integer
 Private Type TrackMouseEvent
     cbSize As Long
     dwFlags As Long
@@ -858,7 +858,7 @@ Private Sub Command_Click(Index As Integer)
             sql = "update tbRegister SET Name= ('" & mac & "');"
             DBKetoan.Execute sql
             Unload Me
-            If mode <> 0 Then
+            If modStatic = 2 Then
                 frmMain.Chayngam
             End If
 
@@ -1636,9 +1636,10 @@ Private Sub Form_Load()
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD IsRunning Number")
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD VbCoche Number")
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD VbCoche2 Number")
+    ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD Version Text")
     mode = SelectSQL("select IsRunning AS f1 from  tbRegister")
     If mode <> 0 Then
-         
+
     End If
 
     ExecuteSQL5 "Update License set skiperror=1"
@@ -1702,7 +1703,7 @@ Private Sub Form_Load()
         Command(0).Enabled = False
         frmLicenseUser.Show vbModal
     End If
-    If mode <> 0 Then
+    If modStatic = 2 Then
         Command_Click 0
     End If
 End Sub

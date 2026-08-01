@@ -2123,6 +2123,8 @@ Public Sub LietKeChungtu(shtk As String, mvt As Long, mts As Long, mcn As Long, 
             ' MsgBox rs_chungtu!SoHieu
             GrdChungtu.AddItem rs_chungtu!sohieu + Chr(9) + Format(rs_chungtu!NgayCT, Mask_D) + Chr(9) _
                              + Format(rs_chungtu!NgayGS, Mask_D) + Chr(9) + rs_chungtu!dg + Chr(9) + Format(rs_chungtu!tps, Mask_0) + Chr(9) + CStr(mct)    ', 0
+            'FrmChungtu.Grid2.Cols = 8
+            'FrmChungtu.Grid2.ColWidth(6) = 400
             FrmChungtu.Grid2.AddItem rs_chungtu!sohieu + Chr(9) + Format(rs_chungtu!NgayCT, Mask_D) + Chr(9) _
                                    + Format(rs_chungtu!NgayGS, Mask_D) + Chr(9) + rs_chungtu!dg + Chr(9) + Format(rs_chungtu!tps, Mask_0) + Chr(9) + CStr(mct) + Chr(9) + Format(rs_chungtu!tylechietkhau, Mask_0) + Chr(9) + Format(rs_chungtu!chietkhau, Mask_0), 0
 
@@ -2369,7 +2371,7 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
         On Error Resume Next
         Set rs_hoadon = DBKetoan.OpenRecordset(sql_hoadon, dbOpenSnapshot)
         On Error GoTo 0
-
+        Dim LoaiHD As String
         If Not rs_hoadon Is Nothing Then
             If Not rs_hoadon.EOF Then
                 Do While Not rs_hoadon.EOF
@@ -2382,13 +2384,10 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
                     End If
                     loai_value = ""
 
-                    If Not IsNull(rs_hoadon!IdNhap) And rs_hoadon!IdNhap <> "..." And rs_hoadon!IdNhap <> "" Then
-                        If rs_hoadon!StatusPH = "1" Then
-                            loai_value = "PH"
-                        Else
-                            loai_value = "HD"
-                        End If
+                    If Not IsNull(rs_hoadon!idnhap) And rs_hoadon!idnhap <> "..." And rs_hoadon!idnhap <> "" Then
+
                     Else
+
                         If Not IsNull(rs_hoadon!TendoHDid) Then
                             If IsNull(rs_hoadon!TendoHDState) Then
                                 loai_value = ""
@@ -2399,6 +2398,7 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
                     End If
 
                     If Not dictLoaiHD.Exists(sohieu_key) Then
+
                         dictLoaiHD.Add sohieu_key, loai_value
                     End If
                     rs_hoadon.MoveNext
@@ -2425,23 +2425,40 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
             End If
         End If
 
+        Dim rowIndex As Integer
+        rowIndex = 1
         If GrdChungtu.Rows < MaxGridRow Then
             so_cong = so_cong + 1
 
             ' L?y LoaiHD t? Dictionary (cache) - KHÔNG M? RECORDSET
             Dim sohieu_ct As String
-            Dim LoaiHD As String
+
             If IsNull(rs_chungtu!sohieu) Then
                 sohieu_ct = ""
             Else
                 sohieu_ct = rs_chungtu!sohieu
             End If
             If dictLoaiHD.Exists(sohieu_ct) Then
-                LoaiHD = dictLoaiHD(sohieu_ct)
+                ' LoaiHD = dictLoaiHD(sohieu_ct)
             Else
-                LoaiHD = ""
+                'LoaiHD = ""
             End If
 
+            'Lay maso truoc
+            Dim idMaso As Long   ' Quan tr?ng: ph?i là Long, KHÔNG du?c là Integer
+            idMaso = SelectSQL("SELECT MaSo as f1 FROM ChungTu WHERE MaCT = " & CLng(rs_chungtu!MaCT) & " AND (MaTKNo=5108 or MaTKCo=14038)")
+            If idMaso = 47373 Or idMaso = 47372 Then
+                Dim isss As Integer
+                isss = 10
+            End If
+
+            Dim idnhap As String
+            idnhap = SelectSQL("SELECT IdNhap as f1 FROM HoaDon WHERE MaSo = " & idMaso)
+            If idnhap = "1" Then
+                LoaiHD = "KTra"  ' ?
+            Else
+                LoaiHD = ""  ' ? (ho?c d? tr?ng)
+            End If
             ' Ð? vào GrdChungtu
             GrdChungtu.AddItem rs_chungtu!sohieu & Chr(9) & Format(rs_chungtu!NgayCT, Mask_D) & Chr(9) _
                              & Format(rs_chungtu!NgayGS, Mask_D) & Chr(9) & rs_chungtu!dg & Chr(9) & Format(rs_chungtu!tps, Mask_0) & Chr(9) & CStr(mct), 0
@@ -2457,16 +2474,17 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
                                       LoaiHD & Chr(9) & _
                                       Format(rs_chungtu!chietkhau, Mask_0), 0
 
+            ' ===== KH?I T?O =====
+            
             FrmChungtu.Grid2.ColWidth(3) = 3700
         Else
             ovr = 1
         End If
         rs_chungtu.MoveNext
     Loop
-
     ' ========== 7. C?P NH?T UI ==========
     'FrmChungtu.Label(28).Caption = "S? ch?ng t? phân h? dang dùng: " & str(rs_chungtu.recordCount)
- FrmChungtu.Label6.Caption = str(rs_chungtu.recordCount)
+    FrmChungtu.Label6.Caption = str(rs_chungtu.recordCount)
     Dim kk As Integer
     kk = 0
     Do While so_cong < 15
@@ -2623,7 +2641,7 @@ Public Sub LietKeChungtu_11(shtk As String, mvt As Long, mts As Long, mcn As Lon
                                                 "inner join ChungTu on HoaDon.MaSo = ChungTu.MaSo " & _
                                                 "where ChungTu.SoHieu = '" & rs_chungtu!sohieu & "' ", dbOpenSnapshot)
             If Not rsport.EOF Then
-                If Not IsNull(rsport!IdNhap) And rsport!IdNhap <> "..." And rsport!IdNhap <> "" Then
+                If Not IsNull(rsport!idnhap) And rsport!idnhap <> "..." And rsport!idnhap <> "" Then
                     If rsport!StatusPH = "1" Then
                         LoaiHD = "PH"
                     Else
