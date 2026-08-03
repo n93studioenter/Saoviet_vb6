@@ -6,10 +6,10 @@ Begin VB.Form Form4s
    ClientHeight    =   1305
    ClientLeft      =   60
    ClientTop       =   345
-   ClientWidth     =   6735
+   ClientWidth     =   8415
    LinkTopic       =   "Form4"
    ScaleHeight     =   1305
-   ScaleWidth      =   6735
+   ScaleWidth      =   8415
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows Default
    Begin VB.Timer Timer1 
@@ -23,7 +23,7 @@ Begin VB.Form Form4s
       Caption         =   "Label1"
       BeginProperty Font 
          Name            =   "Arial"
-         Size            =   8.25
+         Size            =   9.75
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -31,11 +31,11 @@ Begin VB.Form Form4s
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H00FFFFFF&
-      Height          =   495
+      Height          =   615
       Left            =   240
       TabIndex        =   0
       Top             =   240
-      Width           =   5175
+      Width           =   6255
    End
 End
 Attribute VB_Name = "Form4s"

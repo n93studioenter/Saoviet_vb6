@@ -136,6 +136,7 @@ Form=frmInReport.frm
 Form=frmLoading.frm
 Form=frmMeaasge.frm
 ResFile32="custom.RES"
+Form=Form4s.frm
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile="SAS.HLP"

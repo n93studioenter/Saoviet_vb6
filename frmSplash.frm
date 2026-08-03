@@ -260,6 +260,7 @@ Private Sub Form_Load()
         modStatic = 2
     Else
         modStatic = 1
+        
     End If
     Me.Height = 0
     Me.Width = 0

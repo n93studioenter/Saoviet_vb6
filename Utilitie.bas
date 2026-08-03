@@ -2042,7 +2042,7 @@ ErrorHandler:
              "Chu?i nh?p: " & Left(st, 100) & vbCrLf & _
              "V? trí i: " & i & vbCrLf & _
              "L: " & L
-    
+        
     ' Ghi vào file log
     Open App.path & "\error_log.txt" For Append As #1
     Print #1, Now & " - " & sError
