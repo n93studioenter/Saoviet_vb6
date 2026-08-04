@@ -4326,7 +4326,7 @@ Public Sub DoSubNganhang()
     continute = True
     Dim myDate As Date
     myDate = CDate(rs_ktraNH!NgayGD)
-    txt(0).Text = rs_ktraNH!SHDon
+    txt(0).Text = rs_ktraNH!shdon
 
     CboThang.Text = month(myDate) & "/" & Year(myDate)
     MedNgay(0).Text = Format(rs_ktraNH!NgayGD, "dd/mm/yy")
@@ -4472,7 +4472,7 @@ Private Sub btnImport_Click()
         ' Duy?t qua t?t c? các b?n ghi
         Do While Not rs_ktra.EOF
             ' L?y s? lu?ng tru?ng
-            AddImportData rs_ktra!id, rs_ktra!Ten, rs_ktra!mst, rs_ktra!SHDon, rs_ktra!KHHDon, rs_ktra!NLap, "", "", rs_ktra!tkno, rs_ktra!TkCo, rs_ktra!tkThue, rs_ktra!noidung, rs_ktra!TongTien, rs_ktra!VAT, rs_ktra!sohieutp, rs_ktra!TgTCThue, rs_ktra!TgTThue, rs_ktra!Ishaschild
+            AddImportData rs_ktra!id, rs_ktra!Ten, rs_ktra!mst, rs_ktra!shdon, rs_ktra!KHHDon, rs_ktra!NLap, "", "", rs_ktra!tkno, rs_ktra!TkCo, rs_ktra!tkThue, rs_ktra!noidung, rs_ktra!TongTien, rs_ktra!VAT, rs_ktra!sohieutp, rs_ktra!TgTCThue, rs_ktra!TgTThue, rs_ktra!Ishaschild
             rs_ktra.MoveNext
         Loop
     End If
@@ -4979,7 +4979,20 @@ Private Sub XylyHoaDonTong(ByRef rs_import As Recordset)
     skiperror = SelectSQL("select skiperror AS f1 from  License")
     ' lblThongbao.Caption = "®ang  xö lý ho¸ ®¬n thø " & sttHD & " / " & totals
     lblThongbao.Caption = sttHD & " / " & totals
+    If Not rs_import Is Nothing Then
 
+        If Not rs_import.EOF And Not rs_import.BOF Then
+            ' An toàn d? truy c?p d? li?u
+            If rs_import!Type = 1 Then
+                'frmThongbao.thongbao "Dang xu ly hoa don dau vao : " & sttHD & " / " & totals
+            Else
+               ' frmThongbao.thongbao "Dang xu ly hoa don dau ra : " & sttHD & " / " & totals
+            End If
+        Else
+            ' Recordset r?ng
+            frmThongbao.thongbao "Da xu ly xong dau vao"
+        End If
+    End If
     If sttHD < totals Then
         sttHD = sttHD + 1
     End If
@@ -5078,7 +5091,7 @@ Private Sub XulyAddHeader(ByRef rs_import As Recordset)
     'Fill for Date
     Dim myDate As Date
     myDate = CDate(rs_import!NLap)
-    txt(0).Text = rs_import!SHDon
+    txt(0).Text = rs_import!shdon
     txtVT(1).Text = rs_import!KHHDon
 
 
@@ -7133,7 +7146,7 @@ Private Sub timerNext_Timer()
                 response = vbYes
             End If
         Else
-            dshdloi = dshdloi & rs_import!SHDon & ","
+            dshdloi = dshdloi & rs_import!shdon & ","
             response = vbNo
         End If
 
@@ -7174,6 +7187,7 @@ Function RemoveLeadingZeros(ByVal str As String) As String
 End Function
 
 Public Sub btnImportXML_Click()
+     frmThongbao.thongbao "Dang import hoa don"
     Dim kq As String
     kq = LayThongTinMST_Masothue("037051000158-bui-duc-cuong")
 
@@ -7245,7 +7259,7 @@ Public Sub btnImportXML_Click()
             'Form4.Show vbModal   ' Form4 s? t? dóng sau 2 giây
             ' Khi Form4 dóng, code ch?y ti?p xu?ng dây
             On Error GoTo ErrorHandler
-  
+
             Form4s.Show vbModal
 ErrorHandler:
             'MsgBox "L?i hi?n th? Form4s: " & Err.Description
@@ -11221,7 +11235,8 @@ End Function
 
 
 Private Sub Form_Load()
-     If modStatic = 2 Then
+    'frmThongbao.Show
+    If modStatic = 2 Then
         FirstRun = False
         firstPlay = True
     Else
@@ -11512,12 +11527,15 @@ Private Sub Form_Activate()
 
         'Me.Hide
         'ShowWindow Me.hwnd, SW_HIDE
-
-        Me.Width = 50
-        Me.Height = 50
-
-        Me.Left = Screen.Width - Me.Width
-        Me.Top = Screen.Height - Me.Height
+        If Me.WindowState = vbNormal Then
+            ' Tr? hao taskbar
+            Dim taskbarHeight As Long
+            taskbarHeight = 450  ' Kho?ng 30 pixels
+            Me.Width = 500
+            Me.Height = 500
+            Me.Left = Screen.Width - Me.Width - 100
+            Me.Top = Screen.Height - Me.Height - taskbarHeight - 100
+        End If
 
         timerauto.Enabled = True
     End If
