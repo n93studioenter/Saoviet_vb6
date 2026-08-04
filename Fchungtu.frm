@@ -37,7 +37,7 @@ Begin VB.Form FrmChungtu
    WhatsThisHelp   =   -1  'True
    Begin VB.Timer timerauto 
       Enabled         =   0   'False
-      Interval        =   2000
+      Interval        =   300
       Left            =   12720
       Top             =   5520
    End
@@ -3833,6 +3833,7 @@ Private Const NIF_TIP = &H4
 Private Const WM_MOUSEMOVE = &H200
 Dim LastRow As Long
 Dim LastCol As Long
+Private firstPlay As Boolean
 Private Type NOTIFYICONDATA
     cbSize As Long
     hwnd As Long
@@ -4087,18 +4088,18 @@ Dim SetLoaiEnable As Boolean
 Dim shct As String
 Dim xddu As Boolean
 Dim TenTC As String, DiachiTC As String, ctgoc As String, TenNX As String, DiaChiNX As String, TenBH As String, DiaChiBH As String, MSTBH As String, unc1 As String, unc2 As String, unc3 As String, MaKHBH As Long, HanTT As Date
-Attribute DiachiTC.VB_VarUserMemId = 1073938553
-Attribute ctgoc.VB_VarUserMemId = 1073938553
-Attribute TenNX.VB_VarUserMemId = 1073938553
-Attribute DiaChiNX.VB_VarUserMemId = 1073938553
-Attribute TenBH.VB_VarUserMemId = 1073938553
-Attribute DiaChiBH.VB_VarUserMemId = 1073938553
-Attribute MSTBH.VB_VarUserMemId = 1073938553
-Attribute unc1.VB_VarUserMemId = 1073938553
-Attribute unc2.VB_VarUserMemId = 1073938553
-Attribute unc3.VB_VarUserMemId = 1073938553
-Attribute MaKHBH.VB_VarUserMemId = 1073938553
-Attribute HanTT.VB_VarUserMemId = 1073938553
+Attribute DiachiTC.VB_VarUserMemId = 1073938556
+Attribute ctgoc.VB_VarUserMemId = 1073938556
+Attribute TenNX.VB_VarUserMemId = 1073938556
+Attribute DiaChiNX.VB_VarUserMemId = 1073938556
+Attribute TenBH.VB_VarUserMemId = 1073938556
+Attribute DiaChiBH.VB_VarUserMemId = 1073938556
+Attribute MSTBH.VB_VarUserMemId = 1073938556
+Attribute unc1.VB_VarUserMemId = 1073938556
+Attribute unc2.VB_VarUserMemId = 1073938556
+Attribute unc3.VB_VarUserMemId = 1073938556
+Attribute MaKHBH.VB_VarUserMemId = 1073938556
+Attribute HanTT.VB_VarUserMemId = 1073938556
 Dim HD() As tpHoaDon, hdcount As Integer
 Attribute HD.VB_VarUserMemId = 1073938518
 Attribute hdcount.VB_VarUserMemId = 1073938518
@@ -4325,7 +4326,7 @@ Public Sub DoSubNganhang()
     continute = True
     Dim myDate As Date
     myDate = CDate(rs_ktraNH!NgayGD)
-    txt(0).Text = rs_ktraNH!shdon
+    txt(0).Text = rs_ktraNH!SHDon
 
     CboThang.Text = month(myDate) & "/" & Year(myDate)
     MedNgay(0).Text = Format(rs_ktraNH!NgayGD, "dd/mm/yy")
@@ -4471,7 +4472,7 @@ Private Sub btnImport_Click()
         ' Duy?t qua t?t c? các b?n ghi
         Do While Not rs_ktra.EOF
             ' L?y s? lu?ng tru?ng
-            AddImportData rs_ktra!id, rs_ktra!Ten, rs_ktra!mst, rs_ktra!shdon, rs_ktra!KHHDon, rs_ktra!NLap, "", "", rs_ktra!tkno, rs_ktra!TkCo, rs_ktra!tkThue, rs_ktra!noidung, rs_ktra!TongTien, rs_ktra!VAT, rs_ktra!sohieutp, rs_ktra!TgTCThue, rs_ktra!TgTThue, rs_ktra!Ishaschild
+            AddImportData rs_ktra!id, rs_ktra!Ten, rs_ktra!mst, rs_ktra!SHDon, rs_ktra!KHHDon, rs_ktra!NLap, "", "", rs_ktra!tkno, rs_ktra!TkCo, rs_ktra!tkThue, rs_ktra!noidung, rs_ktra!TongTien, rs_ktra!VAT, rs_ktra!sohieutp, rs_ktra!TgTCThue, rs_ktra!TgTThue, rs_ktra!Ishaschild
             rs_ktra.MoveNext
         Loop
     End If
@@ -5038,7 +5039,7 @@ Private Sub XylyHoaDonTong(ByRef rs_import As Recordset)
             'Form4.Show vbModal   ' Form4 s? t? dóng sau 2 giây
             ' Khi Form4 dóng, code ch?y ti?p xu?ng dây
             Form4s.Show vbModal
-            Sleep 4000
+            Sleep 200
             End   ' ? Thoát ?ng d?ng
         End If
     End If
@@ -5077,7 +5078,7 @@ Private Sub XulyAddHeader(ByRef rs_import As Recordset)
     'Fill for Date
     Dim myDate As Date
     myDate = CDate(rs_import!NLap)
-    txt(0).Text = rs_import!shdon
+    txt(0).Text = rs_import!SHDon
     txtVT(1).Text = rs_import!KHHDon
 
 
@@ -7021,7 +7022,8 @@ End Sub
 
 
 Private Sub XulyMiddle(ByRef rs_import As Recordset)
-    
+
+     
     'Xu ly hoa don tong hop
     If rs_import!hdon = "02" Then
         FVAT.Text1 = "1"
@@ -7131,7 +7133,7 @@ Private Sub timerNext_Timer()
                 response = vbYes
             End If
         Else
-            dshdloi = dshdloi & rs_import!shdon & ","
+            dshdloi = dshdloi & rs_import!SHDon & ","
             response = vbNo
         End If
 
@@ -7227,7 +7229,7 @@ Public Sub btnImportXML_Click()
     Else
         ' MsgBox "Kh«ng cßn ho¸ ®¬n ®Ó import"
 
-        If modStatic = 1 Then
+        If modStatic = 1 Or modStatic = 1 Then
             Dim sMsg As String
             sMsg = _
             ChrW(75) & ChrW(104) & ChrW(244) & ChrW(110) & ChrW(103) & " " & _
@@ -7243,16 +7245,11 @@ Public Sub btnImportXML_Click()
             'Form4.Show vbModal   ' Form4 s? t? dóng sau 2 giây
             ' Khi Form4 dóng, code ch?y ti?p xu?ng dây
             On Error GoTo ErrorHandler
-
-            ' Load form n?u chua load
-            If Form4s Is Nothing Then
-                Load Form4s
-            End If
-
+  
             Form4s.Show vbModal
 ErrorHandler:
             'MsgBox "L?i hi?n th? Form4s: " & Err.Description
-            Sleep 4000
+            Sleep 200
             End   ' ? Thoát ?ng d?ng
         End If
     End If
@@ -10140,8 +10137,7 @@ Public Sub Command_Click(Index As Integer)
                 sql = .Text
                 .col = 8
 
-                If Len(.Text) = 0 And modStatic = 1 Then
-
+                If Len(.Text) = 0 Then
                     Exit For
                 End If
                 mtk = CLng5(.Text)
@@ -11225,7 +11221,12 @@ End Function
 
 
 Private Sub Form_Load()
-    
+     If modStatic = 2 Then
+        FirstRun = False
+        firstPlay = True
+    Else
+        FirstRun = True
+    End If
     mode = SelectSQL("select IsRunning AS f1 from  tbRegister")
     isclicktt = 0
     hPopup = CreateUnicodePopup()
@@ -11412,23 +11413,7 @@ Private Sub Form_Activate()
     Else
         FirstRun = True
     End If
-    If Not FirstRun Then
-        FirstRun = True
-       
-        'AddTray
-        'Me.WindowState = vbMinimized
 
-        'Me.Hide
-        'ShowWindow Me.hwnd, SW_HIDE
-
-        Me.Width = 50
-        Me.Height = 50
-
-        Me.Left = Screen.Width - Me.Width
-        Me.Top = Screen.Height - Me.Height
-
-        timerauto.Enabled = True
-    End If
 
     isimportnk = False
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister  ADD tk154 text")
@@ -11518,6 +11503,24 @@ Private Sub Form_Activate()
     '            Command(1).Enabled = True
     '        End If
     '    End If
+
+
+    If firstPlay = True Then
+        firstPlay = False
+        'AddTray
+        'Me.WindowState = vbMinimized
+
+        'Me.Hide
+        'ShowWindow Me.hwnd, SW_HIDE
+
+        Me.Width = 50
+        Me.Height = 50
+
+        Me.Left = Screen.Width - Me.Width
+        Me.Top = Screen.Height - Me.Height
+
+        timerauto.Enabled = True
+    End If
 End Sub
 
 Function kiemtralicenkey() As Boolean
@@ -15262,7 +15265,7 @@ Private Function KiemTraChungtu() As Boolean
     If (loaict = 1 Or loaict = 2 Or loaict = 8) And (CboNguon(0).ListIndex < 0 Or CboNguon(1).ListIndex < 0) Then
         ErrMsg er_NguonNX
         RFocus CboNguon(0)
-        'MsgBox "loi1"
+        MsgBox "loi1"
         Exit Function
     End If
     GrdChungtu.Row = 0
