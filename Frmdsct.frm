@@ -2125,9 +2125,17 @@ Public Sub LietKeChungtu(shtk As String, mvt As Long, mts As Long, mcn As Long, 
                              + Format(rs_chungtu!NgayGS, Mask_D) + Chr(9) + rs_chungtu!dg + Chr(9) + Format(rs_chungtu!tps, Mask_0) + Chr(9) + CStr(mct)    ', 0
             'FrmChungtu.Grid2.Cols = 8
             'FrmChungtu.Grid2.ColWidth(6) = 400
-            FrmChungtu.Grid2.AddItem rs_chungtu!sohieu + Chr(9) + Format(rs_chungtu!NgayCT, Mask_D) + Chr(9) _
-                                   + Format(rs_chungtu!NgayGS, Mask_D) + Chr(9) + rs_chungtu!dg + Chr(9) + Format(rs_chungtu!tps, Mask_0) + Chr(9) + CStr(mct) + Chr(9) + Format(rs_chungtu!tylechietkhau, Mask_0) + Chr(9) + Format(rs_chungtu!chietkhau, Mask_0), 0
-
+            'FrmChungtu.Grid2.AddItem rs_chungtu!sohieu + Chr(9) + Format(rs_chungtu!NgayCT, Mask_D) + Chr(9) _
+             ' + Format(rs_chungtu!NgayGS, Mask_D) + Chr(9) + rs_chungtu!dg + Chr(9) + Format(rs_chungtu!tps, Mask_0) + Chr(9) + CStr(mct) + Chr(9) + Format(rs_chungtu!tylechietkhau, Mask_0) + Chr(9) + Format(rs_chungtu!chietkhau, Mask_0), 0
+            FrmChungtu.Grid2.AddItem _
+                    rs_chungtu!sohieu & vbTab & _
+                                      Format(rs_chungtu!NgayCT, Mask_D) & vbTab & _
+                                      Format(rs_chungtu!NgayGS, Mask_D) & vbTab & _
+                                      rs_chungtu!dg & vbTab & _
+                                      Format(rs_chungtu!tps, Mask_0) & vbTab & _
+                                      CStr(mct) & vbTab & _
+                                      "KTra" & vbTab & _
+                                      Format(rs_chungtu!chietkhau, Mask_0), 0
             so_cong = so_cong + 1
         Else
             ovr = 1
@@ -2135,7 +2143,7 @@ Public Sub LietKeChungtu(shtk As String, mvt As Long, mts As Long, mcn As Long, 
         rs_chungtu.MoveNext
     Loop
     'FrmChungtu.Label(28).Caption = "Sè chøng tõ ph©n hÖ ®ang dïng: " + str(rs_chungtu.recordCount)
-     FrmChungtu.Label6.Caption = str(rs_chungtu.recordCount)
+    FrmChungtu.Label6.Caption = str(rs_chungtu.recordCount)
     Dim kk
     kk = 0
     Do While kk <> 10
@@ -2341,7 +2349,6 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
     ' ========== 3. CLEAR GRID ==========
     ClearGrid GrdChungtu, GrdChungtu.tag
     ClearGrid FrmChungtu.Grid2, FrmChungtu.Grid2.tag
-
     Dim so As Long
     so = GrdChungtu.Rows - 1
     If so > 0 Then
@@ -2464,6 +2471,14 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
                              & Format(rs_chungtu!NgayGS, Mask_D) & Chr(9) & rs_chungtu!dg & Chr(9) & Format(rs_chungtu!tps, Mask_0) & Chr(9) & CStr(mct), 0
 
             ' Ð? vào FrmChungtu.Grid2
+            Dim idnhap As String
+            idnhap = SelectSQL("SELECT IdNhap as f1 FROM HoaDon WHERE MaSo = " & idMaso)
+            If idnhap = "1" Then
+                LoaiHD = "KTra"  ' ?
+            Else
+                LoaiHD = ""  ' ? (ho?c d? tr?ng)
+            End If
+            
             FrmChungtu.Grid2.AddItem _
                     rs_chungtu!sohieu & Chr(9) & _
                                       Format(rs_chungtu!NgayCT, Mask_D) & Chr(9) & _
@@ -2475,7 +2490,7 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
                                       Format(rs_chungtu!chietkhau, Mask_0), 0
 
             ' ===== KH?I T?O =====
-            
+
             FrmChungtu.Grid2.ColWidth(3) = 3700
         Else
             ovr = 1
