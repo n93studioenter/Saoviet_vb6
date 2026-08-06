@@ -2127,6 +2127,15 @@ Public Sub LietKeChungtu(shtk As String, mvt As Long, mts As Long, mcn As Long, 
             'FrmChungtu.Grid2.ColWidth(6) = 400
             'FrmChungtu.Grid2.AddItem rs_chungtu!sohieu + Chr(9) + Format(rs_chungtu!NgayCT, Mask_D) + Chr(9) _
              ' + Format(rs_chungtu!NgayGS, Mask_D) + Chr(9) + rs_chungtu!dg + Chr(9) + Format(rs_chungtu!tps, Mask_0) + Chr(9) + CStr(mct) + Chr(9) + Format(rs_chungtu!tylechietkhau, Mask_0) + Chr(9) + Format(rs_chungtu!chietkhau, Mask_0), 0
+            Dim idnhap As String
+            Dim LoaiHD As String
+            idnhap = SelectSQL("SELECT IdNhap as f1 FROM HoaDon WHERE MaSo = " & idMaso)
+            If idnhap = "1" Then
+                LoaiHD = "KTra"  ' ?
+            Else
+                LoaiHD = ""  ' ? (ho?c d? tr?ng)
+            End If
+
             FrmChungtu.Grid2.AddItem _
                     rs_chungtu!sohieu & vbTab & _
                                       Format(rs_chungtu!NgayCT, Mask_D) & vbTab & _
@@ -2471,7 +2480,7 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
                              & Format(rs_chungtu!NgayGS, Mask_D) & Chr(9) & rs_chungtu!dg & Chr(9) & Format(rs_chungtu!tps, Mask_0) & Chr(9) & CStr(mct), 0
 
             ' Ð? vào FrmChungtu.Grid2
-            Dim idnhap As String
+            'Dim idnhap As String
             idnhap = SelectSQL("SELECT IdNhap as f1 FROM HoaDon WHERE MaSo = " & idMaso)
             If idnhap = "1" Then
                 LoaiHD = "KTra"  ' ?
