@@ -1632,14 +1632,15 @@ Public Sub CheckAndCreateTBGetPhieu()
 End Sub
 
 Private Sub Form_Load()
-    If modStatic = 1 Then
-        ExecuteSQL5 "UPDATE tbRegister  SET IsRunning =0"
-    End If
-    'Lay ra mod cua data dang chay
+
+'Lay ra mod cua data dang chay
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD IsRunning Number")
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD VbCoche Number")
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD VbCoche2 Number")
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD Version Text")
+    If modStatic = 1 Then
+        ExecuteSQL5 "UPDATE tbRegister  SET IsRunning =0"
+    End If
     mode = SelectSQL("select IsRunning AS f1 from  tbRegister")
     If mode <> 0 Then
 

@@ -3,14 +3,14 @@ Object = "{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}#1.1#0"; "ieframe.dll"
 Begin VB.Form frmBrowser 
    BorderStyle     =   5  'Sizable ToolWindow
    Caption         =   "Xem HD"
-   ClientHeight    =   9570
+   ClientHeight    =   9420
    ClientLeft      =   75
    ClientTop       =   315
    ClientWidth     =   12630
    LinkTopic       =   "Form4"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   9570
+   ScaleHeight     =   9420
    ScaleWidth      =   12630
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
@@ -37,7 +37,7 @@ Begin VB.Form frmBrowser
       NoFolders       =   0   'False
       Transparent     =   0   'False
       ViewID          =   "{0057D0E0-3573-11CF-AE69-08002B2E1262}"
-      Location        =   ""
+      Location        =   "http:///"
    End
 End
 Attribute VB_Name = "frmBrowser"

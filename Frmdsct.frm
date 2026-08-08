@@ -2009,7 +2009,7 @@ End Sub
 
 
 Public Sub LietKeChungtu(shtk As String, mvt As Long, mts As Long, mcn As Long, shd As String)
-    Dim sql As String, loaict As String, i As Integer, mct As Long, uID As Long, mct1 As Long, mloai As Integer
+    Dim sql As String, loaict As String, i As Integer, mct As Long, uid As Long, mct1 As Long, mloai As Integer
     Dim rs_chungtu As Recordset, st As Double, ovr As Integer, sh As String
 
     Me.MousePointer = 11
@@ -2109,13 +2109,13 @@ Public Sub LietKeChungtu(shtk As String, mvt As Long, mts As Long, mcn As Long, 
     Do While Not rs_chungtu.EOF
         If mct <> rs_chungtu!MaCT Then
             mct = rs_chungtu!MaCT
-            uID = rs_chungtu!User_ID
+            uid = rs_chungtu!User_ID
         Else
-            If uID <> rs_chungtu!User_ID Or mloai <> rs_chungtu!maloai Then
+            If uid <> rs_chungtu!User_ID Or mloai <> rs_chungtu!maloai Then
                 mct1 = Lng_MaxValue("MaCT", "ChungTu" + sh) + 1
                 ExecuteSQL5 "UPDATE ChungTu" + sh + " SET MaCT=" + CStr(mct1) + " WHERE MaCT=" + CStr(mct) + " AND User_ID=" + CStr(rs_chungtu!User_ID)
                 mct = mct1
-                uID = rs_chungtu!User_ID
+                uid = rs_chungtu!User_ID
                 mloai = rs_chungtu!maloai
             End If
         End If
@@ -2127,6 +2127,14 @@ Public Sub LietKeChungtu(shtk As String, mvt As Long, mts As Long, mcn As Long, 
             'FrmChungtu.Grid2.ColWidth(6) = 400
             'FrmChungtu.Grid2.AddItem rs_chungtu!sohieu + Chr(9) + Format(rs_chungtu!NgayCT, Mask_D) + Chr(9) _
              ' + Format(rs_chungtu!NgayGS, Mask_D) + Chr(9) + rs_chungtu!dg + Chr(9) + Format(rs_chungtu!tps, Mask_0) + Chr(9) + CStr(mct) + Chr(9) + Format(rs_chungtu!tylechietkhau, Mask_0) + Chr(9) + Format(rs_chungtu!chietkhau, Mask_0), 0
+            Dim idMaso As Long   ' Quan tr?ng: ph?i là Long, KHÔNG du?c là Integer
+            idMaso = SelectSQL("SELECT MaSo as f1 FROM ChungTu WHERE MaCT = " & CLng(rs_chungtu!MaCT) & " AND (MaTKNo=5108 or MaTKCo=14038)")
+            If idMaso = 47373 Or idMaso = 47372 Then
+                Dim isss As Integer
+                isss = 10
+            End If
+
+
             Dim idnhap As String
             Dim LoaiHD As String
             idnhap = SelectSQL("SELECT IdNhap as f1 FROM HoaDon WHERE MaSo = " & idMaso)
@@ -2205,7 +2213,7 @@ KT:
     Me.MousePointer = 0
 End Sub
 Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long, shd As String)
-    Dim sql As String, sql_main As String, loaict As String, i As Integer, mct As Long, uID As Long, mct1 As Long, mloai As Integer
+    Dim sql As String, sql_main As String, loaict As String, i As Integer, mct As Long, uid As Long, mct1 As Long, mloai As Integer
     Dim rs_chungtu As Recordset, st As Double, ovr As Integer, sh As String
     Dim dictLoaiHD As Object  ' Dùng Dictionary d? cache LoaiHD
 
@@ -2429,14 +2437,14 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
     Do While Not rs_chungtu.EOF
         If mct <> rs_chungtu!MaCT Then
             mct = rs_chungtu!MaCT
-            uID = rs_chungtu!User_ID
+            uid = rs_chungtu!User_ID
             mloai = rs_chungtu!maloai
         Else
-            If uID <> rs_chungtu!User_ID Or mloai <> rs_chungtu!maloai Then
+            If uid <> rs_chungtu!User_ID Or mloai <> rs_chungtu!maloai Then
                 mct1 = Lng_MaxValue("MaCT", "ChungTu" & sh) + 1
                 ExecuteSQL5 "UPDATE ChungTu" & sh & " SET MaCT=" & CStr(mct1) & " WHERE MaCT=" & CStr(mct) & " AND User_ID=" & CStr(rs_chungtu!User_ID)
                 mct = mct1
-                uID = rs_chungtu!User_ID
+                uid = rs_chungtu!User_ID
                 mloai = rs_chungtu!maloai
             End If
         End If
@@ -2480,6 +2488,11 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
                              & Format(rs_chungtu!NgayGS, Mask_D) & Chr(9) & rs_chungtu!dg & Chr(9) & Format(rs_chungtu!tps, Mask_0) & Chr(9) & CStr(mct), 0
 
             ' Ð? vào FrmChungtu.Grid2
+ 
+            idMaso = SelectSQL("SELECT MaSo as f1 FROM ChungTu WHERE MaCT = " & CLng(rs_chungtu!MaCT) & " AND (MaTKNo=5108 or MaTKCo=14038)")
+            If idMaso = 47373 Or idMaso = 47372 Then
+                isss = 10
+            End If
             'Dim idnhap As String
             idnhap = SelectSQL("SELECT IdNhap as f1 FROM HoaDon WHERE MaSo = " & idMaso)
             If idnhap = "1" Then
@@ -2487,7 +2500,7 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
             Else
                 LoaiHD = ""  ' ? (ho?c d? tr?ng)
             End If
-            
+
             FrmChungtu.Grid2.AddItem _
                     rs_chungtu!sohieu & Chr(9) & _
                                       Format(rs_chungtu!NgayCT, Mask_D) & Chr(9) & _
@@ -2548,7 +2561,7 @@ KT:
 End Sub
 
 Public Sub LietKeChungtu_11(shtk As String, mvt As Long, mts As Long, mcn As Long, shd As String)
-    Dim sql As String, loaict As String, i As Integer, mct As Long, uID As Long, mct1 As Long, mloai As Integer
+    Dim sql As String, loaict As String, i As Integer, mct As Long, uid As Long, mct1 As Long, mloai As Integer
     Dim rs_chungtu As Recordset, st As Double, ovr As Integer, sh As String
 
     Me.MousePointer = 11
@@ -2638,13 +2651,13 @@ Public Sub LietKeChungtu_11(shtk As String, mvt As Long, mts As Long, mcn As Lon
     Do While Not rs_chungtu.EOF
         If mct <> rs_chungtu!MaCT Then
             mct = rs_chungtu!MaCT
-            uID = rs_chungtu!User_ID
+            uid = rs_chungtu!User_ID
         Else
-            If uID <> rs_chungtu!User_ID Or mloai <> rs_chungtu!maloai Then
+            If uid <> rs_chungtu!User_ID Or mloai <> rs_chungtu!maloai Then
                 mct1 = Lng_MaxValue("MaCT", "ChungTu" + sh) + 1
                 ExecuteSQL5 "UPDATE ChungTu" + sh + " SET MaCT=" + CStr(mct1) + " WHERE MaCT=" + CStr(mct) + " AND User_ID=" + CStr(rs_chungtu!User_ID)
                 mct = mct1
-                uID = rs_chungtu!User_ID
+                uid = rs_chungtu!User_ID
                 mloai = rs_chungtu!maloai
             End If
         End If

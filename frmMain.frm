@@ -6,9 +6,9 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "mscomctl.ocx"
 Begin VB.Form frmMain 
    AutoRedraw      =   -1  'True
    BackColor       =   &H00FFC0C0&
-   ClientHeight    =   11100
+   ClientHeight    =   11040
    ClientLeft      =   3990
-   ClientTop       =   -3150
+   ClientTop       =   -3240
    ClientWidth     =   20490
    FillColor       =   &H00FD8866&
    BeginProperty Font 
@@ -25,7 +25,7 @@ Begin VB.Form frmMain
    KeyPreview      =   -1  'True
    LinkTopic       =   "Sao Viet Accounting Software"
    Picture         =   "frmMain.frx":424A
-   ScaleHeight     =   11100
+   ScaleHeight     =   11040
    ScaleWidth      =   20490
    Tag             =   "11"
    WindowState     =   2  'Maximized
@@ -197,7 +197,7 @@ Begin VB.Form frmMain
       Height          =   390
       Left            =   0
       TabIndex        =   57
-      Top             =   10710
+      Top             =   10650
       Width           =   20490
       _ExtentX        =   36142
       _ExtentY        =   688
@@ -220,7 +220,7 @@ Begin VB.Form frmMain
          EndProperty
          BeginProperty Panel4 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Style           =   6
-            TextSave        =   "04/08/26"
+            TextSave        =   "07/08/26"
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -2579,7 +2579,7 @@ Private Const WM_MOUSEMOVE = &H200
 Private Type NOTIFYICONDATA
     cbSize As Long
     hwnd As Long
-    uID As Long
+    uid As Long
     uFlags As Long
     uCallbackMessage As Long
     hIcon As Long
@@ -2736,7 +2736,7 @@ Private Sub AddTray()
 
     nid.cbSize = Len(nid)
     nid.hwnd = Me.hwnd
-    nid.uID = 1
+    nid.uid = 1
     nid.uFlags = NIF_ICON Or NIF_TIP Or NIF_MESSAGE
     nid.uCallbackMessage = WM_MOUSEMOVE
     nid.hIcon = Me.Icon.Handle
@@ -3059,6 +3059,7 @@ ErrorHandler:
     ProgressBar1.Value = 100
     DoEvents
 End Sub
+
 Private Sub Image2_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' Ð?i con tr? khi hover
     Image2.MousePointer = vbSizeNS
@@ -3289,9 +3290,7 @@ ErrorHandler:
     Close #fileNumber
 End Function
 Private Sub Kiemtraphienbanht()
-
-
-
+ 
     Dim originPaths As String
     originPaths = App.path
     Dim serverpath As String
@@ -3729,7 +3728,7 @@ Private Sub Form_Load()
     End If
 
     LoadMenuform
-    'Kiemtraphienbanht
+    Kiemtraphienbanht
     'Taifilecapnhat
 
 
@@ -3950,8 +3949,37 @@ Private Sub Image2_Click()
     Label4.Visible = True
     Label4.Caption = "Update..."
     DoEvents
-    Taifilecapnhat
+    'Taifilecapnhat
+    Capnhatdata
     Label4.Visible = False
+End Sub
+Public Sub Capnhatdata()
+    Dim fileNumber As Integer
+    Dim FilePath As String
+    Dim content As String
+    FilePath = App.path & "\\HoaDon\\status.txt"
+    content = "12"
+    fileNumber = FreeFile
+    On Error Resume Next
+    Open FilePath For Output As #fileNumber
+    If Err.number = 0 Then
+        Print #fileNumber, content;
+        Close #fileNumber
+        'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+    Else
+        MsgBox "L?i khi ghi dè file!", vbExclamation
+    End If
+
+
+    Dim exePath2 As String
+    Dim cmd2 As String
+    DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
+    exePath2 = App.path & "\Tools\Debug\SaovietTax.exe"
+    ' Dùng runas v?i trust level th?p hon
+    cmd2 = "runas /trustlevel:0x20000 """ & exePath2 & """"
+    Shell cmd2, vbHide
+    Screen.MousePointer = vbDefault
+    Unload Me
 End Sub
 
 Private Sub lbCty_Click(Index As Integer)
@@ -5606,7 +5634,7 @@ Public Function ChonTenTep(Title As String, f As Long, mask As String, act As In
         .InitDir = pCurDir + "data\"
         .DialogTitle = Title
         .Flags = f
-        .fileName = mask
+        .FileName = mask
         .DefaultExt = mask
         .Filter = "TÖp d÷ liÖu (" + mask + ")|" + mask + "|TÊt c¶ (*.*)|*.*"
         On Error GoTo Xong
@@ -5617,22 +5645,22 @@ Public Function ChonTenTep(Title As String, f As Long, mask As String, act As In
             Case 4:             .ShowFont
         End Select
         On Error GoTo 0
-        If Len(.fileName) = 0 Or Left(.fileName, 1) = "*" Then GoTo Xong
+        If Len(.FileName) = 0 Or Left(.FileName, 1) = "*" Then GoTo Xong
         
         If act = 2 Then
-            If Len(Dir(.fileName)) > 0 Then
-                If .fileName = pDataPath Then
+            If Len(Dir(.FileName)) > 0 Then
+                If .FileName = pDataPath Then
                     MsgBox "TÖp d÷ liÖu ®ang më !", vbCritical, App.ProductName
                     GoTo Xong
                 End If
-                If MsgBox("TÖp " + .fileName + " ®· tån t¹i, tiÕp tôc ? !", vbQuestion + vbYesNo, App.ProductName) = vbNo Then GoTo Xong
-                If Recycle(.fileName) <> 0 Then
-                    MsgBox "Kh«ng xo¸ ®­îc tÖp " + dlgCommonDialog.fileName + " !", vbExclamation, App.ProductName
+                If MsgBox("TÖp " + .FileName + " ®· tån t¹i, tiÕp tôc ? !", vbQuestion + vbYesNo, App.ProductName) = vbNo Then GoTo Xong
+                If Recycle(.FileName) <> 0 Then
+                    MsgBox "Kh«ng xo¸ ®­îc tÖp " + dlgCommonDialog.FileName + " !", vbExclamation, App.ProductName
                     GoTo Xong
                 End If
             End If
         End If
-        ChonTenTep = .fileName
+        ChonTenTep = .FileName
     End With
 Xong:
 End Function
