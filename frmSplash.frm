@@ -230,11 +230,11 @@ Public Sub StartSAS()
 
     Do While OpenDB(pDataPath) <> 0
         dlgCommonDialog.Flags = &H4&
-        dlgCommonDialog.fileName = "*.MDB"
+        dlgCommonDialog.FileName = "*.MDB"
         On Error GoTo QuitSAS
         dlgCommonDialog.ShowOpen
         On Error GoTo 0
-        pDataPath = dlgCommonDialog.fileName
+        pDataPath = dlgCommonDialog.FileName
     Loop
 
     pThang = month(Date)
