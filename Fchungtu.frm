@@ -63,7 +63,7 @@ Begin VB.Form FrmChungtu
       Caption         =   "Dß CT bank"
       Height          =   375
       Index           =   1
-      Left            =   10080
+      Left            =   11760
       TabIndex        =   196
       Top             =   8400
       Visible         =   0   'False
@@ -449,7 +449,7 @@ Begin VB.Form FrmChungtu
    End
    Begin VB.Timer timerNganhang 
       Enabled         =   0   'False
-      Interval        =   200
+      Interval        =   50
       Left            =   13200
       Top             =   1080
    End
@@ -3837,7 +3837,7 @@ Private firstPlay As Boolean
 Private Type NOTIFYICONDATA
     cbSize As Long
     hwnd As Long
-    uID As Long
+    uid As Long
     uFlags As Long
     uCallbackMessage As Long
     hIcon As Long
@@ -7167,7 +7167,7 @@ Private Sub timerNext_Timer()
             Exit Sub
         Else
             ' Ngu?i dùng ch?n "Yes"
-            'UpdateImportStatus 2
+            UpdateImportStatus 2
             hasError = False
             Command_Click 0
             timerError.Enabled = True
@@ -7204,7 +7204,7 @@ Public Sub btnImportXML_Click()
     'Goi table Import
     Query = "SELECT t.* FROM tbimport AS t " & _
             "WHERE t.IsImport = 1 " & _
-            "AND t.Status = 0 " & _
+            "AND t.Status = 0 OR t.Status = 2  " & _
             "AND t.ID = (" & _
           "   SELECT MIN(t2.ID) FROM tbimport AS t2 " & _
           "   WHERE t2.SHDon = t.SHDon " & _
@@ -10937,7 +10937,7 @@ Public Sub ImportData()
     ' T?o h?p tho?i m? file
     Set fDialog = CreateObject("MSComDlg.CommonDialog")
     fDialog.ShowOpen
-    FilePath = fDialog.fileName
+    FilePath = fDialog.FileName
 
     ' Kh?i t?o MSXML
     Set xmlDoc = CreateObject("MSXML2.DOMDocument.3.0")
@@ -11169,9 +11169,9 @@ Private Sub Command5_Click()
                 End If
             End If
 
-            Dim url As String
-            url = App.path & "\HoaDon\HdNhap\" & idnhap & ".pdf"
-            Shell "rundll32.exe url.dll,FileProtocolHandler " & url, vbNormalFocus
+            Dim URL As String
+            URL = App.path & "\HoaDon\HdNhap\" & idnhap & ".pdf"
+            Shell "rundll32.exe url.dll,FileProtocolHandler " & URL, vbNormalFocus
 
             rsport.Close
             Set rsport = Nothing
@@ -11412,7 +11412,7 @@ Private Sub AddTray()
 
     nid.cbSize = Len(nid)
     nid.hwnd = Me.hwnd
-    nid.uID = 1
+    nid.uid = 1
     nid.uFlags = NIF_ICON Or NIF_TIP Or NIF_MESSAGE
     nid.uCallbackMessage = WM_MOUSEMOVE
     nid.hIcon = Me.Icon.Handle
@@ -14698,7 +14698,7 @@ End Sub
 Public Function HienPhieuTrenManHinh(p As Integer) As Integer
 
     Dim rs_chungtu, thongtinkhachhang As Recordset
-    Dim sh As String, i As Integer, sodong As Integer, ps As Double, ThemDong As Boolean, mct As Long, mts As Long, uID As Long
+    Dim sh As String, i As Integer, sodong As Integer, ps As Double, ThemDong As Boolean, mct As Long, mts As Long, uid As Long
     Dim ma As Long, diengiai As String, ms As Long, tl As Integer, mvt As Long, mk As Long, mtp As Long, psnt As Double, dgia As Double, luong As Double, st As String
 
     ma = MaSoCT
@@ -14793,8 +14793,8 @@ Public Function HienPhieuTrenManHinh(p As Integer) As Integer
 
     If pSongNgu Then txt(2).Text = rs_chungtu!DienGiaiE
     SetListIndex CboNguon(3), rs_chungtu!CTGS
-    uID = rs_chungtu!User_ID
-    LbUser.Caption = TenUser(uID)
+    uid = rs_chungtu!User_ID
+    LbUser.Caption = TenUser(uid)
     If (loaict = 7 Or loaict = 8) And pNVBH > 0 Then
         LBNV.Caption = TenNV(sh, rs_chungtu!MaNV)
         txt(3).Text = sh

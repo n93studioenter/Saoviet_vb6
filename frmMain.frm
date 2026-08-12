@@ -220,7 +220,7 @@ Begin VB.Form frmMain
          EndProperty
          BeginProperty Panel4 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Style           =   6
-            TextSave        =   "07/08/26"
+            TextSave        =   "11/08/26"
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -3691,7 +3691,29 @@ Public Sub CheckAndCreateTBInvoice()
     End If
 End Sub
 Private Sub Form_Load()
- 
+
+    Dim fileNumber As Integer
+    Dim content As String
+    Dim FilePath As String
+    FilePath = App.path & "\\HoaDon\\status.txt"
+    content = "11"
+    fileNumber = FreeFile
+    On Error Resume Next
+    Open FilePath For Output As #fileNumber
+    If Err.number = 0 Then
+        Print #fileNumber, content;
+        Close #fileNumber
+        'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+    Else
+        MsgBox "L?i khi ghi dè file!", vbExclamation
+    End If
+    Dim exePath2 As String
+    Dim cmd2 As String
+    DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
+    exePath2 = App.path & "\Tools\Debug\SaovietTax.exe"
+    ' Dùng runas v?i trust level th?p hon
+    cmd2 = "runas /trustlevel:0x20000 """ & exePath2 & """"
+    Shell cmd2, vbHide
     CheckAndCreateTBCpu
 
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD tk155 text")
