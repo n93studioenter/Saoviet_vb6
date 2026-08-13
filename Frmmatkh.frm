@@ -200,12 +200,12 @@ Private Const HTCAPTION = 2
 
 Private Declare Function SetWindowTextW Lib "user32" _
                                         (ByVal hwnd As Long, ByVal lpString As Long) As Long
-Private Declare Function MultiByteToWideChar Lib "Kernel32" _
+Private Declare Function MultiByteToWideChar Lib "kernel32" _
                                              (ByVal CodePage As Long, ByVal dwFlags As Long, _
                                               lpMultiByteStr As Any, ByVal cchMultiByte As Long, _
                                               ByVal lpWideCharStr As Long, ByVal cchWideChar As Long) As Long
 
-Private Declare Sub CopyMemory Lib "Kernel32" Alias "RtlMoveMemory" (Destination As Any, source As Any, ByVal length As Long)
+Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (Destination As Any, source As Any, ByVal length As Long)
 Private Declare Function GetAdaptersInfo Lib "iphlpapi" (lpAdapterInfo As Any, lpSize As Long) As Long
 
 Dim Counter As Integer
@@ -860,6 +860,8 @@ Private Sub Command_Click(Index As Integer)
             Unload Me
             If modStatic = 2 Then
                 frmMain.Chayngam
+            Else
+                frmMain.ChayTb
             End If
 
             'FrmChungtu.btnImportXML_Click

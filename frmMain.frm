@@ -113,6 +113,12 @@ Begin VB.Form frmMain
          EndProperty
       EndProperty
    End
+   Begin VB.Timer timerChaytb 
+      Enabled         =   0   'False
+      Interval        =   2000
+      Left            =   11760
+      Top             =   1320
+   End
    Begin VB.CommandButton Command3 
       Caption         =   "Command3"
       Height          =   375
@@ -208,19 +214,23 @@ Begin VB.Form frmMain
          BeginProperty Panel1 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Object.Width           =   8819
             MinWidth        =   8819
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel2 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Object.Width           =   12347
             MinWidth        =   12347
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel3 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel4 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Style           =   6
-            TextSave        =   "11/08/26"
+            TextSave        =   "13/08/26"
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -2565,6 +2575,9 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+Private Declare Sub Sleep Lib "Kernel32" (ByVal dwMilliseconds As Long)
+Private Declare Function SetForegroundWindow Lib "user32" (ByVal hwnd As Long) As Long
+
 Private Declare Function Shell_NotifyIcon Lib "shell32.dll" Alias "Shell_NotifyIconA" ( _
                                           ByVal dwMessage As Long, _
                                           lpData As NOTIFYICONDATA) As Long
@@ -3093,6 +3106,9 @@ Public Sub Chayngam()
          Command_Click 0
     End If
 End Sub
+Public Sub ChayTb()
+    timerChaytb.Enabled = True
+End Sub
 
 
 Private Sub Form_Activate()
@@ -3295,8 +3311,7 @@ Private Sub Kiemtraphienbanht()
     originPaths = App.path
     Dim serverpath As String
     serverpath = originPaths & "\Hoadon\serverpath.txt"
-
-
+ 
     Dim uncPath As String
     uncPath = ReadTxt(serverpath)
     Dim txtPath As String
@@ -3691,31 +3706,7 @@ Public Sub CheckAndCreateTBInvoice()
     End If
 End Sub
 Private Sub Form_Load()
-
-    Dim fileNumber As Integer
-    Dim content As String
-    Dim FilePath As String
-    FilePath = App.path & "\\HoaDon\\status.txt"
-    content = "11"
-    fileNumber = FreeFile
-    On Error Resume Next
-    Open FilePath For Output As #fileNumber
-    If Err.number = 0 Then
-        Print #fileNumber, content;
-        Close #fileNumber
-        'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
-    Else
-        MsgBox "L?i khi ghi dè file!", vbExclamation
-    End If
-    Dim exePath2 As String
-    Dim cmd2 As String
-    DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
-    exePath2 = App.path & "\Tools\Debug\SaovietTax.exe"
-    ' Dùng runas v?i trust level th?p hon
-    cmd2 = "runas /trustlevel:0x20000 """ & exePath2 & """"
-    Shell cmd2, vbHide
-    CheckAndCreateTBCpu
-
+ 
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD tk155 text")
     ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
     frmMain.sbStatusBar.Panels(4).ToolTipText = "Log On Time: " + Format(Time, "hh:mm:ss")
@@ -3750,7 +3741,7 @@ Private Sub Form_Load()
     End If
 
     LoadMenuform
-    Kiemtraphienbanht
+    'Kiemtraphienbanht
     'Taifilecapnhat
 
 
@@ -5776,3 +5767,38 @@ Private Sub timerBackup_Timer()
     Set fso = Nothing
 End Sub
 
+Private Sub timerChaytb_Timer()
+    timerChaytb.Enabled = False
+
+    Dim fileNumber As Integer
+    Dim content As String
+    Dim FilePath As String
+    FilePath = App.path & "\\HoaDon\\status.txt"
+    content = "11"
+    fileNumber = FreeFile
+    On Error Resume Next
+    Open FilePath For Output As #fileNumber
+    If Err.number = 0 Then
+        Print #fileNumber, content;
+        Close #fileNumber
+        'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+    Else
+        MsgBox "L?i khi ghi dè file!", vbExclamation
+    End If
+    Dim exePath2 As String
+    Dim cmd2 As String
+    Dim taskID As Double
+
+    DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
+    exePath2 = App.path & "\Tools\Debug\SaovietTax.exe"
+    ' Dùng runas v?i trust level th?p hon
+    cmd2 = "runas /trustlevel:0x20000 """ & exePath2 & """"
+    ' L?y Process ID
+    taskID = Shell(cmd2, vbNormalFocus)    ' Ho?c vbNormalFocus d? hi?n th? và focus
+
+    ' Ch? ?ng d?ng kh?i t?o
+    Sleep 500
+
+    ' Kích ho?t ?ng d?ng
+    AppActivate taskID
+End Sub
