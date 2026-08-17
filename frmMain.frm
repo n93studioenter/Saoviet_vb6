@@ -229,7 +229,7 @@ Begin VB.Form frmMain
          EndProperty
          BeginProperty Panel4 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Style           =   6
-            TextSave        =   "13/08/26"
+            TextSave        =   "17/08/26"
             Key             =   ""
             Object.Tag             =   ""
          EndProperty
@@ -5801,4 +5801,17 @@ Private Sub timerChaytb_Timer()
 
     ' Kích ho?t ?ng d?ng
     AppActivate taskID
+
+    'Reset ve lai 1
+    content = "1"
+    fileNumber = FreeFile
+    On Error Resume Next
+    Open FilePath For Output As #fileNumber
+    If Err.number = 0 Then
+        Print #fileNumber, content;
+        Close #fileNumber
+        'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+    Else
+        MsgBox "L?i khi ghi dè file!", vbExclamation
+    End If
 End Sub

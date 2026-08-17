@@ -561,124 +561,124 @@ Begin VB.Form FBcKt
       TabCaption(1)   =   "VËt t­, thµnh phÈm"
       TabPicture(1)   =   "Fbckt.frx":14FD6
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "LbTenVT(0)"
-      Tab(1).Control(1)=   "LbTenTk(4)"
-      Tab(1).Control(2)=   "LbTenTk(10)"
-      Tab(1).Control(3)=   "LbTenTk(11)"
-      Tab(1).Control(4)=   "LbCT(0)"
-      Tab(1).Control(5)=   "LbCT(1)"
-      Tab(1).Control(6)=   "Line(4)"
-      Tab(1).Control(7)=   "Line(6)"
-      Tab(1).Control(8)=   "txtShTk(4)"
-      Tab(1).Control(9)=   "ChkDu(3)"
-      Tab(1).Control(10)=   "CboLoai(0)"
-      Tab(1).Control(11)=   "ChkDu(2)"
-      Tab(1).Control(12)=   "OptBC(10)"
-      Tab(1).Control(13)=   "OptBC(11)"
-      Tab(1).Control(14)=   "OptBC(12)"
-      Tab(1).Control(15)=   "OptBC(13)"
-      Tab(1).Control(16)=   "OptBC(14)"
-      Tab(1).Control(17)=   "OptBC(15)"
-      Tab(1).Control(18)=   "OptBC(16)"
-      Tab(1).Control(19)=   "cmdtk(4)"
-      Tab(1).Control(20)=   "OptBC(33)"
-      Tab(1).Control(21)=   "CboVV(0)"
-      Tab(1).Control(22)=   "ChkDu(4)"
-      Tab(1).Control(23)=   "CboLoai(1)"
-      Tab(1).Control(24)=   "cmdtk(10)"
-      Tab(1).Control(25)=   "ChkDu(7)"
-      Tab(1).Control(26)=   "OptBC(44)"
-      Tab(1).Control(27)=   "cmdtk(11)"
-      Tab(1).Control(28)=   "txtShTk(11)"
-      Tab(1).Control(29)=   "OptBC(46)"
-      Tab(1).Control(30)=   "OptBC(50)"
-      Tab(1).Control(31)=   "OptBC(51)"
-      Tab(1).Control(32)=   "OptBC(52)"
-      Tab(1).Control(33)=   "OptBC(59)"
-      Tab(1).Control(34)=   "cmdCT(0)"
-      Tab(1).Control(35)=   "OptBC(60)"
-      Tab(1).Control(36)=   "txtShVT(0)"
-      Tab(1).Control(37)=   "OptBC(64)"
-      Tab(1).Control(38)=   "OptBC(65)"
-      Tab(1).Control(39)=   "cmdvt(0)"
-      Tab(1).Control(40)=   "OptBC(54)"
-      Tab(1).Control(41)=   "Frame(5)"
-      Tab(1).Control(42)=   "txtShTk(10)"
-      Tab(1).Control(43)=   "OptBC(43)"
-      Tab(1).Control(44)=   "OptBC(74)"
-      Tab(1).Control(45)=   "OptBC(77)"
-      Tab(1).Control(46)=   "cmdCT(1)"
-      Tab(1).Control(47)=   "txtCT(1)"
-      Tab(1).Control(48)=   "txtCT(0)"
-      Tab(1).Control(49)=   "CboHD"
+      Tab(1).Control(0)=   "CboHD"
+      Tab(1).Control(1)=   "txtCT(0)"
+      Tab(1).Control(2)=   "txtCT(1)"
+      Tab(1).Control(3)=   "cmdCT(1)"
+      Tab(1).Control(4)=   "OptBC(77)"
+      Tab(1).Control(5)=   "OptBC(74)"
+      Tab(1).Control(6)=   "OptBC(43)"
+      Tab(1).Control(7)=   "txtShTk(10)"
+      Tab(1).Control(8)=   "Frame(5)"
+      Tab(1).Control(9)=   "OptBC(54)"
+      Tab(1).Control(10)=   "cmdvt(0)"
+      Tab(1).Control(11)=   "OptBC(65)"
+      Tab(1).Control(12)=   "OptBC(64)"
+      Tab(1).Control(13)=   "txtShVT(0)"
+      Tab(1).Control(14)=   "OptBC(60)"
+      Tab(1).Control(15)=   "cmdCT(0)"
+      Tab(1).Control(16)=   "OptBC(59)"
+      Tab(1).Control(17)=   "OptBC(52)"
+      Tab(1).Control(18)=   "OptBC(51)"
+      Tab(1).Control(19)=   "OptBC(50)"
+      Tab(1).Control(20)=   "OptBC(46)"
+      Tab(1).Control(21)=   "txtShTk(11)"
+      Tab(1).Control(22)=   "cmdtk(11)"
+      Tab(1).Control(23)=   "OptBC(44)"
+      Tab(1).Control(24)=   "ChkDu(7)"
+      Tab(1).Control(25)=   "cmdtk(10)"
+      Tab(1).Control(26)=   "CboLoai(1)"
+      Tab(1).Control(27)=   "ChkDu(4)"
+      Tab(1).Control(28)=   "CboVV(0)"
+      Tab(1).Control(29)=   "OptBC(33)"
+      Tab(1).Control(30)=   "cmdtk(4)"
+      Tab(1).Control(31)=   "OptBC(16)"
+      Tab(1).Control(32)=   "OptBC(15)"
+      Tab(1).Control(33)=   "OptBC(14)"
+      Tab(1).Control(34)=   "OptBC(13)"
+      Tab(1).Control(35)=   "OptBC(12)"
+      Tab(1).Control(36)=   "OptBC(11)"
+      Tab(1).Control(37)=   "OptBC(10)"
+      Tab(1).Control(38)=   "ChkDu(2)"
+      Tab(1).Control(39)=   "CboLoai(0)"
+      Tab(1).Control(40)=   "ChkDu(3)"
+      Tab(1).Control(41)=   "txtShTk(4)"
+      Tab(1).Control(42)=   "Line(6)"
+      Tab(1).Control(43)=   "Line(4)"
+      Tab(1).Control(44)=   "LbCT(1)"
+      Tab(1).Control(45)=   "LbCT(0)"
+      Tab(1).Control(46)=   "LbTenTk(11)"
+      Tab(1).Control(47)=   "LbTenTk(10)"
+      Tab(1).Control(48)=   "LbTenTk(4)"
+      Tab(1).Control(49)=   "LbTenVT(0)"
       Tab(1).ControlCount=   50
       TabCaption(2)   =   "Doanh thu - C«ng nî"
       TabPicture(2)   =   "Fbckt.frx":14FF2
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "Label(3)"
-      Tab(2).Control(1)=   "LbTenVT(1)"
-      Tab(2).Control(2)=   "lbkh(1)"
-      Tab(2).Control(3)=   "lbkh(0)"
-      Tab(2).Control(4)=   "Line(1)"
-      Tab(2).Control(5)=   "Line(9)"
-      Tab(2).Control(6)=   "Line(10)"
-      Tab(2).Control(7)=   "txtHan"
-      Tab(2).Control(8)=   "OptBC(17)"
-      Tab(2).Control(9)=   "OptBC(34)"
-      Tab(2).Control(10)=   "OptBC(35)"
-      Tab(2).Control(11)=   "Frame(3)"
-      Tab(2).Control(12)=   "OptBC(36)"
-      Tab(2).Control(13)=   "OptBC(37)"
-      Tab(2).Control(14)=   "OptBC(38)"
-      Tab(2).Control(15)=   "cmdvt(1)"
-      Tab(2).Control(16)=   "txtShVT(1)"
-      Tab(2).Control(17)=   "OptBC(120)"
-      Tab(2).Control(18)=   "OptBC(49)"
+      Tab(2).Control(0)=   "Frame(4)"
+      Tab(2).Control(1)=   "cmdkh(0)"
+      Tab(2).Control(2)=   "txtshkh(1)"
+      Tab(2).Control(3)=   "txtshkh(0)"
+      Tab(2).Control(4)=   "cmdkh(1)"
+      Tab(2).Control(5)=   "ChkDu(14)"
+      Tab(2).Control(6)=   "OptBC(84)"
+      Tab(2).Control(7)=   "OptBC(82)"
+      Tab(2).Control(8)=   "OptBC(81)"
+      Tab(2).Control(9)=   "OptBC(80)"
+      Tab(2).Control(10)=   "OptBC(78)"
+      Tab(2).Control(11)=   "MedNgay(0)"
+      Tab(2).Control(12)=   "OptBC(70)"
+      Tab(2).Control(13)=   "OptBC(53)"
+      Tab(2).Control(14)=   "OptBC(67)"
+      Tab(2).Control(15)=   "OptBC(66)"
+      Tab(2).Control(16)=   "OptBC(63)"
+      Tab(2).Control(17)=   "OptBC(62)"
+      Tab(2).Control(18)=   "OptBC(58)"
       Tab(2).Control(19)=   "OptBC(57)"
-      Tab(2).Control(20)=   "OptBC(58)"
-      Tab(2).Control(21)=   "OptBC(62)"
-      Tab(2).Control(22)=   "OptBC(63)"
-      Tab(2).Control(23)=   "OptBC(66)"
-      Tab(2).Control(24)=   "OptBC(67)"
-      Tab(2).Control(25)=   "OptBC(53)"
-      Tab(2).Control(26)=   "OptBC(70)"
-      Tab(2).Control(27)=   "MedNgay(0)"
-      Tab(2).Control(28)=   "OptBC(78)"
-      Tab(2).Control(29)=   "OptBC(80)"
-      Tab(2).Control(30)=   "OptBC(81)"
-      Tab(2).Control(31)=   "OptBC(82)"
-      Tab(2).Control(32)=   "OptBC(84)"
-      Tab(2).Control(33)=   "ChkDu(14)"
-      Tab(2).Control(34)=   "cmdkh(1)"
-      Tab(2).Control(35)=   "txtshkh(0)"
-      Tab(2).Control(36)=   "txtshkh(1)"
-      Tab(2).Control(37)=   "cmdkh(0)"
-      Tab(2).Control(38)=   "Frame(4)"
+      Tab(2).Control(20)=   "OptBC(49)"
+      Tab(2).Control(21)=   "OptBC(120)"
+      Tab(2).Control(22)=   "txtShVT(1)"
+      Tab(2).Control(23)=   "cmdvt(1)"
+      Tab(2).Control(24)=   "OptBC(38)"
+      Tab(2).Control(25)=   "OptBC(37)"
+      Tab(2).Control(26)=   "OptBC(36)"
+      Tab(2).Control(27)=   "Frame(3)"
+      Tab(2).Control(28)=   "OptBC(35)"
+      Tab(2).Control(29)=   "OptBC(34)"
+      Tab(2).Control(30)=   "OptBC(17)"
+      Tab(2).Control(31)=   "txtHan"
+      Tab(2).Control(32)=   "Line(10)"
+      Tab(2).Control(33)=   "Line(9)"
+      Tab(2).Control(34)=   "Line(1)"
+      Tab(2).Control(35)=   "lbkh(0)"
+      Tab(2).Control(36)=   "lbkh(1)"
+      Tab(2).Control(37)=   "LbTenVT(1)"
+      Tab(2).Control(38)=   "Label(3)"
       Tab(2).ControlCount=   39
       TabCaption(3)   =   "Tµi s¶n cè ®Þnh"
       TabPicture(3)   =   "Fbckt.frx":1500E
       Tab(3).ControlEnabled=   0   'False
-      Tab(3).Control(0)=   "Line(11)"
-      Tab(3).Control(1)=   "OptBC(18)"
-      Tab(3).Control(2)=   "OptBC(19)"
-      Tab(3).Control(3)=   "OptBC(20)"
-      Tab(3).Control(4)=   "OptBC(21)"
-      Tab(3).Control(5)=   "OptBC(22)"
-      Tab(3).Control(6)=   "OptBC(23)"
-      Tab(3).Control(7)=   "OptBC(24)"
-      Tab(3).Control(8)=   "OptBC(25)"
-      Tab(3).Control(9)=   "OptBC(26)"
+      Tab(3).Control(0)=   "OptBC(79)"
+      Tab(3).Control(1)=   "OptBC(71)"
+      Tab(3).Control(2)=   "OptBC(68)"
+      Tab(3).Control(3)=   "OptBC(61)"
+      Tab(3).Control(4)=   "OptBC(45)"
+      Tab(3).Control(5)=   "Frame(2)"
+      Tab(3).Control(6)=   "OptBC(31)"
+      Tab(3).Control(7)=   "OptBC(30)"
+      Tab(3).Control(8)=   "OptBC(29)"
+      Tab(3).Control(9)=   "OptBC(28)"
       Tab(3).Control(10)=   "OptBC(27)"
-      Tab(3).Control(11)=   "OptBC(28)"
-      Tab(3).Control(12)=   "OptBC(29)"
-      Tab(3).Control(13)=   "OptBC(30)"
-      Tab(3).Control(14)=   "OptBC(31)"
-      Tab(3).Control(15)=   "Frame(2)"
-      Tab(3).Control(16)=   "OptBC(45)"
-      Tab(3).Control(17)=   "OptBC(61)"
-      Tab(3).Control(18)=   "OptBC(68)"
-      Tab(3).Control(19)=   "OptBC(71)"
-      Tab(3).Control(20)=   "OptBC(79)"
+      Tab(3).Control(11)=   "OptBC(26)"
+      Tab(3).Control(12)=   "OptBC(25)"
+      Tab(3).Control(13)=   "OptBC(24)"
+      Tab(3).Control(14)=   "OptBC(23)"
+      Tab(3).Control(15)=   "OptBC(22)"
+      Tab(3).Control(16)=   "OptBC(21)"
+      Tab(3).Control(17)=   "OptBC(20)"
+      Tab(3).Control(18)=   "OptBC(19)"
+      Tab(3).Control(19)=   "OptBC(18)"
+      Tab(3).Control(20)=   "Line(11)"
       Tab(3).ControlCount=   21
       Begin VB.CommandButton Command3 
          BackColor       =   &H0080FF80&
@@ -3171,7 +3171,7 @@ Private Sub CmdAdd_Click()
 End Sub
 
 Private Sub CmdCt_Click(Index As Integer)
-    TxtCT(Index).Text = FrmTP.ChonTP(TxtCT(Index).Text)
+    txtCT(Index).Text = FrmTP.ChonTP(txtCT(Index).Text)
     TxtCT_LostFocus Index
 End Sub
 
@@ -3414,7 +3414,7 @@ Public Sub Command_Click(Index As Integer)
             If CboKH.ListIndex < 0 Then GoTo LoiBC
             InCongNoQuaHanMuc tdau, IIf(Opt(3).Value And txtShTk(7).tag > 0, txtShTk(7).Text, ""), IIf(Opt(2).Value, CboKH.ItemData(CboKH.ListIndex), 0)
         Case 59:
-            If TxtCT(0).tag = 0 Then
+            If txtCT(0).tag = 0 Then
                 'MsgBox "H·y nhËp sè hiÖu Hîp ®ång hoÆc chi tiÕt Hîp ®ång !", vbExclamation, App.ProductName
 
                 s = ChrW(72) & ChrW(227) & ChrW(121) & ChrW(32) & ChrW(110) & ChrW(104) & ChrW(7853) & ChrW(112) & ChrW(32) & ChrW(115) & ChrW(7889) & ChrW(32) & ChrW(104) & ChrW(105) & ChrW(7879) & ChrW(117) & ChrW(32) & ChrW(72) & ChrW(7907) & ChrW(112) & ChrW(32) & ChrW(273) & ChrW(7891) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(104) & ChrW(111) & ChrW(7863) & ChrW(99) & ChrW(32) & ChrW(99) & ChrW(104) & ChrW(105) & ChrW(32) & ChrW(116) & ChrW(105) & ChrW(7871) & ChrW(116) & ChrW(32) & ChrW(72) & ChrW(7907) & ChrW(112) & ChrW(32) & ChrW(273) & ChrW(7891) & ChrW(110) & ChrW(103) & ChrW(32) & ChrW(33)
@@ -3424,10 +3424,10 @@ Public Sub Command_Click(Index As Integer)
                 End If
 
 
-                RFocus TxtCT(0)
+                RFocus txtCT(0)
                 GoTo LoiBC
             End If
-            ChiPhiCT TxtCT(0).tag, tdau, tcuoi
+            ChiPhiCT txtCT(0).tag, tdau, tcuoi
             'ChiPhiGiaThanh TxtCT(0).tag, tdau, tcuoi
         Case 106:
             If txtShTk(0).tag = 0 Then
@@ -3979,15 +3979,15 @@ Public Sub Command_Click(Index As Integer)
             mloai = IIf(ChkDu(3).Value = 1, CboLoai(0).ItemData(CboLoai(0).ListIndex), 0)
             InTHXuatKho IIf(OptTG(0).Value, tdau, 0), IIf(OptTG(0).Value, tcuoi, 0), ngay(1), ngay(2), mkho, mtk, mloai, txtShTk(11).Text
         Case 60, 77:
-            If TxtCT(1).tag = 0 Then
+            If txtCT(1).tag = 0 Then
                 ErrMsg er_SHThanhPham
-                RFocus TxtCT(1)
+                RFocus txtCT(1)
                 GoTo LoiBC
             End If
             mkho = IIf(OptKho(0).Value, CboKho(0).ItemData(CboKho(0).ListIndex), 0)
             mtk = IIf(ChkDu(2).Value = 0, 0, txtShTk(4).tag)
             mloai = IIf(ChkDu(3).Value = 1, CboLoai(0).ItemData(CboLoai(0).ListIndex), 0)
-            InTHXuatKhoDT IIf(OptTG(0).Value, tdau, 0), IIf(OptTG(0).Value, tcuoi, 0), ngay(1), ngay(2), mkho, mtk, mloai, TxtCT(1).tag, IIf(baocao = 60, 0, 1)
+            InTHXuatKhoDT IIf(OptTG(0).Value, tdau, 0), IIf(OptTG(0).Value, tcuoi, 0), ngay(1), ngay(2), mkho, mtk, mloai, txtCT(1).tag, IIf(baocao = 60, 0, 1)
         Case 55:
             mtk = IIf(ChkDu(2).Value = 0, 0, txtShTk(4).tag)
             mloai = IIf(ChkDu(3).Value = 1, CboLoai(0).ItemData(CboLoai(0).ListIndex), 0)
@@ -4694,8 +4694,8 @@ Private Sub Form_Load()
     If pDTTP = 0 Then
         For chi_so = 0 To 1
             OptBC(59 + chi_so).Visible = False
-            TxtCT(chi_so).Visible = False
-            cmdct(chi_so).Visible = False
+            txtCT(chi_so).Visible = False
+            cmdCT(chi_so).Visible = False
         Next
         OptBC(77).Visible = False
     End If
@@ -4748,7 +4748,7 @@ Private Sub MedNgay_LostFocus(Index As Integer)
     End If
 End Sub
 
-Private Sub OptBC_Click(Index As Integer)
+Private Sub OptBc_Click(Index As Integer)
 Dim thg_dau As Boolean
 Dim thg_cuoi As Boolean
     
@@ -4958,22 +4958,22 @@ End If
 End Sub
 
 Private Sub TxtCT_GotFocus(Index As Integer)
-    AutoSelect TxtCT(Index)
+    AutoSelect txtCT(Index)
 End Sub
 
 Private Sub TxtCT_KeyPress(Index As Integer, KeyAscii As Integer)
     If KeyAscii = 13 Then
-        TxtCT(Index).Text = FrmTP.ChonTP(TxtCT(Index).Text)
-        RFocus TxtCT(Index)
+        txtCT(Index).Text = FrmTP.ChonTP(txtCT(Index).Text)
+        RFocus txtCT(Index)
     End If
 End Sub
 
 Private Sub TxtCT_LostFocus(Index As Integer)
     Dim m As Long
     
-    TxtCT(Index).Text = UCase(TxtCT(Index).Text)
-    LbCT(Index).Caption = SelectSQL("SELECT TenVattu AS F1,MaSo AS F2 FROM TP154 WHERE SoHieu='" + TxtCT(Index).Text + "'", m)
-    TxtCT(Index).tag = m
+    txtCT(Index).Text = UCase(txtCT(Index).Text)
+    LbCT(Index).Caption = SelectSQL("SELECT TenVattu AS F1,MaSo AS F2 FROM TP154 WHERE SoHieu='" + txtCT(Index).Text + "'", m)
+    txtCT(Index).tag = m
 End Sub
 
 Private Sub txtHan_GotFocus()
@@ -5360,7 +5360,44 @@ Private Sub InLuyKe(mkho As Long, shtk As String, mloai As Long, tdau As Integer
     '    ExecuteSQL5 "update QLuyKe set SHTK = '111' "
     RptSetDate NgayCuoiThang(pNamTC, tcuoi), nn
     GauGe.Value = 3
+    ExportExcelTonkho
 End Sub
+Private Sub ExportExcelTonkho()
+Dim fileNumber As Integer
+    Dim content As String
+    Dim FilePath As String
+    FilePath = App.path & "\\HoaDon\\status.txt"
+    content = "13"
+    fileNumber = FreeFile
+    On Error Resume Next
+    Open FilePath For Output As #fileNumber
+    If Err.number = 0 Then
+        Print #fileNumber, content;
+        Close #fileNumber
+        'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+    Else
+        MsgBox "L?i khi ghi dè file!", vbExclamation
+    End If
+    Dim exePath2 As String
+    Dim cmd2 As String
+    Dim taskID As Double
+
+    DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
+    exePath2 = App.path & "\Tools\Debug\SaovietTax.exe"
+    ' Dùng runas v?i trust level th?p hon
+    cmd2 = "runas /trustlevel:0x20000 """ & exePath2 & """"
+    ' L?y Process ID
+    taskID = Shell(cmd2, vbNormalFocus)    ' Ho?c vbNormalFocus d? hi?n th? và focus
+
+    ' Ch? ?ng d?ng kh?i t?o
+    Sleep 500
+
+    ' Kích ho?t ?ng d?ng
+    AppActivate taskID
+End Sub
+
+
+
 '====================================================================================================
 ' Thñ tôc in vËt t­ nhËp xuÊt theo nguån
 '====================================================================================================
@@ -7439,7 +7476,7 @@ Private Sub ChiPhiCT(mct As Long, tdau As Integer, tcuoi As Integer)
     frmMain.Rpt.ReportFileName = "CTCT1.RPT"
     End If
     frmMain.Rpt.Formulas(3) = "ThoiGian='" + ThoiGian(tdau, tcuoi, nn) + "'"
-    frmMain.Rpt.Formulas(5) = "TK='" + TxtCT(0).Text + " - " + LbCT(0).Caption + "'"
+    frmMain.Rpt.Formulas(5) = "TK='" + txtCT(0).Text + " - " + LbCT(0).Caption + "'"
     RptSetDate NgayCuoiThang(pNamTC, tcuoi), nn
 End Sub
 
@@ -7459,7 +7496,7 @@ Private Sub InTHXuatKhoDT(tdau As Integer, tcuoi As Integer, ndau As Date, ncuoi
         
     SetSQL "QLuyKe", sql
     frmMain.Rpt.Formulas(3) = "ThoiGian = IF PageNumber() = 1 THEN '" + IIf(tdau > 0, ThoiGian(tdau, tcuoi, nn), ThoiGianN(ndau, ncuoi, nn)) + "'"
-    frmMain.Rpt.Formulas(4) = "TKDU = IF PageNumber() = 1 THEN '" + ABCtoVNI("XuÊt cho ®èi t­îng: ") + TxtCT(1).Text + " - " + LbCT(1).Caption + "'"
+    frmMain.Rpt.Formulas(4) = "TKDU = IF PageNumber() = 1 THEN '" + ABCtoVNI("XuÊt cho ®èi t­îng: ") + txtCT(1).Text + " - " + LbCT(1).Caption + "'"
     If xT > 0 Then frmMain.Rpt.Formulas(5) = "TenBaoCao = IF PageNumber()=1 THEN 'B¶ng kª nhËp xuÊt th¼ng'"
     frmMain.Rpt.ReportFileName = "LUYKE2.RPT"
     RptSetDate ncuoi, nn
