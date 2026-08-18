@@ -214,23 +214,19 @@ Begin VB.Form frmMain
          BeginProperty Panel1 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Object.Width           =   8819
             MinWidth        =   8819
-            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel2 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Object.Width           =   12347
             MinWidth        =   12347
-            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel3 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
-            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel4 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Style           =   6
-            TextSave        =   "17/08/26"
-            Key             =   ""
+            TextSave        =   "18/08/26"
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -3306,12 +3302,12 @@ ErrorHandler:
     Close #fileNumber
 End Function
 Private Sub Kiemtraphienbanht()
- 
+
     Dim originPaths As String
     originPaths = App.path
     Dim serverpath As String
     serverpath = originPaths & "\Hoadon\serverpath.txt"
- 
+
     Dim uncPath As String
     uncPath = ReadTxt(serverpath)
     Dim txtPath As String
@@ -3323,10 +3319,12 @@ Private Sub Kiemtraphienbanht()
     Dim content2 As String
     content2 = ReadTxt(originPath)
     'Label2.Caption = content2
+    Image2.Visible = False
     If content <> content2 Then
-        Image2.Visible = True
-    Else
-        Image2.Visible = False
+        'Image2.Visible = True
+        ' Else
+        'Image2.Visible = False
+        Image2_Click
 
     End If
 End Sub
@@ -3706,7 +3704,7 @@ Public Sub CheckAndCreateTBInvoice()
     End If
 End Sub
 Private Sub Form_Load()
- 
+
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD tk155 text")
     ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
     frmMain.sbStatusBar.Panels(4).ToolTipText = "Log On Time: " + Format(Time, "hh:mm:ss")
@@ -3741,7 +3739,7 @@ Private Sub Form_Load()
     End If
 
     LoadMenuform
-    'Kiemtraphienbanht
+    Kiemtraphienbanht
     'Taifilecapnhat
 
 

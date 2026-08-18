@@ -2151,7 +2151,7 @@ Public Sub LietKeChungtu(shtk As String, mvt As Long, mts As Long, mcn As Long, 
                                       rs_chungtu!dg & vbTab & _
                                       Format(rs_chungtu!tps, Mask_0) & vbTab & _
                                       CStr(mct) & vbTab & _
-                                      "KTra" & vbTab & _
+                                      LoaiHD & vbTab & _
                                       Format(rs_chungtu!chietkhau, Mask_0), 0
             so_cong = so_cong + 1
         Else

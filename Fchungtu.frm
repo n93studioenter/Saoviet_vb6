@@ -2778,7 +2778,7 @@ Begin VB.Form FrmChungtu
       Left            =   120
       Style           =   1  'Graphical
       TabIndex        =   175
-      Top             =   3540
+      Top             =   3480
       Width           =   1575
    End
    Begin VB.TextBox txtchungtu 
@@ -3821,6 +3821,35 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+Private Const INFINITE As Long = &HFFFF    ' Ho?c -1
+
+Private Declare Function GetWindowThreadProcessId Lib "user32" ( _
+                                                  ByVal hwnd As Long, _
+                                                  ByRef lpdwProcessId As Long) As Long
+Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" ( _
+                                    ByVal lpClassName As String, _
+                                    ByVal lpWindowName As String) As Long
+
+' ?? API FindWindowEx d? tìm c?a s? ti?p theo
+Private Declare Function FindWindowEx Lib "user32" Alias "FindWindowExA" ( _
+                                      ByVal hWndParent As Long, _
+                                      ByVal hWndChildAfter As Long, _
+                                      ByVal lpClassName As String, _
+                                      ByVal lpWindowName As String) As Long
+Private Declare Function OpenProcess Lib "Kernel32" ( _
+                                     ByVal dwDesiredAccess As Long, _
+                                     ByVal bInheritHandle As Long, _
+                                     ByVal dwProcessId As Long) As Long
+
+Private Declare Function CloseHandle Lib "Kernel32" ( _
+                                     ByVal hObject As Long) As Long
+
+Private Declare Function WaitForSingleObject Lib "Kernel32" ( _
+                                             ByVal hHandle As Long, _
+                                             ByVal dwMilliseconds As Long) As Long
+
+Private Const SYNCHRONIZE As Long = &H100000
+
 Private Declare Function Shell_NotifyIcon Lib "shell32.dll" Alias "Shell_NotifyIconA" ( _
                                           ByVal dwMessage As Long, _
                                           lpData As NOTIFYICONDATA) As Long
@@ -3979,8 +4008,8 @@ Dim numberOfItems As Integer
 Dim isshift As Integer
 Dim TimerID As Long
 ' Ð?u tiên, khai báo các API c?n thi?t
-Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" _
-                                    (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
+'Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" _
+ '(ByVal lpClassName As String, ByVal lpWindowName As String) As Long
 
 Private Declare Function IsWindow Lib "user32" (ByVal hwnd As Long) As Long
 Private Declare Function MessageBoxTimeout Lib "user32" Alias "MessageBoxTimeoutA" ( _
@@ -7187,7 +7216,7 @@ Function RemoveLeadingZeros(ByVal str As String) As String
 End Function
 
 Public Sub btnImportXML_Click()
-     frmThongbao.thongbao "Dang import hoa don"
+    frmThongbao.thongbao "Dang import hoa don"
     Dim kq As String
     kq = LayThongTinMST_Masothue("037051000158-bui-duc-cuong")
 
@@ -7204,7 +7233,7 @@ Public Sub btnImportXML_Click()
     'Goi table Import
     Query = "SELECT t.* FROM tbimport AS t " & _
             "WHERE t.IsImport = 1 " & _
-            "AND t.Status = 0 OR t.Status = 2  " & _
+            "AND (t.Status = 0 OR t.Status = 2) " & _
             "AND t.ID = (" & _
           "   SELECT MIN(t2.ID) FROM tbimport AS t2 " & _
           "   WHERE t2.SHDon = t.SHDon " & _
@@ -7299,30 +7328,39 @@ End Sub
 
 Private Sub btnOpenexe_Click()
     Dim exePath As String
-    exePath = App.path & "\\Tools\\Debug\\SaovietTax.exe"
+    Dim ProcessId As Long
+    Dim hProcess As Long
+    Dim hWndVB6 As Long
 
-    ' Shell d? m? ?ng d?ng
-    Shell exePath, vbNormalFocus
-    Exit Sub
-    DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
+    exePath = App.path & "\Tools\Debug\SaovietTax.exe"
 
-    ' L?y handle c?a c?a s? ?ng d?ng
-    hWndApp = 0  ' Kh?i t?o bi?n hWndApp
+    ' M? ?ng d?ng và luu Process ID
+    ProcessId = Shell(exePath, vbNormalFocus)
+    hWndVB6 = Me.hwnd
 
-    While hWndApp = 0
-        hWndApp = FindWindow(vbNullString, "frmMain")  ' Thay d?i tiêu d? c?a ?ng d?ng
-        DoEvents  ' Cho phép x? lý s? ki?n khác
-    Wend
+    If ProcessId = 0 Then
+        MsgBox "Không th? m? ?ng d?ng!", vbCritical
+        Exit Sub
+    End If
 
-    ' Ki?m tra handle có h?p l? hay không
-    If hWndApp = 0 Then
-        MsgBox "Không tìm th?y ?ng d?ng."
+    ' M? Process d? theo dõi
+    hProcess = OpenProcess(SYNCHRONIZE, False, ProcessId)
+
+    If hProcess <> 0 Then
+        ' Ch? Process dóng
+        WaitForSingleObject hProcess, INFINITE
+        CloseHandle hProcess
+
+        SetForegroundWindow hWndVB6
+        btnImportXML.SetFocus
+        DoEvents
+        btnImportXML_Click
+        'btnImportXML.Value = True
     Else
-        ' Ð?i m?t chút tru?c khi ki?m tra l?i
-        Sleep 1000
-        'CheckWindow
+        MsgBox "Không th? theo dõi ti?n trình!", vbCritical
     End If
 End Sub
+
 Private Sub GhiChutxt(ByVal content As Integer)
     Dim FilePath As String
     FilePath = App.path & "\\Hoadon\\status.txt"
@@ -12514,6 +12552,7 @@ Public Sub OptLoai_Click(Index As Integer)
     If Index = 5 Then
         GhiChutxt 1
         btnOpenexe_Click
+         Exit Sub
     End If
     txtVT(2).Text = ""
     ' OptLoai(Index).Value = True
@@ -15293,6 +15332,26 @@ Private Function KiemTraChungtu() As Boolean
         'MsgBox "loi2"
         Exit Function
     End If
+
+
+    If FThuChi.FThuChiForm <> 0 Then
+        If loaict = 5 Then
+            If OptLoai(8).Value = True Then
+                loaict = 8
+            End If
+            If OptLoai(0).Value = True Then
+                loaict = 0
+            End If
+            If OptLoai(4).Value = True Then
+                loaict = 4
+            End If
+            If OptLoai(1).Value = True Then
+                loaict = 1
+            End If
+        End If
+    End If
+
+
     If pHachToan <> 0 And Fix(SoPSConLai * Mask_N) <> 0 And ((loaict <> 8 And loaict <> 7) Or Chk.Value = 0) Then
         If Not PSTuDong(SoPSConLai) Then
 
