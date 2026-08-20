@@ -41,15 +41,6 @@ Begin VB.Form FrmA
       _ExtentY        =   12091
       _StockProps     =   77
       BackColor       =   16777215
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "VK Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
    End
    Begin VB.CommandButton Command 
       BackColor       =   &H8000000E&
@@ -329,8 +320,8 @@ Private Sub LietKeChungtu(thang As Integer, ndau As Date, ncuoi As Date)
         End If
         rs_chungtu.MoveNext
     Loop
-    GrdChungtu.Rows = IIf(rs_chungtu.RecordCount > GrdChungtu.tag, IIf(rs_chungtu.RecordCount > MaxGridRow, MaxGridRow, rs_chungtu.RecordCount), GrdChungtu.tag)
-    LbSoCT.Caption = CStr(rs_chungtu.RecordCount)
+    GrdChungtu.Rows = IIf(rs_chungtu.recordCount > GrdChungtu.tag, IIf(rs_chungtu.recordCount > MaxGridRow, MaxGridRow, rs_chungtu.recordCount), GrdChungtu.tag)
+    LbSoCT.Caption = CStr(rs_chungtu.recordCount)
     GrdChungtu.col = 0
     rs_chungtu.Close
     Set rs_chungtu = Nothing

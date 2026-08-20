@@ -182,9 +182,12 @@ Dim esc As Integer
 
 Public Sub Form_KeyPress(KeyAscii As Integer)
     Select Case KeyAscii
-        Case 27:
-            esc = 1
-            Unload Me
+    Case 27  ' ESC
+        esc = 1
+        Unload Me
+    Case 13  ' Enter
+        MedNgay(1).SetFocus
+        MedNgay_KeyPress 1, 32
     End Select
 End Sub
 Private Sub lblClose_Click()

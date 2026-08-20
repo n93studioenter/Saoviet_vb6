@@ -184,21 +184,21 @@ End Sub
 '======================================================================================
 Public Function GhiChungtu(Optional p As Integer = 0, Optional r As Integer = 0) As Integer
     Dim ckh As New ClsKhachHang, tp As Cls154, m As Long, st As String, dv As String
-            
+
     If Len(DienGiaiE) = 0 Then DienGiaiE = "..."
-    
+
     GhiChungtuTH IIf(maloai = 7 Or p <> 0, 1, 0)
-    
+
     If maloai = 7 Or p <> 0 Or (pProcessMode = 1 And r = 0) Then GoTo KT
     MaSo = Lng_MaxValue("MaSo", "ChungTu" + IIf(p > 0 Or maloai = 7, "P", ""))
-    
+
     WSpace.BeginTrans
     GhiChungtu = 0
-    If maloai <> 9000 Then ' binh thuong thi <> 4 them chung tu ngan hang
+    If maloai <> 9000 Then    ' binh thuong thi <> 4 them chung tu ngan hang
         ' Ghi l¹i c¸c sè d­ hiÖn thêi cña c¸c tµi kho¶n cã ph¸t sinh
         If tkno.MaSo > 0 Then tkno.TinhSoDu ThangCT, sops, -1, IIf(tkno.MaNT > 0, SoPS2No, 0)
         If TkCo.MaSo > 0 Then TkCo.TinhSoDu ThangCT, sops, 1, IIf(TkCo.MaNT > 0, SoPS2Co, 0)
-        
+
         ' TÝnh l¹i tån vËt t­ nÕu cã nhËp xuÊt
         If MaVattu > 0 Then
             If (maloai = 1 And tkno.tk_id = TKVT_ID) Or (maloai = 1 And TkCo.tk_id = TKVT_ID And sops = 0) Then TinhTonKho MaKho, IIf(tkno.MaSo > 0, tkno.MaSo, TkCo.MaSo), MaVattu, ThangCT, -1, IIf(tkno.MaSo > 0, SoPS2No, SoPS2Co), sops, PSUSD
@@ -208,11 +208,11 @@ Public Function GhiChungtu(Optional p As Integer = 0, Optional r As Integer = 0)
                     ExecuteSQL5 "UPDATE ChungTu SET SoXuat = SoXuat + " + DoiDau(IIf(SoPS2Co = 0, 1, SoPS2Co)) + " WHERE MaSo = " + CStr(-CT_ID)
                 Else
                     ExecuteSQL5 "UPDATE VTDauNam SET SoXuat = SoXuat + " + DoiDau(IIf(SoPS2Co = 0, 1, SoPS2Co)) _
-                        + " WHERE MaSoKho = " + CStr(MaKho) + " AND MaVattu = " + CStr(MaVattu) + " AND MaSo=" + CStr(-CT_ID - 2000000000)
+                              + " WHERE MaSoKho = " + CStr(MaKho) + " AND MaVattu = " + CStr(MaVattu) + " AND MaSo=" + CStr(-CT_ID - 2000000000)
                 End If
             End If
         End If
-        
+
         If makh > 0 Then
             ckh.InitKhachHangMaSo makh
             If ckh.MaSo > 0 Then
@@ -225,7 +225,7 @@ Public Function GhiChungtu(Optional p As Integer = 0, Optional r As Integer = 0)
                 If TkCo.tk_id = TKCNKH_ID Or TkCo.tk_id = TKCNPT_ID Then ckh.GhiSoPSKH TkCo, ThangCT, sops, SoPS2Co, 1
             End If
         End If
-        
+
         If pCongNoHD > 0 Then
             If makh > 0 And CT_ID < 0 Then
                 If Abs(CT_ID) < 2000000000 Then
@@ -256,7 +256,7 @@ Public Function GhiChungtu(Optional p As Integer = 0, Optional r As Integer = 0)
                 ExecuteSQL5 "UPDATE ChungTu SET SoXuat = SoXuat + " + DoiDau(SoPS2Co) + " WHERE MaSo = " + CStr(-CT_ID)
             Else
                 ExecuteSQL5 "UPDATE VTDauNam SET SoXuat = SoXuat + " + DoiDau(SoPS2Co) _
-                    + " WHERE MaSoKho = " + CStr(MaKho) + " AND MaVattu = " + CStr(MaVattu) + " AND MaSo=" + CStr(-CT_ID - 2000000000)
+                          + " WHERE MaSoKho = " + CStr(MaKho) + " AND MaVattu = " + CStr(MaVattu) + " AND MaSo=" + CStr(-CT_ID - 2000000000)
             End If
         End If
     End If
@@ -280,23 +280,26 @@ Public Function GhiChungtu(Optional p As Integer = 0, Optional r As Integer = 0)
         sohieu = sohieu + "GV"
         maloai = 2
         CT_ID = 500000000 + MaSo
-        MaCT = SelectSQL("SELECT TOP 1 MaCT AS F1 FROM ChungTu WHERE ThangCT=" + CStr(ThangCT) + " AND MaLoai=2 AND SoHieu='" + sohieu + "'")
+        'MaCT = SelectSQL("SELECT TOP 1 MaCT AS F1 FROM ChungTu WHERE ThangCT=" + CStr(ThangCT) + " AND MaLoai=2 AND SoHieu='" + sohieu + "'")
+        ' Cách 1: Thêm di?u ki?n NgayCT
+        MaCT = SelectSQL("SELECT TOP 1 MaCT AS F1 FROM ChungTu WHERE ThangCT=" + CStr(ThangCT) + " AND NgayCT=#" + Format(NgayCT, "yyyy/mm/dd") + "# AND MaLoai=2 AND SoHieu='" + sohieu + "'")
+
         If MaCT = 0 Then MaCT = Lng_MaxValue("MaCT", "ChungTu") + 1
         User_ID = 0
         If CTGS_GV > 0 Then CTGS = CTGS_GV
         If OutCost = 0 Then
             sops = GiaXuatKho(MaKho, TkCo.MaSo, MaVattu, NgayGS, SoPS2Co, PSUSD)
-            
+
             GhiChungtu
         Else
             Dim i As Integer, luong() As Double, tien() As Double, id() As Long, c As Integer, tien2() As Double
             Select Case OutCost
-                Case 1:
-                    c = GiaXuatKhoDD(MaKho, TkCo.MaSo, MaVattu, SoPS2Co, luong, tien, id, tien2)
-                Case 2:
-                    c = GiaXuatKhoFIFO(MaKho, TkCo.MaSo, MaVattu, SoPS2Co, luong, tien, id, tien2)
-                Case 3:
-                    c = GiaXuatKhoLIFO(MaKho, TkCo.MaSo, MaVattu, SoPS2Co, luong, tien, id, tien2)
+            Case 1:
+                c = GiaXuatKhoDD(MaKho, TkCo.MaSo, MaVattu, SoPS2Co, luong, tien, id, tien2)
+            Case 2:
+                c = GiaXuatKhoFIFO(MaKho, TkCo.MaSo, MaVattu, SoPS2Co, luong, tien, id, tien2)
+            Case 3:
+                c = GiaXuatKhoLIFO(MaKho, TkCo.MaSo, MaVattu, SoPS2Co, luong, tien, id, tien2)
             End Select
             For i = 1 To c
                 SoPS2Co = luong(i)
@@ -311,18 +314,18 @@ Public Function GhiChungtu(Optional p As Integer = 0, Optional r As Integer = 0)
             Erase id
         End If
     End If
-    
-If MaTP > 0 And (Left(tkno.sohieu, 3) = "154" Or Left(TkCo.sohieu, 3) = "154" Or Left(tkno.sohieu, 3) = "621" Or Left(TkCo.sohieu, 3) = "621") And (CT_ID < 610000000) Then 'CT_ID < 610000000 Or
+
+    If MaTP > 0 And (Left(tkno.sohieu, 3) = "154" Or Left(TkCo.sohieu, 3) = "154" Or Left(tkno.sohieu, 3) = "621" Or Left(TkCo.sohieu, 3) = "621") And (CT_ID < 610000000) Then    'CT_ID < 610000000 Or
         If DaTinhGiaThanh154(MaTP, ThangCT) Then
             Set tp = New Cls154
             tp.InitTPMaSo MaTP
             If MsgBox("TÝnh l¹i gi¸ thµnh cña ®èi t­îng " + tp.sohieu + " - " + tp.TenVattu + " ?", vbCritical + vbYesNo, App.ProductName) = vbYes Then
                 DieuChinhGiaThanh tp, ThangCT
             End If
-           
+
             Set tp = Nothing
         End If
-      
+
     End If
 KT:
     Set ckh = Nothing

@@ -226,7 +226,7 @@ Begin VB.Form frmMain
          EndProperty
          BeginProperty Panel4 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Style           =   6
-            TextSave        =   "18/08/26"
+            TextSave        =   "20/08/26"
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -2558,8 +2558,12 @@ Begin VB.Form frmMain
          Tag             =   "&New"
       End
    End
-   Begin VB.Menu mnVersion 
+   Begin VB.Menu mnversion 
       Caption         =   "Version"
+      Begin VB.Menu mnversionChild 
+         Caption         =   "Ver1.1"
+         Index           =   1
+      End
    End
    Begin VB.Menu mnTT 
       Caption         =   "TT"
@@ -2571,6 +2575,19 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+Private Type MenuInfo
+    id As Long
+    Name As String
+End Type
+Private arrItems() As MenuInfo
+Private mnItemCount As Integer
+
+Private Declare Function GetMenuString Lib "user32" Alias "GetMenuStringA" _
+                                       (ByVal hMenu As Long, ByVal wIDItem As Long, ByVal lpString As String, _
+                                        ByVal nMaxCount As Long, ByVal wFlag As Long) As Long
+
+Private Const MF_BYCOMMAND As Long = &H0&
+
 Private Declare Sub Sleep Lib "Kernel32" (ByVal dwMilliseconds As Long)
 Private Declare Function SetForegroundWindow Lib "user32" (ByVal hwnd As Long) As Long
 
@@ -2660,7 +2677,7 @@ Private Declare Function SystemParametersInfo Lib "user32.dll" Alias "SystemPara
 'Module tieng viet
 Dim MenuCount As Integer
 Dim CurrentMenu As Integer
-Dim ItemCount As Integer
+Dim itemCount As Integer
 Dim fontmenu As String, fontcaption As String, ncm As NONCLIENTMETRICS
 Attribute fontcaption.VB_VarUserMemId = 1073938440
 Attribute ncm.VB_VarUserMemId = 1073938440
@@ -2741,6 +2758,23 @@ Private Const OptLDBLoggedUsers = &H2
 '         UVowels = mDOMVowels.ReadUnicode(GetLocalDirectory & "UnicodeVowels.xml")
 '       LbCongty.Caption = MyUnicodeText.ReadUnicode("D:\soft\sv\Accounting\config.xml")
 'End Sub
+Private Sub AddItem(id As Integer, Name As String)
+    mnItemCount = mnItemCount + 1
+    ReDim Preserve arrItems(1 To mnItemCount)
+    arrItems(mnItemCount).id = id
+    arrItems(mnItemCount).Name = Name
+End Sub
+Private Function FindItemByID(id As Integer) As String
+    Dim i As Integer
+    For i = 1 To mnItemCount
+        If arrItems(i).id = id Then
+            FindItemByID = arrItems(i).Name
+            Exit Function
+        End If
+    Next i
+    FindItemByID = "Not Found"
+End Function
+
 Private Sub AddTray()
 
     nid.cbSize = Len(nid)
@@ -2805,7 +2839,23 @@ Private Sub Command_Click(Index As Integer)
     End Select
     HienThongBao "", 1
 End Sub
+Public Function GetMenuCaption(ByVal hMenu As Long, ByVal MenuID As Long) As String
+    Dim Buffer As String
+    Dim length As Long
 
+    ' T?o buffer d? ch?a caption
+    Buffer = Space$(256)
+
+    ' G?i API d? l?y caption
+    length = GetMenuString(hMenu, MenuID, Buffer, Len(Buffer), MF_BYCOMMAND)
+
+    ' C?t chu?i theo d? dài th?c t?
+    If length > 0 Then
+        GetMenuCaption = Left$(Buffer, length)
+    Else
+        GetMenuCaption = ""
+    End If
+End Function
 Private Sub CommandButton1_Click()
 
 End Sub
@@ -3069,6 +3119,8 @@ ErrorHandler:
     DoEvents
 End Sub
 
+
+
 Private Sub Image2_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' Ð?i con tr? khi hover
     Image2.MousePointer = vbSizeNS
@@ -3310,10 +3362,17 @@ Private Sub Kiemtraphienbanht()
 
     Dim uncPath As String
     uncPath = ReadTxt(serverpath)
+    If InStr(1, uncPath, "Versions", vbTextCompare) > 0 Then
+        Image2.Visible = True
+        Exit Sub
+    End If
+
     Dim txtPath As String
     txtPath = uncPath & "\" & "Tools\version.txt"
     Dim content As String
     content = ReadTxt(txtPath)
+    mnversion.Caption = "Version " & content
+
     Dim originPath As String
     originPath = App.path & "\Hoadon\version.txt"
     Dim content2 As String
@@ -3703,7 +3762,43 @@ Public Sub CheckAndCreateTBInvoice()
         DBKetoan.TableDefs.Append tdf
     End If
 End Sub
+Private Sub menuversion()
+    mnItemCount = 0
+    ReDim arrItems(1 To 1)    ' Kh?i t?o m?ng
+
+
+    Dim fso As Object
+    Dim folder As Object
+    Dim subFolder As Object
+
+    Set fso = CreateObject("Scripting.FileSystemObject")
+
+    Set folder = fso.GetFolder("\\192.168.1.90\Ke toan 2025 New\1 Copi vao dung 1\Versions")
+    Dim i As Integer
+    i = 2
+    For Each subFolder In folder.SubFolders
+        ' Debug.Print subFolder.Name
+        Load mnversionChild(i)
+        mnversionChild(i).Caption = subFolder.Name
+        mnversionChild(i).Visible = True
+        Call AddItem(i, subFolder.Name)
+        i = i + 1
+    Next
+
+    Set subFolder = Nothing
+    Set folder = Nothing
+    Set fso = Nothing
+
+
+
+    'Menu m?u
+    'mnversionChild(1).Visible = False
+
+
+    mnversionChild(1).Visible = False
+End Sub
 Private Sub Form_Load()
+    menuversion
 
     ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD tk155 text")
     ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
@@ -3732,12 +3827,12 @@ Private Sub Form_Load()
     check162 = SelectSQL("SELECT SoHieu AS F1 FROM HeThongTK where SoHieu = '621' ")
     If check162 = 0 Then
 
-        mnTT.Caption = "TT-46/2025-BTC"
+        'mnTT.Caption = "TT-46/2025-BTC"
     Else
-        mnTT.Caption = "TT-99/2025-BTC"
+        'mnTT.Caption = "TT-99/2025-BTC"
         'mnTT.Visible = False
     End If
-
+    mnTT.Caption = "TT133/2016/TT-BTC"
     LoadMenuform
     Kiemtraphienbanht
     'Taifilecapnhat
@@ -3968,8 +4063,8 @@ Public Sub Capnhatdata()
     Dim fileNumber As Integer
     Dim FilePath As String
     Dim content As String
-    FilePath = App.path & "\\HoaDon\\status.txt"
-    content = "12"
+    FilePath = App.path & "\\HoaDon\\\serverpath.txt"
+    content = "\\192.168.1.90\Ke toan 2025 New\1 Copi vao dung 1"
     fileNumber = FreeFile
     On Error Resume Next
     Open FilePath For Output As #fileNumber
@@ -3981,16 +4076,21 @@ Public Sub Capnhatdata()
         MsgBox "L?i khi ghi dè file!", vbExclamation
     End If
 
+    'Cap nhat file version
+    FilePath = App.path & "\\HoaDon\\\version.txt"
+    fileNumber = FreeFile
+    On Error Resume Next
+    Open FilePath For Output As #fileNumber
+    If Err.number = 0 Then
+        Print #fileNumber, FindItemByID(Index);
+        Close #fileNumber
+        'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+    Else
+        MsgBox "L?i khi ghi dè file!", vbExclamation
+    End If
+    CopyAndRun
+    Me.Hide
 
-    Dim exePath2 As String
-    Dim cmd2 As String
-    DoEvents  ' Ð? d?m b?o ?ng d?ng có th?i gian kh?i d?ng
-    exePath2 = App.path & "\Tools\Debug\SaovietTax.exe"
-    ' Dùng runas v?i trust level th?p hon
-    cmd2 = "runas /trustlevel:0x20000 """ & exePath2 & """"
-    Shell cmd2, vbHide
-    Screen.MousePointer = vbDefault
-    Unload Me
 End Sub
 
 Private Sub lbCty_Click(Index As Integer)
@@ -4646,6 +4746,73 @@ Private Sub mnviet_Click()
 End Sub
 
 
+Private Sub mnversionchild_Click(Index As Integer)
+    Dim fileNumber As Integer
+    Dim FilePath As String
+    Dim content As String
+    FilePath = App.path & "\\HoaDon\\\serverpath.txt"
+    content = "\\192.168.1.90\Ke toan 2025 New\1 Copi vao dung 1\Versions"
+    fileNumber = FreeFile
+    On Error Resume Next
+    Open FilePath For Output As #fileNumber
+    If Err.number = 0 Then
+        Print #fileNumber, content;
+        Close #fileNumber
+        'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+    Else
+        MsgBox "L?i khi ghi dè file!", vbExclamation
+    End If
+
+    'Cap nhat file version
+    FilePath = App.path & "\\HoaDon\\\version.txt"
+    fileNumber = FreeFile
+    On Error Resume Next
+    Open FilePath For Output As #fileNumber
+    If Err.number = 0 Then
+        Print #fileNumber, FindItemByID(Index);
+        Close #fileNumber
+        'MsgBox "Ðã ghi dè file version.txt thành công!", vbInformation
+    Else
+        MsgBox "L?i khi ghi dè file!", vbExclamation
+    End If
+    CopyAndRun
+    Me.Hide
+
+End Sub
+Private Sub CopyAndRun()
+    On Error GoTo ErrorHandler
+    
+    Dim fso As Object
+    Dim src As String, dest As String, exe As String
+    
+    src = "\\192.168.1.90\Ke toan 2025 New\1 Copi vao dung 1\Tools\Debug\AutoUpdate"
+    dest = App.path & "\Tools\Debug\"
+    exe = dest & "AutoUpdate\AutoUpdate.exe"
+    
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    
+    ' Copy
+    If Not fso.FolderExists(dest) Then fso.CreateFolder dest
+    fso.CopyFolder src, dest, True
+    
+    ' Ch?y
+    If fso.FileExists(exe) Then
+        Shell exe, vbNormalFocus
+    Else
+        MsgBox "Không tìm th?y AutoUpdate.exe!", vbExclamation
+        Exit Sub
+    End If
+    
+    ' === ÐÓNG FORM ===
+    Unload Me
+    
+    Exit Sub
+    
+ErrorHandler:
+    MsgBox "L?i: " & Err.Description, vbCritical
+    Unload Me
+End Sub
+
 Public Sub mnVT_Click(Index As Integer)
 
     If Index = 22 Then
@@ -4786,7 +4953,7 @@ Public Sub mnVT_Click(Index As Integer)
             If OutCost = 0 Then
                 If frmMain.Tudongtinhgiavon = False Then
                     ' Nh?p s? t? ngu?i dùng
-                    k = CInt5(FrmGetStr.GetString("NhËp sè 1 ®Ó tÝnh b×nh qu©n di ®éng, sè 2 ®Ó tÝnh b×nh qu©n cuèi kú ", "TÝnh l¹i gi¸ xuÊt kho"))
+                    k = CInt5(FrmGetStr.GetString("NhËp sè 1 ®Ó tÝnh b×nh qu©n cuèi kú, sè 2 ®Ó tÝnh b×nh qu©n di ®éng ", "TÝnh l¹i gi¸ xuÊt kho"))
                 Else
                     k = 2
                 End If    ' Ð?m b?o có End If cho If th? hai
@@ -4832,7 +4999,7 @@ Public Sub mnVT_Click(Index As Integer)
         Loop
         Me.MousePointer = 11
         If OutCost = 0 Then
-            k = CInt5(FrmGetStr.GetString("NhËp sè 1 ®Ó tÝnh b×nh qu©n di ®éng, sè 2 ®Ó tÝnh b×nh qu©n cuèi kú (tÝnh theo th¸ng)", "TÝnh l¹i gi¸ vèn"))
+            k = CInt5(FrmGetStr.GetString("NhËp sè 1 ®Ó tÝnh b×nh qu©n cuèi kú (tÝnh theo th¸ng), sè 2 ®Ó tÝnh b×nh qu©n di ®éng ", "TÝnh l¹i gi¸ vèn"))
             If k < 1 And k > 2 Then GoTo KT
             TinhGVBHBQ month(d1), month(d2), i, mv, k
         Else

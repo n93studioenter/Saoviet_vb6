@@ -136,7 +136,7 @@ End Function
 '====================================================================================================
 ' Thñ tôc in thÎ kho
 '====================================================================================================
-Public Function InTheKho2(mkho As Long, mvt As Long, tdau As Integer, tcuoi As Integer, thongbao As Boolean, mn As Long, Optional tkdu As String = "", Optional loaitk As Integer = 0, Optional nn As Integer = 0) As Boolean
+Public Function InTheKho2(mkho As Long, mvt As Long, tdau As Integer, tcuoi As Integer, Thongbao As Boolean, mn As Long, Optional tkdu As String = "", Optional loaitk As Integer = 0, Optional nn As Integer = 0) As Boolean
     Dim dkl As Double, dkt As Double, dkt2 As Double
     Dim sqll As String, st As String, i As Integer, dv As String, ps As Double, Dvt2 As Integer
     
@@ -182,7 +182,7 @@ Public Function InTheKho2(mkho As Long, mvt As Long, tdau As Integer, tcuoi As I
     InTheKho2 = True
     Exit Function
 KhongPS:
-    If thongbao Then MsgBox "VËt t­ kh«ng cã tån kho hoÆc ph¸t sinh !", vbInformation, App.ProductName
+    If Thongbao Then MsgBox "VËt t­ kh«ng cã tån kho hoÆc ph¸t sinh !", vbInformation, App.ProductName
     InTheKho2 = False
 End Function
 
@@ -337,7 +337,7 @@ Public Function GetVAT(mvt As Long) As Integer
     GetVAT = SelectSQL(sql)
 End Function
 
-Public Function InTheKho2N(mkho As Long, mvt As Long, ndau As Date, ncuoi As Date, thongbao As Boolean, mn As Long, Optional tkdu As String = "", Optional loaitk As Integer = 0, Optional nn As Integer = 0) As Boolean
+Public Function InTheKho2N(mkho As Long, mvt As Long, ndau As Date, ncuoi As Date, Thongbao As Boolean, mn As Long, Optional tkdu As String = "", Optional loaitk As Integer = 0, Optional nn As Integer = 0) As Boolean
     Dim rs_ps As Recordset, dkl As Double, dkt As Double, dkt2 As Double
     Dim sqll As String, st As String, i As Integer, dv As String, Dvt2 As Integer
     
@@ -372,7 +372,7 @@ Public Function InTheKho2N(mkho As Long, mvt As Long, ndau As Date, ncuoi As Dat
     InTheKho2N = True
     Exit Function
 KhongPS:
-    If thongbao Then MsgBox "VËt t­ kh«ng cã tån kho hoÆc ph¸t sinh !", vbInformation, App.ProductName
+    If Thongbao Then MsgBox "VËt t­ kh«ng cã tån kho hoÆc ph¸t sinh !", vbInformation, App.ProductName
     InTheKho2N = False
 End Function
 
@@ -709,7 +709,6 @@ Public Sub TinhGXK(tdau As Integer, tcuoi As Integer, shvt As String, tkno As St
             luong = luong - rs!SoPS2Co
             tien = tien - tienx
         End If
-
         If tienx <> rs!sops Then ExecuteSQL5 "UPDATE ChungTu SET SoPS=" + DoiDau(tienx) + " WHERE MaSo=" + CStr(rs!MaSo)
 
         If pGiaUSD > 0 Then
@@ -754,17 +753,31 @@ Private Function SoTonKhoN2(ngay As Date, mkho As Long, mtk As Long, mvt As Long
     If mkho > 0 Then sql = sql + " AND ((MaKho=" + CStr(mkho) + " AND MaLoai=1) OR (MaNguon=" + CStr(mkho) + " AND MaLoai=4))"
     If mtk > 0 Then sql = sql + " And MaTKNo=" + CStr(mtk)
 
-    ThanhTien = ThanhTien + SelectSQL(sql, luong, tien2)
+    Dim sql2 As String
+    sql2 = "SELECT Sum(SoPS) As F1, Sum(SoPS2Co) As F2" + IIf(pGiaUSD > 0, ", Sum(PSUSD) As F3", "") + " FROM ChungTu WHERE MaVattu=" + CStr(mvt) + " AND MaLoai=2 AND NgayGS<#" + Format(ngay, Mask_DB) + "#"
+    Dim tt2 As Double
+    Dim luong1 As Double
+    Dim luong2 As Double
+    Dim tien3 As Double
+
+    tt2 = SelectSQL(sql2, luong2, tien3)
+    Debug.Print "Tinh tt2 : " & sql2
+    'ThanhTien = ThanhTien + SelectSQL(sql, luong, tien2)
+    Debug.Print "Tinh tt : " & sql
+    Dim tt As Double
+    tt = SelectSQL(sql, luong1, tien2)
+    'ThanhTien = ThanhTien + SelectSQL(sql, luong, tien2) - tt2
+     ThanhTien = ThanhTien + tt - tt2
     Debug.Print "Makho" & sql
-    SoTonKhoN2 = SoTonKhoN2 + luong
+    SoTonKhoN2 = SoTonKhoN2 + luong1 - luong2
 
     sql = "SELECT Sum(SoPS) As F1,Sum(SoPS2Co) As F2" + IIf(pGiaUSD > 0, ",Sum(PSUSD) As F3", "") + " FROM ChungTu WHERE MaVattu=" + CStr(mvt) + " AND (MaLoai=2" + IIf(mkho > 0, " OR MaLoai=4)", ")") + " AND NgayGS<#" + Format(ngay, Mask_DB) + "# AND MaCT<" + CStr(mct)
     If mkho > 0 Then sql = sql + " AND (MaKho=" + CStr(mkho) + ")"
     If mtk > 0 Then sql = sql + " And MaTKCo=" + CStr(mtk)
-    
+
     ThanhTien = ThanhTien - SelectSQL(sql, luong, X)
     tien2 = tien2 - X
-    SoTonKhoN2 = SoTonKhoN2 - luong
+    SoTonKhoN2 = SoTonKhoN2
 End Function
 
 Public Function SoCPPB(tdau As Integer, tcuoi As Integer, f As String, m As Long) As Double

@@ -2999,13 +2999,13 @@ Private Sub Command2_Click()
     OptBC(11).Value = True
     Command_Click 0
 
-    Dim url As String
+    Dim URL As String
 
     ' T?o URL
-    url = "http://localhost:8081/?path=" & Replace(pDataPath, "\", "/")
+    URL = "http://localhost:8081/?path=" & Replace(pDataPath, "\", "/")
 
     ' M? URL trong trình duy?t
-    Shell "explorer.exe """ & url & """", vbNormalFocus
+    Shell "explorer.exe """ & URL & """", vbNormalFocus
 End Sub
 
 Private Sub Form_DblClick()
@@ -7708,30 +7708,30 @@ Private Sub ToKhaiVAT(tdau As Integer, tcuoi As Integer, taikhoan As ClsTaikhoan
 
     ExecuteSQL5 QueryUpdate
 
-    Dim result As String
+    Dim Result As String
     If tdau = tcuoi Then
-        result = "T" & tdau
+        Result = "T" & tdau
     End If
 
     If tdau = 1 And tcuoi = 3 Then
-        result = "Q1"
+        Result = "Q1"
     End If
     If tdau = 4 And tcuoi = 6 Then
-        result = "Q2"
+        Result = "Q2"
     End If
     If tdau = 7 And tcuoi = 9 Then
-        result = "Q3"
+        Result = "Q3"
     End If
     If tdau = 10 And tcuoi = 12 Then
-        result = "Q4"
+        Result = "Q4"
     End If
-    Dim url As String
+    Dim URL As String
 
     ' T?o URL
-    url = "http://localhost:8081/home/index?path=" & Replace(pDataPath, "\", "/")
-    url = url & "&ky=" & result
+    URL = "http://localhost:8081/home/index?path=" & Replace(pDataPath, "\", "/")
+    URL = URL & "&ky=" & Result
     ' M? URL trong trình duy?t
-    Shell "explorer.exe """ & url & """", vbNormalFocus
+    Shell "explorer.exe """ & URL & """", vbNormalFocus
 
     Set TK = Nothing
 End Sub
@@ -8674,12 +8674,12 @@ On Error GoTo ErrorHandler
    ' Recycle pCurDir + "bangke.XLS"
     On Error GoTo KetThuc
 
-             dlgCommonDialog.fileName = "D:\BangKeDauRa" + CStr(tdau) + IIf(tcuoi < 10, "0", "") + CStr(tcuoi) + CStr(pNamTC Mod 100) + ".XLS" '"*.XLS"
+             dlgCommonDialog.FileName = "D:\BangKeDauRa" + CStr(tdau) + IIf(tcuoi < 10, "0", "") + CStr(tcuoi) + CStr(pNamTC Mod 100) + ".XLS" '"*.XLS"
           '   dlgCommonDialog.
           '  On Error GoTo QuitSAS
             dlgCommonDialog.ShowSave
             On Error GoTo 0
-            pDataPath = dlgCommonDialog.fileName
+            pDataPath = dlgCommonDialog.FileName
    ' pDataPath = "bangke.XLS"
   
    
@@ -8986,12 +8986,12 @@ Private Function InVATDauvao_exel(tdau As Integer, tcuoi As Integer, tl As Integ
    ' Recycle pCurDir + "bangke.XLS"
     On Error GoTo KetThuc
 
-             dlgCommonDialog.fileName = "D:\BangKeDauVao" + CStr(tdau) + IIf(tcuoi < 10, "0", "") + CStr(tcuoi) + CStr(pNamTC Mod 100) + ".XLS" '"*.XLS"
+             dlgCommonDialog.FileName = "D:\BangKeDauVao" + CStr(tdau) + IIf(tcuoi < 10, "0", "") + CStr(tcuoi) + CStr(pNamTC Mod 100) + ".XLS" '"*.XLS"
           '   dlgCommonDialog.
           '  On Error GoTo QuitSAS
             dlgCommonDialog.ShowSave
             On Error GoTo 0
-            pDataPath = dlgCommonDialog.fileName
+            pDataPath = dlgCommonDialog.FileName
    ' pDataPath = "bangke.XLS"
     FileCopy pCurDir + "REPORTS\Bangkemuavao.XLS", pDataPath '+ "bangkera.XLS"
 

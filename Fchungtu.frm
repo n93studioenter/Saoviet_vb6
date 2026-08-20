@@ -341,7 +341,7 @@ Begin VB.Form FrmChungtu
       TabIndex        =   182
       Tag             =   "35"
       ToolTipText     =   "Depreciation"
-      Top             =   4440
+      Top             =   4340
       Width           =   1575
    End
    Begin VB.Timer timerErrorNganhang 
@@ -414,7 +414,7 @@ Begin VB.Form FrmChungtu
       Left            =   120
       Style           =   1  'Graphical
       TabIndex        =   178
-      Top             =   3960
+      Top             =   3850
       Width           =   1575
    End
    Begin VB.Timer t331 
@@ -527,7 +527,7 @@ Begin VB.Form FrmChungtu
       TabIndex        =   170
       Tag             =   "35"
       ToolTipText     =   "Depreciation"
-      Top             =   3110
+      Top             =   3030
       Width           =   1575
    End
    Begin VB.Timer timer3311 
@@ -2778,7 +2778,7 @@ Begin VB.Form FrmChungtu
       Left            =   120
       Style           =   1  'Graphical
       TabIndex        =   175
-      Top             =   3480
+      Top             =   3450
       Width           =   1575
    End
    Begin VB.TextBox txtchungtu 
@@ -4100,6 +4100,7 @@ Dim FilePath As String
 Dim cbbThang As String
 
 Public MaSoCT As Long
+Public NgayCT As Date
 Public bakSoHieu As String
 Public bakNgay As Date
 Public bakNoidung As String
@@ -4117,18 +4118,18 @@ Dim SetLoaiEnable As Boolean
 Dim shct As String
 Dim xddu As Boolean
 Dim TenTC As String, DiachiTC As String, ctgoc As String, TenNX As String, DiaChiNX As String, TenBH As String, DiaChiBH As String, MSTBH As String, unc1 As String, unc2 As String, unc3 As String, MaKHBH As Long, HanTT As Date
-Attribute DiachiTC.VB_VarUserMemId = 1073938556
-Attribute ctgoc.VB_VarUserMemId = 1073938556
-Attribute TenNX.VB_VarUserMemId = 1073938556
-Attribute DiaChiNX.VB_VarUserMemId = 1073938556
-Attribute TenBH.VB_VarUserMemId = 1073938556
-Attribute DiaChiBH.VB_VarUserMemId = 1073938556
-Attribute MSTBH.VB_VarUserMemId = 1073938556
-Attribute unc1.VB_VarUserMemId = 1073938556
-Attribute unc2.VB_VarUserMemId = 1073938556
-Attribute unc3.VB_VarUserMemId = 1073938556
-Attribute MaKHBH.VB_VarUserMemId = 1073938556
-Attribute HanTT.VB_VarUserMemId = 1073938556
+Attribute DiachiTC.VB_VarUserMemId = 1073938557
+Attribute ctgoc.VB_VarUserMemId = 1073938557
+Attribute TenNX.VB_VarUserMemId = 1073938557
+Attribute DiaChiNX.VB_VarUserMemId = 1073938557
+Attribute TenBH.VB_VarUserMemId = 1073938557
+Attribute DiaChiBH.VB_VarUserMemId = 1073938557
+Attribute MSTBH.VB_VarUserMemId = 1073938557
+Attribute unc1.VB_VarUserMemId = 1073938557
+Attribute unc2.VB_VarUserMemId = 1073938557
+Attribute unc3.VB_VarUserMemId = 1073938557
+Attribute MaKHBH.VB_VarUserMemId = 1073938557
+Attribute HanTT.VB_VarUserMemId = 1073938557
 Dim HD() As tpHoaDon, hdcount As Integer
 Attribute HD.VB_VarUserMemId = 1073938518
 Attribute hdcount.VB_VarUserMemId = 1073938518
@@ -7354,7 +7355,11 @@ Private Sub btnOpenexe_Click()
         SetForegroundWindow hWndVB6
         btnImportXML.SetFocus
         DoEvents
-        btnImportXML_Click
+        Dim StatusClose As Integer
+        StatusClose = SelectSQL("select StatusClose AS f1 from  tbRegister")
+        If StatusClose = 1 Then
+            btnImportXML_Click
+        End If
         'btnImportXML.Value = True
     Else
         MsgBox "Không th? theo dõi ti?n trình!", vbCritical
@@ -12272,6 +12277,9 @@ Private Sub Grid2_Click()
         Else
             MaCTChon = CLng5(.Text)
             MaSoCT = MaCTChon
+            .col = 2
+            Dim nct As String
+            NgayCT = CDate(.Text)
             CheckTkThue MaSoCT
             HienPhieuTrenManHinh (0)
         End If
@@ -14745,7 +14753,7 @@ Public Function HienPhieuTrenManHinh(p As Integer) As Integer
     sh = IIf(p > 0, "P", "")
     Dim sql
 
-    'sql = "SELECT ChungTu" + sh + ".*,HoaDon" + sh + ".MaKhachHang,HoaDon" + sh + ".Loai AS LoaiHD,KyHieu,HoaDon" + sh + ".SoHD AS SHD,NgayPH,MatHang,Soluong,Thanhtien,Tyle,HD,KCT,NK,TS,HoaDon" + sh + ".DC,HTTT,MauSo,KhachHang.Ten,KhachHang.DiaChi,KhachHang.MST,khachhang.sohieu as sohieukhachhang,HDBL,HoaDon" + sh + ".TyGia AS TG FROM (ChungTu" + sh + " LEFT JOIN HoaDon" + sh + " ON ChungTu" + sh + ".MaSo=HoaDon" + sh + ".MaSo) LEFT JOIN KhachHang ON ChungTu" + sh + ".MaKH=KhachHang.MaSo WHERE Chungtu" + sh + ".MaCT=" + CStr(MaSoCT) + IIf(pProcessMode = 1, " AND XuLy<2", "") + " ORDER BY Chungtu" + sh + ".MaSo DESC"
+    ' sql = "SELECT ChungTu" + sh + ".*,HoaDon" + sh + ".MaKhachHang,HoaDon" + sh + ".Loai AS LoaiHD,KyHieu,HoaDon" + sh + ".SoHD AS SHD,NgayPH,MatHang,Soluong,Thanhtien,Tyle,HD,KCT,NK,TS,HoaDon" + sh + ".DC,HTTT,MauSo,KhachHang.Ten,KhachHang.DiaChi,KhachHang.MST,khachhang.sohieu as sohieukhachhang,HDBL,HoaDon" + sh + ".TyGia AS TG FROM (ChungTu" + sh + " LEFT JOIN HoaDon" + sh + " ON ChungTu" + sh + ".MaSo=HoaDon" + sh + ".MaSo) LEFT JOIN KhachHang ON ChungTu" + sh + ".MaKH=KhachHang.MaSo WHERE Chungtu" + sh + ".MaCT=" + CStr(MaSoCT) + IIf(pProcessMode = 1, " AND XuLy<2", "") + " ORDER BY Chungtu" + sh + ".MaSo DESC"
     'sql = "SELECT ChungTu" + sh + ".*,HoaDon" + sh + ".MaKhachHang,HoaDon" + sh + ".KyHieu as kyhieuhoadon ,HoaDon" + sh + ".Loai AS LoaiHD,KyHieu,HoaDon" + sh + ".SoHD AS SHD,NgayPH,MatHang,Soluong,Thanhtien,Tyle,HD,KCT,NK,TS,HoaDon" + sh + ".DC,HTTT,MauSo,KhachHang.Ten,KhachHang.DiaChi,KhachHang.MST,khachhang.sohieu as sohieukhachhang,HDBL,HoaDon" + sh + ".TyGia AS TG FROM (ChungTu" + sh + " LEFT JOIN HoaDon" + sh + " ON ChungTu" + sh + ".MaSo=HoaDon" + sh + ".MaSo) LEFT JOIN KhachHang ON ChungTu" + sh + ".MaKH =KhachHang.MaSo WHERE Chungtu" + sh + ".MaCT=" + CStr(MaSoCT) + IIf(pProcessMode = 1, " AND XuLy<2", "") + " ORDER BY Chungtu" + sh + ".MaSo DESC"
     sql = "SELECT DISTINCT ChungTu" + sh + ".*,HoaDon" + sh + ".MaKhachHang,HoaDon" + sh + ".KyHieu as kyhieuhoadon,HoaDon" + sh + ".Loai AS LoaiHD,KyHieu,HoaDon" + sh + ".SoHD AS SHD,NgayPH,MatHang,Soluong,Thanhtien,Tyle,HD,KCT,NK,TS,HoaDon" + sh + ".DC,HTTT,MauSo,KhachHang.Ten,KhachHang.DiaChi,KhachHang.MST,khachhang.sohieu as sohieukhachhang,HDBL,HoaDon" + sh + ".TyGia AS TG " & _
           "FROM (ChungTu" + sh + " LEFT JOIN HoaDon" + sh + " ON ChungTu" + sh + ".MaSo=HoaDon" + sh + ".MaSo) " & _
