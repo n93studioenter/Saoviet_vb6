@@ -775,8 +775,8 @@ Private Function SoTonKhoN2(ngay As Date, mkho As Long, mtk As Long, mvt As Long
     If mkho > 0 Then sql = sql + " AND (MaKho=" + CStr(mkho) + ")"
     If mtk > 0 Then sql = sql + " And MaTKCo=" + CStr(mtk)
 
-    ThanhTien = ThanhTien - SelectSQL(sql, luong, X)
-    tien2 = tien2 - X
+    'ThanhTien = ThanhTien - SelectSQL(sql, luong, X)
+    'tien2 = tien2 - X
     SoTonKhoN2 = SoTonKhoN2
 End Function
 

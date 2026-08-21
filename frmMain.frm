@@ -226,7 +226,7 @@ Begin VB.Form frmMain
          EndProperty
          BeginProperty Panel4 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Style           =   6
-            TextSave        =   "20/08/26"
+            TextSave        =   "21/08/26"
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -3160,20 +3160,8 @@ End Sub
 
 
 Private Sub Form_Activate()
+
     
-    Dim counttkinvoice As Long
-    counttkinvoice = SelectSQL("select count(*) AS f1 from  tbInvoiceInfo")
-    If counttkinvoice = 1 Then
-        Label3(18).Visible = True
-        LbCty(15).Visible = True
-        Label3(19).Visible = True
-        Label3(20).Visible = True
-        LbCty(16).Visible = True
-        LbCty(17).Visible = True
-        LbCty(15).Caption = SelectSQL("select Url AS f1 from  tbInvoiceInfo")
-        LbCty(16).Caption = SelectSQL("select Username AS f1 from  tbInvoiceInfo")
-        LbCty(17).Caption = SelectSQL("select Password AS f1 from  tbInvoiceInfo")
-    End If
     CheckAndCreateTBCpu
     ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD IdNhap text")
     ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD IdTemplate text")
@@ -3363,6 +3351,11 @@ Private Sub Kiemtraphienbanht()
     Dim uncPath As String
     uncPath = ReadTxt(serverpath)
     If InStr(1, uncPath, "Versions", vbTextCompare) > 0 Then
+        Dim txtPath2 As String
+        txtPath2 = originPaths & "\" & "Hoadon\version.txt"
+        Dim content3 As String
+        content3 = ReadTxt(txtPath2)
+        mnversion.Caption = "Version " & content3
         Image2.Visible = True
         Exit Sub
     End If
@@ -3949,7 +3942,20 @@ Private Sub Form_Load()
             frmMain.txtdungthu.Caption = ""
         End If
     End If
+    Dim counttkinvoice As Long
+    counttkinvoice = SelectSQL("select count(*) AS f1 from tbInvoiceInfo")
 
+    If counttkinvoice = 1 Then
+        Label3(18).Visible = True
+        LbCty(15).Visible = True
+        Label3(19).Visible = True
+        Label3(20).Visible = True
+        LbCty(16).Visible = True
+        LbCty(17).Visible = True
+        LbCty(15).Caption = SelectSQL("select Url AS f1 from  tbInvoiceInfo")
+        LbCty(16).Caption = SelectSQL("select Username AS f1 from  tbInvoiceInfo")
+        LbCty(17).Caption = SelectSQL("select Password AS f1 from  tbInvoiceInfo")
+    End If
 End Sub
 Public Function ExecuteSQL_them_query(Ten As String, sql As String, Optional msg As Boolean = True) As Integer
     On Error GoTo ErrLock
@@ -4050,6 +4056,7 @@ End Sub
 
 
 Private Sub Image2_Click()
+    Screen.MousePointer = vbHourglass
     Dim i As Integer
     ProgressBar1.Visible = True
     Label4.Visible = True
@@ -4089,7 +4096,6 @@ Public Sub Capnhatdata()
         MsgBox "L?i khi ghi dè file!", vbExclamation
     End If
     CopyAndRun
-    Me.Hide
 
 End Sub
 
@@ -4747,6 +4753,7 @@ End Sub
 
 
 Private Sub mnversionchild_Click(Index As Integer)
+    Screen.MousePointer = vbHourglass
     Dim fileNumber As Integer
     Dim FilePath As String
     Dim content As String
@@ -4776,38 +4783,46 @@ Private Sub mnversionchild_Click(Index As Integer)
         MsgBox "L?i khi ghi dè file!", vbExclamation
     End If
     CopyAndRun
-    Me.Hide
 
 End Sub
 Private Sub CopyAndRun()
     On Error GoTo ErrorHandler
-    
+
     Dim fso As Object
-    Dim src As String, dest As String, exe As String
-    
+    Dim src As String
+    Dim dest As String
+    Dim exe As String
+    Dim cmd As String
+
     src = "\\192.168.1.90\Ke toan 2025 New\1 Copi vao dung 1\Tools\Debug\AutoUpdate"
     dest = App.path & "\Tools\Debug\"
     exe = dest & "AutoUpdate\AutoUpdate.exe"
-    
+
     Set fso = CreateObject("Scripting.FileSystemObject")
-    
+
     ' Copy
-    If Not fso.FolderExists(dest) Then fso.CreateFolder dest
+    If Not fso.FolderExists(dest) Then
+        fso.CreateFolder dest
+    End If
+
     fso.CopyFolder src, dest, True
-    
-    ' Ch?y
-    If fso.FileExists(exe) Then
-        Shell exe, vbNormalFocus
-    Else
+
+    ' Ki?m tra file
+    If Not fso.FileExists(exe) Then
         MsgBox "Không tìm th?y AutoUpdate.exe!", vbExclamation
         Exit Sub
     End If
-    
-    ' === ÐÓNG FORM ===
+
+    ' Ch?y AutoUpdate b?ng CMD, không ch? chuong trình k?t thúc
+    cmd = "cmd.exe /c start """" """ & exe & """"
+
+    Shell cmd, vbHide
+
+    ' Ðóng form ngay
     Unload Me
-    
+
     Exit Sub
-    
+
 ErrorHandler:
     MsgBox "L?i: " & Err.Description, vbCritical
     Unload Me
