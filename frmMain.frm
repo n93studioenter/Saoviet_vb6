@@ -214,19 +214,23 @@ Begin VB.Form frmMain
          BeginProperty Panel1 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Object.Width           =   8819
             MinWidth        =   8819
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel2 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Object.Width           =   12347
             MinWidth        =   12347
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel3 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
          BeginProperty Panel4 {0713E89F-850A-101B-AFC0-4210102A8DA7} 
             Style           =   6
             TextSave        =   "21/08/26"
+            Key             =   ""
             Object.Tag             =   ""
          EndProperty
       EndProperty
@@ -3155,67 +3159,9 @@ Public Sub Chayngam()
     End If
 End Sub
 Public Sub ChayTb()
-    timerChaytb.Enabled = True
+    'timerChaytb.Enabled = True
 End Sub
 
-
-Private Sub Form_Activate()
-
-    
-    CheckAndCreateTBCpu
-    ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD IdNhap text")
-    ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD IdTemplate text")
-    ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD StatusPH text")
-    ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
-    ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD Printername text")
-    ExecuteSQL5_Themmoi ("ALTER TABLE tbInvoiceTemplate ADD KHHD text")
-    Dim cmg As Long
-    cmg = SelectSQL("select CMG AS f1 from  License")
-    If cmg = 249991 Then
-        'Label5.Visible = True
-
-    Else
-        Label5.Visible = False
-    End If
-    ExecuteSQL5_Themmoi ("ALTER TABLE chungtu  ADD nhanban number")
-    'Tudongtinhgiavon = True
-    'Kiemtraphienban
-    ' FindLatestExe
-    Label1.Left = 0
-    Label1.Top = (Me.ScaleHeight * 95 / 100)
-
-
-    Image1.Left = (Me.ScaleWidth * 87 / 100)
-    Image1.Top = (Me.ScaleHeight * 5 / 100)
-    'Command1.Left = (Me.ScaleWidth * 90 / 100)
-    Command1.Left = Me.ScaleWidth * 0.957 - Command1.Width
-
-    Command1.Top = (Me.ScaleHeight * 80 / 100)
-    Label3(0).Alignment = vbRightJustify
-    Label3(0).Left = Me.ScaleWidth * 0.957 - Label3(0).Width
-
-    Label3(0).Top = (Me.ScaleHeight * 85 / 100)
-    Label3(16).Alignment = vbRightJustify
-    Label3(16).Left = Me.ScaleWidth * 0.96 - Label3(16).Width
-    Label3(16).Top = (Me.ScaleHeight * 88 / 100)
-
-
-    ExecuteSQL5_Themmoi ("ALTER TABLE HeThongTK DROP COLUMN KyHieu")
-    ExecuteSQL5_Themmoi ("ALTER TABLE ChungTu  ADD NgayImport Datetime")
-    ExecuteSQL5_Themmoi ("ALTER TABLE license  ADD tenhoadon text")
-    ExecuteSQL5 ("ALTER TABLE license ALTER COLUMN TaiKhoanVN TEXT(200)")
-    ExecuteSQL5 ("ALTER TABLE license ALTER COLUMN DiaChi TEXT(255)")
-    ExecuteSQL5 ("ALTER TABLE license ALTER COLUMN FAX TEXT(200)")
-    ExecuteSQL5_Themmoi ("ALTER TABLE license  ADD col711 text")
-    ExecuteSQL5_Themmoi ("ALTER TABLE license  ADD col711ra text")
-    ExecuteSQL5_Themmoi ("ALTER TABLE license  ADD skiperror text")
-    ExecuteSQL5 "Update License set skiperror=0 where skiperror='...'"
-    ' ExecuteSQL5 ("ALTER TABLE Vattu ALTER COLUMN TenVattu MEMO")
-    'ExecuteSQL5 ("UPDATE HOADON SET KyHieu = '01GTKT3/001' WHERE KYHIEU = '...'")
-    'mnDuLieu.Caption = "Xö lý"
-
-    StationList
-End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 
@@ -3942,6 +3888,10 @@ Private Sub Form_Load()
             frmMain.txtdungthu.Caption = ""
         End If
     End If
+    Loadactive
+End Sub
+Public Sub Loadactive()
+
     Dim counttkinvoice As Long
     counttkinvoice = SelectSQL("select count(*) AS f1 from tbInvoiceInfo")
 
@@ -3956,6 +3906,59 @@ Private Sub Form_Load()
         LbCty(16).Caption = SelectSQL("select Username AS f1 from  tbInvoiceInfo")
         LbCty(17).Caption = SelectSQL("select Password AS f1 from  tbInvoiceInfo")
     End If
+    CheckAndCreateTBCpu
+    ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD IdNhap text")
+    ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD IdTemplate text")
+    ExecuteSQL5_Themmoi ("ALTER TABLE HoaDon ADD StatusPH text")
+    ExecuteSQL5_Themmoi ("ALTER TABLE tbCpu ADD PcName text")
+    ExecuteSQL5_Themmoi ("ALTER TABLE tbRegister ADD Printername text")
+    ExecuteSQL5_Themmoi ("ALTER TABLE tbInvoiceTemplate ADD KHHD text")
+    Dim cmg As Long
+    cmg = SelectSQL("select CMG AS f1 from  License")
+    If cmg = 249991 Then
+        'Label5.Visible = True
+
+    Else
+        Label5.Visible = False
+    End If
+    ExecuteSQL5_Themmoi ("ALTER TABLE chungtu  ADD nhanban number")
+    'Tudongtinhgiavon = True
+    'Kiemtraphienban
+    ' FindLatestExe
+    Label1.Left = 0
+    Label1.Top = (Me.ScaleHeight * 95 / 100)
+
+
+    Image1.Left = (Me.ScaleWidth * 87 / 100)
+    Image1.Top = (Me.ScaleHeight * 5 / 100)
+    'Command1.Left = (Me.ScaleWidth * 90 / 100)
+    Command1.Left = Me.ScaleWidth * 0.957 - Command1.Width
+
+    Command1.Top = (Me.ScaleHeight * 80 / 100)
+    Label3(0).Alignment = vbRightJustify
+    Label3(0).Left = Me.ScaleWidth * 0.957 - Label3(0).Width
+
+    Label3(0).Top = (Me.ScaleHeight * 85 / 100)
+    Label3(16).Alignment = vbRightJustify
+    Label3(16).Left = Me.ScaleWidth * 0.96 - Label3(16).Width
+    Label3(16).Top = (Me.ScaleHeight * 88 / 100)
+
+
+    ExecuteSQL5_Themmoi ("ALTER TABLE HeThongTK DROP COLUMN KyHieu")
+    ExecuteSQL5_Themmoi ("ALTER TABLE ChungTu  ADD NgayImport Datetime")
+    ExecuteSQL5_Themmoi ("ALTER TABLE license  ADD tenhoadon text")
+    ExecuteSQL5 ("ALTER TABLE license ALTER COLUMN TaiKhoanVN TEXT(200)")
+    ExecuteSQL5 ("ALTER TABLE license ALTER COLUMN DiaChi TEXT(255)")
+    ExecuteSQL5 ("ALTER TABLE license ALTER COLUMN FAX TEXT(200)")
+    ExecuteSQL5_Themmoi ("ALTER TABLE license  ADD col711 text")
+    ExecuteSQL5_Themmoi ("ALTER TABLE license  ADD col711ra text")
+    ExecuteSQL5_Themmoi ("ALTER TABLE license  ADD skiperror text")
+    ExecuteSQL5 "Update License set skiperror=0 where skiperror='...'"
+    ' ExecuteSQL5 ("ALTER TABLE Vattu ALTER COLUMN TenVattu MEMO")
+    'ExecuteSQL5 ("UPDATE HOADON SET KyHieu = '01GTKT3/001' WHERE KYHIEU = '...'")
+    'mnDuLieu.Caption = "Xö lý"
+
+    StationList
 End Sub
 Public Function ExecuteSQL_them_query(Ten As String, sql As String, Optional msg As Boolean = True) As Integer
     On Error GoTo ErrLock
