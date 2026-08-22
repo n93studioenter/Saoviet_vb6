@@ -2357,7 +2357,7 @@ Public Sub LietKeChungtu_1(shtk As String, mvt As Long, mts As Long, mcn As Long
 
     ' TOP 500 và d?o th? t?
     chuoidieukien_intoanbo = sql
-    sql_main = "SELECT TOP 50 * FROM (" & sql & ") AS tong ORDER BY NgayGS DESC, Val(SoHieu) DESC"
+    sql_main = "SELECT TOP 100 * FROM (" & sql & ") AS tong ORDER BY NgayGS DESC, Val(SoHieu) DESC"
     sql_main = "SELECT * FROM (" & sql_main & ") AS a ORDER BY NgayGS ASC, Val(SoHieu) ASC"
 
     Debug.Print "=== FINAL SQL ==="
